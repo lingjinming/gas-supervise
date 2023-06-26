@@ -34,7 +34,7 @@ let loginForm: Ref<req_token> = ref({
   username: "system",
   password: "Gsafety@2022",
 });
-let serverValue = ref("");
+let serverValue = ref("test");
 let serverList = uni.getStorageSync("SERVER_LIST");
 const login = async () => {
   uni.setStorageSync("TOKEN_INFO", await getToken(loginForm.value));
