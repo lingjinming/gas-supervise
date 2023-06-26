@@ -25,7 +25,7 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     };
   }
 });
-const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "/Users/wengxiaoqing/Documents/GitHub/uni-preset-vue/src/App.vue"]]);
+const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "/Users/wengxiaoqing/Documents/GitHub/gas-supervise/src/App.vue"]]);
 function createApp() {
   const app = common_vendor.createSSRApp(App);
   return {

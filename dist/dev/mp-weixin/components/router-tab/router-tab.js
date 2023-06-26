@@ -69,5 +69,5 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     };
   }
 });
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-660758ae"], ["__file", "/Users/wengxiaoqing/Documents/GitHub/uni-preset-vue/src/components/router-tab/router-tab.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-660758ae"], ["__file", "/Users/wengxiaoqing/Documents/GitHub/gas-supervise/src/components/router-tab/router-tab.vue"]]);
 wx.createComponent(Component);

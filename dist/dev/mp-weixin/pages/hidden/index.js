@@ -16,5 +16,5 @@ const _sfc_main = /* @__PURE__ */ common_vendor.defineComponent({
     };
   }
 });
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-5afab1a9"], ["__file", "/Users/wengxiaoqing/Documents/GitHub/uni-preset-vue/src/pages/hidden/index.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-5afab1a9"], ["__file", "/Users/wengxiaoqing/Documents/GitHub/gas-supervise/src/pages/hidden/index.vue"]]);
 wx.createPage(MiniProgramPage);
