@@ -96,7 +96,7 @@ import { reactive, ref } from "vue";
 import { addHidden, type req_addHidden } from "../../api/hidden";
 import { formatDate } from "@/utils";
 
-let isOrg:boolean = uni.getStorageSync('USER_INFO')['orgType'] != 1;
+let isOrg: boolean = uni.getStorageSync("USER_INFO")["orgType"] != 1;
 
 let checkDatePopupIsShow = ref(false);
 
@@ -113,7 +113,7 @@ let reportForm: req_addHidden = ref({
   fileIds: [],
   longitude: "",
   latitude: "",
-  districtId:''
+  districtId: "",
 });
 let fileList: any = ref([]);
 const delImg = (event) => {
@@ -165,20 +165,24 @@ const chooseDate = (e) => {
   reportForm.value.checkDate = formatDate(e.detail);
 };
 
-const submit =async () => {
-  let data =  await addHidden(reportForm.value);
-  console.log(data)
+const submit = async () => {
+  if (fileList.value.length) {
+    reportForm.value.fileIds = [];
+    fileList.value.forEach((file) => {
+      reportForm.value.fileIds.push(file.objectName);
+    });
+  }
+  let data = await addHidden(reportForm.value);
+
   uni.showToast({
-    title:data.message,
-    duration:3000,
-    complete(){
-      uni.navigateBack()
-
-    }
-  })
-
+    title: data.message,
+    complete() {
+      setTimeout(() => {
+        data.success && uni.navigateBack();
+      }, 2000);
+    },
+  });
 };
-
 
 const chooseLocation = () => {
   uni.chooseLocation({
