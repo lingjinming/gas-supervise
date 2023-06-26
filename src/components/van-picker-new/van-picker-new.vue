@@ -76,7 +76,7 @@ const confirm = (e) => {
   }
   if (props.dicType == "RISK_DANGER_LEVEL") {
     pickerVal.value = value.label;
-    emits("update:modelValue", value.shortName);
+    emits("update:modelValue", value.value);
   }
 };
 </script>

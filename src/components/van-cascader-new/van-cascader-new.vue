@@ -14,7 +14,7 @@
     </van-popup>
 </template>
 <script setup lang="ts">
-import { getDictList } from "@/api/dic";
+import { getDictList, getDistrict } from "@/api/dic";
 
 const emits = defineEmits(["update:modelValue","update:subjectType"]);
 const props = defineProps({
@@ -34,10 +34,16 @@ let cascaderVal = ref([]);
 const columnsObj = {
   RISK_SUBJECT_TYPE_TREE: async () => {
     let data = (await getDictList(props.dicType))["data"][props.dicType];
-    data.forEach(item => item.text = item.label)
     options.value = data;
   },
+  district:async () => {
+    let data = (await getDistrict())["data"];
+    console.log(data)
+    data.forEach(item => item.text = item.label)
+    options.value = [data];
+  },
 };
+
 
 const showCascader = () => {
   isShow.value = true;

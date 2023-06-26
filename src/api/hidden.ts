@@ -29,6 +29,7 @@ export type req_addHidden = {
     fileIds:String[]
     level:String
     planCode:String
+    districtId:String
 }
 export const addHidden = (data:req_addHidden) => {
     return request({

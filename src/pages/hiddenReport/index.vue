@@ -25,6 +25,12 @@
       title="关联燃气公司"
       v-model="reportForm.orgId"
     />
+    <van-cascader-new
+      dicType="district"
+      label="所属区域"
+      title="所属区域"
+      v-model="reportForm.districtId"
+    />
     <van-picker-new
       dicType="planCode"
       label="关联检查计划"
@@ -38,6 +44,7 @@
       title="隐患等级"
       v-model="reportForm.level"
     />
+
     <van-cascader-new
       dicType="RISK_SUBJECT_TYPE_TREE"
       label="隐患类别"
@@ -89,7 +96,8 @@ import { reactive, ref } from "vue";
 import { addHidden, type req_addHidden } from "../../api/hidden";
 import { formatDate } from "@/utils";
 
-let isOrg: boolean = true;
+let isOrg:boolean = uni.getStorageSync('USER_INFO')['orgType'] != 1;
+
 let checkDatePopupIsShow = ref(false);
 
 let reportForm: req_addHidden = ref({
@@ -105,6 +113,7 @@ let reportForm: req_addHidden = ref({
   fileIds: [],
   longitude: "",
   latitude: "",
+  districtId:''
 });
 let fileList: any = ref([]);
 const delImg = (event) => {
@@ -158,6 +167,7 @@ const chooseDate = (e) => {
 
 const submit =async () => {
   let data =  await addHidden(reportForm.value);
+  console.log(data)
   uni.showToast({
     title:data.message,
     duration:3000,

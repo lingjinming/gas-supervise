@@ -25,7 +25,6 @@ export const request = (option: {
   if (option.header) {
     header = Object.assign(header, option.header);
   }
-
   return new Promise((resolve, reject) => {
     uni.request({
       url: BASE_URL + option.url,
@@ -33,9 +32,13 @@ export const request = (option: {
       header,
       data: option.data,
       success(res) {
+        // console.log('success',res)
+
         resolve(res.data);
       },
       fail(err) {
+        // console.log('fail',err)
+
         reject(err);
       },
     });

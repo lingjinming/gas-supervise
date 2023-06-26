@@ -44,3 +44,14 @@ export const getToken = (data: req_token) => {
     data,
   });
 };
+
+/**
+ * 用户信息
+ *
+ */
+export const getUserInfo = () => {
+  return request({
+    url: "gasguard-service-system-app/user/me",
+    method: "get"
+  });
+};
