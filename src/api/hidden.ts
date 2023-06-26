@@ -1,6 +1,16 @@
 // 导入请求函数
 import { request } from './request';
 
+/**
+ * 获取检查计划
+ * 
+*/
+export const getCheckPlanByOrg = (orgId:string) => {
+    return request({
+        url: `gasguard-service-risk-app/hidanger/gov/check-plan/selections?targetOrgId=${orgId}`,
+        method: "get",
+    })
+}
 
 /**
  * 新增隐患

@@ -1,10 +1,10 @@
 const BASE_URL = "https://aiot.citysafety.com/gasguard/";
 
 export const request = (option: {
-  url: String;
-  method: String;
-  data: any;
-  header: any;
+  url: string;
+  method: string;
+  data?: any;
+  header?: any;
 }) => {
   let TOKEN = uni.getStorageSync("TOKEN_INFO")["access_token"];
   let SERVER_CONFIG = uni.getStorageSync("SERVER_CONFIG");

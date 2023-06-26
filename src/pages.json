@@ -68,7 +68,8 @@
       "van-uploader": "wxcomponents/vant/uploader/index",
       "van-datetime-picker": "wxcomponents/vant/datetime-picker/index",
       "van-popup": "wxcomponents/vant/popup/index",
-      "van-cascader": "wxcomponents/vant/cascader/index"
+      "van-cascader": "wxcomponents/vant/cascader/index",
+      "van-notify": "wxcomponents/vant/notify/index"
     }
   }
 }

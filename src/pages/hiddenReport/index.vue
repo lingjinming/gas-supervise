@@ -19,102 +19,53 @@
       <text slot="right-icon" @click="chooseLocation">11</text>
     </van-field>
 
+    <van-picker-new
+      dicType="org"
+      label="关联燃气公司"
+      title="关联燃气公司"
+      v-model="reportForm.orgId"
+    />
+    <van-picker-new
+      dicType="planCode"
+      label="关联检查计划"
+      title="关联检查计划"
+      v-model="reportForm.planCode"
+      :orgId="reportForm.orgId"
+    />
+    <van-picker-new
+      dicType="RISK_DANGER_LEVEL"
+      label="隐患等级"
+      title="隐患等级"
+      v-model="reportForm.level"
+    />
+    <van-cascader-new
+      dicType="RISK_SUBJECT_TYPE_TREE"
+      label="隐患类别"
+      title="隐患类别"
+      v-model="reportForm.dangerType"
+      v-model:subjectType="reportForm.subjectType"
+    />
+
     <van-field
-      :disabled="isOrg"
-      label="上报企业"
-      placeholder="请输入"
+      is-link
+      label="检查日期"
+      @click-input="checkDatePopupIsShow = true"
     >
       <input
-        :value="reportForm.orgId"
+        :value="reportForm.checkDate"
         slot="input"
         readonly
         placeholder="请选择"
       />
-      <text slot="right-icon" @click="orgIsShow = true">11</text>
     </van-field>
-    <van-popup :show="orgIsShow" round position="bottom">
-      <van-picker
-        show-toolbar	
-        title="关联燃气公司"
-        :columns="planCodeColumns"
-        @confirm="chooseOrg"
-        @cancel="orgIsShow = false"
-
-      />
-    </van-popup>
-
-    <van-field label="关联检查计划">
-      <input
-        :value="reportForm.planCode"
-        slot="input"
-        readonly
-        placeholder="请选择"
-      />
-      <text slot="right-icon" @click="planCodeIsShow = true">11</text>
-    </van-field>
-    <van-popup :show="planCodeIsShow" round position="bottom">
-      <van-picker
-        show-toolbar	
-        title="关联检查计划"
-        :columns="planCodeColumns"
-        @confirm="choosePlanCode"
-        @cancel="planCodeIsShow = false"
-
-      />
-    </van-popup>
-
-    <van-field
-      label="隐患等级"
-    >  <input
-        :value="reportForm.level"
-        slot="input"
-        readonly
-        placeholder="请选择"
-      />
-      <text slot="right-icon" @click="levelIsShow = true">11</text>
-    </van-field>
-    <van-popup :show="levelIsShow" round position="bottom">
-      <van-picker
-        show-toolbar	
-        title="隐患等级"
-        :columns="planCodeColumns"
-        @confirm="chooseLevel"
-        @cancel="levelIsShow = false"
-
-      />
-    </van-popup>
-
-    <van-field
-      is-link
-      readonly
-      label="隐患类别"
-      placeholder="请选择"
-      @click-input="dangerTypePopupIsShow = true"
-    />
-    <van-popup :show="dangerTypePopupIsShow" round position="bottom">
-      <van-cascader
-        :value="reportForm.dangerType"
-        @change="reportForm.dangerType = $event.detail"
-        title="请选择隐患类别"
-        :options="dangerTypes"
-        @close="dangerTypePopupIsShow = false"
-      />
-    </van-popup>
-
-    <van-field
-      :value="reportForm.checkDate"
-      is-link
-      readonly
-      label="检查日期"
-      placeholder="请选择"
-      @click-input="checkDatePopupIsShow = true"
-    />
     <van-popup
       :show="checkDatePopupIsShow"
       position="bottom"
       custom-style="height: 20%"
     >
       <van-datetime-picker
+        :min-date="minDate"
+        :max-date="maxDate"
         :value="reportForm.checkDate"
         type="date"
         @confirm="chooseDate"
@@ -136,23 +87,11 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
 import { addHidden, type req_addHidden } from "../../api/hidden";
+import { formatDate } from "@/utils";
 
 let isOrg: boolean = true;
-let dangerTypePopupIsShow = ref(false);
 let checkDatePopupIsShow = ref(false);
-const dangerTypes = [
-  {
-    text: "浙江省",
-    value: "330000",
-    children: [{ text: "杭州市", value: "330100" }],
-  },
-  {
-    text: "江苏省",
-    value: "320000",
-    children: [{ text: "南京市", value: "320100" }],
-  },
-];
-let planCodeColumns = ref([1, 23, 4]);
+
 let reportForm: req_addHidden = ref({
   isOrg: isOrg,
   remark: "",
@@ -170,11 +109,9 @@ let reportForm: req_addHidden = ref({
 let fileList: any = ref([]);
 const delImg = (event) => {
   fileList.value.splice(event.detail.index, 1);
-  // console.log(fileList);
 };
 const uploadImg = async (event) => {
   let SERVER_CONFIG = uni.getStorageSync("SERVER_CONFIG");
-
   let { file } = event.detail;
   // console.log(file);
   file.map((item) => {
@@ -212,35 +149,26 @@ const uploadImg = async (event) => {
   });
 };
 
-
-const chooseDate = (val) => {
+const minDate = ref(new Date().getTime());
+const maxDate = ref(new Date(2099, 10, 1).getTime());
+const chooseDate = (e) => {
   checkDatePopupIsShow.value = false;
-  console.log(val);
+  reportForm.value.checkDate = formatDate(e.detail);
 };
 
-const submit = () => {
-  console.log(reportForm);
-  console.log(fileList.value);
-  addHidden(reportForm.value);
+const submit =async () => {
+  let data =  await addHidden(reportForm.value);
+  uni.showToast({
+    title:data.message,
+    duration:3000,
+    complete(){
+      uni.navigateBack()
+
+    }
+  })
+
 };
 
-let levelIsShow = ref(false);
-const chooseLevel = (e) => {
-  levelIsShow.value = false
-  console.log(e);
-};
-
-let orgIsShow = ref(false);
-const chooseOrg = (e) => {
-  orgIsShow.value = false
-  console.log(e);
-};
-
-let planCodeIsShow = ref(false);
-const choosePlanCode = (e) => {
-  planCodeIsShow.value = false
-  console.log(e);
-};
 
 const chooseLocation = () => {
   uni.chooseLocation({
