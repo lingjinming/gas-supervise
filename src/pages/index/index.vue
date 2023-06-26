@@ -1,6 +1,6 @@
 <template>
   <view class="top">
-    <view class="menu" v-for="item in menus" :key="item.name">{{
+    <view class="menu" v-for="item in menus" :key="item.name" @click="navigato(item.url)">{{
       item.name
     }}</view>
   </view>
@@ -32,6 +32,7 @@ const menus = [
   },
   {
     name: "隐患管理",
+    url:'/pages/hidden/index'
   },
   {
     name: "风险管理",
@@ -52,6 +53,11 @@ const menus = [
     name: "更多分类",
   },
 ];
+const navigato = url => {
+  uni.navigateTo({
+    url
+  })
+}
 
 const notices = ref([]);
 
