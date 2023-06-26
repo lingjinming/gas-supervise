@@ -49,13 +49,14 @@ console.log(props.notice)
 </script>
 
 <style lang="scss" scoped>
+  ::v-deep .van-swipe-cell{
+    background: #fff;
+  }
 .notice-box {
   margin: 40rpx;
   border-radius: 4rpx;
   height: 100rpx;
-  .van-swipe-cell{
-    background: #fff;
-  }
+
   .left {
     flex: 1;
     padding: 40rpx;
