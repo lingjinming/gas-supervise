@@ -1,0 +1,6 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "router-tab": "../../components/router-tab/router-tab"
+  }
+}

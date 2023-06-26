@@ -1,0 +1,47 @@
+{
+  "pages": [
+    "pages/login/index",
+    "pages/hiddenReport/index",
+    "pages/index/index",
+    "pages/hidden/index",
+    "pages/notice/index",
+    "pages/user/index"
+  ],
+  "usingComponents": {
+    "van-button": "wxcomponents/vant/button/index",
+    "van-cell-group": "wxcomponents/vant/cell-group/index",
+    "van-field": "wxcomponents/vant/field/index",
+    "van-picker": "wxcomponents/vant/picker/index",
+    "van-picker-column": "wxcomponents/vant/picker-column/index",
+    "van-swipe-cell": "wxcomponents/vant/swipe-cell/index",
+    "van-radio": "wxcomponents/vant/radio/index",
+    "van-radio-group": "wxcomponents/vant/radio-group/index",
+    "van-uploader": "wxcomponents/vant/uploader/index",
+    "van-datetime-picker": "wxcomponents/vant/datetime-picker/index",
+    "van-popup": "wxcomponents/vant/popup/index",
+    "van-cascader": "wxcomponents/vant/cascader/index"
+  },
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/user/index",
+        "text": "我的"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于获取位置信息和经纬度信息"
+    }
+  }
+}

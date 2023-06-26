@@ -1,0 +1,1 @@
+<view class="route-wrap data-v-660758ae" style="{{'background:' + c}}"><view wx:for="{{a}}" wx:for-item="route" wx:key="b" class="{{['tab', 'data-v-660758ae', route.c && 'act']}}" bindtap="{{route.d}}">{{route.a}}</view><view class="midBtn data-v-660758ae" bindtap="{{b}}"></view></view>
