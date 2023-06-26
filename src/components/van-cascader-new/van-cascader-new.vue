@@ -1,5 +1,5 @@
 <template>
-  <van-field v-bind="$attrs" @click-input="showCascader">
+  <van-field v-bind="$attrs" @click-input="showCascader" is-link>
     <input :value="cascaderVal" slot="input" readonly placeholder="请选择" />
   </van-field>
   <van-popup :show="isShow" round position="bottom">

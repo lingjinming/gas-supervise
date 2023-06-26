@@ -1,4 +1,5 @@
 <template>
+  <view class="container">
   <van-cell-group>
     <van-field
       :value="reportForm.remark"
@@ -9,14 +10,14 @@
       autosize
       placeholder="请输入"
     />
-    <van-field label="位置">
+    <van-field label="位置" is-link>
       <input
         :value="reportForm.address"
         slot="input"
         readonly
         placeholder="请选择"
+        @click="chooseLocation"
       />
-      <text slot="right-icon" @click="chooseLocation">11</text>
     </van-field>
 
     <van-picker-new
@@ -80,7 +81,9 @@
     /></van-popup>
   </van-cell-group>
 
-  <van-uploader
+    <view class="uploader-box">
+      <text>上传照片</text>
+      <van-uploader
     multiple
     :max-count="3"
     accept="image"
@@ -88,8 +91,12 @@
     @delete="delImg"
     @after-read="uploadImg"
   ></van-uploader>
+    </view>
 
-  <van-button type="primary" block round plain @click="submit">确定</van-button>
+
+
+  <van-button type="primary" size="large" round plain @click="submit">确定</van-button>
+</view>
 </template>
 <script setup lang="ts">
 import { reactive, ref } from "vue";
@@ -154,7 +161,6 @@ const uploadImg = async (event) => {
       file[i] = Object.assign(file[i], item.data);
     });
     fileList.value = JSON.parse(JSON.stringify(file));
-    console.log(fileList);
   });
 };
 
@@ -176,6 +182,7 @@ const submit = async () => {
 
   uni.showToast({
     title: data.message,
+    icon:data.success?"success":'error',
     complete() {
       setTimeout(() => {
         data.success && uni.navigateBack();
@@ -195,7 +202,15 @@ const chooseLocation = () => {
 };
 </script>
 <style lang="scss" scoped>
+
 .top {
   line-height: 100rpx;
 }
+.uploader-box{
+  display: flex;
+    gap: 88rpx;
+    padding: 30rpx;
+    margin-bottom: 20rpx;
+}
+
 </style>

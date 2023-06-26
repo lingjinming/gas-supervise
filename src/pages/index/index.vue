@@ -1,6 +1,8 @@
 <template>
   <view class="top">
-    <view  class="menu" v-for="item in menus" :key="item.name">{{ item.name }}</view>
+    <view class="menu" v-for="item in menus" :key="item.name">{{
+      item.name
+    }}</view>
   </view>
 
   <view class="index-box center">
@@ -8,21 +10,21 @@
       <view>消息提醒</view>
       <view>更多</view>
     </view>
-    <view class="msg" v-for="item in msgs" :key="item.uid" >
-    </view>
+    <notice class="msg" v-for="item in notices" :key="item.uid" :notices="item"/>
   </view>
 
   <view class="index-box bottom">
     <view class="tit">
       <view>我的待办</view>
     </view>
-
   </view>
   <router-tab actPath="pages/index/index" />
 </template>
 
 <script setup lang="ts">
-  uni.hideTabBar()
+import { getNotice } from "@/api/hidden";
+
+uni.hideTabBar();
 
 const menus = [
   {
@@ -50,26 +52,35 @@ const menus = [
     name: "更多分类",
   },
 ];
-const msgs = ref([])
+
+const notices = ref([]);
+
+const getNoticeFn = async () => {
+  notices.value = (await getNotice({
+    recipient:uni.getStorageSync('USER_INFO')['userId']
+  }))["data"];
+
+};
+getNoticeFn();
 </script>
 
 <style lang="scss" scoped>
-.top{
+.top {
   background: #fff;
   border-radius: 10prx;
   margin: 150rpx 40rpx 40rpx;
   display: flex;
   flex-wrap: wrap;
   gap: 10rpx;
-  .menu{
+  .menu {
     width: calc((100% - 30rpx) / 4);
     height: 50%;
   }
 }
 
-.index-box{
+.index-box {
   padding: 0 20rpx;
-  .tit{
+  .tit {
     @include flex-between;
     line-height: 60rpx;
   }

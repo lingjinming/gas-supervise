@@ -1,7 +1,6 @@
 <template>
-  <van-field v-bind="$attrs">
-    <input :value="pickerVal" slot="input" readonly placeholder="请选择" />
-    <text slot="right-icon" @click="showPicker">11</text>
+  <van-field v-bind="$attrs" is-link>
+    <input :value="pickerVal" slot="input" readonly placeholder="请选择" @click="showPicker"/>
   </van-field>
   <van-popup :show="isShow" round position="bottom">
     <van-picker

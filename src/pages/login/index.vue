@@ -38,7 +38,6 @@ let serverValue = ref("");
 let serverList = uni.getStorageSync("SERVER_LIST");
 const login = async () => {
   uni.setStorageSync("TOKEN_INFO", await getToken(loginForm.value));
-  console.log((await getUserInfo())['data'])
   uni.setStorageSync('USER_INFO',(await getUserInfo())['data'])
   uni.switchTab({
     url: "/pages/index/index",

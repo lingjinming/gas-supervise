@@ -38,3 +38,17 @@ export const addHidden = (data:req_addHidden) => {
         data
     })
 }
+
+/**
+ * 消息提醒
+ *
+*/
+export const getNotice = (data:{
+    recipient:string
+}) => {
+    return request({
+        url: `gasguard-service-system-app/urge/get/allMsg/page`,
+        method: "GET",
+        data
+    })
+}

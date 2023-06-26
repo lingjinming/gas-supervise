@@ -19,4 +19,8 @@ page{
   background: $uni-bg-color;
   font-size: 28rpx;
 }
+.container{
+  background: #fff;
+  height: 100vh;
+}
 </style>
