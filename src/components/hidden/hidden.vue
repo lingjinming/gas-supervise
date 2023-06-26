@@ -1,25 +1,43 @@
 <template>
   <view class="hidden-box">
       <view class="tit">
-        <text>重大 隐患名称</text>
-        <text>1分钟前</text>
+        <text>{{ info._level }}</text>
+        <text>{{ info.checkDate }}</text>
       </view>
       <view class="con">
-        <text>通知内容通知内通知内容通知内容通知内容通知内容容通知内容通知内容</text>
+        <text>{{ info.remark }}</text>
       </view>
       <text>
         <icon
         type="info"
         :size="23"
         color=""
-      /> 地地址地址地址地址地址址</text>
+      /> {{ info.address }}</text>
 
       <view class="bottom">
-        <text>由某人发布</text>
+        <text>{{ info.checkBy }}</text>
         <text>去整改</text>
       </view>
   </view>
 </template>
+<script setup lang="ts">
+import type {  HidangerPgaeVO } from '@/api/hidden';
+import type { PropType } from 'vue'
+
+const props = defineProps({
+  info: {
+    type: Object as PropType<HidangerPgaeVO>,
+    default: {
+      uid: ''
+    }
+  }
+})
+
+
+
+</script>
+
+
 <style lang="scss" scoped>
 .hidden-box {
   margin: 40rpx;
