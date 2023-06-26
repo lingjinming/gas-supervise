@@ -1,33 +1,26 @@
 <template>
-  <van-swipe-cell >
-  <view slot="left" class="van-swipe-cell__left">选择</view>
-  <van-cell-group>
-    <van-cell title="单元格" value="内容" />
-  </van-cell-group>
-  <view slot="right" class="van-swipe-cell__right">删除</view>
-</van-swipe-cell>
 
-  <!-- <van-swipe-cell right-width="65" name="示例" class="notice-box">
+ <van-swipe-cell :right-width="50" name="示例" class="notice-box">
     <van-cell-group>
       <view class="left">
         <view class="tit">
           <text>通知</text>
-          <text>{{ notices.sendTime }}</text>
+          <text>{{ notice.sendTime }}</text>
         </view>
         <view class="con">
-          <text class="name"> {{ notices.createBy }} </text>
-          <text>{{ notices.content }}</text>
+          <text class="name"> {{ notice.createBy }} </text>
+          <text>{{ notice.content }}</text>
         </view>
       </view>
-      <view slot="right" class="right">
-        <text>删除</text>
-      </view>
     </van-cell-group>
-  </van-swipe-cell> -->
+    <view slot="right" class="right">
+        删除
+      </view>
+  </van-swipe-cell> 
 </template>
 <script setup lang="ts">
 const props = defineProps({
-  notices: {
+  notice: {
     type: Object,
     default:
       {
@@ -52,14 +45,17 @@ const props = defineProps({
       }
   },
 });
+console.log(props.notice)
 </script>
 
 <style lang="scss" scoped>
 .notice-box {
   margin: 40rpx;
-  background: #fff;
   border-radius: 4rpx;
-  @include flex-between;
+  height: 100rpx;
+  .van-swipe-cell{
+    background: #fff;
+  }
   .left {
     flex: 1;
     padding: 40rpx;
@@ -74,14 +70,12 @@ const props = defineProps({
     }
   }
   .right {
-    width: 100rpx;
     background: red;
-    transform: all 0.3s;
+    height: 100%;
     display: flex;
-    height: 160rpx;
-    @include flex-center;
-    text {
-    }
+    justify-content: center;
+    align-items: center;
+    width: 100rpx;
   }
 }
 </style>

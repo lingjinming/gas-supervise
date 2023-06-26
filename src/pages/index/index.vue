@@ -8,9 +8,9 @@
   <view class="index-box center">
     <view class="tit">
       <view>消息提醒</view>
-      <view>更多</view>
+      <view @click="navigatoNotice">更多</view>
     </view>
-    <notice class="msg" v-for="item in notices" :key="item.uid" :notices="item"/>
+    <notice v-for="item in notices.slice(0,2)" :key="item.uid" :notices="item"/>
   </view>
 
   <view class="index-box bottom">
@@ -59,13 +59,21 @@ const navigato = url => {
   })
 }
 
+const navigatoNotice = () => {
+  uni.$emit('NOTICES',{
+    NOTICES:notices
+  })
+  uni.navigateTo({
+    url:'/pages/notice/index'
+  })
+}
+
 const notices = ref([]);
 
 const getNoticeFn = async () => {
   notices.value = (await getNotice({
     recipient:uni.getStorageSync('USER_INFO')['userId']
   }))["data"];
-
 };
 getNoticeFn();
 </script>
