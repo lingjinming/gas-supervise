@@ -5,10 +5,10 @@ import { request } from "./request";
  * 上传文件
  *
  */
-export const upload = (data) => {
+export const upload = (data: any) => {
   return request({
     url: "gasguard-service-system-app/file/upload",
-    method: "post",
+    method: "POST",
     header: {
       "content-type": "multipart/form-data",
     },
@@ -40,7 +40,7 @@ export type req_token = {
 export const getToken = (data: req_token) => {
   return request({
     url: "apilogin/oauth/token",
-    method: "post",
+    method: "POST",
     data,
   });
 };
@@ -52,6 +52,6 @@ export const getToken = (data: req_token) => {
 export const getUserInfo = () => {
   return request({
     url: "gasguard-service-system-app/user/me",
-    method: "get"
+    method: "GET"
   });
 };

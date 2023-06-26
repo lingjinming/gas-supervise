@@ -26,9 +26,9 @@
 </template>
 <script setup lang="ts">
 import { getConfig, getToken, getUserInfo, type req_token } from "@/api/uaa";
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref ,type Ref} from "vue";
 
-let loginForm: req_token = ref({
+let loginForm: Ref<req_token> = ref({
   grant_type: "password",
   scope: "all",
   username: "system",

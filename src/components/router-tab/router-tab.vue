@@ -16,13 +16,13 @@
 </template>
 
 <script setup lang="ts">
-import { tabBar, globalStyle } from "../../pages";
+import { tabBar, globalStyle } from "../../pages.json";
 let  props = defineProps({
   actPath:{
     type:String
   }
 });
-let switchTab = (route) => {
+let switchTab = (route: any) => {
   uni.switchTab({
     url:`/${route.pagePath}`
   })

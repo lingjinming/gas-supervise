@@ -3,18 +3,18 @@ import { request } from './request';
 
 /**
  * 获取检查计划
- * 
+ *
 */
 export const getCheckPlanByOrg = (orgId:string) => {
     return request({
         url: `gasguard-service-risk-app/hidanger/gov/check-plan/selections?targetOrgId=${orgId}`,
-        method: "get",
+        method: "GET",
     })
 }
 
 /**
  * 新增隐患
- * 
+ *
 */
 export type req_addHidden = {
     isOrg:Boolean
@@ -34,7 +34,7 @@ export type req_addHidden = {
 export const addHidden = (data:req_addHidden) => {
     return request({
         url: data.isOrg? "gasguard-service-risk-app/hidanger/org" : "gasguard-service-risk-app/hidanger/gov",
-        method: "post",
+        method: "POST",
         data
     })
 }

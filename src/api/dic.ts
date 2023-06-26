@@ -6,7 +6,7 @@ import { request } from './request';
 export const getDistrict = () => {
     return request({
         url: "gasguard-service-system-app/user/me/district",
-        method: "get"
+        method: "GET"
     })
 }
 
@@ -16,7 +16,7 @@ export const getDistrict = () => {
 export const getOrg = () => {
     return request({
         url: "gasguard-service-system-app/user/me/org",
-        method: "get"
+        method: "GET"
     })
 }
 
@@ -26,6 +26,6 @@ export const getOrg = () => {
 export const getDictList = (dicType:string) => {
     return request({
         url: `gasguard-service-system-app/dictionary/list?types=${dicType}`,
-        method: "get"
+        method: "GET"
     })
 }
