@@ -9,6 +9,6 @@
     "lib": ["esnext", "dom"],
     "types": ["@dcloudio/types", "auto-imports.d","miniprogram-api-typings"]
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "types/**/*.ts",
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "typings/**/*.ts",
   "types/**/*.d.ts"]
 }
