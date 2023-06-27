@@ -6,7 +6,10 @@
       }}</van-radio>
     </van-radio-group> -->
 
-    <type-tab :tabs="serverList" v-model="serverValue" @change="changeServe"></type-tab>
+    <type-tab
+      :tabs="serverList"
+      v-model="serverValue"
+    ></type-tab>
 
     <van-cell-group>
       <van-field
@@ -19,8 +22,7 @@
         :value="loginForm.password"
         @change="loginForm.password = $event.detail"
         label="密码"
-        placeholder="请输入手机号"
-        error-message="手机号格式错误"
+        placeholder="请输入密码"
         :border="false"
       />
     </van-cell-group>
@@ -29,7 +31,7 @@
 </template>
 <script setup lang="ts">
 import { getConfig, getToken, getUserInfo, type req_token } from "@/api/uaa";
-import { onMounted, reactive, ref ,type Ref} from "vue";
+import { onMounted, reactive, ref, type Ref } from "vue";
 
 let loginForm: Ref<req_token> = ref({
   grant_type: "password",
@@ -40,28 +42,44 @@ let loginForm: Ref<req_token> = ref({
 let serverValue = ref("test");
 let serverList = uni.getStorageSync("SERVER_LIST");
 const login = async () => {
-  let TOKEN_INFO = await getToken(loginForm.value)
-  uni.setStorageSync("TOKEN_INFO", TOKEN_INFO);
-  if(!TOKEN_INFO){
-    uni.showToast({
-      icon:'error',
-      title:'请重新登录'
-    })
-    return
-  }
-  uni.setStorageSync('USER_INFO',(await getUserInfo())['data'])
-  uni.switchTab({
-    url: "/pages/index/index",
+  changeServe()
+
+  uni.showLoading({
+    title: "登录中...",
   });
+  let TOKEN_INFO = await getToken(loginForm.value);
+  uni.setStorageSync("TOKEN_INFO", TOKEN_INFO);
+
+  if (!TOKEN_INFO) {
+    uni.showToast({
+      icon: "error",
+      title: "请重新登录",
+    });
+    uni.hideLoading();
+    return;
+  }
+  let USER_INFO = (await getUserInfo())["data"];
+
+  uni.hideLoading();
+  if (USER_INFO) {
+    uni.setStorageSync("USER_INFO", USER_INFO);
+    uni.switchTab({
+      url: "/pages/index/index",
+    });
+  }else{
+    uni.showToast({
+      icon: "error",
+      title: "请重新登录",
+    });
+  }
 };
 
-const changeServe = (tab) => {
-//  console.log(serverValue)
-  let auth = serverList.filter((item) => item.region == tab.region)[0][
+const changeServe = () => {
+  let auth = serverList.filter((item) => item.region == serverValue.value)[0][
     "auth_header"
   ];
   uni.setStorageSync("SERVER_CONFIG", {
-    name: tab.region,
+    name: serverValue.value,
     auth,
   });
 };
@@ -73,5 +91,8 @@ const changeServe = (tab) => {
   left: 0;
   right: 0;
   bottom: 300rpx;
+  gap: 40rpx;
+  padding: 40rpx;
+  @include flex-column;
 }
 </style>

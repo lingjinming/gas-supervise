@@ -78,6 +78,11 @@ $uni-font-size-paragraph: 15px;
 /* 组件中常用变量 */
 $router-tab-height:100rpx;
 
+@mixin flex-column{
+    display: flex;
+    flex-direction: column;
+}
+
 @mixin flex-between{
     display: flex;
     justify-content: space-between;
