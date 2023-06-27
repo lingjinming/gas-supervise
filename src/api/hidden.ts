@@ -54,9 +54,9 @@ export const getNotice = (data: { recipient: string }) => {
 };
 
 export interface HidangerOrgPageQuery {
-  isOrg: boolean;
-  page?: number;
-  size?: number;
+  isOrg: boolean|undefined;
+  page: number;
+  size: number;
   order?: string;
   orgId?: string;
   districtId?: string;
