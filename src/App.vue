@@ -15,12 +15,17 @@ onHide(() => {
 page{
   position: relative;
   width: 100vw;
-  min-height: 100vh;
   background: $uni-bg-color;
   font-size: 28rpx;
+  height: 100vh;
+  overflow: hidden;
 }
 .container{
   background: #fff;
-  height: 100vh;
+  height: 100%;
+}
+::v-deep .van-swipe-cell{
+  background: #fff;
+  margin-bottom: 20rpx;
 }
 </style>

@@ -25,7 +25,7 @@ const notices = ref([]);
 
 const props = defineProps({
   num: {
-    type: number,
+    type: Number,
     default:0
   },
 });
@@ -48,17 +48,12 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-  ::v-deep .van-swipe-cell{
-    background: #fff;
-  }
 .notice-box {
-  margin: 40rpx;
-  border-radius: 4rpx;
-  height: 100rpx;
+
 
   .left {
     flex: 1;
-    padding: 40rpx;
+    padding: 30rpx;
 
     .tit {
       @include flex-between;

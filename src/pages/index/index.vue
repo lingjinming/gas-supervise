@@ -71,13 +71,17 @@ const navigatoNotice = () => {
 .top {
   background: #fff;
   border-radius: 10prx;
-  margin: 150rpx 40rpx 40rpx;
+  margin: 150rpx 20rpx 40rpx;
   display: flex;
   flex-wrap: wrap;
-  gap: 10rpx;
+  gap: 20rpx;
+  font-size: 24rpx;
+  box-shadow: $uni-box-shadow;
+  border-radius: 10rpx;
   .menu {
-    width: calc((100% - 30rpx) / 4);
+    width: calc((100% - 60rpx) / 4);
     height: 50%;
+    text-align: center;
   }
 }
 
