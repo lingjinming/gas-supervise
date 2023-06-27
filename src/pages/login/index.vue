@@ -1,10 +1,13 @@
 <template>
   <view class="login-box">
-    <van-radio-group :value="serverValue" @change="changeServe">
+    <!-- <van-radio-group :value="serverValue" @change="changeServe">
       <van-radio v-for="(item, i) in serverList" :key="i" :name="item.region">{{
         item.remark
       }}</van-radio>
-    </van-radio-group>
+    </van-radio-group> -->
+
+    <type-tab :tabs="serverList" v-model="serverValue" @change="changeServe"></type-tab>
+
     <van-cell-group>
       <van-field
         :value="loginForm.username"
@@ -52,13 +55,13 @@ const login = async () => {
   });
 };
 
-const changeServe = (e) => {
-  serverValue.value = e.detail;
-  let auth = serverList.filter((item) => item.region == e.detail)[0][
+const changeServe = (tab) => {
+//  console.log(serverValue)
+  let auth = serverList.filter((item) => item.region == tab.region)[0][
     "auth_header"
   ];
   uni.setStorageSync("SERVER_CONFIG", {
-    name: e.detail,
+    name: tab.region,
     auth,
   });
 };
