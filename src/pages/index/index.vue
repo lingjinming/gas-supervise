@@ -10,7 +10,7 @@
       <view>消息提醒</view>
       <view @click="navigatoNotice">更多</view>
     </view>
-    <notice v-for="item in notices.slice(0,2)" :key="item.uid" :notices="item"/>
+    <notice :num="2"/>
   </view>
 
   <view class="index-box bottom">
@@ -22,7 +22,6 @@
 </template>
 
 <script setup lang="ts">
-import { getNotice } from "@/api/hidden";
 
 uni.hideTabBar();
 
@@ -60,22 +59,12 @@ const navigato = url => {
 }
 
 const navigatoNotice = () => {
-  uni.$emit('NOTICES',{
-    NOTICES:notices
-  })
   uni.navigateTo({
     url:'/pages/notice/index'
   })
 }
 
-const notices = ref([]);
 
-const getNoticeFn = async () => {
-  notices.value = (await getNotice({
-    recipient:uni.getStorageSync('USER_INFO')['userId']
-  }))["data"];
-};
-getNoticeFn();
 </script>
 
 <style lang="scss" scoped>

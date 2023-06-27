@@ -1,6 +1,7 @@
+
 <template>
 
- <van-swipe-cell :right-width="50" name="示例" class="notice-box">
+ <van-swipe-cell :right-width="50" name="示例" class="notice-box" v-for="(notice,i) in notices" :key="i">
     <van-cell-group>
       <view class="left">
         <view class="tit">
@@ -19,33 +20,31 @@
   </van-swipe-cell> 
 </template>
 <script setup lang="ts">
+import { getNotice } from "@/api/hidden";
+const notices = ref([]);
+
 const props = defineProps({
-  notice: {
-    type: Object,
-    default:
-      {
-        content: "短信提醒如下：20230608",
-        createBy: "ONE",
-        createTime: "2023-06-08 14:31:08",
-        lastUpdateTime: "2023-06-08 14:31:08",
-        msgFlag: "20230608",
-        msgType: "MsgBulletin",
-        recipient: "1",
-        recipientPhone: "15395093564",
-        recipientUnit: "合肥澤中",
-        sendStatus: "RETAINED",
-        sendTime: "2023-06-16 15:37:59",
-        title: "短信提醒",
-        type: "TEXT",
-        uid: 1666694328248307700,
-        _msgType: null,
-        _recipientUnit: null,
-        _sendStatus: null,
-        _type: null,
-      }
+  num: {
+    type: number,
+    default:0
   },
 });
-console.log(props.notice)
+const getNoticeFn = async () => {
+  let data = (await getNotice({
+    recipient:uni.getStorageSync('USER_INFO')['userId']
+  }))["data"];
+
+  if(props.num){
+    notices.value = data.slice(0,props.num)
+  }else{
+    notices.value = data
+  }
+};
+
+onMounted(() => {
+  getNoticeFn();
+
+})
 </script>
 
 <style lang="scss" scoped>

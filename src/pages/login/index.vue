@@ -37,7 +37,15 @@ let loginForm: Ref<req_token> = ref({
 let serverValue = ref("test");
 let serverList = uni.getStorageSync("SERVER_LIST");
 const login = async () => {
-  uni.setStorageSync("TOKEN_INFO", await getToken(loginForm.value));
+  let TOKEN_INFO = await getToken(loginForm.value)
+  uni.setStorageSync("TOKEN_INFO", TOKEN_INFO);
+  if(!TOKEN_INFO){
+    uni.showToast({
+      icon:'error',
+      title:'请重新登录'
+    })
+    return
+  }
   uni.setStorageSync('USER_INFO',(await getUserInfo())['data'])
   uni.switchTab({
     url: "/pages/index/index",
