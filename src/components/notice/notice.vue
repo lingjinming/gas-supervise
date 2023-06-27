@@ -2,7 +2,7 @@
 <template>
 <view class="notice-box" v-for="(notice,i) in notices" :key="i">
 
-  <!-- <van-swipe-cell disabled :right-width="50" >
+  <!-- <van-swipe-cell :right-width="50" >
     <van-cell-group> -->
       
       <view class="left">

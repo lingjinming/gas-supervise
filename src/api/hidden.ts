@@ -229,3 +229,20 @@ export const hidangerPage = (query: HidangerOrgPageQuery) => {
     data: query
   })
 }
+
+export const checkPlanPage = (query:any) => {
+    const url = `gasguard-service-risk-app/hidanger/gov/check-plan/page`
+    return request<{data: HidangerPgaeVO[],total: number}>({
+      url,
+      method: 'GET',
+      data: query
+    })
+  }
+  export const checkPlanDelById = (query:{uid:string}) => {
+    const url = `gasguard-service-risk-app/hidanger/gov/check-plan/${query.uid}`
+    return request<{data: HidangerPgaeVO[],total: number}>({
+      url,
+      method: 'DELETE',
+      data: query
+    })
+  }

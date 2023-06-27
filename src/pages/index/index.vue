@@ -47,6 +47,7 @@ const menus = [
   },
   {
     name: "检查计划管理",
+    url:'/pages/check/index'
   },
   {
     name: "更多分类",

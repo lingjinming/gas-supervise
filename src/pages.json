@@ -31,7 +31,12 @@
         "navigationBarTitleText": "消息提醒"
       }
     },
-
+    {
+      "path": "pages/check/index",
+      "style": {
+        "navigationBarTitleText": "检查计划管理"
+      }
+    },
     {
       "path": "pages/user/index",
       "style": {
