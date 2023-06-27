@@ -41,8 +41,8 @@ let routeToHiddenReport = () => {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 120rpx;
-  line-height: 120rpx;
+  height: $router-tab-height;
+  line-height: $router-tab-height;
   display: flex;
   justify-content: space-around;
   align-items: center;

@@ -2,7 +2,12 @@
 import { onLaunch, onShow, onHide } from "@dcloudio/uni-app";
 import { getConfig } from "./api/uaa";
 onLaunch(async () => {
-  uni.setStorageSync("SERVER_LIST",(await getConfig())["regions"])
+  let SERVER_LIST = (await getConfig())["regions"]
+  SERVER_LIST.forEach(item => {
+    item.label = item.remark
+    item.value = item.region
+  })
+  uni.setStorageSync("SERVER_LIST",SERVER_LIST)
 });
 onShow(() => {
   // console.log("App Show");
@@ -15,12 +20,17 @@ onHide(() => {
 page{
   position: relative;
   width: 100vw;
-  min-height: 100vh;
   background: $uni-bg-color;
   font-size: 28rpx;
+  height: 100vh;
+  overflow: hidden;
 }
 .container{
   background: #fff;
-  height: 100vh;
+  height: 100%;
+}
+::v-deep .van-swipe-cell{
+  background: #fff;
+  margin-bottom: 20rpx;
 }
 </style>

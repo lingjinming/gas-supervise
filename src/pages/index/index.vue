@@ -8,9 +8,9 @@
   <view class="index-box center">
     <view class="tit">
       <view>消息提醒</view>
-      <view>更多</view>
+      <view @click="navigatoNotice">更多</view>
     </view>
-    <notice class="msg" v-for="item in notices" :key="item.uid" :notices="item"/>
+    <notice :num="2"/>
   </view>
 
   <view class="index-box bottom">
@@ -22,7 +22,6 @@
 </template>
 
 <script setup lang="ts">
-import { getNotice } from "@/api/hidden";
 
 uni.hideTabBar();
 
@@ -59,28 +58,30 @@ const navigato = url => {
   })
 }
 
-const notices = ref([]);
+const navigatoNotice = () => {
+  uni.navigateTo({
+    url:'/pages/notice/index'
+  })
+}
 
-const getNoticeFn = async () => {
-  notices.value = (await getNotice({
-    recipient:uni.getStorageSync('USER_INFO')['userId']
-  }))["data"];
 
-};
-getNoticeFn();
 </script>
 
 <style lang="scss" scoped>
 .top {
   background: #fff;
   border-radius: 10prx;
-  margin: 150rpx 40rpx 40rpx;
+  margin: 150rpx 20rpx 40rpx;
   display: flex;
   flex-wrap: wrap;
-  gap: 10rpx;
+  gap: 20rpx;
+  font-size: 24rpx;
+  box-shadow: $uni-box-shadow;
+  border-radius: 10rpx;
   .menu {
-    width: calc((100% - 30rpx) / 4);
+    width: calc((100% - 60rpx) / 4);
     height: 50%;
+    text-align: center;
   }
 }
 

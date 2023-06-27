@@ -57,7 +57,7 @@ const userInfo = uni.getStorageSync('USER_INFO');
 
 <style lang="scss" scoped>
   .container {
-    margin-top: 30px;
+    padding-top: 30px;
 
     .av {
       font-size: 50px;
