@@ -54,7 +54,7 @@ export const getNotice = (data: { recipient: string }) => {
 };
 
 export interface HidangerOrgPageQuery {
-  isOrg: boolean|undefined;
+  isOrg: boolean | undefined;
   page: number;
   size: number;
   order?: string;
@@ -231,19 +231,19 @@ export const hidangerPage = (query: HidangerOrgPageQuery) => {
   });
 };
 export type CheckVo = {
-    checkers: string
-  endDate: string
-  handleState: string
-  masterOrgId: string
-  planCode: string
-  startDate:string
-  title:string
-  type: string
-  uid: string
-  _handleState: string
-  _masterOrgId: string
-  _type: string
-  }
+  checkers: string;
+  endDate: string;
+  handleState: string;
+  masterOrgId: string;
+  planCode: string;
+  startDate: string;
+  title: string;
+  type: string;
+  uid: string;
+  _handleState: string;
+  _masterOrgId: string;
+  _type: string;
+};
 
 export const checkPlanPage = (query: CheckVo) => {
   const url = `gasguard-service-risk-app/hidanger/gov/check-plan/page`;
@@ -263,10 +263,22 @@ export const checkPlanDelById = (query: { uid: string }) => {
 };
 
 export const checkPlanFinishById = (query: { uid: string }) => {
-    const url = `gasguard-service-risk-app/hidanger/gov/check-plan/finish/${query.uid}`;
-    return request<{ data: HidangerPgaeVO[]; total: number }>({
-      url,
-      method: "POST",
-      data: query,
-    });
-  };
+  const url = `gasguard-service-risk-app/hidanger/gov/check-plan/finish/${query.uid}`;
+  return request<{ data: HidangerPgaeVO[]; total: number }>({
+    url,
+    method: "POST",
+    data: query,
+  });
+};
+
+/**
+ * @description 隐患整改
+ */
+export const reformHidangerById = (query: { data: any }) => {
+  const url = `gasguard-service-risk-app/hidanger/org/handle/${query.data.uid}`;
+  return request({
+    url,
+    method: "PUT",
+    data: query,
+  });
+};

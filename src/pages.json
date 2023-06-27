@@ -8,6 +8,12 @@
       }
     },
     {
+      "path": "pages/hiddenReform/index",
+      "style": {
+        "navigationBarTitleText": "隐患整改"
+      }
+    },
+    {
       "path": "pages/hiddenReport/index",
       "style": {
         "navigationBarTitleText": "隐患上报"

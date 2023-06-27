@@ -2,82 +2,38 @@
   <view class="container">
     <van-cell-group>
       <van-field
-        :value="reportForm.remark"
-        @change="reportForm.remark = $event.detail"
+        :value="reportForm.handleContent"
+        @change="reportForm.handleContent = $event.detail"
         label="隐患描述"
         type="textarea"
         fixed
         autosize
         placeholder="请输入"
       />
-      <van-field label="位置" is-link>
-        <input
-          :value="reportForm.address"
-          slot="input"
-          placeholder="请选择"
-          @click="chooseLocation"
-        />
-      </van-field>
-
-      <van-picker-new
-        dicType="org"
-        :label="isOrg ? '责任企业' : '上报企业'"
-        :title="isOrg ? '责任企业' : '上报企业'"
-        v-model="reportForm.orgId"
-      />
-      <van-picker-new
-        v-if="isOrg"
-        dicType="planCode"
-        label="关联检查计划"
-        title="关联检查计划"
-        v-model="reportForm.planCode"
-        :orgId="reportForm.orgId"
-      />
-      <van-cascader-new
-        dicType="district"
-        label="所属区域"
-        title="所属区域"
-        v-model="reportForm.districtId"
-      />
-
-      <van-picker-new
-        dicType="RISK_DANGER_LEVEL"
-        label="隐患等级"
-        title="隐患等级"
-        v-model="reportForm.level"
-      />
-
-      <van-cascader-new
-        dicType="RISK_SUBJECT_TYPE_TREE"
-        label="隐患类别"
-        title="隐患类别"
-        v-model="reportForm.dangerType"
-        v-model:subjectType="reportForm.subjectType"
-      />
 
       <van-field
         is-link
-        label="检查日期"
-        @click-input="checkDatePopupIsShow = true"
+        label="整改日期"
+        @click-input="handleDatePopupIsShow = true"
       >
         <input
-          :value="reportForm.checkDate"
+          :value="reportForm.handleDate"
           slot="input"
           placeholder="请选择"
         />
       </van-field>
       <van-popup
-        :show="checkDatePopupIsShow"
+        :show="handleDatePopupIsShow"
         position="bottom"
         custom-style="height: 20%"
       >
         <van-datetime-picker
           :min-date="minDate"
           :max-date="maxDate"
-          :value="reportForm.checkDate"
+          :value="reportForm.handleDate"
           type="date"
           @confirm="chooseDate"
-          @cancel="checkDatePopupIsShow = false"
+          @cancel="handleDatePopupIsShow = false"
       /></van-popup>
     </van-cell-group>
 
@@ -100,34 +56,21 @@
 </template>
 <script setup lang="ts">
 import { reactive, ref } from "vue";
-import { addHidden, type req_addHidden } from "../../api/hidden";
+import { addHidden, reformHidangerById, type req_addHidden } from "../../api/hidden";
 import { formatDate } from "@/utils";
 
-let isOrg: boolean = uni.getStorageSync("USER_INFO")["orgType"] != 1;
 
 onMounted(() => {
-  isOrg &&
-    uni.setNavigationBarTitle({
-      title: "安全检查下发",
-    });
-});
 
-let checkDatePopupIsShow = ref(false);
+})
 
-let reportForm: req_addHidden = ref({
-  isOrg: isOrg,
-  remark: "",
-  address: "",
-  orgId: "",
-  level: "",
-  checkDate: "",
-  planCode: "",
-  subjectType: "",
-  dangerType: "",
+let handleDatePopupIsShow = ref(false);
+
+let reportForm = ref({
+  uid:11,
+  handleContent: "",
+  handleDate: "",
   fileIds: [],
-  longitude: "",
-  latitude: "",
-  districtId: "",
 });
 let fileList: any = ref([]);
 const delImg = (event) => {
@@ -174,8 +117,8 @@ const uploadImg = async (event) => {
 const minDate = ref(new Date().getTime());
 const maxDate = ref(new Date(2099, 10, 1).getTime());
 const chooseDate = (e) => {
-  checkDatePopupIsShow.value = false;
-  reportForm.value.checkDate = formatDate(e.detail);
+  handleDatePopupIsShow.value = false;
+  reportForm.value.handleDate = formatDate(e.detail);
 };
 
 const submit = async () => {
@@ -185,27 +128,15 @@ const submit = async () => {
       reportForm.value.fileIds.push(file.objectName);
     });
   }
-  let data = await addHidden(reportForm.value);
+  let data = await reformHidangerById(reportForm.value);
+
   data.success &&
     setTimeout(() => {
       uni.navigateBack();
     }, 1500);
 };
 
-const chooseLocation = () => {
-  uni.authorize({
-    scope: "scope.userLocation",
-    success() {
-      uni.chooseLocation({
-        success: function (res) {
-          reportForm.value.address = res.name + res.name;
-          reportForm.value.longitude = res.longitude;
-          reportForm.value.latitude = res.latitude;
-        },
-      });
-    },
-  });
-};
+
 </script>
 <style lang="scss" scoped>
 .top {
