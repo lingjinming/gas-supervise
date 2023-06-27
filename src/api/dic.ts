@@ -20,11 +20,25 @@ export const getOrg = () => {
     })
 }
 
+
+
+export interface DicItem {
+  pid:         string;
+  id:          string;
+  label:       string;
+  value:       string;
+  order:       number;
+  hasChildren: boolean;
+  notes1:      string;
+  systemFlag:  string;
+  text:        string;
+  children?: DicItem[]
+}
 /**
  * 字典
 */
 export const getDictList = (dicType:string) => {
-    return request({
+    return request<{data: Record<string,DicItem[]>}>({
         url: `gasguard-service-system-app/dictionary/list?types=${dicType}`,
         method: "GET"
     })

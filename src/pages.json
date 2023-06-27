@@ -70,7 +70,9 @@
       "van-popup": "wxcomponents/vant/popup/index",
       "van-cascader": "wxcomponents/vant/cascader/index",
       "van-notify": "wxcomponents/vant/notify/index",
-      "van-icon": "wxcomponents/vant/icon/index"
+      "van-icon": "wxcomponents/vant/icon/index",
+      "van-empty": "wxcomponents/vant/empty/index",
+      "van-switch":"wxcomponents/vant/switch/index"
     }
   }
 }
