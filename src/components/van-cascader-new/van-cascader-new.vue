@@ -1,9 +1,9 @@
 <template>
   <van-field v-bind="$attrs" @click-input="showCascader" is-link>
-    <input :value="cascaderVal" slot="input" readonly placeholder="请选择" />
+    <input hold-keyboard readonly :value="cascaderVal" slot="input" placeholder="请选择" />
   </van-field>
   <van-popup :show="isShow" round position="bottom">
-    <van-cascader v-bind="$attrs" :options="options" @finish="finish" />
+    <van-cascader v-bind="$attrs" :options="options" @finish="finish" @close="isShow=false"/>
   </van-popup>
 </template>
 <script setup lang="ts">

@@ -1,58 +1,57 @@
 // 导入请求函数
-import { request } from './request';
+import { request } from "./request";
 
 /**
  * 获取检查计划
  *
-*/
-export const getCheckPlanByOrg = (orgId:string) => {
-    return request({
-        url: `gasguard-service-risk-app/hidanger/gov/check-plan/selections?targetOrgId=${orgId}`,
-        method: "GET",
-    })
-}
+ */
+export const getCheckPlanByOrg = (orgId: string) => {
+  return request({
+    url: `gasguard-service-risk-app/hidanger/gov/check-plan/selections?targetOrgId=${orgId}`,
+    method: "GET",
+  });
+};
 
 /**
  * 新增隐患
  *
-*/
+ */
 export type req_addHidden = {
-    isOrg:Boolean
-    subjectType:String
-    dangerType:String
-    orgId:String
-    checkDate:String
-    longitude:Number
-    latitude:Number
-    address:String
-    remark:String
-    fileIds:String[]
-    level:String
-    planCode:String
-    districtId:String
-}
-export const addHidden = (data:req_addHidden) => {
-    return request({
-        url: data.isOrg? "gasguard-service-risk-app/hidanger/org" : "gasguard-service-risk-app/hidanger/gov",
-        method: "POST",
-        data
-    })
-}
+  isOrg: Boolean;
+  subjectType: String;
+  dangerType: String;
+  orgId: String;
+  checkDate: String;
+  longitude: Number;
+  latitude: Number;
+  address: String;
+  remark: String;
+  fileIds: String[];
+  level: String;
+  planCode: String;
+  districtId: String;
+};
+export const addHidden = (data: req_addHidden) => {
+  return request({
+    url: data.isOrg
+      ? "gasguard-service-risk-app/hidanger/org"
+      : "gasguard-service-risk-app/hidanger/gov",
+    method: "POST",
+    data,
+  });
+};
 
 /**
  * 消息提醒
  *
-*/
-export const getNotice = (data:{
-    recipient:string
-}) => {
-    return request({
-        url: `gasguard-service-system-app/urge/get/allMsg/page`,
-        method: "GET",
-        data
-    })
-}
-
+ */
+export const getNotice = (data: { recipient: string }) => {
+  return request({
+    url: `gasguard-service-system-app/urge/get/allMsg/page`,
+    method: "GET",
+    data,
+  });
+};
 
 export interface HidangerOrgPageQuery {
   isOrg: boolean;
@@ -222,27 +221,52 @@ export interface HidangerPgaeVO {
   orderCode?: string;
 }
 export const hidangerPage = (query: HidangerOrgPageQuery) => {
-  const url = `gasguard-service-risk-app/hidanger/${query.isOrg? 'org':'gov'}/page`
-  return request<{data: HidangerPgaeVO[],total: number}>({
+  const url = `gasguard-service-risk-app/hidanger/${
+    query.isOrg ? "org" : "gov"
+  }/page`;
+  return request<{ data: HidangerPgaeVO[]; total: number }>({
     url,
-    method: 'GET',
-    data: query
-  })
-}
+    method: "GET",
+    data: query,
+  });
+};
+export type CheckVo = {
+    checkers: string
+  endDate: string
+  handleState: string
+  masterOrgId: string
+  planCode: string
+  startDate:string
+  title:string
+  type: string
+  uid: string
+  _handleState: string
+  _masterOrgId: string
+  _type: string
+  }
 
-export const checkPlanPage = (query:any) => {
-    const url = `gasguard-service-risk-app/hidanger/gov/check-plan/page`
-    return request<{data: HidangerPgaeVO[],total: number}>({
+export const checkPlanPage = (query: CheckVo) => {
+  const url = `gasguard-service-risk-app/hidanger/gov/check-plan/page`;
+  return request({
+    url,
+    method: "GET",
+    data: query,
+  });
+};
+export const checkPlanDelById = (query: { uid: string }) => {
+  const url = `gasguard-service-risk-app/hidanger/gov/check-plan/${query.uid}`;
+  return request<{ data: HidangerPgaeVO[]; total: number }>({
+    url,
+    method: "DELETE",
+    data: query,
+  });
+};
+
+export const checkPlanFinishById = (query: { uid: string }) => {
+    const url = `gasguard-service-risk-app/hidanger/gov/check-plan/finish/${query.uid}`;
+    return request<{ data: HidangerPgaeVO[]; total: number }>({
       url,
-      method: 'GET',
-      data: query
-    })
-  }
-  export const checkPlanDelById = (query:{uid:string}) => {
-    const url = `gasguard-service-risk-app/hidanger/gov/check-plan/${query.uid}`
-    return request<{data: HidangerPgaeVO[],total: number}>({
-      url,
-      method: 'DELETE',
-      data: query
-    })
-  }
+      method: "POST",
+      data: query,
+    });
+  };

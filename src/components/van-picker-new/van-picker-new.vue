@@ -1,9 +1,10 @@
 <template>
-  <van-field v-bind="$attrs" is-link>
-    <input :value="pickerVal" slot="input" readonly placeholder="请选择" @click="showPicker"/>
+  <van-field v-bind="$attrs" is-link clickable @click-input="showPicker">
+    <input hold-keyboard readonly disabled :value="pickerVal" slot="input"  placeholder="请选择" />
   </van-field>
   <van-popup :show="isShow" round position="bottom">
     <van-picker
+      hold-keyboard	
       show-toolbar
       v-bind="$attrs"
       :columns="columns"

@@ -1,5 +1,5 @@
 const BASE_URL = "https://aiot.citysafety.com/gasguard/";
-
+const SUCESS_CODE = [200,401]
 export const request = <T = any>(option: UniApp.RequestOptions): Promise<T> => {
   let TOKEN = uni.getStorageSync("TOKEN_INFO")["access_token"];
   let SERVER_CONFIG = uni.getStorageSync("SERVER_CONFIG");
@@ -27,15 +27,23 @@ export const request = <T = any>(option: UniApp.RequestOptions): Promise<T> => {
       header,
       data: option.data,
       success(res: UniApp.RequestSuccessCallbackResult) {
-        // console.log('success',res)
-
+        console.log('success',res)
+        if(res.data && !res.data.success){
+          uni.showToast({
+            icon:'error',
+            title:res.data.message
+          })
+        }
         resolve(res.data as any);
+
       },
       fail(err: UniApp.GeneralCallbackResult) {
-        // console.log('fail',err)
-
+        console.log('fail',err)
         reject(err);
       },
+      complete(){
+        uni.hideLoading()
+      }
     });
   });
 };
