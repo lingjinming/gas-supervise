@@ -3,7 +3,14 @@
         <text>共计{{ state.total }}条隐患</text>
         <text>筛选</text>
     </view>
-    <hidden v-for="item in state.list" :key="item.uid" :info="item"></hidden>
+    <scroll-view
+    style="height: calc(100% - 100rpx);"
+    scroll-y="true"
+    class="scroll-Y"
+  >
+  <hidden v-for="item in state.list" :key="item.uid" :info="item"></hidden>
+
+  </scroll-view>
 </template>
 <script setup lang="ts">
 import { hidangerPage,type HidangerPgaeVO } from '@/api/hidden';

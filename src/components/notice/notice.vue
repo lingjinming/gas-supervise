@@ -1,8 +1,10 @@
 
 <template>
+<view class="notice-box" v-for="(notice,i) in notices" :key="i">
 
- <van-swipe-cell :right-width="50" name="示例" class="notice-box" v-for="(notice,i) in notices" :key="i">
-    <van-cell-group>
+  <!-- <van-swipe-cell disabled :right-width="50" >
+    <van-cell-group> -->
+      
       <view class="left">
         <view class="tit">
           <text>通知</text>
@@ -13,11 +15,13 @@
           <text>{{ notice.content }}</text>
         </view>
       </view>
-    </van-cell-group>
+    <!-- </van-cell-group>
     <view slot="right" class="right">
         删除
       </view>
-  </van-swipe-cell> 
+  </van-swipe-cell>  -->
+</view>
+
 </template>
 <script setup lang="ts">
 import { getNotice } from "@/api/hidden";
@@ -49,8 +53,8 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .notice-box {
-
-
+  background: #fff;
+  margin-bottom: 20rpx;
   .left {
     flex: 1;
     padding: 30rpx;
