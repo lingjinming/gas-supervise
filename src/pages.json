@@ -14,6 +14,18 @@
       }
     },
     {
+      "path": "pages/hiddenDetail/index",
+      "style": {
+        "navigationBarTitleText": "隐患详情"
+      }
+    },
+    {
+      "path": "pages/hiddenReform/index",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/hiddenReform/index",
       "style": {
         "navigationBarTitleText": "隐患整改"
@@ -88,8 +100,9 @@
       "van-notify": "wxcomponents/vant/notify/index",
       "van-icon": "wxcomponents/vant/icon/index",
       "van-empty": "wxcomponents/vant/empty/index",
-      "van-switch":"wxcomponents/vant/switch/index",
-      "van-skeleton":"wxcomponents/vant/skeleton/index"
+      "van-switch": "wxcomponents/vant/switch/index",
+      "van-skeleton": "wxcomponents/vant/skeleton/index",
+      "van-toast": "wxcomponents/vant/toast/index"
     }
   }
 }
