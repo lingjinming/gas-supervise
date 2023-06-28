@@ -21,23 +21,18 @@ let src = ref('');
 
 onMounted(async () => {
     let urlObj = await getImg(props.id);
-    console.log('urlObj',urlObj)
     console.log('urlObj',getUrl(urlObj.data))
-    
-    // uni.request({
-    //     url:'https://aiot.citysafety.com/gasguard/preview_pic'+  urlObj.pathname +
-    //   urlObj.search,
-    //     header:{
-    //         "x-api-region": props.region
-    //     },
-    //     responseType:'arraybuffer',
-    //     success(res){
-    //         let blob = res.data
-    //         console.log('blob',blob)
-
-    //         src.value = URL.revokeObjectURL(URL.createObjectURL(blob));
-    //     }
-    // })
+    uni.request({
+        url:`https://aiot.citysafety.com/gasguard/preview_pic/${getUrl(urlObj.data).path}?${getUrl(urlObj.data).query}`,
+        header:{
+            "x-api-region": props.region
+        },
+        responseType:'arraybuffer',
+        success(res){
+            const base64 = uni.arrayBufferToBase64(res.data);
+            src.value = `data:image/jpg;base64,${base64}`
+        }
+    })
 })
 
 

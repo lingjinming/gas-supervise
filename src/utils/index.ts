@@ -8,13 +8,13 @@ export const formatDate = (value) => {
   return y + "-" + m + "-" + d;
 };
 
-export const getUrl =(str) => {
-    str = str.slice(str.indexOf("?") + 1);  //结果：ie=utf-8&f=3&rsv_bp=0
-  var arr = str.split("&");  //结果： ["ie=utf-8", "f=3", "rsv_bp=0"]
-  var obj = {};
-  for(var i = 0; i < arr.length; i++) {
-    var newArr = arr[i].split("="); //结果：["ie", "utf-8"]，["f", "3"]，["rsv_bp", "0"]
-    obj[newArr[0]] = newArr[1];
+export const getUrl = (url) => {
+  var parse_url = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/;
+  var result = parse_url.exec(url);
+  let urlObj = {}
+  var names = ["url","scheme","slash","host","port","path","query","hash"];
+  for(var i=0; i <names.length;i++){
+      urlObj[names[i]] = result[i]
   }
-  return obj;
-}
+  return urlObj
+};
