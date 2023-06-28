@@ -30,7 +30,10 @@ page{
   height: 100%;
 }
 ::v-deep .van-swipe-cell{
+  width:692rpx;
+  border-radius: 6px;
   background: #fff;
-  margin-bottom: 20rpx;
+  margin:0 auto;
+  margin-top: 20rpx;
 }
 </style>

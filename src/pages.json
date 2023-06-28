@@ -55,14 +55,14 @@
       {
         "pagePath": "pages/index/index",
         "text": "首页",
-        "iconPath":"static/img/index.png",
-        "selectedIconPath":"static/img/index_act.png"
+        "iconPath": "static/img/index.png",
+        "selectedIconPath": "static/img/index_act.png"
       },
       {
         "pagePath": "pages/user/index",
         "text": "我的",
-        "iconPath":"static/img/user.png",
-        "selectedIconPath":"static/img/user_act.png"
+        "iconPath": "static/img/user.png",
+        "selectedIconPath": "static/img/user_act.png"
       }
     ]
   },
@@ -88,8 +88,8 @@
       "van-notify": "wxcomponents/vant/notify/index",
       "van-icon": "wxcomponents/vant/icon/index",
       "van-empty": "wxcomponents/vant/empty/index",
-      "van-switch":"wxcomponents/vant/switch/index",
-      "van-skeleton":"wxcomponents/vant/skeleton/index"
+      "van-switch": "wxcomponents/vant/switch/index",
+      "van-skeleton": "wxcomponents/vant/skeleton/index"
     }
   }
 }
