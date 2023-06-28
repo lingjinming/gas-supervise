@@ -49,7 +49,6 @@ const changeType = (item) => {
   emits("update:modelValue", item.value);
   emits("change", item);
 };
-console.log(props)
 </script>
 
 <style lang="scss" scoped>

@@ -32,13 +32,11 @@
       </van-cell-group>
       <van-button class="login-btn" type="primary" color="#006CFF" size="large" @click="login">登 录</van-button>
     </div>
-    <van-toast id="van-toast"/>
   </view>
 </template>
 <script setup lang="ts">
 import {getToken, getUserInfo, type req_token} from "@/api/uaa";
 import {ref, type Ref} from "vue";
-import Toast from "@/wxcomponents/vant/toast/toast";
 
 let loginForm: Ref<req_token> = ref({
   grant_type: "password",
@@ -50,31 +48,40 @@ let serverValue = ref(null);
 let serverList = uni.getStorageSync("SERVER_LIST");
 const login = async () => {
   if (!serverValue.value) {
-    Toast.fail('请先选择地区');
+    uni.showToast({
+      icon:'error',
+      title:'请先选择地区'
+    });
     return;
   }
 
   if (!loginForm.value.username) {
-    Toast.fail('请输入账号');
+    uni.showToast({
+      icon:'error',
+      title:'请输入账号'
+    });
     return;
   }
 
   if (!loginForm.value.password) {
-    Toast.fail('请输入密码');
+    uni.showToast({
+      icon:'error',
+      title:'请输入密码'
+    });
     return;
   }
 
   changeServe()
 
-  Toast.loading({
-    message: '登录中...',
-    forbidClick: true,
-  });
+  uni.showLoading({title:'登录中'})
   let TOKEN_INFO = await getToken(loginForm.value);
   uni.setStorageSync("TOKEN_INFO", TOKEN_INFO);
 
   if (!uni.getStorageSync("TOKEN_INFO")["access_token"]) {
-    Toast('用户名或密码错误');
+    uni.showToast({
+      icon:'error',
+      title:'用户名或密码错误'
+    });
     return;
   }
   let USER_INFO = (await getUserInfo())["data"];
@@ -85,7 +92,10 @@ const login = async () => {
       url: "/pages/index/index",
     });
   } else {
-    Toast.fail('请重新登录');
+    uni.showToast({
+      icon:'error',
+      title:'请重新登录'
+    });
   }
 };
 

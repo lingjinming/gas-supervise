@@ -32,7 +32,6 @@ const props = defineProps({
 });
 const emits = defineEmits(['refresh'])
 
-console.log(props.data)
 
 const deletePlan = async (uid) => {
   let data = await checkPlanDelById({uid});

@@ -1,10 +1,10 @@
 <template>
-  <view class="container">
-    <region-img
-              region="test"
-              id="22636a7ca1424d2381b179e68281f334.jpg"
-            />
-    <van-skeleton
+    <scroll-view
+    style="height: 100%;"
+    scroll-y="true"
+    class="scroll-Y container"
+  >
+  <van-skeleton
       title
       avatar
       row="3"
@@ -18,39 +18,43 @@
             <text class="fs16">{{ val.title }}</text>
             <text class="fs12">{{ val.stageTime }}</text>
           </view>
-          <view>{{ val.operator }}</view>
+          <view class="header">
+            <image
+              style="width: 50rpx;height: 50rpx;"
+              src="../../static/img/header.png"
+              mode="scaleToFill"
+            />
+             {{ val.operator }}
+            </view>
         </view>
         <view class="con">
-          <text>{{ val.remark }}</text>
-          <!-- <template v-if="val.picIds">
-            <RegionImg
+          <view class="remark">{{ val.remark }}</view>
+         <template v-if="val.picIds">
+            <region-img
               v-for="img in val.picIds"
               :key="img"
               region="test"
-              :img-id="img"
+              :id="img"
             />
-          </template> -->
-
-          <view>隐患类型: {{ val._subjectType + val._dangerType }}</view>
+          </template> 
+          <template v-if="key=='push'">
+          <view >隐患类型: {{ val._subjectType + val._dangerType }}</view>
           <view>整改单位: {{ val.operatorOrg }}</view>
           <view>详细地址: {{ val.address }}</view>
+        </template>
         </view>
       </view>
     </van-skeleton>
-  </view>
+  </scroll-view>
 </template>
 <script setup lang="ts">
 import { reactive, ref } from "vue";
 import { getHidangerFlow } from "../../api/hidden";
-const BASE_URL = ref(
-  "https://aiot.citysafety.com/gasguard/" +
-    "gasguard-service-system-app/open/preview/"
-);
 
 let loading = ref(true);
 
 onLoad((options) => {
-  getDetail("1988807");
+  getDetail(options.uid);
 });
 
 let data = ref({});
@@ -67,6 +71,12 @@ const getDetail = async (id) => {
   .tit {
     margin-bottom: 20rpx;
   }
+  .header{
+    display: flex;
+    align-items: center;
+    gap:20rpx;
+    margin: 20rpx 0;
+  }
   .top {
     @include flex-between;
   }
@@ -80,4 +90,9 @@ const getDetail = async (id) => {
     }
   }
 }
+.remark{
+  color: $uni-text-color !important;
+  font-weight: 600;
+}
+
 </style>

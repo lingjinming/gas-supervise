@@ -12,8 +12,8 @@
       />
       <van-field label="位置" is-link>
         <input
+           slot="input"
           :value="reportForm.address"
-          slot="input"
           placeholder="请选择"
           @click="chooseLocation"
         />

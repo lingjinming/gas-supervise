@@ -1,6 +1,8 @@
 
 <template>
     <image
+    class="image"
+    lazy-load
         :src="src"
         mode="scaleToFill"
     />
@@ -35,44 +37,11 @@ onMounted(async () => {
     })
 })
 
-
-// const RegionImg = defineComponent({
-
-//   setup: async (props) => {
-//     //  请求燃气后端,根据附件id,获取预览地址
-//     let urlObj = await fetch(
-//       "https://aiot.citysafety.com/gasguard/gasguard-service-system-app/open/file/" +
-//         props.imgId,
-//       {
-//         method: "GET",
-//         headers: {
-//           "x-api-region": props.region,
-//         },
-//       }
-//     )
-//       .then((res) => res.json())
-//       .then((json) => new URL(json.data));
-//     // 替换预览地址host,从燃气云代理访问
-//     const proxyImgUrl =
-//       "https://aiot.citysafety.com/gasguard/preview_pic" +
-//       urlObj.pathname +
-//       urlObj.search;
-//     // 特殊处理请求静态资源时携带 x-api-region请求头
-//     const url = ref();
-//     fetch(proxyImgUrl, {
-//       method: "GET",
-//       headers: { "x-api-region": props.region },
-//     })
-//       .then((res) => res.blob())
-//       .then((blob) => {
-//         url.value = URL.createObjectURL(blob);
-//       });
-//     return () =>
-//       h("image", {
-//         src: url.value,
-//         onload: () => URL.revokeObjectURL(url.value),
-//       });
-//   },
-// });
-
 </script>
+<style>
+ .image{
+      width: 200rpx;
+      height: 200rpx;
+      margin-right:  30rpx;
+    }
+</style>

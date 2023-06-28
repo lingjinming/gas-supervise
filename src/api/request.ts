@@ -30,8 +30,7 @@ export const request = <T = any>(option: UniApp.RequestOptions): Promise<T> => {
       header,
       data: option.data,
       success(res: UniApp.RequestSuccessCallbackResult) {
-        console.log('success',res)
-        if(res.statusCode != 401 && res.data && !res.data.success){
+        if(res.statusCode != 401 && res.data && !res.data.success && res.data.message){
           uni.showToast({
             icon:'error',
             title:res.data.message
@@ -43,9 +42,6 @@ export const request = <T = any>(option: UniApp.RequestOptions): Promise<T> => {
       fail(err: UniApp.GeneralCallbackResult) {
         console.log('fail',err)
         reject(err);
-      },
-      complete(){
-        uni.hideLoading()
       }
     });
   });

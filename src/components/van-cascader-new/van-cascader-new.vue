@@ -22,7 +22,7 @@ const props = defineProps({
 });
 let isShow = ref(false);
 let options = ref([]);
-let cascaderVal = ref([]);
+let cascaderVal = ref('');
 
 const columnsObj = {
   RISK_SUBJECT_TYPE_TREE: async () => {

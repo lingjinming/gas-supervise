@@ -52,7 +52,9 @@ const navigatoReform = (uid: string) => {
 }
 // 查看流程
 const showFlow = (uid: string) => {
-
+  uni.navigateTo({
+    url: `/pages/hiddenDetail/index?uid=${uid}`
+  })
 }
 
 </script>

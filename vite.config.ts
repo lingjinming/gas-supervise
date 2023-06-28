@@ -5,7 +5,7 @@ import AutoImport from 'unplugin-auto-import/vite';
 export default defineConfig({
   resolve:{
     alias:{
-      '@':'./src'
+      '@':'./src',
     }
   },
   plugins: [
