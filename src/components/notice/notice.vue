@@ -1,10 +1,11 @@
 
 <template>
-  <van-skeleton title avatar row="2" :loading="loading" class="notice-box" v-for="(notice,i) in notices" :key="i"  :right-width="50"  >
+  <view style="padding: 20prx;">
+  <van-skeleton title avatar row="2" :loading="loading" v-for="(notice,i) in notices" :key="i"  :right-width="50"  >
   <!-- <van-swipe-cell :right-width="50" >
     <van-cell-group> -->
-      
-      <view class="left">
+      <view  class="notice-box">
+        <view class="left">
         <view class="tit">
           <van-icon name="/static/img/tip1.png" size="36rpx"  v-if="notice.msgType==='MsgBulletin'"/>
           <van-icon name="/static/img/tip2.png" size="36rpx"  v-if="notice.msgType==='MsgRiskCheck'"/>
@@ -18,16 +19,18 @@
           <text class="content">{{ notice.content }}</text>
         </view>
       </view>
-      <view slot="right" class="right">
-        删除
       </view>
+ 
+      <!-- <view slot="right" class="right">
+        删除
+      </view> -->
     <!-- </van-cell-group>
     <view slot="right" class="right">
         删除
       </view>
   </van-swipe-cell>  -->
 </van-skeleton>
-
+</view>
 </template>
 <script setup lang="ts">
 import { getNotice } from "@/api/hidden";
@@ -94,19 +97,10 @@ onMounted(() => {
 
 })
 </script>
-<style lang="scss">
-::v-deep .van-skeleton__content{
-  width:692rpx;
-  border-radius: 6px;
-  background: #fff;
-  margin:0 auto;
-  margin-top: 20rpx;
-}
-</style>
 <style lang="scss" scoped>
 .notice-box {
   background: #fff;
-  margin-bottom: 20rpx;
+  margin: 20rpx 0;
   .left {
     
     flex: 1;

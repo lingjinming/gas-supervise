@@ -31,11 +31,8 @@ page {
   overflow: auto;
 }
 ::v-deep .van-swipe-cell {
-  width:692rpx;
   border-radius: 6px;
-  background: #fff;
   margin:0 auto;
-  margin-top: 20rpx;
 }
 .fs {
   &-12 {
@@ -50,11 +47,8 @@ page {
 }
 
 ::v-deep .van-skeleton__content{
-  width:692rpx;
   border-radius: 6px;
-  background: #fff;
   margin:0 auto;
-  margin-top: 20rpx;
 }
 
 </style>

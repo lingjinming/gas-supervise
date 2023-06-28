@@ -22,7 +22,7 @@
   <view class="index-box bottom">
     <view class="tit">
       <view>我的待办</view>
-      <view @click="navigatoNotice" class="more">更多 ></view>
+      <view class="more">更多 ></view>
     </view>
     <view >
       <view class="no-content">
@@ -75,6 +75,13 @@ const menus = [
   },
 ];
 const navigato = url => {
+  if(!url){
+    uni.showToast({
+      icon:'error',
+      title:'功能开发中'
+    })
+    return
+  }
   uni.navigateTo({
     url
   })
@@ -111,6 +118,10 @@ const navigatoNotice = () => {
     width: calc((100% - 60rpx) / 4);
     height: 50%;
     text-align: center;
+    transition: all .3s;
+    &:hover{
+      transform: scale(1.1);
+    }
   }
 }
 .bg_img{
