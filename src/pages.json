@@ -65,7 +65,7 @@
         "selectedIconPath": "static/img/index_act.png"
       },
       {
-        "pagePath": "pages/notice/index",
+        "pagePath": "pages/user/index",
         "text": "我的",
         "iconPath": "static/img/user.png",
         "selectedIconPath": "static/img/user_act.png"
