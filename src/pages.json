@@ -8,6 +8,12 @@
       }
     },
     {
+      "path": "pages/index/index",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/hiddenReform/index",
       "style": {
         "navigationBarTitleText": "隐患整改"
@@ -17,12 +23,6 @@
       "path": "pages/hiddenReport/index",
       "style": {
         "navigationBarTitleText": "隐患上报"
-      }
-    },
-    {
-      "path": "pages/index/index",
-      "style": {
-        "navigationStyle": "custom"
       }
     },
     {
@@ -55,14 +55,14 @@
       {
         "pagePath": "pages/index/index",
         "text": "首页",
-        "iconPath":"static/img/index.png",
-        "selectedIconPath":"static/img/index_act.png"
+        "iconPath":"/static/img/index.png",
+        "selectedIconPath":"/static/img/index_act.png"
       },
       {
         "pagePath": "pages/user/index",
         "text": "我的",
-        "iconPath":"static/img/user.png",
-        "selectedIconPath":"static/img/user_act.png"
+        "iconPath":"/static/img/user.png",
+        "selectedIconPath":"/static/img/user_act.png"
       }
     ]
   },

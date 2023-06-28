@@ -10,13 +10,16 @@
       :class="{ act: route.pagePath == actPath }"
       @click="switchTab(route)"
       >
-        <text>{{ route.text }}</text>
-        <image
-          :src="route.pagePath == actPath ? route.iconPath : route.selectedIconPath"
-        />
+        <view class="routeItem"><image
+          :src="route.pagePath == actPath ? route.selectedIconPath : route.iconPath"
+          class="mainBtn"
+        /></view>
+        <view class="routeItem"><text>{{ route.text }}</text></view> 
       </view
     >
-    <view class="midBtn" @click="routeToHiddenReport"></view>
+    <view class="midBtn" @click="routeToHiddenReport">
+      <image src="/static/img/icon_photo.png" class="photo"></image>
+    </view>
   </view>
 </template>
 
@@ -43,10 +46,12 @@ let routeToHiddenReport = () => {
 <style lang="scss" scoped>
 .route-wrap {
   position: fixed;
+  background-color: #ffffff;
   bottom: 0;
   left: 0;
   right: 0;
-  height: $router-tab-height;
+  height: 133rpx;
+  padding-top: 20rpx;
   line-height: $router-tab-height;
   display: flex;
   justify-content: space-around;
@@ -57,20 +62,28 @@ let routeToHiddenReport = () => {
     height: 100%;
     text-align: center;
   }
+  .routeItem{
+    height: 42rpx;
+    line-height: 42rpx;
+  }
   .act{
     color: $uni-color-primary;
   }
-
+  .mainBtn{
+    width: 42rpx;
+    height: 42rpx;
+    line-height: 42rpx;
+  }
   .midBtn{
     position: absolute;
     z-index: 999;
     left: 50%;
     top: -10rpx;
     transform: translateX(-50%);
-    width: 100rpx;
-    height: 100rpx;
-    border-radius: 50%;
-    box-shadow: -6rpx 8rpx 10rpx red;
+  }
+  .photo{
+    width: 125rpx;
+    height: 133rpx;
   }
 }
 </style>
