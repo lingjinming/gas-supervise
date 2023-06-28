@@ -1,5 +1,5 @@
 <template>
-  <view class="hidden-box" @click="navigatoReform(info.uid)">
+  <view class="hidden-box" @click.stop="navigatoDetail(info.uid)" >
       <view class="tit">
         <text>{{ info._level }}</text>
         <text>{{ info.checkDate }}</text>
@@ -16,7 +16,7 @@
 
       <view class="bottom">
         <text>{{ info.checkBy }}</text>
-        <text>去整改</text>
+        <text @click="navigatoReform(info.uid)">去整改</text>
       </view>
   </view>
 </template>
@@ -39,6 +39,11 @@ const navigatoReform = uid => {
   })
 }
 
+const navigatoDetail = uid => {
+  uni.navigateTo({
+    url:`/pages/hiddenDetail/index?uid=${uid}`
+  })
+}
 
 </script>
 

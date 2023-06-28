@@ -9,7 +9,12 @@
       :key="route.pagePath"
       :class="{ act: route.pagePath == actPath }"
       @click="switchTab(route)"
-      >{{ route.text }}</view
+      >
+        <text>{{ route.text }}</text>
+        <image
+          :src="route.pagePath == actPath ? route.iconPath : route.selectedIconPath"
+        />
+      </view
     >
     <view class="midBtn" @click="routeToHiddenReport"></view>
   </view>

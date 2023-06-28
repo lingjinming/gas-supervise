@@ -54,11 +54,15 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页"
+        "text": "首页",
+        "iconPath":"static/img/index.png",
+        "selectedIconPath":"static/img/index_act.png"
       },
       {
         "pagePath": "pages/user/index",
-        "text": "我的"
+        "text": "我的",
+        "iconPath":"static/img/user.png",
+        "selectedIconPath":"static/img/user_act.png"
       }
     ]
   },
