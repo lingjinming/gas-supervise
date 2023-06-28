@@ -275,10 +275,50 @@ export const checkPlanFinishById = (query: { uid: string }) => {
  * @description 隐患整改
  */
 export const reformHidangerById = (query: { data: any }) => {
-  const url = `gasguard-service-risk-app/hidanger/org/handle/${query.data.uid}`;
+  const url = `gasguard-service-risk-app/hidanger/org/handle/${query.uid}`;
   return request({
     url,
     method: "PUT",
     data: query,
   });
 };
+
+
+export interface HiDangerFlow {
+  push:        HandleStage;
+  handleStage: HandleStage;
+  auditStage:  AuditStage;
+}
+
+export interface AuditStage {
+  stageTime:   string;
+  title:       string;
+  operator:    string;
+  operatorOrg: string;
+}
+
+export interface HandleStage {
+  stageTime:    string;
+  title:        string;
+  operator:     string;
+  operatorOrg:  string;
+  handleDate?:  string;
+  level:        string;
+  _level:       string;
+  address:      string;
+  dangerType:   string;
+  _dangerType:  string;
+  subjectType:  string;
+  _subjectType: string;
+  remark:       string;
+  fileIds:      string[];
+  picIds?:      string[];
+  checkDate?:   string;
+}
+
+export const getHidangerFlow = async (uid: string) => {
+  return request<{data: HiDangerFlow}>({
+    url: 'gasguard-service-risk-app/hidanger/flow/'+uid,
+    method: 'GET'
+  })
+}

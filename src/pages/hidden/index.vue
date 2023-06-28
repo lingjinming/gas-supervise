@@ -3,6 +3,12 @@
     <text>共计{{ state.total }}条隐患</text>
     <text @click="state.showQuery = true">筛选</text>
   </view>
+  <scroll-view
+    style="height: calc(100% - 100rpx);"
+    scroll-y="true"
+    class="scroll-Y"
+    @scrolltolower="nextpage"
+  >
   <!-- 隐患列表 -->
   <view v-if="state.list.length">
     <hidden v-for="item in state.list" :key="item.uid" :info="item"></hidden>
@@ -10,6 +16,8 @@
   <view v-else>
     <van-empty description="暂无数据"></van-empty>
   </view>
+  </scroll-view>
+
   <!-- 搜索面板 -->
   <van-popup :show="state.showQuery" position="left" custom-style="height: 100%;width: 50%" @close="doQuery">
 
@@ -47,7 +55,6 @@
 <script setup lang="ts">
 import { hidangerPage, type HidangerPgaeVO, type HidangerOrgPageQuery } from '@/api/hidden';
 import { reactive, ref } from 'vue';
-import { onReachBottom } from '@dcloudio/uni-app';
 import { getDictList, type DicItem } from '@/api/dic';
 
 let isOrg: boolean = uni.getStorageSync("USER_INFO")["orgType"] != 1;
@@ -75,14 +82,14 @@ const state = reactive({
 })
 
 // 下拉到底部 加载下一页
-onReachBottom(() => {
-  if (state.query.page * state.query.size > state.total) {
+const nextpage = () => {
+    if (state.query.page * state.query.size > state.total) {
     // no more data
   } else {
     state.query.page! += 1;
     featchPage();
   }
-})
+}
 
 // 关闭查询面板/点击确定 执行查询
 const doQuery = () => {
@@ -108,8 +115,9 @@ const featchPage = async () => {
   state.total = total;
   state.list.push(...data)
 }
-featchPage();
 loadDic();
+
+onMounted(() => featchPage())
 </script>
 <style lang="scss" scoped>
 .top {

@@ -17,6 +17,8 @@
     <view class="tit">
       <view>我的待办</view>
     </view>
+    <van-empty description="暂无数据"></van-empty>
+
   </view>
   <router-tab actPath="pages/index/index" />
 </template>

@@ -1,6 +1,6 @@
 
 <template>
-<view class="notice-box" v-for="(notice,i) in notices" :key="i">
+  <van-skeleton title avatar row="2" :loading="notice.length" class="notice-box" v-for="(notice,i) in notices" :key="i">
 
   <!-- <van-swipe-cell :right-width="50" >
     <van-cell-group> -->
@@ -20,7 +20,7 @@
         删除
       </view>
   </van-swipe-cell>  -->
-</view>
+</van-skeleton>
 
 </template>
 <script setup lang="ts">
@@ -37,7 +37,6 @@ const getNoticeFn = async () => {
   let data = (await getNotice({
     recipient:uni.getStorageSync('USER_INFO')['userId']
   }))["data"];
-
   if(props.num){
     notices.value = data.slice(0,props.num)
   }else{

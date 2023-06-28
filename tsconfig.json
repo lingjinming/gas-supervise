@@ -10,6 +10,12 @@
     "types": ["@dcloudio/types", "auto-imports.d","miniprogram-api-typings"],
     "noImplicitAny": false // 允许隐含的any
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "typings/**/*.ts",
-  "types/**/*.d.ts"]
+  "include": [
+    "src/**/*.ts", 
+    "src/**/*.d.ts", 
+    "src/**/*.tsx", 
+    "src/**/*.vue", 
+    "typings/**/*.ts",
+    "types/**/*.d.ts"
+  ]
 }

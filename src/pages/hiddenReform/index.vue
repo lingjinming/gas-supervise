@@ -60,19 +60,22 @@ import { addHidden, reformHidangerById, type req_addHidden } from "../../api/hid
 import { formatDate } from "@/utils";
 
 
-onMounted(() => {
 
-})
 
 let handleDatePopupIsShow = ref(false);
 
 let reportForm = ref({
-  uid:11,
+  uid:'',
   handleContent: "",
   handleDate: "",
   fileIds: [],
 });
 let fileList: any = ref([]);
+
+onLoad(options => {
+  reportForm.value.uid = options.uid
+})
+
 const delImg = (event) => {
   fileList.value.splice(event.detail.index, 1);
 };

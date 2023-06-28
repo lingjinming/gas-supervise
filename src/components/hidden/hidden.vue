@@ -1,5 +1,5 @@
 <template>
-  <view class="hidden-box">
+  <view class="hidden-box" @click="navigatoReform(info.uid)">
       <view class="tit">
         <text>{{ info._level }}</text>
         <text>{{ info.checkDate }}</text>
@@ -33,6 +33,11 @@ const props = defineProps({
   }
 })
 
+const navigatoReform = uid => {
+  uni.navigateTo({
+    url:`/pages/hiddenReform/index?uid=${uid}`
+  })
+}
 
 
 </script>

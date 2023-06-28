@@ -84,7 +84,8 @@
       "van-notify": "wxcomponents/vant/notify/index",
       "van-icon": "wxcomponents/vant/icon/index",
       "van-empty": "wxcomponents/vant/empty/index",
-      "van-switch":"wxcomponents/vant/switch/index"
+      "van-switch":"wxcomponents/vant/switch/index",
+      "van-skeleton":"wxcomponents/vant/skeleton/index"
     }
   }
 }

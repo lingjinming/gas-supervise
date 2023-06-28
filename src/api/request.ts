@@ -1,5 +1,5 @@
 const BASE_URL = "https://aiot.citysafety.com/gasguard/";
-const SUCESS_CODE = [200,401]
+const SUCESS_CODE = [200]
 export const request = <T = any>(option: UniApp.RequestOptions): Promise<T> => {
   let TOKEN = uni.getStorageSync("TOKEN_INFO")["access_token"];
   let SERVER_CONFIG = uni.getStorageSync("SERVER_CONFIG");
