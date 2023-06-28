@@ -78,10 +78,10 @@ const finishPlan = async (uid) => {
       height: 100%;
     }
     .done {
-      background: rgb(0, 255, 213);
+      background: $uni-color-success;
     }
     .del {
-      background: red;
+      background: $uni-color-error;
     }
   }
 }

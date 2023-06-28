@@ -31,7 +31,7 @@ export const request = <T = any>(option: UniApp.RequestOptions): Promise<T> => {
       data: option.data,
       success(res: UniApp.RequestSuccessCallbackResult) {
         console.log('success',res)
-        if(res.data && !res.data.success){
+        if(res.statusCode != 401 && res.data && !res.data.success){
           uni.showToast({
             icon:'error',
             title:res.data.message

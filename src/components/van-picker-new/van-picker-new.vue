@@ -54,6 +54,13 @@ const columnsObj = {
     });
     columns.value = data;
   },
+  SERVER_CONFIG: async () => {
+    let data = uni.getStorageSync("SERVER_LIST");
+    data.forEach((ele) => {
+      ele.text = ele.label;
+    });
+    columns.value = data;
+  },
 };
 
 const showPicker = () => {
@@ -74,7 +81,7 @@ const confirm = (e) => {
     pickerVal.value = value.shortName;
     emits("update:modelValue", value.id);
   }
-  if (props.dicType == "RISK_DANGER_LEVEL") {
+  if (props.dicType == "RISK_DANGER_LEVEL" || props.dicType == "SERVER_CONFIG") {
     pickerVal.value = value.label;
     emits("update:modelValue", value.value);
   }
