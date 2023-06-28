@@ -22,12 +22,6 @@
     {
       "path": "pages/hiddenReform/index",
       "style": {
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/hiddenReform/index",
-      "style": {
         "navigationBarTitleText": "隐患整改"
       }
     },

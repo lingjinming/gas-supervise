@@ -50,7 +50,7 @@ let routeToHiddenReport = () => {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 133rpx;
+  height: $router-tab-height;
   padding-top: 20rpx;
   line-height: $router-tab-height;
   display: flex;
