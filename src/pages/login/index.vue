@@ -1,15 +1,13 @@
 <template>
   <view class="login-box">
-    <!-- <van-radio-group :value="serverValue" @change="changeServe">
-      <van-radio v-for="(item, i) in serverList" :key="i" :name="item.region">{{
-        item.remark
-      }}</van-radio>
-    </van-radio-group> -->
 
-    <type-tab
-      :tabs="serverList"
-      v-model="serverValue"
-    ></type-tab>
+    <van-picker-new
+        dicType="SERVER_CONFIG"
+        label="服务器"
+        title="服务器"
+        v-model="serverValue"
+      />
+
 
     <van-cell-group>
       <van-field
