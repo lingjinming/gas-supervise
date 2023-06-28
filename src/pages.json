@@ -1,7 +1,6 @@
 {
   "pages": [
     //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-
     {
       "path": "pages/login/index",
       "style": {
@@ -66,7 +65,7 @@
         "selectedIconPath": "static/img/index_act.png"
       },
       {
-        "pagePath": "pages/user/index",
+        "pagePath": "pages/notice/index",
         "text": "我的",
         "iconPath": "static/img/user.png",
         "selectedIconPath": "static/img/user_act.png"
