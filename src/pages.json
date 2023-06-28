@@ -2,6 +2,12 @@
   "pages": [
     //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
     {
+      "path": "pages/index/index",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/hiddenDetail/index",
       "style": {
         "navigationBarTitleText": "隐患详情"
@@ -24,12 +30,6 @@
       "path": "pages/hiddenReport/index",
       "style": {
         "navigationBarTitleText": "隐患上报"
-      }
-    },
-    {
-      "path": "pages/index/index",
-      "style": {
-        "navigationStyle": "custom"
       }
     },
     {
@@ -62,14 +62,14 @@
       {
         "pagePath": "pages/index/index",
         "text": "首页",
-        "iconPath":"static/img/index.png",
-        "selectedIconPath":"static/img/index_act.png"
+        "iconPath":"/static/img/index.png",
+        "selectedIconPath":"/static/img/index_act.png"
       },
       {
         "pagePath": "pages/user/index",
         "text": "我的",
-        "iconPath":"static/img/user.png",
-        "selectedIconPath":"static/img/user_act.png"
+        "iconPath":"/static/img/user.png",
+        "selectedIconPath":"/static/img/user_act.png"
       }
     ]
   },
@@ -95,8 +95,9 @@
       "van-notify": "wxcomponents/vant/notify/index",
       "van-icon": "wxcomponents/vant/icon/index",
       "van-empty": "wxcomponents/vant/empty/index",
-      "van-switch":"wxcomponents/vant/switch/index",
-      "van-skeleton":"wxcomponents/vant/skeleton/index"
+      "van-switch": "wxcomponents/vant/switch/index",
+      "van-skeleton": "wxcomponents/vant/skeleton/index",
+      "van-toast": "wxcomponents/vant/toast/index"
     }
   }
 }
