@@ -1,4 +1,5 @@
 <template>
+  <image src="./static/img/bg.png"></image>
   <view class="top">
     <view class="menu" v-for="item in menus" :key="item.name" @click="navigato(item.url)">{{
       item.name
@@ -72,7 +73,6 @@ const navigatoNotice = () => {
 
 <style lang="scss" scoped>
 .top {
-  background: #fff;
   border-radius: 10prx;
   margin: 150rpx 20rpx 40rpx;
   display: flex;
@@ -86,6 +86,15 @@ const navigatoNotice = () => {
     height: 50%;
     text-align: center;
   }
+}
+image{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: -999;
 }
 
 .index-box {
