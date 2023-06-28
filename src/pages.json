@@ -95,9 +95,12 @@
       "van-notify": "wxcomponents/vant/notify/index",
       "van-icon": "wxcomponents/vant/icon/index",
       "van-empty": "wxcomponents/vant/empty/index",
-      "van-switch": "wxcomponents/vant/switch/index",
-      "van-skeleton": "wxcomponents/vant/skeleton/index",
-      "van-toast": "wxcomponents/vant/toast/index"
+      "van-toast": "wxcomponents/vant/toast/index",
+      "van-switch":"wxcomponents/vant/switch/index",
+      "van-skeleton":"wxcomponents/vant/skeleton/index",
+      "van-tag": "wxcomponents/vant/tag/index",
+      "van-checkbox-group": "wxcomponents/vant/checkbox-group/index",
+      "van-checkbox": "wxcomponents/vant/checkbox/index"
     }
   }
 }

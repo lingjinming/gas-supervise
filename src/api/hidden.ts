@@ -74,13 +74,13 @@ export interface HidangerOrgPageQuery {
   dangerSubType?: string;
 
   /** 隐患级别 */
-  level?: string;
+  level?: string[];
 
   /** 隐患状态 */
-  state?: string;
+  state?: string[];
 
   /** 隐患来源 */
-  dangerSource?: string;
+  dangerSource?: string[];
 
   /** 是否督办 */
   superviseState?: boolean;
@@ -101,6 +101,8 @@ export interface HidangerOrgPageQuery {
   endTime?: string;
 }
 export interface HidangerPgaeVO {
+  // xx 天前
+  ago: string;
   /** 数据主键 */
   uid?: string;
 
@@ -152,6 +154,8 @@ export interface HidangerPgaeVO {
 
   /** 隐患级别 */
   level?: "ZD" | "JD" | "YB";
+  _subjectType: string;
+  _dangerType: string;
   _level?: string;
 
   /** 隐患描述 */
