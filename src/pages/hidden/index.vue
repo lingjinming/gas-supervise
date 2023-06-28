@@ -16,8 +16,10 @@
   </scroll-view>
 
   <!-- 搜索面板 -->
-  <van-popup :show="state.showQuery" position="top" custom-style="height: 70%;width: 100%;border-radius: 10rpx;padding: 29rpx" @close="cancel">
-    <check-group useAll v-model="state.query.state" title="隐患状态" :options="[{label: '待整改',value:'WAIT_HANDLE'},{label: '已整改',value:'WAIT_AUDIT,HANDLED'}]"></check-group> 
+  <van-popup :show="state.showQuery" position="top"
+    custom-style="height: 70%;width: 100%;border-radius: 10rpx;padding: 29rpx" @close="cancel">
+    <check-group useAll v-model="state.query.state" title="隐患状态"
+      :options="[{ label: '待整改', value: 'WAIT_HANDLE' }, { label: '已整改', value: 'WAIT_AUDIT,HANDLED' }]"></check-group>
     <check-group useAll v-model="state.query.dangerSource" title="隐患来源" :options="state.dics.source"></check-group>
     <check-group useAll v-model="state.query.level" title="隐患级别" :options="state.dics.level"></check-group>
 
@@ -27,17 +29,18 @@
 
     <!-- 确定 -->
     <view class="bottom">
-      <button  plain="true" @click="cancel" class="btn cancel">取消</button>
-      <button  plain="true" @click="doQuery" class="btn query">查询</button>
+      <button plain="true" @click="cancel" class="btn cancel">取消</button>
+      <button plain="true" @click="doQuery" class="btn query">查询</button>
     </view>
 
   </van-popup>
 </template>
+
+
 <script setup lang="ts">
 import { hidangerPage, type HidangerPgaeVO, type HidangerOrgPageQuery } from '@/api/hidden';
 import { reactive, ref } from 'vue';
 import { getDictList, type DicItem } from '@/api/dic';
-
 
 let isOrg: boolean = uni.getStorageSync("USER_INFO")["orgType"] != 1;
 const state = reactive({
@@ -130,6 +133,7 @@ onMounted(() => {
     line-height: 50rpx;
   }
 }
+
 .bottom {
   @include flex-between;
 
@@ -140,14 +144,15 @@ onMounted(() => {
     line-height: 88rpx;
     border-radius: 10px;
   }
+
   .btn.cancel {
     background: #E8F1FF;
     color: $uni-color-primary;
 
   }
+
   .btn.query {
     background: $uni-color-primary;
     color: #fff;
   }
-}
-</style>
+}</style>
