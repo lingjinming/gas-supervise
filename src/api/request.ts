@@ -20,6 +20,9 @@ export const request = <T = any>(option: UniApp.RequestOptions): Promise<T> => {
   if (option.header) {
     header = Object.assign(header, option.header);
   }
+  if(option.method === 'GET') {
+    handleGetQueryParam(option.data);
+  }
   return new Promise((resolve, reject) => {
     uni.request({
       url: BASE_URL + option.url,
@@ -47,3 +50,16 @@ export const request = <T = any>(option: UniApp.RequestOptions): Promise<T> => {
     });
   });
 };
+
+
+// 处理一下get下的数组传参
+const handleGetQueryParam = (param: any) => {
+  if(param && typeof param === 'object') {
+    for(let key in param) {
+      const theValue = param[key];
+      if(Array.isArray(theValue)) {
+        param[key] = theValue.join(',');
+      } 
+    }
+  }
+}
