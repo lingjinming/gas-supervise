@@ -105,7 +105,7 @@ const changeServe = () => {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 300rpx;
+  bottom: 30%;
   gap: 40rpx;
   padding: 40rpx;
   @include flex-column;
@@ -124,7 +124,7 @@ const changeServe = () => {
   text-align: center;
   font-family: 'Playfair Display', serif;
   font-weight: bold;
-  font-size: 28px;
+  font-size: 36px;
   text-transform: uppercase;
   padding-bottom: 100rpx;
 }
