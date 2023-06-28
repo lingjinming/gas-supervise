@@ -1,7 +1,6 @@
 
 <template>
-  <van-skeleton title avatar row="2" :loading="notice.length" class="notice-box" v-for="(notice,i) in notices" :key="i">
-
+  <van-skeleton title avatar row="2" :loading="loading" class="notice-box" v-for="(notice,i) in notices" :key="i">
   <!-- <van-swipe-cell :right-width="50" >
     <van-cell-group> -->
       
@@ -25,6 +24,8 @@
 </template>
 <script setup lang="ts">
 import { getNotice } from "@/api/hidden";
+
+let loading = ref(true)
 const notices = ref([]);
 
 const props = defineProps({
@@ -42,6 +43,7 @@ const getNoticeFn = async () => {
   }else{
     notices.value = data
   }
+  setTimeout(() => {loading.value = false},1000)
 };
 
 onMounted(() => {
