@@ -32,6 +32,7 @@
         @confirm="chooseDate"
       />
     </van-cell-group>
+    
     <van-uploader-new v-model="reportForm.picIds"/>
 
     <van-button type="primary" size="large" round plain @click="submit"
