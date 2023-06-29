@@ -8,6 +8,7 @@
   <view class="container">
     <van-cell-group>
       <van-field
+      maxlength="200"
         :value="reportForm.title"
         @change="reportForm.title = $event.detail"
         label="计划名称"
@@ -44,18 +45,21 @@
         @change="reportForm.targetOrgOwner = $event.detail"
         label="企业负责人"
         placeholder="请输入"
+        maxlength="200"
       />
       <van-field
         :value="reportForm.targetOrgPhone"
         @change="reportForm.targetOrgPhone = $event.detail"
         label="负责人联系方式"
         placeholder="请输入"
+        maxlength="200"
       />
       <van-field
         :value="reportForm.checkers"
         @change="reportForm.checkers = $event.detail"
         label="参与人"
         placeholder="请输入"
+        maxlength="200"
       />
       <!-- <van-field label="位置" is-link>
         <input

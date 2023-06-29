@@ -5,7 +5,7 @@
     row="2"
     :loading="loading"
   >
-  <view class="hidden-box" @click="showFlow(info.uid as string)">
+  <view class="hidden-box" @click.stop="showFlow(info.uid as string)">
     <view class="tit">
       <view>
         <van-tag :type="info.level === 'ZD' ? 'danger': info.level == 'JD' ? 'warning' : 'primary'">{{ info._level }}</van-tag>
@@ -27,7 +27,7 @@
         由<text class="publisher">{{ info.checkBy }}</text>发布
       </view>
       <template v-if=" 'WAIT_HANDLE'.includes(info.state!)">
-        <van-button plain hairline round size="mini" type="primary" @click.stop="navigatoReform(info.uid!)">去整改</van-button>
+        <van-button plain hairline round size="mini" type="primary" @click.stop="navigatoReform(info)">去整改</van-button>
       </template>
       <template v-else >
         <view class="handled">
@@ -56,9 +56,9 @@ setTimeout(() => {
 }, 500);
 
 // 去整改
-const navigatoReform = (uid: string) => {
+const navigatoReform = (info: HidangerPgaeVO) => {
   uni.navigateTo({
-    url: `/pages/hiddenReform/index?uid=${uid}`
+    url: `/pages/hiddenReform/index?uid=${info.uid}&checkDate=${info.checkDate}`
   })
 }
 // 查看流程

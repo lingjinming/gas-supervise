@@ -9,6 +9,7 @@
         fixed
         autosize
         placeholder="请输入"
+        maxlength="200"
       />
       <van-field label="位置" is-link>
         <input
@@ -76,7 +77,10 @@
         :file-list="fileList"
         @delete="delImg"
         @after-read="uploadImg"
-      ></van-uploader>
+      >
+      
+      <van-button icon="photo" type="primary">最多3张</van-button>
+    </van-uploader>
     </view>
 
     <van-button type="primary" size="large" round plain @click="submit"
@@ -90,7 +94,7 @@ import { addHidden, type req_addHidden } from "../../api/hidden";
 import { formatDate } from "@/utils";
 import { getDistrictId } from '@/utils/qqMapUtil'
 import { minDate,maxDate} from "@/hooks";
-const isOrg: boolean = uni.getStorageSync("USER_INFO")["orgType"] != 1;
+const isOrg: boolean = uni.getStorageSync("USER_INFO")['organizationVO']["orgType"] != 1;
 
 onShow(() => {
   isOrg &&

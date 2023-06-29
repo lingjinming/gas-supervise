@@ -1,5 +1,5 @@
 <template>
-  <van-field v-bind="$attrs" is-link clickable @click-input="showPicker">
+  <van-field v-bind="$attrs" is-link clickable maxlength="200" @click-input="showPicker">
     <input hold-keyboard readonly disabled :value="pickerVal" slot="input" style="width: 100%;" placeholder="请选择" />
   </van-field>
   <van-popup :show="isShow" round position="bottom">
