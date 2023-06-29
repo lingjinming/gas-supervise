@@ -107,7 +107,6 @@ const login = async () => {
 
   if (USER_INFO) {
     store.setUserInfo(USER_INFO);
-    //uni.setStorageSync("USER_INFO", USER_INFO);
     uni.switchTab({
       url: "/pages/index/index",
     });

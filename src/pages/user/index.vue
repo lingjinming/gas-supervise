@@ -22,6 +22,7 @@
       <van-field :value="form.wechat" label="微信" fixed autosize disabled />
 
       <van-field :value="form.contactAddress" label="联系地址" fixed autosize disabled />
+      <button @click="logout">退出</button>
     </van-cell-group>
 
 
@@ -30,7 +31,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-
+import { userStore } from "@/state";
 const form = ref({
   name: '',
   department: '',
@@ -51,6 +52,15 @@ const userInfo = uni.getStorageSync('USER_INFO');
     form.value.gender = userInfo.gender == 'xb002' ? '男' : '女';
     form.value.phone = userInfo.phoneNumber;
     form.value.contactAddress = userInfo.contactAddress || '--'
+  }
+
+  const logout = () => {
+    const store = userStore();
+    store.clearCache();
+    uni.navigateTo({
+      url: `/pages/login/index`
+    })
+ 
   }
 
 </script>

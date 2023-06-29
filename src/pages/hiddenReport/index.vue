@@ -77,8 +77,11 @@ import { addHidden, type req_addHidden } from "../../api/hidden";
 import { formatDate } from "@/utils";
 import { getDistrictId } from "@/utils/qqMapUtil";
 import { minDate, maxDate } from "@/hooks";
-const isOrg: boolean =
-  uni.getStorageSync("USER_INFO")["organizationVO"]["orgType"] != 1;
+import { userStore } from "@/state";
+
+const store = userStore();
+
+const isOrg: boolean = store.isOrgUser;
 
 onShow(() => {
   isOrg &&

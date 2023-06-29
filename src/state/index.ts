@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { setCache, getCache } from '@/utils/cache'
+import { setCache, getCache ,removeCache} from '@/utils/cache'
 import { getConfig } from "@/api/uaa";
 
 
@@ -20,7 +20,7 @@ export const userStore = defineStore('app-store', {
     // 获取用户信息
     getUserInfo: (state) => state.userInfo,
     // 是否是企业用户
-    isOrgUser: (state) => state.userInfo?.organizationVO.orgType === 1,
+    isOrgUser: (state) => state.userInfo?.organizationVO.orgType === '1',
     // 获取服务器列表
     getServerList: (state) => state.auth.servers,
     // 按 服务器 编码,获取服务器配置
@@ -64,9 +64,9 @@ export const userStore = defineStore('app-store', {
       }
     },
     clearCache() {
-      setCache('AUTH_TOKEN', undefined);
-      setCache('SERVER_CONFIG',undefined);
-      setCache('USER_INFO',undefined);
+      removeCache('AUTH_TOKEN');
+      removeCache('SERVER_CONFIG');
+      removeCache('USER_INFO');
       this.auth.token = undefined;
     },
     setServer(server: any) {
@@ -108,7 +108,7 @@ interface UserStoreType {
   userInfo: {
     organizationVO: {
       // 0-政府,1-企业,2-监测中心
-      orgType: 0 | 1 | 2 
+      orgType: '0' | '1' | '2' 
     }
   } | undefined
 }
