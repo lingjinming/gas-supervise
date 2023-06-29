@@ -15,7 +15,12 @@
       <view class="detail-box">
         <view class="tit">
           <view class="top">
-            <text class="fs16">{{ val.title }}</text>
+            <view>
+              <van-tag :type="val.level === 'ZD' ? 'danger': val.level == 'JD' ? 'warning' : 'primary'">{{ val._level }}</van-tag>
+
+<text style="margin-left: 10rpx;" class="fs16">{{ val.title }}</text>
+            </view>
+  
             <text class="fs12">{{ val.stageTime }}</text>
           </view>
           <view class="header">
@@ -66,7 +71,6 @@ const getDetail = async (id) => {
 </script>
 <style lang="scss" scoped>
 .detail-box {
-  margin-bottom: 30rpx;
   padding: 40rpx 40rpx 40rpx 80rpx;
 
   .tit {

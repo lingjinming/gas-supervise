@@ -32,18 +32,7 @@
         @confirm="chooseDate"
       />
     </van-cell-group>
-
-    <view class="uploader-box">
-      <text>上传照片</text>
-      <van-uploader
-        multiple
-        :max-count="3"
-        accept="image"
-        :file-list="fileList"
-        @delete="delImg"
-        @after-read="uploadImg"
-      ></van-uploader>
-    </view>
+    <van-uploader-new v-model="reportForm.picIds"/>
 
     <van-button type="primary" size="large" round plain @click="submit"
       >确定</van-button
@@ -64,7 +53,6 @@ let reportForm = ref({
   handleDate: "",
   picIds: [],
 });
-let fileList: any = ref([]);
 
 onLoad(options => {
   reportForm.value.uid = options.uid
@@ -72,46 +60,6 @@ onLoad(options => {
   reportForm.value.handleDate = formatDate(new Date())
 })
 
-const delImg = (event) => {
-  fileList.value.splice(event.detail.index, 1);
-};
-const uploadImg = async (event) => {
-  let SERVER_CONFIG = uni.getStorageSync("SERVER_CONFIG");
-  let { file } = event.detail;
-  // console.log(file);
-  file.map((item) => {
-    item = Object.assign(item, {
-      url: file.tempFilePath,
-      status: "uploading",
-      message: "上传中",
-    });
-  });
-  fileList.value = file;
-  const uploadTasks = file.map((item) => {
-    return new Promise((resolve) => {
-      uni.uploadFile({
-        url: "https://aiot.citysafety.com/gasguard/gasguard-service-system-app/file/upload",
-        filePath: item.tempFilePath,
-        name: "file",
-        header: {
-          "x-api-region": SERVER_CONFIG.name,
-          Authorization:
-            "Bearer " + uni.getStorageSync("TOKEN_INFO")["access_token"],
-        },
-        success(res) {
-          item.status = "done";
-          resolve(JSON.parse(res.data));
-        },
-      });
-    });
-  });
-  Promise.all(uploadTasks).then((data) => {
-    data.map((item, i) => {
-      file[i] = Object.assign(file[i], item.data);
-    });
-    fileList.value = JSON.parse(JSON.stringify(file));
-  });
-};
 
 const chooseDate = (e) => {
   handleDatePopupIsShow.value = false;
@@ -124,12 +72,7 @@ const submit = async () => {
       icon:'none',
       title:'整改日期应在排查日期之后'
     })
-  }
-  if (fileList.value.length) {
-    reportForm.value.picIds = [];
-    fileList.value.forEach((file) => {
-      reportForm.value.picIds.push(file.objectName);
-    });
+    return
   }
   let data = await reformHidangerById(reportForm.value);
 
