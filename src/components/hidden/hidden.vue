@@ -115,6 +115,17 @@ const showFlow = (uid: string) => {
       font-weight: 700;
       margin: 0 10rpx;
     }
+    .gohandle {
+      width: 144rpx;
+      height: 62rpx;
+      line-height: 62rpx;
+      border: 1rpx solid $uni-color-primary;
+      border-radius: 31rpx;
+      margin-right: 0;
+      font-size: 26rpx;
+      color: $uni-color-primary;
+      font-weight: 500;
+    }
     .handled {
       color: $uni-color-success;
       position: relative;
