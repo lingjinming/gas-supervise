@@ -54,6 +54,7 @@
     "@dcloudio/uni-quickapp-webview": "3.0.0-alpha-3070720230316001",
     "@vant/weapp": "^1.10.19",
     "miniprogram-api-typings": "^3.10.0",
+    "pinia": "2.0.36",
     "sass": "^1.63.4",
     "unplugin-auto-import": "^0.16.4",
     "vue": "^3.2.45",
