@@ -52,13 +52,6 @@
         @change="reportForm.targetOrgPhone = $event.detail"
         label="负责人联系方式"
         placeholder="请输入"
-        :rules="[
-          { required: true, message: '展示占位文字必须填写' },
-          {
-            pattern: /^1[3|4|5|8|9]\d{9}$/,
-            message: '请输入合法手机号！',
-          },
-        ]"
       />
       <van-field
         :value="reportForm.checkers"
@@ -95,9 +88,7 @@ let reportForm: ICheckPlanVo = ref({
   startDate: formatDate(minDate),
   endDate: formatDate(tomorrowDate),
 });
-watch(reportForm,(val) => {
-  console.log(val)
-})
+
 
 
 
