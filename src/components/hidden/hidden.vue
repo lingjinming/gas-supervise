@@ -1,4 +1,10 @@
 <template>
+    <van-skeleton
+    title
+    avatar
+    row="2"
+    :loading="loading"
+  >
   <view class="hidden-box" @click="showFlow(info.uid as string)">
     <view class="tit">
       <view>
@@ -30,11 +36,12 @@
       </template>
     </view>
   </view>
+  </van-skeleton>
 </template>
 <script setup lang="ts">
 import type { HidangerPgaeVO } from '@/api/hidden';
 import type { PropType } from 'vue'
-
+let loading = ref(true)
 const props = defineProps({
   info: {
     type: Object as PropType<HidangerPgaeVO>,
@@ -43,6 +50,10 @@ const props = defineProps({
     }
   }
 })
+
+setTimeout(() => {
+  loading.value = false;
+}, 500);
 
 // 去整改
 const navigatoReform = (uid: string) => {

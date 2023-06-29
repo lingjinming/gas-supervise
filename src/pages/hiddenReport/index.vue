@@ -56,31 +56,12 @@
       />
 
       <van-field
-        is-link
         label="检查日期"
-        @click-input="checkDatePopupIsShow = true"
+        disabled
+        :value="reportForm.checkDate"
       >
-        <input
-          :value="reportForm.checkDate"
-          slot="input"
-          placeholder="请选择"
-        />
       </van-field>
-      <van-popup
-        :show="checkDatePopupIsShow"
-        position="bottom"
-        custom-style="height: 20%"
-      >
-        <van-datetime-picker
-          :min-date="minDate"
-          :max-date="maxDate"
-          :value="reportForm.checkDate"
-          type="date"
-          @confirm="chooseDate"
-          @cancel="checkDatePopupIsShow = false"
-      /></van-popup>
     </van-cell-group>
-
     <view class="uploader-box">
       <text>上传照片</text>
       <van-uploader
@@ -102,8 +83,8 @@
 import { reactive, ref } from "vue";
 import { addHidden, type req_addHidden } from "../../api/hidden";
 import { formatDate } from "@/utils";
-
-let isOrg: boolean = uni.getStorageSync("USER_INFO")["orgType"] != 1;
+import { minDate,maxDate} from "@/hooks";
+const isOrg: boolean = uni.getStorageSync("USER_INFO")["orgType"] != 1;
 
 onMounted(() => {
   isOrg &&
@@ -112,15 +93,13 @@ onMounted(() => {
     });
 });
 
-let checkDatePopupIsShow = ref(false);
-
 let reportForm: req_addHidden = ref({
   isOrg: isOrg,
   remark: "",
   address: "",
   orgId: "",
   level: "",
-  checkDate: "",
+  checkDate: formatDate(minDate),
   planCode: "",
   subjectType: "",
   dangerType: "",
@@ -129,6 +108,7 @@ let reportForm: req_addHidden = ref({
   latitude: "",
   districtId: "",
 });
+// reportForm.value.checkDate = 
 let fileList: any = ref([]);
 const delImg = (event) => {
   fileList.value.splice(event.detail.index, 1);
@@ -169,13 +149,6 @@ const uploadImg = async (event) => {
     });
     fileList.value = JSON.parse(JSON.stringify(file));
   });
-};
-
-const minDate = ref(new Date().getTime());
-const maxDate = ref(new Date(2099, 10, 1).getTime());
-const chooseDate = (e) => {
-  checkDatePopupIsShow.value = false;
-  reportForm.value.checkDate = formatDate(e.detail);
 };
 
 const submit = async () => {

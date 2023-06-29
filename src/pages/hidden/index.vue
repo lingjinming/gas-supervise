@@ -7,25 +7,22 @@
   </view>
   <scroll-view style="height: calc(100% - 100rpx);" scroll-y="true" class="scroll-Y" @scrolltolower="nextPage">
     <!-- 隐患列表 -->
-    <view v-if="state.list.length">
+    <template v-if="state.list.length">
       <hidden v-for="item in state.list" :key="item.uid" :info="item"></hidden>
-    </view>
-    <view v-else>
-      <van-empty description="暂无数据"></van-empty>
-    </view>
+    </template>
+    <van-empty v-else description="暂无数据"></van-empty>
   </scroll-view>
 
   <!-- 搜索面板 -->
   <van-popup :show="state.showQuery" position="top"
-    custom-style="height: 70%;width: 100%;border-radius: 10rpx;padding: 29rpx" @close="cancel">
+    custom-style="padding: 30rpx" @close="cancel">
+    <!-- 隐患类型 -->
+    <van-cascader-new dicType="RISK_SUBJECT_TYPE_TREE" label="隐患类别" title="隐患类别" v-model="state.query.dangerType"
+      v-model:subjectType="state.query.subjectType" />
     <check-group useAll v-model="state.query.state" title="隐患状态"
       :options="[{ label: '待整改', value: 'WAIT_HANDLE' }, { label: '已整改', value: 'WAIT_AUDIT,HANDLED' }]"></check-group>
     <check-group useAll v-model="state.query.dangerSource" title="隐患来源" :options="state.dics.source"></check-group>
     <check-group useAll v-model="state.query.level" title="隐患级别" :options="state.dics.level"></check-group>
-
-    <!-- 隐患类型 -->
-    <van-cascader-new dicType="RISK_SUBJECT_TYPE_TREE" label="隐患类别" title="隐患类别" v-model="state.query.dangerType"
-      v-model:subjectType="state.query.subjectType" />
 
     <!-- 确定 -->
     <view class="bottom">
@@ -136,7 +133,7 @@ onMounted(() => {
 
 .bottom {
   @include flex-between;
-
+  margin-top: 20rpx;
   .btn {
     border: 0px;
     width: 333rpx;

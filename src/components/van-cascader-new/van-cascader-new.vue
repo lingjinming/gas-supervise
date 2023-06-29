@@ -3,7 +3,7 @@
     <input hold-keyboard readonly :value="cascaderVal" slot="input" placeholder="请选择" />
   </van-field>
   <van-popup :show="isShow" round position="bottom">
-    <van-cascader v-bind="$attrs" :options="options" @finish="finish" @close="isShow=false"/>
+    <van-cascader v-bind="$attrs" :options="options" @change="change" @close="isShow=false" @finish="isShow=false"/>
   </van-popup>
 </template>
 <script setup lang="ts">
@@ -52,15 +52,22 @@ const showCascader = () => {
     columnsObj[props.dicType]();
 };
 
-const finish = (e) => {
+const change = (e) => {
   const detail = e.detail;
-  isShow.value = false;
   console.log(detail);
   if (props.dicType == "RISK_SUBJECT_TYPE_TREE") {
-    cascaderVal.value = detail["selectedOptions"][1]["label"];
-    emits("update:modelValue", detail.value);
-    console.log(detail["selectedOptions"][0]["value"]);
-    emits("update:subjectType", detail["selectedOptions"][0]["value"]);
+    if(detail["selectedOptions"].length == 1){//未选择子集
+      cascaderVal.value = detail["selectedOptions"][0]["label"];
+
+      emits("update:subjectType", detail["value"]);
+      emits("update:modelValue", '');
+
+    }else{
+      cascaderVal.value = detail["selectedOptions"][1]["label"];
+      emits("update:modelValue", detail.value);
+      emits("update:subjectType", detail["selectedOptions"][0]["value"]);
+    }
+
   }
 
   if (props.dicType == "district") {

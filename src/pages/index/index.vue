@@ -39,15 +39,21 @@
 uni.hideTabBar();
 
 const menus = [
-  {
-    name: "政府界面",
-    image: "/static/img/icon_zfjm.png"
-  },
+  // {
+  //   name: "政府界面",
+  //   image: "/static/img/icon_zfjm.png"
+  // },
   {
     name: "隐患管理",
     url:'/pages/hidden/index',
     image: "/static/img/icon_yhgl.png"
   },
+  {
+    name: "检查计划管理",
+    url:'/pages/check/index',
+    image: "/static/img/icon_jcjhgl.png"
+  },
+  
   {
     name: "风险管理",
     image: "/static/img/icon_fxgl.png"
@@ -64,11 +70,7 @@ const menus = [
     name: "事故事件管理",
     image: "/static/img/icon_sgsjgl.png"
   },
-  {
-    name: "检查计划管理",
-    url:'/pages/check/index',
-    image: "/static/img/icon_jcjhgl.png"
-  },
+
   {
     name: "更多分类",
     image: "/static/img/icon_gdfl.png"

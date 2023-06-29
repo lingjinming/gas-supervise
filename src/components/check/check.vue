@@ -1,6 +1,6 @@
 <template>
-  <!-- <view > -->
-    <van-swipe-cell :right-width="100" class="data-box">
+  <view class="data-box">
+    <van-swipe-cell :right-width="100" >
       <van-cell-group>
         <view class="left">
           <view class="tit">
@@ -18,7 +18,7 @@
         <view class="del" @click="deletePlan(data.uid)">删除</view>
       </view>
     </van-swipe-cell>
-  <!-- </view> -->
+  </view>
 </template>
 <script setup lang="ts">
 import { checkPlanDelById, checkPlanFinishById, type CheckVo } from "@/api/hidden";
@@ -52,8 +52,10 @@ const finishPlan = async (uid) => {
 
 <style lang="scss" scoped>
 .data-box {
-  background: #fff;
+  box-shadow: $uni-box-shadow;
   margin-bottom: 20rpx;
+  margin: 20rpx;
+    border-radius: 10rpx;
   .left {
     flex: 1;
     padding: 30rpx;
@@ -75,6 +77,7 @@ const finishPlan = async (uid) => {
       @include flex-center;
       width: 50%;
       height: 100%;
+      color: #fff;
     }
     .done {
       background: $uni-color-success;

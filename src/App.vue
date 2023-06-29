@@ -34,6 +34,11 @@ page {
   border-radius: 6px;
   margin:0 auto;
 }
+.van-field__label{
+  font-size: 24rpx;
+    color: $uni-text-color;
+    font-weight: 600;
+}
 .fs {
   &-12 {
     font-size: 24rpx;

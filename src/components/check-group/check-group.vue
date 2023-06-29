@@ -77,11 +77,11 @@ const clickAll = () => {
 
 <style lang="scss" scoped>
 .tab_box {
+  margin-bottom: 20rpx;
   .tit {
     color: #999;
-    height: 40rpx;
-    line-height: 40rpx;
-    margin-bottom: 15rpx;
+    height: 60rpx;
+    line-height: 60rpx;
     font-size: 28rpx;
     font-family: Microsoft YaHei;
     font-weight: 400;
