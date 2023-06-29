@@ -27,7 +27,7 @@
         由<text class="publisher">{{ info.checkBy }}</text>发布
       </view>
       <template v-if=" 'WAIT_HANDLE'.includes(info.state!)">
-        <van-button plain hairline round size="mini" type="primary" @click="navigatoReform(info.uid!)">去整改</van-button>
+        <van-button plain hairline round size="mini" type="primary" @click.stop="navigatoReform(info.uid!)">去整改</van-button>
       </template>
       <template v-else >
         <view class="handled">

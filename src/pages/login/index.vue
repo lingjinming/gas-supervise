@@ -1,6 +1,6 @@
 <template>
   <view>
-    <image class="login-background" src="@/static/img/个人中心bg.png"></image>
+    <image class="login-background" src="@/static/img/login_bg.png"></image>
 
     <div class="login-box">
       <text class="page-title">燃气安全监管</text>
