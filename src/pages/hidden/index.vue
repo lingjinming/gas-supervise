@@ -8,7 +8,7 @@
   <scroll-view style="height: calc(100% - 100rpx);" scroll-y="true" class="scroll-Y" @scrolltolower="nextPage">
     <!-- 隐患列表 -->
     <template v-if="state.list.length">
-      <hidden v-for="item in state.list" :key="item.uid" :info="item"></hidden>
+      <hidden v-for="(item,i) in state.list" :key="i" :info="item"></hidden>
     </template>
     <van-empty v-else description="暂无数据"></van-empty>
   </scroll-view>

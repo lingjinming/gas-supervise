@@ -1,6 +1,6 @@
 <template>
     <scroll-view
-    style="height: 100%;"
+    style="height: 100%;padding-bottom: 100rpx;"
     scroll-y="true"
     class="scroll-Y container"
   >
@@ -9,8 +9,8 @@
       avatar
       row="3"
       :loading="loading"
-      v-for="(val, key) in data"
-      :key="key"
+      v-for="(val, key,i) in data"
+      :key="i"
     >
       <view class="detail-box">
         <view class="tit">
@@ -29,14 +29,15 @@
         </view>
         <view class="con">
           <view class="remark">{{ val.remark }}</view>
-         <template v-if="val.picIds">
+          <view class="region-imgBox" v-if="val.fileIds && val.fileIds.length">
             <region-img
-              v-for="img in val.picIds"
+              v-for="img in val.fileIds"
               :key="img"
               region="test"
               :id="img"
             />
-          </template> 
+          </view>
+   
           <template v-if="key=='push'">
           <view >隐患类型: {{ val._subjectType + val._dangerType }}</view>
           <view>整改单位: {{ val.operatorOrg }}</view>
@@ -66,7 +67,7 @@ const getDetail = async (id) => {
 <style lang="scss" scoped>
 .detail-box {
   margin-bottom: 30rpx;
-  padding: 40rpx 20rpx 0 80rpx;
+  padding: 40rpx 40rpx 40rpx 80rpx;
 
   .tit {
     margin-bottom: 20rpx;
@@ -94,5 +95,8 @@ const getDetail = async (id) => {
   color: $uni-text-color !important;
   font-weight: 600;
 }
-
+.region-imgBox{
+  overflow-x: auto;
+  @include flex-between;
+}
 </style>

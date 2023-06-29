@@ -21,14 +21,14 @@
       </van-field>
 
 
-      <van-field
+      <!-- <van-field
         :value="districtName"
         :innerValue="districtName"
         label="所属区域"
         fixed
         autosize
         placeholder="请点选位置"
-      />
+      /> -->
 
       <van-picker-new
         dicType="org"
