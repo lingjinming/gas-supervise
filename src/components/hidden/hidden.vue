@@ -27,7 +27,7 @@
         由<text class="publisher">{{ info.checkBy }}</text>发布
       </view>
       <template v-if=" 'WAIT_HANDLE'.includes(info.state!)">
-        <van-button plain hairline round size="mini" type="primary" @click="navigatoReform(info.uid!)">去整改</van-button>
+        <button type="primary" plain="true" class="gohandle" @click="navigatoReform(info.uid!)">去整改</button>
       </template>
       <template v-else >
         <view class="handled">
@@ -114,6 +114,17 @@ const showFlow = (uid: string) => {
     .publisher {
       font-weight: 700;
       margin: 0 10rpx;
+    }
+    .gohandle {
+      width: 144rpx;
+      height: 62rpx;
+      line-height: 62rpx;
+      border: 1rpx solid $uni-color-primary;
+      border-radius: 31rpx;
+      margin-right: 0;
+      font-size: 26rpx;
+      color: $uni-color-primary;
+      font-weight: 500;
     }
     .handled {
       color: $uni-color-success;

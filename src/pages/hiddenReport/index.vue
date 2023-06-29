@@ -20,6 +20,16 @@
         />
       </van-field>
 
+
+      <van-field
+        :value="districtName"
+        :innerValue="districtName"
+        label="所属区域"
+        fixed
+        autosize
+        placeholder="请点选位置"
+      />
+
       <van-picker-new
         dicType="org"
         :label="isOrg ? '责任企业' : '上报企业'"
@@ -33,12 +43,6 @@
         title="关联检查计划"
         v-model="reportForm.planCode"
         :orgId="reportForm.orgId"
-      />
-      <van-cascader-new
-        dicType="district"
-        label="所属区域"
-        title="所属区域"
-        v-model="reportForm.districtId"
       />
 
       <van-picker-new
@@ -81,9 +85,10 @@
   </view>
 </template>
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { reactive, ref , type Ref} from "vue";
 import { addHidden, type req_addHidden } from "../../api/hidden";
 import { formatDate } from "@/utils";
+import { getDistrictId } from '@/utils/qqMapUtil'
 import { minDate,maxDate} from "@/hooks";
 const isOrg: boolean = uni.getStorageSync("USER_INFO")["orgType"] != 1;
 
@@ -94,6 +99,8 @@ onShow(() => {
     });
 });
 
+let checkDatePopupIsShow = ref(false);
+const districtName = ref('')
 let reportForm: req_addHidden = ref({
   isOrg: isOrg,
   remark: "",
@@ -109,7 +116,7 @@ let reportForm: req_addHidden = ref({
   latitude: "",
   districtId: "",
 });
-// reportForm.value.checkDate = 
+// reportForm.value.checkDate =
 let fileList: any = ref([]);
 const delImg = (event) => {
   fileList.value.splice(event.detail.index, 1);
@@ -175,7 +182,19 @@ const chooseLocation = () => {
           reportForm.value.address = res.name + res.name;
           reportForm.value.longitude = res.longitude;
           reportForm.value.latitude = res.latitude;
+          console.log(res);
+
+          getDistrictId(res.latitude,res.longitude).then(data => {
+            console.log(data);
+
+            reportForm.value.districtId = data.code;
+            districtName.value = data.name;
+          })
         },
+        fail: function (res) {
+          console.log(res);
+
+        }
       });
     },
   });

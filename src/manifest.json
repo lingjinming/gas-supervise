@@ -59,7 +59,8 @@
             "scope.userLocation":{
                 "desc":"用于获取位置信息和经纬度信息"
             }
-        }
+        },
+        "requiredPrivateInfos": [ "getLocation", "chooseLocation" ]
     },
     "mp-alipay" : {
         "usingComponents" : true
@@ -70,7 +71,7 @@
     "mp-toutiao" : {
         "usingComponents" : true
     },
-    "uniStatistics": {  
+    "uniStatistics": {
         "enable": false
     },
     "vueVersion" : "3"
