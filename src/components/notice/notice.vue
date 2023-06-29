@@ -99,7 +99,7 @@ const getNoticeFn = async () => {
   }, 500);
 };
 
-onMounted(() => {
+onShow(() => {
   getNoticeFn();
 });
 </script>

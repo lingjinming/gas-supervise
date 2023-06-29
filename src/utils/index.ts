@@ -1,4 +1,4 @@
-export const formatDate = (value) => {
+export const formatDate = (value:number) => {
   let date = new Date(value);
   let y = date.getFullYear();
   let m = date.getMonth() + 1;

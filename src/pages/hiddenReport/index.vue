@@ -13,6 +13,7 @@
       <van-field label="位置" is-link>
         <input
            slot="input"
+           style="width: 100%;"
           :value="reportForm.address"
           placeholder="请选择"
           @click="chooseLocation"
@@ -86,7 +87,7 @@ import { formatDate } from "@/utils";
 import { minDate,maxDate} from "@/hooks";
 const isOrg: boolean = uni.getStorageSync("USER_INFO")["orgType"] != 1;
 
-onMounted(() => {
+onShow(() => {
   isOrg &&
     uni.setNavigationBarTitle({
       title: "安全检查下发",

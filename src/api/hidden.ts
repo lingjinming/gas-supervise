@@ -1,8 +1,32 @@
 // 导入请求函数
 import { request } from "./request";
+export interface ICheckPlanVo {
+  title:string
+  startDate:string
+  endDate:string
+  type:string
+  targetOrgId:string
+  targetOrgOwner:string
+  targetOrgPhone:string
+  checkers:string
+  address:string
+  targetOrgAddr:''
+}
+/**
+ * @description 新增检查计划
+ */
+
+export const addCheckPlan = (data: ICheckPlanVo) => {
+  return request({
+    url: `gasguard-service-risk-app/hidanger/gov/check-plan`,
+    method: "POST",
+    data
+  });
+};
+
 
 /**
- * 获取检查计划
+ * @description  获取检查计划
  *
  */
 export const getCheckPlanByOrg = (orgId: string) => {
@@ -13,7 +37,7 @@ export const getCheckPlanByOrg = (orgId: string) => {
 };
 
 /**
- * 新增隐患
+ * @description 新增隐患
  *
  */
 export type req_addHidden = {

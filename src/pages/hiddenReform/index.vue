@@ -19,6 +19,7 @@
         <input
           :value="reportForm.handleDate"
           slot="input"
+          style="width: 100%;"
           placeholder="请选择"
         />
       </van-field>

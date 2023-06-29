@@ -8,6 +8,12 @@
       }
     },
     {
+      "path": "pages/addCheck/index",
+      "style": {
+        "navigationBarTitleText": "创建检查计划"
+      }
+    },
+    {
       "path": "pages/hiddenDetail/index",
       "style": {
         "navigationBarTitleText": "隐患详情"
@@ -102,7 +108,8 @@
       "van-skeleton":"wxcomponents/vant/skeleton/index",
       "van-tag": "wxcomponents/vant/tag/index",
       "van-checkbox-group": "wxcomponents/vant/checkbox-group/index",
-      "van-checkbox": "wxcomponents/vant/checkbox/index"
+      "van-checkbox": "wxcomponents/vant/checkbox/index",
+      "van-calendar": "wxcomponents/vant/calendar/index"
     }
   }
 }

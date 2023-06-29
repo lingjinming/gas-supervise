@@ -5,14 +5,16 @@
     <div class="login-box">
       <text class="page-title">燃气安全监管</text>
 
+
+      <van-cell-group>
+
       <van-picker-new
+          :is-link="false"
           dicType="SERVER_CONFIG"
           label="地区"
           title="服务器"
           v-model="serverValue"
       />
-
-      <van-cell-group>
         <van-field
             :value="loginForm.username"
             @change="loginForm.username = $event.detail"

@@ -21,7 +21,7 @@ const props = defineProps({
 })
 let src = ref('');
 
-onMounted(async () => {
+onShow(async () => {
     let urlObj = await getImg(props.id);
     console.log('urlObj',getUrl(urlObj.data))
     uni.request({

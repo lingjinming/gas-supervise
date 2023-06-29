@@ -101,7 +101,7 @@ const fetchPage = async () => {
   state.list.push(...data)
 }
 
-onMounted(() => {
+onShow(() => {
   loadDic();
   fetchPage();
 })

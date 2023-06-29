@@ -1,6 +1,6 @@
 <template>
   <van-field v-bind="$attrs" @click-input="showCascader" is-link>
-    <input hold-keyboard readonly :value="cascaderVal" slot="input" placeholder="请选择" />
+    <input hold-keyboard readonly :value="cascaderVal" slot="input" style="width: 100%;" placeholder="请选择" />
   </van-field>
   <van-popup :show="isShow" round position="bottom">
     <van-cascader v-bind="$attrs" :options="options" @change="change" @close="isShow=false" @finish="isShow=false"/>

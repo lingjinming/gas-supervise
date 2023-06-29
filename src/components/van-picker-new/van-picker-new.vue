@@ -1,6 +1,6 @@
 <template>
   <van-field v-bind="$attrs" is-link clickable @click-input="showPicker">
-    <input hold-keyboard readonly disabled :value="pickerVal" slot="input"  placeholder="请选择" />
+    <input hold-keyboard readonly disabled :value="pickerVal" slot="input" style="width: 100%;" placeholder="请选择" />
   </van-field>
   <van-popup :show="isShow" round position="bottom">
     <van-picker
@@ -47,13 +47,6 @@ const columnsObj = {
     });
     columns.value = data;
   },
-  RISK_DANGER_LEVEL: async () => {
-    let data = (await getDictList(props.dicType))["data"][props.dicType];
-    data.forEach((ele) => {
-      ele.text = ele.label;
-    });
-    columns.value = data;
-  },
   SERVER_CONFIG: async () => {
     let data = uni.getStorageSync("SERVER_LIST");
     data.forEach((ele) => {
@@ -63,10 +56,18 @@ const columnsObj = {
   },
 };
 
+const getDictListFn = async (type:string) =>{
+  let data = (await getDictList(type))["data"][type];
+  columns.value = data;
+}
+
 const showPicker = () => {
   isShow.value = true;
-  Object.keys(columnsObj).includes(props.dicType) &&
+  if(Object.keys(columnsObj).includes(props.dicType)){
     columnsObj[props.dicType]();
+  }else{
+    getDictListFn(props.dicType);
+  }
 };
 
 const confirm = (e) => {
@@ -76,12 +77,10 @@ const confirm = (e) => {
   if (props.dicType == "planCode") {
     pickerVal.value = value.value;
     emits("update:modelValue", value.value);
-  }
-  if (props.dicType == "org") {
+  } else if (props.dicType == "org") {
     pickerVal.value = value.shortName;
     emits("update:modelValue", value.id);
-  }
-  if (props.dicType == "RISK_DANGER_LEVEL" || props.dicType == "SERVER_CONFIG") {
+  }else{
     pickerVal.value = value.label;
     emits("update:modelValue", value.value);
   }
