@@ -59,7 +59,6 @@ onShow(() => {
 .top {
   @include flex-between;
   height: 80rpx;
-  margin-bottom: 20rpx;
   padding: 0 40rpx;
 }
 </style>

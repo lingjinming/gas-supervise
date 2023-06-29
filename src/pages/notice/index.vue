@@ -4,7 +4,8 @@
     scroll-y="true"
     class="scroll-Y"
   >
-    <notice />
+    <view style="padding:0 20rpx;">    <notice />
+</view>
   </scroll-view>
 </template>
 <script setup lang="ts"></script>

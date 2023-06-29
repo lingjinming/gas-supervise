@@ -1,6 +1,6 @@
 <template>
   <view>
-    <image class="login-background" src="@/static/img/个人中心bg.png"></image>
+    <image class="login-background" src="@/static/img/login_bg.png"></image>
 
     <div class="login-box">
       <text class="page-title">燃气安全监管</text>
@@ -21,6 +21,7 @@
             clearable
             label="账号"
             placeholder="请输入账号"
+            maxlength="20"
         />
         <van-field
             :value="loginForm.password"
@@ -30,6 +31,7 @@
             label="密码"
             placeholder="请输入密码"
             :border="false"
+            maxlength="20"
         />
       </van-cell-group>
       <van-button class="login-btn" type="primary" color="#006CFF" size="large" @click="login">登 录</van-button>

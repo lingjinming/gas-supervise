@@ -9,26 +9,26 @@
         fixed
         autosize
         placeholder="请输入"
+        maxlength="200"
       />
       <van-field label="位置" is-link>
         <input
-           slot="input"
-           style="width: 100%;"
+          slot="input"
+          style="width: 100%"
           :value="reportForm.address"
           placeholder="请选择"
           @click="chooseLocation"
         />
       </van-field>
 
-
-      <van-field
+      <!-- <van-field
         :value="districtName"
         :innerValue="districtName"
         label="所属区域"
         fixed
         autosize
         placeholder="请点选位置"
-      />
+      /> -->
 
       <van-picker-new
         dicType="org"
@@ -60,24 +60,11 @@
         v-model:subjectType="reportForm.subjectType"
       />
 
-      <van-field
-        label="检查日期"
-        disabled
-        :value="reportForm.checkDate"
-      >
+      <van-field label="检查日期" disabled :value="reportForm.checkDate">
       </van-field>
     </van-cell-group>
-    <view class="uploader-box">
-      <text>上传照片</text>
-      <van-uploader
-        multiple
-        :max-count="3"
-        accept="image"
-        :file-list="fileList"
-        @delete="delImg"
-        @after-read="uploadImg"
-      ></van-uploader>
-    </view>
+
+    <van-uploader-new v-model="reportForm.fileIds" />
 
     <van-button type="primary" size="large" round plain @click="submit"
       >确定</van-button
@@ -85,12 +72,13 @@
   </view>
 </template>
 <script setup lang="ts">
-import { reactive, ref , type Ref} from "vue";
+import { reactive, ref, type Ref } from "vue";
 import { addHidden, type req_addHidden } from "../../api/hidden";
 import { formatDate } from "@/utils";
-import { getDistrictId } from '@/utils/qqMapUtil'
-import { minDate,maxDate} from "@/hooks";
-const isOrg: boolean = uni.getStorageSync("USER_INFO")["orgType"] != 1;
+import { getDistrictId } from "@/utils/qqMapUtil";
+import { minDate, maxDate } from "@/hooks";
+const isOrg: boolean =
+  uni.getStorageSync("USER_INFO")["organizationVO"]["orgType"] != 1;
 
 onShow(() => {
   isOrg &&
@@ -100,7 +88,7 @@ onShow(() => {
 });
 
 let checkDatePopupIsShow = ref(false);
-const districtName = ref('')
+const districtName = ref("");
 let reportForm: req_addHidden = ref({
   isOrg: isOrg,
   remark: "",
@@ -116,56 +104,8 @@ let reportForm: req_addHidden = ref({
   latitude: "",
   districtId: "",
 });
-// reportForm.value.checkDate =
-let fileList: any = ref([]);
-const delImg = (event) => {
-  fileList.value.splice(event.detail.index, 1);
-};
-const uploadImg = async (event) => {
-  let SERVER_CONFIG = uni.getStorageSync("SERVER_CONFIG");
-  let { file } = event.detail;
-  // console.log(file);
-  file.map((item) => {
-    item = Object.assign(item, {
-      url: file.tempFilePath,
-      status: "uploading",
-      message: "上传中",
-    });
-  });
-  fileList.value = file;
-  const uploadTasks = file.map((item) => {
-    return new Promise((resolve) => {
-      uni.uploadFile({
-        url: "https://aiot.citysafety.com/gasguard/gasguard-service-system-app/file/upload",
-        filePath: item.tempFilePath,
-        name: "file",
-        header: {
-          "x-api-region": SERVER_CONFIG.name,
-          Authorization:
-            "Bearer " + uni.getStorageSync("TOKEN_INFO")["access_token"],
-        },
-        success(res) {
-          item.status = "done";
-          resolve(JSON.parse(res.data));
-        },
-      });
-    });
-  });
-  Promise.all(uploadTasks).then((data) => {
-    data.map((item, i) => {
-      file[i] = Object.assign(file[i], item.data);
-    });
-    fileList.value = JSON.parse(JSON.stringify(file));
-  });
-};
 
 const submit = async () => {
-  if (fileList.value.length) {
-    reportForm.value.fileIds = [];
-    fileList.value.forEach((file) => {
-      reportForm.value.fileIds.push(file.objectName);
-    });
-  }
   let data = await addHidden(reportForm.value);
   data.success &&
     setTimeout(() => {
@@ -184,17 +124,16 @@ const chooseLocation = () => {
           reportForm.value.latitude = res.latitude;
           console.log(res);
 
-          getDistrictId(res.latitude,res.longitude).then(data => {
+          getDistrictId(res.latitude, res.longitude).then((data) => {
             console.log(data);
 
             reportForm.value.districtId = data.code;
             districtName.value = data.name;
-          })
+          });
         },
         fail: function (res) {
           console.log(res);
-
-        }
+        },
       });
     },
   });

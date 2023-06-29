@@ -1,5 +1,5 @@
 <template>
-    <van-calendar
+  <van-calendar
     type="range"
     :show="isShow"
     @close="isShow = false"
@@ -8,6 +8,7 @@
   <view class="container">
     <van-cell-group>
       <van-field
+        maxlength="200"
         :value="reportForm.title"
         @change="reportForm.title = $event.detail"
         label="计划名称"
@@ -20,12 +21,12 @@
         placeholder="请选择"
         readonly
       >
-      <input
-           slot="input"
-           style="width: 100%;"
-           :value="reportForm.startDate + ' - ' + reportForm.endDate"
+        <input
+          slot="input"
+          style="width: 100%"
+          :value="reportForm.startDate + ' - ' + reportForm.endDate"
         />
-    </van-field>
+      </van-field>
 
       <van-picker-new
         dicType="SAFE_CHECK_TYPE"
@@ -44,34 +45,31 @@
         @change="reportForm.targetOrgOwner = $event.detail"
         label="企业负责人"
         placeholder="请输入"
+        maxlength="200"
       />
       <van-field
         :value="reportForm.targetOrgPhone"
         @change="reportForm.targetOrgPhone = $event.detail"
         label="负责人联系方式"
         placeholder="请输入"
+        :rules="[
+          { required: true, message: '展示占位文字必须填写' },
+          {
+            pattern: /^1[3|4|5|8|9]\d{9}$/,
+            message: '请输入合法手机号！',
+          },
+        ]"
       />
       <van-field
         :value="reportForm.checkers"
         @change="reportForm.checkers = $event.detail"
         label="参与人"
         placeholder="请输入"
+        maxlength="200"
       />
-      <!-- <van-field label="位置" is-link>
-        <input
-           slot="input"
-           style="width: 100%;"
-          :value="reportForm.address"
-          readonly
-          placeholder="请选择"
-          @click="chooseLocation"
-        />
-      </van-field> -->
-   
     </van-cell-group>
 
-
-    <van-button type="primary" size="large" round plain @click="submit"
+    <van-button  type="primary" size="large" round plain @click="submit"
       >确定</van-button
     >
   </view>
@@ -80,51 +78,50 @@
 import { reactive, ref } from "vue";
 import { addCheckPlan, type ICheckPlanVo } from "../../api/hidden";
 import { formatDate } from "@/utils";
-import { minDate ,tomorrowDate} from "@/hooks";
+import { minDate, tomorrowDate } from "@/hooks";
 
 let isShow = ref(false);
 
-const onConfirm = (e) => {
-  reportForm.value.startDate= formatDate(e.detail[0])
-  reportForm.value.endDate= formatDate(e.detail[1])
-  isShow.value = false
-};
-let reportForm:ICheckPlanVo = ref({
-  targetOrgAddr:'',
-  startDate:formatDate(minDate),
-  endDate:formatDate(tomorrowDate),
-});
 
-// const chooseLocation = () => {
-//   uni.authorize({
-//     scope: "scope.userLocation",
-//     success() {
-//       uni.chooseLocation({
-//         success: function (res) {
-//           console.log(res)
-//           reportForm.value.targetOrgAddr = res.name + res.name;
-//         },
-//       });
-//     },
-//   });
-// };
+
+
+const onConfirm = (e) => {
+  reportForm.value.startDate = formatDate(e.detail[0]);
+  reportForm.value.endDate = formatDate(e.detail[1]);
+  isShow.value = false;
+};
+let reportForm: ICheckPlanVo = ref({
+  targetOrgAddr: "",
+  startDate: formatDate(minDate),
+  endDate: formatDate(tomorrowDate),
+});
+watch(reportForm,(val) => {
+  console.log(val)
+})
+
+
 
 const submit = async () => {
   let data = await addCheckPlan(reportForm.value);
-  data.success &&
-    uni.showToast({
-      title: data.message,
-      icon: 'success',
-      mask: true
-    })
-    setTimeout(() => {
-      uni.navigateBack();
-    }, 500);
-};
+  uni.showToast({
+    title: data.message,
+    icon:data.success ? "success":'error',
+    mask: true,
+  });
+  console.log(data)
+if(data.success){
+  setTimeout(() => {
+    uni.navigateBack();
+  }, 500);
+}
 
+};
 </script>
 <style lang="scss" scoped>
 .top {
   line-height: 100rpx;
+}
+::v-deep .van-button{
+  margin-top: 30rpx;
 }
 </style>
