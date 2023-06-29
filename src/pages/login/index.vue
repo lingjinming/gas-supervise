@@ -47,6 +47,8 @@ let loginForm: Ref<req_token> = ref({
 let serverValue = ref(null);
 let serverList = uni.getStorageSync("SERVER_LIST");
 const login = async () => {
+  uni.setStorageSync("TOKEN_INFO", {});
+
   if (!serverValue.value) {
     uni.showToast({
       icon:'error',
@@ -77,10 +79,12 @@ const login = async () => {
   let TOKEN_INFO = await getToken(loginForm.value);
   uni.setStorageSync("TOKEN_INFO", TOKEN_INFO);
 
+  console.log(TOKEN_INFO)
+
   if (!uni.getStorageSync("TOKEN_INFO")["access_token"]) {
     uni.showToast({
       icon:'error',
-      title:'用户名或密码错误'
+      title:'账号或密码错误'
     });
     return;
   }
