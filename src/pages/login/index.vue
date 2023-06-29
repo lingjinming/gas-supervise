@@ -39,6 +39,17 @@
 <script setup lang="ts">
 import {getToken, getUserInfo, type req_token} from "@/api/uaa";
 import {ref, type Ref} from "vue";
+import { userStore } from "@/state";
+
+const store = userStore();
+if(store.isLogin) {
+  console.log('已经登录了');
+  
+  uni.switchTab({
+      url: "/pages/index/index",
+    });
+}
+
 
 let loginForm: Ref<req_token> = ref({
   grant_type: "password",
@@ -47,9 +58,10 @@ let loginForm: Ref<req_token> = ref({
   password: "Gsafety@2022",
 });
 let serverValue = ref(null);
-let serverList = uni.getStorageSync("SERVER_LIST");
+let serverList = store.getServerList;
+
 const login = async () => {
-  uni.setStorageSync("TOKEN_INFO", {});
+  //uni.setStorageSync("TOKEN_INFO", {});
 
   if (!serverValue.value) {
     uni.showToast({
@@ -79,11 +91,10 @@ const login = async () => {
 
   uni.showLoading({title:'登录中'})
   let TOKEN_INFO = await getToken(loginForm.value);
-  uni.setStorageSync("TOKEN_INFO", TOKEN_INFO);
+  // uni.setStorageSync("TOKEN_INFO", TOKEN_INFO);
+  store.setToken(TOKEN_INFO);
 
-  console.log(TOKEN_INFO)
-
-  if (!uni.getStorageSync("TOKEN_INFO")["access_token"]) {
+  if (!store.isLogin) {
     uni.showToast({
       icon:'error',
       title:'账号或密码错误'
@@ -93,7 +104,8 @@ const login = async () => {
   let USER_INFO = (await getUserInfo())["data"];
 
   if (USER_INFO) {
-    uni.setStorageSync("USER_INFO", USER_INFO);
+    store.setUserInfo(USER_INFO);
+    //uni.setStorageSync("USER_INFO", USER_INFO);
     uni.switchTab({
       url: "/pages/index/index",
     });
@@ -106,13 +118,17 @@ const login = async () => {
 };
 
 const changeServe = () => {
-  let auth = serverList.filter((item) => item.region == serverValue.value)[0][
-      "auth_header"
-      ];
-  uni.setStorageSync("SERVER_CONFIG", {
-    name: serverValue.value,
-    auth,
-  });
+  let server = store.getServer(serverValue.value!);
+  console.log(server);
+  store.setServer(server);
+  
+  // let auth = serverList.filter((item) => item.region == serverValue.value)[0][
+  //     "auth_header"
+  //     ];
+  // uni.setStorageSync("SERVER_CONFIG", {
+  //   name: serverValue.value,
+  //   auth,
+  // });
 };
 </script>
 

@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import { onLaunch, onShow, onHide } from "@dcloudio/uni-app";
-import { getConfig } from "./api/uaa";
+import { userStore } from '@/state/index'
+
 onLaunch(async () => {
-  let SERVER_LIST = (await getConfig())["regions"];
+  const store = userStore();
+  // 从缓存中恢复数据到pinia
+  store.restoreStore();
+  // 重新加载服务器配置
+  await store.loadServers();
+  /* let SERVER_LIST = (await getConfig())["regions"];
   SERVER_LIST.forEach((item) => {
     item.label = item.remark;
     item.value = item.region;
   });
-  uni.setStorageSync("SERVER_LIST", SERVER_LIST);
+  uni.setStorageSync("SERVER_LIST", SERVER_LIST); */
 });
 onShow(() => {
   // console.log("App Show");
@@ -25,25 +31,30 @@ page {
   height: 100vh;
   overflow: hidden;
 }
+
 .container {
   background: #fff;
   height: 100%;
   overflow: auto;
 }
+
 ::v-deep .van-swipe-cell {
   border-radius: 6px;
-  margin:0 auto;
+  margin: 0 auto;
 }
-.van-field__label{
+
+.van-field__label {
   font-size: 24rpx;
-    color: $uni-text-color;
-    font-weight: 600;
+  color: $uni-text-color;
+  font-weight: 600;
 }
+
 .fs {
   &-12 {
     font-size: 24rpx;
     color: $uni-text-color-placeholder;
   }
+
   &-16 {
     font-size: 24rpx;
     color: $uni-text-color;
@@ -51,9 +62,7 @@ page {
   }
 }
 
-::v-deep .van-skeleton__content{
+::v-deep .van-skeleton__content {
   border-radius: 6px;
-  margin:0 auto;
-}
-
-</style>
+  margin: 0 auto;
+}</style>

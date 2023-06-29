@@ -1,22 +1,26 @@
+import { userStore } from "@/state";
+
 const BASE_URL = "https://aiot.citysafety.com/gasguard/";
-const SUCESS_CODE = [200]
+const SUCESS_CODE = [200];
+
+
 export const request = <T = any>(option: UniApp.RequestOptions): Promise<T> => {
-  let TOKEN = uni.getStorageSync("TOKEN_INFO")["access_token"];
-  let SERVER_CONFIG = uni.getStorageSync("SERVER_CONFIG");
-  let header = {};
-  if (SERVER_CONFIG) {
-    header = Object.assign(header, {
-      "x-api-region": SERVER_CONFIG.name,
-      Authorization: SERVER_CONFIG.auth,
-      "content-type": "application/x-www-form-urlencoded",
-    });
+  const store = userStore();
+  const currentServer = store.auth.activeServer;
+
+  let header = {
+    "x-api-region": currentServer?.region
+  };
+  // 登录请求
+  if(isLoginReq(option.url)) {
+    header["Authorization"] = currentServer?.auth_header;
+    header["content-type"] =  "application/x-www-form-urlencoded";
   }
-  if (TOKEN) {
-    header = Object.assign(header, {
-      Authorization: "Bearer " + TOKEN,
-      "content-type": "application/json",
-    });
+  // 其他请求 
+  else {
+    header["Authorization"] = `Bearer ${store.auth.token?.access_token}`;
   }
+
   if (option.header) {
     header = Object.assign(header, option.header);
   }
@@ -47,6 +51,10 @@ export const request = <T = any>(option: UniApp.RequestOptions): Promise<T> => {
   });
 };
 
+// 是否是登录请求
+const isLoginReq = (url: string) => {
+  return url.includes('oauth/token')
+}
 
 // 处理一下get下的数组传参
 const handleGetQueryParam = (param: any) => {

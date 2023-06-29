@@ -21,7 +21,7 @@ export const upload = (data: any) => {
  *
  */
 export const getConfig = () => {
-  return request({
+  return request<{regions: {region: string,remark: string,auth_header: string}[]}>({
     url: "config.json",
     method: "GET",
   });
