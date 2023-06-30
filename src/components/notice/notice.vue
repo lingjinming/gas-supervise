@@ -11,14 +11,8 @@
     <view class="notice-box">
       <view class="tit">
         <van-icon
-          name="/static/img/tip1.png"
+          :name="'/static/img/'+notice.msgType + '.png'"
           size="36rpx"
-          v-if="notice.msgType === 'MsgBulletin'"
-        />
-        <van-icon
-          name="/static/img/tip2.png"
-          size="36rpx"
-          v-if="notice.msgType === 'MsgRiskCheck'"
         />
 
         <text class="title" v-if="notice.msgType === 'MsgBulletin'"
