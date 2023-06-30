@@ -10,17 +10,14 @@
   >
     <view class="notice-box">
       <view class="tit">
-        <van-icon
+        
+        <view style="display: flex;align-items: center;gap: 10rpx;">
+          <van-icon
           :name="'/static/img/'+notice.msgType + '.png'"
           size="36rpx"
-        />
-
-        <text class="title" v-if="notice.msgType === 'MsgBulletin'"
-          >安全检查通知</text
-        >
-        <text class="title" v-if="notice.msgType === 'MsgRiskCheck'"
-          >隐患整改催办</text
-        >
+        />{{ notice.title }}
+      </view>
+   
         <text class="time">{{ format(notice.sendTime) }}</text>
       </view>
       <view class="con">
