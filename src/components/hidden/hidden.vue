@@ -26,13 +26,16 @@
         <van-icon name="user-o" :size="18"/>
         由<text class="publisher">{{ info.checkBy }}</text>发布
       </view>
-      <template v-if=" 'WAIT_HANDLE'.includes(info.state!)">
-        <van-button plain hairline round size="mini" type="primary" @click.stop="navigatoReform(info)">去整改</van-button>
+      <template v-if="'HANDLED,WAIT_AUDIT'.includes(info.state!)">
+        <view class="state handled"> 已整改 </view>
       </template>
-      <template v-else >
-        <view class="handled">
-          已整改
-        </view>
+      <template v-else>
+        <template v-if="isOrg">
+          <van-button plain hairline round size="mini" type="primary" @click.stop="navigatoReform(info)">去整改</van-button>
+        </template>
+        <template v-else>
+          <view class="state wait-handle"> 待整改 </view>
+        </template>
       </template>
     </view>
   </view>
@@ -41,6 +44,13 @@
 <script setup lang="ts">
 import type { HidangerPgaeVO } from '@/api/hidden';
 import type { PropType } from 'vue'
+import { userStore } from "@/state";
+
+const store = userStore();
+
+const isOrg: boolean = store.isOrgUser;
+
+
 let loading = ref(true)
 const props = defineProps({
   info: {
@@ -126,7 +136,7 @@ const showFlow = (uid: string) => {
       color: $uni-color-primary;
       font-weight: 500;
     }
-    .handled {
+    .state {
       color: $uni-color-success;
       position: relative;
       &:before {
@@ -139,7 +149,19 @@ const showFlow = (uid: string) => {
         height: 16rpx;
         width: 16rpx;
         border-radius: 10rpx;
+        
+      }
+    }
+    .state.handled {
+      color: $uni-color-success;
+      &::before{
         background-color: $uni-color-success;
+      }
+    }
+    .state.wait-handle {
+      color: $uni-color-warning;
+      &::before{
+        background-color: $uni-color-warning;
       }
     }
   }

@@ -32,12 +32,13 @@
 
       <van-picker-new
         dicType="org"
-        :label="isOrg ? '责任企业' : '上报企业'"
-        :title="isOrg ? '责任企业' : '上报企业'"
+        :label="isOrg ?  '上报企业' : '责任企业' "
+        :title="isOrg ?  '上报企业' : '责任企业'"
         v-model="reportForm.orgId"
       />
+      <!-- 企业不需要关联检查计划 -->
       <van-picker-new
-        v-if="isOrg"
+        v-if="!isOrg"
         dicType="planCode"
         label="关联检查计划"
         title="关联检查计划"
@@ -82,6 +83,7 @@ import { userStore } from "@/state";
 const store = userStore();
 
 const isOrg: boolean = store.isOrgUser;
+
 
 onShow(() => {
   isOrg &&

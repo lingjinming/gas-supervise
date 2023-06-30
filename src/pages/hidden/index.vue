@@ -8,21 +8,37 @@
   <scroll-view style="height: calc(100% - 100rpx);" scroll-y="true" class="scroll-Y" @scrolltolower="nextPage">
     <!-- 隐患列表 -->
     <template v-if="state.list.length">
-      <hidden v-for="(item,i) in state.list" :key="i" :info="item"></hidden>
+      <hidden v-for="(item, i) in state.list" :key="i" :info="item"></hidden>
     </template>
     <van-empty v-else description="暂无数据"></van-empty>
   </scroll-view>
 
   <!-- 搜索面板 -->
-  <van-popup :show="state.showQuery" position="top"
-    custom-style="padding: 30rpx" @close="cancel">
+  <van-popup :show="state.showQuery" position="top" custom-style="padding: 30rpx" @close="cancel">
     <!-- 隐患类型 -->
-    <van-cascader-new dicType="RISK_SUBJECT_TYPE_TREE" label="隐患类别" title="隐患类别" v-model="state.query.dangerType"
+    <van-cascader-new 
+      dicType="RISK_SUBJECT_TYPE_TREE" 
+      label="隐患类别" 
+      title="隐患类别" 
+      v-model="state.query.dangerType"
       v-model:subjectType="state.query.subjectType" />
+    <!-- 所属企业(政府用户可见) -->
+    <van-picker-new
+        v-if="!isOrg"
+        dicType="org"
+        label="所属企业"
+        title="上报企业"
+        v-model="state.query.orgId"
+    />
+    <!-- 隐患状态 -->
     <check-group useAll v-model="state.query.state" title="隐患状态"
-      :options="[{ label: '待整改', value: 'WAIT_HANDLE' }, { label: '已整改', value: 'WAIT_AUDIT,HANDLED' }]"></check-group>
+      :options="[{ label: '待整改', value: 'WAIT_HANDLE' }, { label: '已整改', value: 'WAIT_AUDIT,HANDLED' }]">
+    </check-group>
+    <!-- 隐患来源 -->
     <check-group useAll v-model="state.query.dangerSource" title="隐患来源" :options="state.dics.source"></check-group>
+    <!-- 隐患级别 -->
     <check-group useAll v-model="state.query.level" title="隐患级别" :options="state.dics.level"></check-group>
+    
 
     <!-- 确定 -->
     <view class="bottom">
@@ -38,8 +54,12 @@
 import { hidangerPage, type HidangerPgaeVO, type HidangerOrgPageQuery } from '@/api/hidden';
 import { reactive, ref } from 'vue';
 import { getDictList, type DicItem } from '@/api/dic';
+import { userStore } from "@/state";
 
-let isOrg: boolean = uni.getStorageSync("USER_INFO")["orgType"] != 1;
+const store = userStore();
+
+const isOrg: boolean = store.isOrgUser;
+
 const state = reactive({
   showQuery: false,
   total: 0,
@@ -111,6 +131,7 @@ onShow(() => {
   margin: 0 40rpx;
   line-height: 100rpx;
   position: relative;
+
   .total {
     font-weight: 700;
     padding: 0 8rpx;
@@ -134,6 +155,7 @@ onShow(() => {
 .bottom {
   @include flex-between;
   margin-top: 20rpx;
+
   .btn {
     border: 0px;
     width: 333rpx;
@@ -152,4 +174,5 @@ onShow(() => {
     background: $uni-color-primary;
     color: #fff;
   }
-}</style>
+}
+</style>
