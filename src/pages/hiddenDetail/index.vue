@@ -1,36 +1,47 @@
 <template>
-    <scroll-view
-    style="height: 100%;padding-bottom: 100rpx;"
+  <scroll-view
+    style="height: 100%; padding-bottom: 100rpx"
     scroll-y="true"
     class="scroll-Y container"
   >
-  <van-skeleton
+    <van-skeleton
       title
       avatar
       row="3"
       :loading="loading"
-      v-for="(val, key,i) in data"
+      v-for="(val, key, i) in data"
       :key="i"
     >
-      <view class="detail-box">
+      <view class="detail-box" :data-stage="key">
         <view class="tit">
           <view class="top">
             <view>
-              <van-tag :type="val.level === 'ZD' ? 'danger': val.level == 'JD' ? 'warning' : 'primary'">{{ val._level }}</van-tag>
+              <van-tag
+                :type="
+                  val.level === 'ZD'
+                    ? 'danger'
+                    : val.level == 'JD'
+                    ? 'warning'
+                    : 'primary'
+                "
+                >{{ val._level }}</van-tag
+              >
 
-<text style="margin-left: 10rpx;" class="fs16">{{ val.title }}</text>
+              <text style="margin-left: 10rpx" class="fs16">{{
+                val.title
+              }}</text>
             </view>
-  
+
             <text class="fs12">{{ val.stageTime }}</text>
           </view>
           <view class="header">
             <image
-              style="width: 50rpx;height: 50rpx;"
+              style="width: 50rpx; height: 50rpx"
               src="../../static/img/header.png"
               mode="scaleToFill"
             />
-             {{ val.operator }}
-            </view>
+            {{ val.operator }}
+          </view>
         </view>
         <view class="con">
           <view class="remark">{{ val.remark }}</view>
@@ -42,12 +53,12 @@
               :id="img"
             />
           </view>
-   
-          <template v-if="key=='push'">
-          <view >隐患类型: {{ val._subjectType + val._dangerType }}</view>
-          <view>整改单位: {{ val.operatorOrg }}</view>
-          <view>详细地址: {{ val.address }}</view>
-        </template>
+
+          <template v-if="key == 'push'">
+            <view>隐患类型: {{ val._subjectType + val._dangerType }}</view>
+            <view>整改单位: {{ val.operatorOrg }}</view>
+            <view>详细地址: {{ val.address }}</view>
+          </template>
         </view>
       </view>
     </van-skeleton>
@@ -70,16 +81,64 @@ const getDetail = async (id) => {
 };
 </script>
 <style lang="scss" scoped>
+
 .detail-box {
+  position: relative;
   padding: 40rpx 40rpx 40rpx 80rpx;
 
+  &[data-stage='push'],
+  &[data-stage='handleStage'],
+  &[data-stage='auditStage']{
+    &::before,&::after{
+      content: '';
+      position: absolute;
+    }
+    &::after{
+      top: 50rpx;
+
+      left: 30rpx;
+      width: 20rpx;
+      height: 20rpx;
+      border-radius: 50%;
+    }
+    &::before{
+      top: 80rpx;
+      left: 38rpx;
+      height: calc(100% - 50rpx);
+    }
+  }
+  &[data-stage='push']{
+    &::before{
+      border: 2rpx solid $uni-color-error;
+    }
+     &::after{
+      background:$uni-color-error;
+    }
+  }
+  &[data-stage='handleStage']{
+    &::before{
+      border: 2rpx dashed $uni-color-primary;
+    }
+    &::after{
+      background:$uni-color-primary;
+    }
+  }
+  &[data-stage='auditStage']{
+    &::before{
+      border: 2rpx dashed $uni-color-success;
+      height: calc(100% - 150rpx);
+    }
+    &::after{
+      background:$uni-color-success;
+    }
+  }
   .tit {
     margin-bottom: 20rpx;
   }
-  .header{
+  .header {
     display: flex;
     align-items: center;
-    gap:20rpx;
+    gap: 20rpx;
     margin: 20rpx 0;
   }
   .top {
@@ -95,11 +154,11 @@ const getDetail = async (id) => {
     }
   }
 }
-.remark{
+.remark {
   color: $uni-text-color !important;
   font-weight: 600;
 }
-.region-imgBox{
+.region-imgBox {
   overflow-x: auto;
   @include flex-between;
 }
