@@ -14,7 +14,9 @@
   </view>
 </template>
 <script lang="ts" setup>
+import { userStore } from "@/state";
 
+const store = userStore();
 let fileList: any = ref([]);
 
 const emits = defineEmits(["update:modelValue"]);
@@ -26,9 +28,11 @@ const delImg = (event) => {
   console.log(fileList.value);
 };
 const uploadImg = async (event) => {
-  let SERVER_CONFIG = uni.getStorageSync("SERVER_CONFIG");
+  // 当前激活的服务器
+  const server = store.auth.activeServer;
+  const token = store.auth.token;
+
   let { file } = event.detail;
-  // console.log(file);
   file.map((item) => {
     item = Object.assign(item, {
       url: file.tempFilePath,
@@ -46,9 +50,8 @@ const uploadImg = async (event) => {
         filePath: item.tempFilePath,
         name: "file",
         header: {
-          "x-api-region": SERVER_CONFIG.value,
-          Authorization:
-            "Bearer " + uni.getStorageSync("AUTH_TOKEN")["access_token"],
+          "x-api-region": server?.region,
+          Authorization: "Bearer " + token?.access_token,
         },
         success(res) {
           item.status = "done";

@@ -3,17 +3,13 @@ import { onLaunch, onShow, onHide } from "@dcloudio/uni-app";
 import { userStore } from '@/state/index'
 
 onLaunch(async () => {
+  console.log('onLaunch...');
   const store = userStore();
   // 从缓存中恢复数据到pinia
   store.restoreStore();
   // 重新加载服务器配置
   await store.loadServers();
-  /* let SERVER_LIST = (await getConfig())["regions"];
-  SERVER_LIST.forEach((item) => {
-    item.label = item.remark;
-    item.value = item.region;
-  });
-  uni.setStorageSync("SERVER_LIST", SERVER_LIST); */
+
 });
 onShow(() => {
   // console.log("App Show");
