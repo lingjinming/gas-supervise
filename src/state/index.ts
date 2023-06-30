@@ -7,10 +7,14 @@ export const userStore = defineStore('app-store', {
   state: (): UserStoreType => {
     return {
       auth: {
+        // 登陆后获取的token信息
         token: undefined,
+        // 可用的服务器列表
         servers: [],
+        // 用户选择的服务器
         activeServer: undefined
       },
+      // 用户信息
       userInfo: undefined,
     } 
   },
