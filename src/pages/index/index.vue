@@ -2,7 +2,7 @@
   <image class="bg_img" src="./static/img/bg.png"></image>
   <view class="top">
     <view class="menu-box">
-      <view class="menu" v-for="item in menus" :key="item.name" @click="navigato(item.url)">
+      <view hover-class="hover" class="menu" v-for="item in menus" :key="item.name" @click="navigato(item.url)">
         <view >
           <image class="menu_img" :src="item.image"></image>
         </view>
@@ -14,7 +14,7 @@
   <view class="index-box center">
     <view class="tit">
       <view>消息提醒</view>
-      <view @click="navigatoNotice" class="more">更多 ></view>
+      <view hover-class="hover"  @click="navigatoNotice" class="more">更多 ></view>
     </view>
     <notice :num="2"/>
   </view>
@@ -22,7 +22,7 @@
   <view class="index-box bottom">
     <view class="tit">
       <view>我的待办</view>
-      <view class="more">更多 ></view>
+      <view hover-class="hover" class="more">更多 ></view>
     </view>
     <view >
       <view class="no-content">
@@ -120,10 +120,6 @@ const navigatoNotice = () => {
     width: calc((100% - 60rpx) / 4);
     height: 50%;
     text-align: center;
-    transition: all .3s;
-    &:hover{
-      transform: scale(1.1);
-    }
   }
 }
 .bg_img{

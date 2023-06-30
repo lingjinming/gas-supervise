@@ -8,7 +8,7 @@
   <view class="container">
     <van-cell-group>
       <van-field
-        maxlength="200"
+        maxlength="100"
         :value="reportForm.title"
         @change="reportForm.title = $event.detail"
         label="计划名称"
@@ -60,6 +60,8 @@
         placeholder="请输入"
         maxlength="200"
       />
+      <van-field label="主管部门" disabled :value="store.userInfo.organizationVO.fullName">
+      </van-field>
     </van-cell-group>
 
     <van-button  type="primary" size="large" round plain @click="submit"
@@ -72,10 +74,12 @@ import { reactive, ref } from "vue";
 import { addCheckPlan, type ICheckPlanVo } from "../../api/hidden";
 import { formatDate } from "@/utils";
 import { minDate, tomorrowDate } from "@/hooks";
+import { userStore } from "@/state";
 
+ 
 let isShow = ref(false);
 
-
+const store = userStore()
 
 
 const onConfirm = (e) => {

@@ -1,26 +1,26 @@
 <template>
-    <view class="uploader-box">
-      <text>上传照片</text>
-      <van-uploader
-        multiple
-        :max-count="3"
-        accept="image"
-        :file-list="fileList"
-        @delete="delImg"
-        @after-read="uploadImg"
-      >
-      <van-button icon="photo" type="primary">最多3张</van-button>
+  <view class="uploader-box">
+    <text>上传照片</text>
+    <van-uploader
+      multiple
+      :max-count="3"
+      accept="image"
+      :file-list="fileList"
+      @delete="delImg"
+      @after-read="uploadImg"
+    >
+      <van-button icon="photo" plain type="default">最多3张</van-button>
     </van-uploader>
-    </view>
+  </view>
 </template>
 <script lang="ts" setup>
 
 let fileList: any = ref([]);
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits(["update:modelValue"]);
 
 const delImg = (event) => {
   fileList.value.splice(event.detail.index, 1);
-  console.log(fileList.value)
+  console.log(fileList.value);
 };
 const uploadImg = async (event) => {
   let SERVER_CONFIG = uni.getStorageSync("SERVER_CONFIG");
@@ -41,9 +41,9 @@ const uploadImg = async (event) => {
         filePath: item.tempFilePath,
         name: "file",
         header: {
-          "x-api-region": SERVER_CONFIG.name,
+          "x-api-region": SERVER_CONFIG.value,
           Authorization:
-            "Bearer " + uni.getStorageSync("TOKEN_INFO")["access_token"],
+            "Bearer " + uni.getStorageSync("AUTH_TOKEN")["access_token"],
         },
         success(res) {
           item.status = "done";
@@ -53,14 +53,14 @@ const uploadImg = async (event) => {
     });
   });
   Promise.all(uploadTasks).then((data) => {
-    let fileIds = []
+    let fileIds = [];
     data.map((item, i) => {
       file[i] = Object.assign(file[i], item.data);
-      fileIds.push(item.data.objectName)
+      fileIds.push(item.data.objectName);
     });
     fileList.value = JSON.parse(JSON.stringify(file));
 
-    emits('update:modelValue',fileIds)
+    emits("update:modelValue", fileIds);
   });
 };
 </script>
@@ -71,5 +71,9 @@ const uploadImg = async (event) => {
   gap: 88rpx;
   padding: 30rpx;
   margin-bottom: 20rpx;
+  background: #fff;
+  text {
+    @include label;
+  }
 }
 </style>

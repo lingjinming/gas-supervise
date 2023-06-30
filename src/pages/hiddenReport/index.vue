@@ -1,5 +1,4 @@
 <template>
-  <view class="container">
     <van-cell-group>
       <van-field
         :value="reportForm.remark"
@@ -62,14 +61,15 @@
 
       <van-field label="检查日期" disabled :value="reportForm.checkDate">
       </van-field>
+      <van-uploader-new v-model="reportForm.fileIds" />
+
     </van-cell-group>
 
-    <van-uploader-new v-model="reportForm.fileIds" />
 
-    <van-button type="primary" size="large" round plain @click="submit"
-      >确定</van-button
+
+    <van-button custom-style="margin:40rpx;width:calc(100% - 80rpx)" type="primary" size="large" color="#006CFF" @click="submit"
+      >提交</van-button
     >
-  </view>
 </template>
 <script setup lang="ts">
 import { reactive, ref, type Ref } from "vue";

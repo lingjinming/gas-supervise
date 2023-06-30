@@ -26,14 +26,12 @@
         <van-icon name="user-o" :size="18"/>
         由<text class="publisher">{{ info.checkBy }}</text>发布
       </view>
-      <template v-if=" 'WAIT_HANDLE'.includes(info.state!)">
-        <van-button plain hairline round size="mini" type="primary" @click.stop="navigatoReform(info)">去整改</van-button>
-      </template>
-      <template v-else >
-        <view class="handled">
+      <view hover-stop-propagation v-if=" 'WAIT_HANDLE'.includes(info.state!)" @click.stop="navigatoReform(info)">
+        <van-button plain hairline round size="mini" type="primary" >去整改</van-button>
+      </view>
+        <view v-else class="handled">
           已整改
         </view>
-      </template>
     </view>
   </view>
   </van-skeleton>

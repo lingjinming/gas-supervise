@@ -271,6 +271,7 @@ export type CheckVo = {
   _handleState: string;
   _masterOrgId: string;
   _type: string;
+  planCreator:string
 };
 
 export const checkPlanPage = (query: CheckVo) => {

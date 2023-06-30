@@ -8,8 +8,13 @@
               <text>{{ data._handleState }} </text>
           </view>
           <view class="con">
-            <text class="name"> {{ data._type }} ({{ data.startDate +'-'+ data.endDate}})</text>
-            <view>检查人员 {{ data.checkers }}</view>
+            <view>
+              <text class="name"> {{ data._type }} ({{ data.startDate +'-'+ data.endDate}})</text>
+              <view>创建人: {{ data.planCreator }}</view>
+            </view>
+            <view class="checkers">
+              {{ data.checkers }}
+            </view>
           </view>
         </view>
       </van-cell-group>
@@ -64,8 +69,12 @@ const finishPlan = async (uid) => {
       @include flex-between;
     }
     .con {
+      @include flex-between;
       .name {
         color: $uni-color-primary;
+      }
+      .checkers{
+        width: 100rpx;
       }
     }
   }

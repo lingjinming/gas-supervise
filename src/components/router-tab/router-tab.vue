@@ -17,7 +17,7 @@
         <view class="routeItem"><text>{{ route.text }}</text></view> 
       </view
     >
-    <view class="midBtn" @click="routeToHiddenReport">
+    <view hover-class="hover"	 class="midBtn" @click="routeToHiddenReport">
       <image src="/static/img/icon_photo.png" class="photo"></image>
     </view>
   </view>

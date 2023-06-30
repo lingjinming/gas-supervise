@@ -1,6 +1,6 @@
 {
   "name": "gas-supervise",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "dev:mp-weixin": "uni -p mp-weixin",
     "dev:app": "uni -p app",

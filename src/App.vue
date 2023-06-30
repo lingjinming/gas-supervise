@@ -44,9 +44,7 @@ page {
 }
 
 .van-field__label {
-  font-size: 24rpx;
-  color: $uni-text-color;
-  font-weight: 600;
+  @include label;
 }
 
 .fs {
@@ -61,8 +59,12 @@ page {
     font-weight: 600;
   }
 }
-
+.hover{
+  transition: all .3s;
+  transform: scale(1.1);
+}
 ::v-deep .van-skeleton__content {
   border-radius: 6px;
   margin: 0 auto;
-}</style>
+}
+</style>

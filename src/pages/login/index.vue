@@ -34,7 +34,7 @@
             maxlength="20"
         />
       </van-cell-group>
-      <van-button class="login-btn" type="primary" color="#006CFF" size="large" @click="login">登 录</van-button>
+      <van-button  type="primary" color="#006CFF" size="large" @click="login">登 录</van-button>
     </div>
   </view>
 </template>
@@ -160,10 +160,5 @@ const changeServe = () => {
   font-size: 36px;
   text-transform: uppercase;
   padding-bottom: 100rpx;
-}
-
-.login-btn {
-  font-weight: bold;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 </style>

@@ -1,6 +1,5 @@
 <template>
 
-  <view class="container">
     <van-cell-group>
       <van-field
         :value="reportForm.handleContent"
@@ -8,9 +7,10 @@
         label="隐患描述"
         type="textarea"
         fixed
-        autosize
+        autosize="{minHeight: 200rpx}"
         placeholder="请输入"
         maxlength="200"
+        size="large"
       />
 
       <van-field
@@ -31,14 +31,14 @@
         @close="handleDatePopupIsShow = false"
         @confirm="chooseDate"
       />
-    </van-cell-group>
-    
-    <van-uploader-new v-model="reportForm.picIds"/>
+      <van-uploader-new v-model="reportForm.picIds"/>
 
-    <van-button type="primary" size="large" round plain @click="submit"
-      >确定</van-button
+    </van-cell-group>
+
+
+    <van-button custom-style="margin:40rpx;width:calc(100% - 80rpx)" type="primary" size="large" color="#006CFF" @click="submit"
+      >提交</van-button
     >
-  </view>
 </template>
 <script setup lang="ts">
 import { reactive, ref } from "vue";
