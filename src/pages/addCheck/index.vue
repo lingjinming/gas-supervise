@@ -45,6 +45,7 @@
       @change="reportForm.targetOrgPhone = $event.detail"
       label="负责人联系方式"
       placeholder="请输入"
+      :error-message="errorMessage"
     />
     <van-field
       :value="reportForm.checkers"
@@ -72,12 +73,12 @@
   />
 </template>
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { reactive, ref, watch } from "vue";
 import { addCheckPlan, type ICheckPlanVo } from "../../api/hidden";
 import { formatDate } from "@/utils";
 import { minDate, tomorrowDate } from "@/hooks";
 import { userStore } from "@/state";
-
+let errorMessage= ref('')
 const store = userStore();
 const isOrg: boolean = store.isOrgUser;
 
@@ -93,6 +94,21 @@ let reportForm: ICheckPlanVo = ref({
   startDate: formatDate(minDate),
   endDate: formatDate(tomorrowDate),
 });
+
+watch(reportForm,(val)=>{
+  console.log(val.targetOrgPhone)
+  let rules = {
+    phone:{
+      reg:/^1[3|4|5|7|8|9]\d{9}$/,
+      msg:'请输入合法的手机号'
+    }
+  }
+  if(!val.targetOrgPhone.match(rules.phone.reg)){
+    errorMessage.value = rules.phone.msg
+  }else{
+    errorMessage.value = ''
+  }
+},{deep:true})
 
 const submit = async () => {
   let data = await addCheckPlan(reportForm.value);

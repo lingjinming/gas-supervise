@@ -16,10 +16,13 @@
 <script lang="ts" setup>
 
 let fileList: any = ref([]);
+
 const emits = defineEmits(["update:modelValue"]);
 
 const delImg = (event) => {
-  fileList.value.splice(event.detail.index, 1);
+    let temp = JSON.parse(JSON.stringify(fileList.value))
+    temp.splice(event.detail.index, 1);
+    fileList.value = temp
   console.log(fileList.value);
 };
 const uploadImg = async (event) => {
@@ -34,6 +37,8 @@ const uploadImg = async (event) => {
     });
   });
   fileList.value = file;
+
+
   const uploadTasks = file.map((item) => {
     return new Promise((resolve) => {
       uni.uploadFile({
