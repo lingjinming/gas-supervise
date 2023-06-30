@@ -10,13 +10,13 @@
         placeholder="请输入"
         maxlength="200"
       />
-      <van-field label="位置" is-link>
+      <van-field label="位置" @click-input="chooseLocation" right-icon="location-o">
         <input
           slot="input"
           style="width: 100%"
           :value="reportForm.address"
           placeholder="请选择"
-          @click="chooseLocation"
+
         />
       </van-field>
 
@@ -124,10 +124,9 @@ const chooseLocation = () => {
     success() {
       uni.chooseLocation({
         success: function (res) {
-          reportForm.value.address = res.name + res.name;
+          reportForm.value.address = res.address + res.name;
           reportForm.value.longitude = res.longitude;
           reportForm.value.latitude = res.latitude;
-          console.log(res);
 
           getDistrictId(res.latitude, res.longitude).then((data) => {
             console.log(data);

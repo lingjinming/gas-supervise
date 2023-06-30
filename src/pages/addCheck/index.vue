@@ -76,7 +76,7 @@
 import { reactive, ref, watch } from "vue";
 import { addCheckPlan, type ICheckPlanVo } from "../../api/hidden";
 import { formatDate } from "@/utils";
-import { minDate, tomorrowDate } from "@/hooks";
+import { minDate, showToast, tomorrowDate } from "@/hooks";
 import { userStore } from "@/state";
 let errorMessage= ref('')
 const store = userStore();
@@ -96,7 +96,6 @@ let reportForm: ICheckPlanVo = ref({
 });
 
 watch(reportForm,(val)=>{
-  console.log(val.targetOrgPhone)
   let rules = {
     phone:{
       reg:/^1[3|4|5|7|8|9]\d{9}$/,
@@ -111,18 +110,21 @@ watch(reportForm,(val)=>{
 },{deep:true})
 
 const submit = async () => {
+  if(errorMessage.value) return
   let data = await addCheckPlan(reportForm.value);
-  uni.showToast({
-    title: data.message,
-    icon: data.success ? "success" : "error",
-    mask: true,
-  });
-  console.log(data);
-  if (data.success) {
-    setTimeout(() => {
-      uni.navigateBack();
-    }, 500);
-  }
+
+  showToast(data.success,uni.navigateBack)
+  // uni.showToast({
+  //   title: data.message,
+  //   icon: data.success ? "success" : "error",
+  //   mask: true,
+  // });
+  // console.log(data);
+  // if (data.success) {
+  //   setTimeout(() => {
+  //     uni.navigateBack();
+  //   }, 500);
+  // }
 };
 </script>
 <style lang="scss" scoped>

@@ -115,6 +115,7 @@ onShow(() => {
       width: 100rpx;
       color: #989898;
       font-size: $uni-font-size-sm;
+      white-space: nowrap;
     }
   }
   .con {

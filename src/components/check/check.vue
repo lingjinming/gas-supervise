@@ -1,70 +1,55 @@
 <template>
-  <view class="data-box">
-    <van-skeleton
-    title
-    avatar
-    row="2"
-    :loading="loading"
-  >
-    <van-swipe-cell :right-width="100" >
-      <van-cell-group>
-        <view class="left">
-          <view class="tit">
-              <text>{{ data.title }} ({{ data.planCode }}) </text>
-              <text>{{ data._handleState }} </text>
+  <van-swipe-cell class="data-box" :right-width="160">
+    <van-cell-group>
+      <view class="left">
+        <view class="tit">
+          <text>{{ data.title }} ({{ data.planCode }}) </text>
+          <text>{{ data._handleState }} </text>
+        </view>
+        <view class="con">
+          <view>
+            <text class="name">
+              {{ data._type }} ({{ data.startDate + "-" + data.endDate }})</text
+            >
+            <view>创建人: {{ data.planCreator }}</view>
           </view>
-          <view class="con">
-            <view>
-              <text class="name"> {{ data._type }} ({{ data.startDate +'-'+ data.endDate}})</text>
-              <view>创建人: {{ data.planCreator }}</view>
-            </view>
-            <view class="checkers">
-              {{ data.checkers }}
-            </view>
+          <view class="checkers">
+            {{ data.checkers }}
           </view>
         </view>
-      </van-cell-group>
-      <view slot="right" class="right">
-        <view class="done" @click="finishPlan(data.uid)">完成</view>
-        <view class="del" @click="deletePlan(data.uid)">删除</view>
       </view>
-    </van-swipe-cell>
-    </van-skeleton>
-  </view>
+    </van-cell-group>
+    <view slot="right" class="right">
+      <view class="done" @click="finishPlan(data.uid)">完成</view>
+      <view class="del" @click="deletePlan(data.uid)">删除</view>
+    </view>
+  </van-swipe-cell>
 </template>
 <script setup lang="ts">
-import { checkPlanDelById, checkPlanFinishById, type CheckVo } from "@/api/hidden";
+import {
+  checkPlanDelById,
+  checkPlanFinishById,
+  type CheckVo,
+} from "@/api/hidden";
+import { showToast } from "@/hooks";
 import type { PropType } from "vue";
 
-let loading = ref(true)
-
-setTimeout(() => {
-  loading.value = false
-},500)
 const props = defineProps({
   data: {
     type: Object as PropType<CheckVo>,
     default: {},
   },
 });
-const emits = defineEmits(['refresh'])
-
 
 const deletePlan = async (uid) => {
-  let data = await checkPlanDelById({uid});
-  if(data.success){
-    emits('refresh')
-  }
+  let data = await checkPlanDelById({ uid });
+  showToast(data.success)
 };
 
 const finishPlan = async (uid) => {
-  let data = await checkPlanFinishById({uid});
-  if(data.success){
-    emits('refresh')
-  }
+  let data = await checkPlanFinishById({ uid });
+  showToast(data.success)
 };
-
-
 </script>
 
 <style lang="scss" scoped>
@@ -72,7 +57,7 @@ const finishPlan = async (uid) => {
   box-shadow: $uni-box-shadow;
   margin-bottom: 20rpx;
   margin: 20rpx;
-    border-radius: 10rpx;
+  border-radius: 10rpx;
   .left {
     flex: 1;
     padding: 30rpx;
@@ -85,7 +70,7 @@ const finishPlan = async (uid) => {
       .name {
         color: $uni-color-primary;
       }
-      .checkers{
+      .checkers {
         width: 100rpx;
       }
     }
@@ -93,8 +78,8 @@ const finishPlan = async (uid) => {
   .right {
     height: 100%;
     @include flex-between;
-    width: 200rpx;
-    view{
+    width: 320rpx;
+    view {
       @include flex-center;
       width: 50%;
       height: 100%;
