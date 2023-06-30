@@ -45,15 +45,9 @@
         </view>
         <view class="con">
           <view class="remark">{{ val.remark }}</view>
-          <view class="region-imgBox" v-if="val.fileIds && val.fileIds.length">
-            <region-img
-              v-for="img in val.fileIds"
-              :key="img"
-              region="test"
-              :id="img"
-            />
+          <view class="region-imgBox" v-if="getPics(key,val)">
+            <region-img v-for="img in getPics(key,val)" :key="img" region="test" :id="img" />
           </view>
-
           <template v-if="key == 'push'">
             <view>隐患类型: {{ val._subjectType + val._dangerType }}</view>
             <view>整改单位: {{ val.operatorOrg }}</view>
@@ -69,6 +63,21 @@ import { reactive, ref } from "vue";
 import { getHidangerFlow } from "../../api/hidden";
 
 let loading = ref(true);
+
+const getPics = (stage: 'push'| 'handleStage' | 'auditStage',flowNode: any): string[] | undefined => {
+  let picKey = '';
+  if(stage === 'push') {
+    picKey = 'fileIds';
+  }
+  if(stage === 'handleStage') {
+    picKey = 'picIds';
+  }
+  console.log(stage);
+  console.log(flowNode);
+  
+  
+  return flowNode[picKey];
+}
 
 onLoad((options) => {
   getDetail(options.uid);
@@ -141,6 +150,7 @@ const getDetail = async (id) => {
     gap: 20rpx;
     margin: 20rpx 0;
   }
+
   .top {
     @include flex-between;
   }
@@ -148,6 +158,7 @@ const getDetail = async (id) => {
   .con {
     background: $uni-bg-color;
     padding: 20rpx;
+
     view {
       color: #4b5b6c;
       line-height: 50rpx;
