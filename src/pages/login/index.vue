@@ -46,7 +46,7 @@ import { userStore } from "@/state";
 const store = userStore();
 if(store.isLogin) {
   console.log('已经登录了');
-  
+
   uni.switchTab({
       url: "/pages/index/index",
     });
@@ -63,8 +63,6 @@ let serverValue = ref(null);
 let serverList = store.getServerList;
 
 const login = async () => {
-  //uni.setStorageSync("TOKEN_INFO", {});
-
   if (!serverValue.value) {
     uni.showToast({
       icon:'error',
@@ -93,7 +91,6 @@ const login = async () => {
 
   uni.showLoading({title:'登录中'})
   let TOKEN_INFO = await getToken(loginForm.value);
-  // uni.setStorageSync("TOKEN_INFO", TOKEN_INFO);
   store.setToken(TOKEN_INFO);
 
   if (!store.isLogin) {
@@ -120,16 +117,7 @@ const login = async () => {
 
 const changeServe = () => {
   let server = store.getServer(serverValue.value!);
-  console.log(server);
   store.setServer(server);
-  
-  // let auth = serverList.filter((item) => item.region == serverValue.value)[0][
-  //     "auth_header"
-  //     ];
-  // uni.setStorageSync("SERVER_CONFIG", {
-  //   name: serverValue.value,
-  //   auth,
-  // });
 };
 </script>
 

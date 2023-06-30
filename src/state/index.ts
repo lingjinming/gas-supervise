@@ -44,6 +44,7 @@ export const userStore = defineStore('app-store', {
       if(cacheToken?.expire_at) {
         const now = new Date().getTime();
         if(now > cacheToken.expire_at) {
+          console.log('data expired, clear!!');
           this.clearCache();
           return;
         }
@@ -68,6 +69,8 @@ export const userStore = defineStore('app-store', {
       removeCache('SERVER_CONFIG');
       removeCache('USER_INFO');
       this.auth.token = undefined;
+      this.auth.activeServer = undefined;
+      this.userInfo = undefined;
     },
     setServer(server: any) {
       setCache('SERVER_CONFIG',server);
@@ -106,7 +109,12 @@ interface UserStoreType {
     activeServer: Server | undefined
   },
   userInfo: {
+    name: string;
+    gender: string;
+    phoneNumber: string;
+    contactAddress: string;
     organizationVO: {
+      fullName: string;
       // 0-政府,1-企业,2-监测中心
       orgType: '0' | '1' | '2' 
     }
