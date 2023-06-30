@@ -60,11 +60,15 @@
         placeholder="请输入"
         maxlength="200"
       />
-      <van-field label="主管部门" disabled :value="store.userInfo.organizationVO.fullName">
+      <van-field
+        label="主管部门"
+        disabled
+        :value="store.userInfo.organizationVO.fullName"
+      >
       </van-field>
     </van-cell-group>
 
-    <van-button  type="primary" size="large" round plain @click="submit"
+    <van-button type="primary" size="large" round plain @click="submit"
       >确定</van-button
     >
   </view>
@@ -76,11 +80,10 @@ import { formatDate } from "@/utils";
 import { minDate, tomorrowDate } from "@/hooks";
 import { userStore } from "@/state";
 
- 
+const store = userStore();
+const isOrg: boolean = store.isOrgUser;
+
 let isShow = ref(false);
-
-const store = userStore()
-
 
 const onConfirm = (e) => {
   reportForm.value.startDate = formatDate(e.detail[0]);
@@ -93,30 +96,26 @@ let reportForm: ICheckPlanVo = ref({
   endDate: formatDate(tomorrowDate),
 });
 
-
-
-
 const submit = async () => {
   let data = await addCheckPlan(reportForm.value);
   uni.showToast({
     title: data.message,
-    icon:data.success ? "success":'error',
+    icon: data.success ? "success" : "error",
     mask: true,
   });
-  console.log(data)
-if(data.success){
-  setTimeout(() => {
-    uni.navigateBack();
-  }, 500);
-}
-
+  console.log(data);
+  if (data.success) {
+    setTimeout(() => {
+      uni.navigateBack();
+    }, 500);
+  }
 };
 </script>
 <style lang="scss" scoped>
 .top {
   line-height: 100rpx;
 }
-::v-deep .van-button{
+::v-deep .van-button {
   margin-top: 30rpx;
 }
 </style>

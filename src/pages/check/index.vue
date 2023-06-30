@@ -1,6 +1,6 @@
 <template>
   <view class="top">
-    <text @click="addCheck">新增</text>
+    <text v-if="!isOrg" @click="addCheck">新增</text>
     <text @click="showCalendar">时间</text>
   </view>
   <scroll-view
@@ -25,6 +25,10 @@
 <script setup lang="ts">
 import { checkPlanPage } from "@/api/hidden";
 import { formatDate } from "@/utils";
+import { userStore } from "@/state";
+
+const store = userStore();
+const isOrg: boolean = store.isOrgUser;
 let checks = ref([]);
 let reportForm = ref({
   startTime:'',
