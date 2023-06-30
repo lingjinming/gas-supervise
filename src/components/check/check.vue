@@ -1,5 +1,11 @@
 <template>
   <view class="data-box">
+    <van-skeleton
+    title
+    avatar
+    row="2"
+    :loading="loading"
+  >
     <van-swipe-cell :right-width="100" >
       <van-cell-group>
         <view class="left">
@@ -23,12 +29,18 @@
         <view class="del" @click="deletePlan(data.uid)">删除</view>
       </view>
     </van-swipe-cell>
+    </van-skeleton>
   </view>
 </template>
 <script setup lang="ts">
 import { checkPlanDelById, checkPlanFinishById, type CheckVo } from "@/api/hidden";
 import type { PropType } from "vue";
 
+let loading = ref(true)
+
+setTimeout(() => {
+  loading.value = false
+},500)
 const props = defineProps({
   data: {
     type: Object as PropType<CheckVo>,

@@ -22,7 +22,10 @@
       <van-field :value="form.wechat" label="微信" fixed autosize disabled />
 
       <van-field :value="form.contactAddress" label="联系地址" fixed autosize disabled />
-      <button @click="logout">退出</button>
+
+      <van-button custom-style="margin:40rpx;width:calc(100% - 80rpx)" type="primary" size="large" color="#006CFF" @click="logout"
+      >退出</van-button
+    >
     </van-cell-group>
 
 

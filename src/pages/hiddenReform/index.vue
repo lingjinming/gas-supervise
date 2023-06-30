@@ -37,7 +37,7 @@
 
 
     <van-button custom-style="margin:40rpx;width:calc(100% - 80rpx)" type="primary" size="large" color="#006CFF" @click="submit"
-      >提交</van-button
+      >确定</van-button
     >
 </template>
 <script setup lang="ts">

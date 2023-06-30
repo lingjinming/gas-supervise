@@ -1,7 +1,7 @@
 <template>
   <view class="top">
-    <text v-if="!isOrg" @click="addCheck">新增</text>
-    <text @click="showCalendar">时间</text>
+    <van-icon color="#006CFF" size="60rpx" name="add-o" type="default"  v-if="!isOrg" @click="addCheck"/>
+    <van-icon color="#006CFF" size="60rpx" name="calendar-o"  @click="showCalendar"/>
   </view>
   <scroll-view
     style="height: calc(100% - 80rpx)"
