@@ -20,13 +20,12 @@
     scroll-y="true"
     class="scroll-Y"
   >
-    <van-skeleton
-      title
-      row="6"
-      :loading="loading"
-    >
-      <check     v-for="(item, i) in checks"
-      :key="i" :data="item" @refresh="getcheckPlanPageFn" />
+    <van-skeleton title row="6" :loading="loading">
+      <check
+        v-for="(item, i) in checks"
+        :key="i"
+        :data="item"
+      />
     </van-skeleton>
   </scroll-view>
   <van-calendar
@@ -64,19 +63,17 @@ const onConfirm = (e) => {
   getcheckPlanPageFn(reportForm.value);
 };
 const showCalendar = () => {
-  console.log(1);
   isShow.value = true;
 };
 const getcheckPlanPageFn = async (reportForm) => {
   let data = (await checkPlanPage(reportForm))["data"];
   checks.value = data;
   isShow.value = false;
-  // setTimeout(() => {
   loading.value = false;
-  // },500)
 };
 onShow(() => {
   getcheckPlanPageFn(reportForm.value);
+  uni.$on('refresh',() => getcheckPlanPageFn(reportForm.value))
 });
 </script>
 <style lang="scss" scoped>
