@@ -84,7 +84,7 @@ const getDetail = async (id) => {
 
 .detail-box {
   position: relative;
-  padding: 40rpx 40rpx 40rpx 80rpx;
+  padding: 40rpx 40rpx 0rpx 80rpx;
 
   &[data-stage='push'],
   &[data-stage='handleStage'],
@@ -109,27 +109,27 @@ const getDetail = async (id) => {
   }
   &[data-stage='push']{
     &::before{
-      border: 2rpx solid $uni-color-error;
+      border: 2rpx solid rgba($color: $uni-color-error, $alpha: .8);
     }
      &::after{
-      background:$uni-color-error;
+      background:rgba($color: $uni-color-error, $alpha: .8);
     }
   }
   &[data-stage='handleStage']{
     &::before{
-      border: 2rpx dashed $uni-color-primary;
+      border: 2rpx dashed rgba($color: $uni-color-primary, $alpha: .8);
     }
     &::after{
-      background:$uni-color-primary;
+      background: rgba($color: $uni-color-primary, $alpha: .8);
     }
   }
   &[data-stage='auditStage']{
     &::before{
-      border: 2rpx dashed $uni-color-success;
+      border: 2rpx dashed rgba($color: $uni-color-success, $alpha: .8);
       height: calc(100% - 150rpx);
     }
     &::after{
-      background:$uni-color-success;
+      background: rgba($color: $uni-color-success, $alpha: .8);
     }
   }
   .tit {

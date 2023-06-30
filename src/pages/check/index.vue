@@ -21,14 +21,12 @@
     class="scroll-Y"
   >
     <van-skeleton
-      v-for="(item, i) in checks"
-      :key="i"
       title
-      avatar
-      row="2"
+      row="6"
       :loading="loading"
     >
-      <check :data="item" @refresh="getcheckPlanPageFn" />
+      <check     v-for="(item, i) in checks"
+      :key="i" :data="item" @refresh="getcheckPlanPageFn" />
     </van-skeleton>
   </scroll-view>
   <van-calendar

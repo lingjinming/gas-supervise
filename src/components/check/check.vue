@@ -4,7 +4,8 @@
       <view class="left">
         <view class="tit">
           <text>{{ data.title }} ({{ data.planCode }}) </text>
-          <text>{{ data._handleState }} </text>
+          <van-tag :type="data.handleState == 'UNCOMPLETED' ? 'danger' : 'success'">{{ data._handleState }}</van-tag>
+
         </view>
         <view class="con">
           <view>
@@ -54,10 +55,6 @@ const finishPlan = async (uid) => {
 
 <style lang="scss" scoped>
 .data-box {
-  box-shadow: $uni-box-shadow;
-  margin-bottom: 20rpx;
-  margin: 20rpx;
-  border-radius: 10rpx;
   .left {
     flex: 1;
     padding: 30rpx;
