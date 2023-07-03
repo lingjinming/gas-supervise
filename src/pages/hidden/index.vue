@@ -5,10 +5,10 @@
       筛选<van-icon name="arrow-down" />
     </view>
   </view>
+  <!-- 隐患列表 -->
   <scroll-view style="height: calc(100% - 100rpx);" scroll-y="true" class="scroll-Y" @scrolltolower="nextPage">
-    <!-- 隐患列表 -->
     <template v-if="state.list.length">
-      <hidden v-for="(item, i) in state.list" :key="i" :info="item"></hidden>
+      <hidden v-for="(item, i) in state.list" :key="i" :info="item" @onAudit="doQuery"></hidden>
     </template>
     <van-empty v-else description="暂无数据"></van-empty>
   </scroll-view>
@@ -51,7 +51,8 @@
 
 
 <script setup lang="ts">
-import { hidangerPage, type HidangerPgaeVO, type HidangerOrgPageQuery } from '@/api/hidden';
+import type { HidangerPgaeVO,HidangerOrgPageQuery } from '@/api/model/HidangerPage'
+import { hidangerPage } from '@/api/hidden';
 import { reactive, ref } from 'vue';
 import { getDictList, type DicItem } from '@/api/dic';
 import { userStore } from "@/state";
@@ -120,10 +121,13 @@ const fetchPage = async () => {
   state.total = total;
   state.list.push(...data)
 }
-
-onShow(() => {
+onLoad(() => {
   loadDic();
   fetchPage();
+})
+onShow(() => {
+  // 刷新页面
+  doQuery();
 })
 </script>
 <style lang="scss" scoped>

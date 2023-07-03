@@ -60,7 +60,7 @@
         </textarea>
       </view>
       <view class="btns">
-        <button type="default">取消</button>
+        <button type="default" @click="closeComment">取消</button>
         <button @click="submitLeaderComment">确认</button>
       </view>
     </view>
@@ -70,13 +70,14 @@
 import { ref, reactive } from "vue";
 import { userStore } from "@/state";
 import { getHidangerFlow ,createLeaderComment} from "../../api/hidden";
-import type { Flow,LeaderCommentCreate,Stage} from '@/api/model/Hidanger'
+import type { Flow,LeaderCommentCreate,Stage} from '@/api/model/HidangerFlow'
 
 const store = userStore();
 
 const data = reactive({
   uid: '',
   detail: <Flow>{
+    state: '',
     dangerId: undefined,
     level: undefined,
     _level: undefined,
@@ -138,8 +139,9 @@ const getDetail = async (id: string) => {
     loading.value = true;
     data.uid = id;
 
-    const { level, _level, dangerId, flow } = (await getHidangerFlow(id)).data;
+    const { level, _level, dangerId, flow,state } = (await getHidangerFlow(id)).data;
     data.detail._level = _level;
+    data.detail.state = state;
     data.detail.level = level;
     data.detail.flow = flow;
     data.detail.dangerId = dangerId;

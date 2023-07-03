@@ -1,4 +1,5 @@
 export interface Flow {
+  state: string | undefined;
   dangerId: string | undefined;
   level: 'ZD' | 'JD' | 'YB' | undefined;
   _level: string | undefined;
