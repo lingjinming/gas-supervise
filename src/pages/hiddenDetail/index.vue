@@ -2,7 +2,7 @@
   <scroll-view style="height: 100%;padding-bottom: 100rpx;" scroll-y="true" class="scroll-Y container">
 
     <van-skeleton title avatar row="3" :loading="data.loading" v-for="(node, i) in data.detail.flow" :key="i">
-      <view class="detail-box">
+      <view class="detail-box" :data-stage="node.stage">
         <view class="tit">
           <view class="top">
             <view>
@@ -152,9 +152,57 @@ const getDetail = async (id: string) => {
 };
 </script>
 <style lang="scss" scoped>
-.detail-box {
-  padding: 40rpx 40rpx 40rpx 80rpx;
 
+.detail-box {
+  position: relative;
+  padding: 40rpx 40rpx 0rpx 80rpx;
+
+  &[data-stage='PUSH'],
+  &[data-stage='HANDLE'],
+  &[data-stage='AUDIT']{
+    &::before,&::after{
+      content: '';
+      position: absolute;
+    }
+    &::after{
+      top: 50rpx;
+
+      left: 30rpx;
+      width: 20rpx;
+      height: 20rpx;
+      border-radius: 50%;
+    }
+    &::before{
+      top: 80rpx;
+      left: 38rpx;
+      height: calc(100% - 50rpx);
+    }
+  }
+  &[data-stage='PUSH']{
+    &::before{
+      border: 2rpx solid rgba($color: $uni-color-error, $alpha: .8);
+    }
+     &::after{
+      background:rgba($color: $uni-color-error, $alpha: .8);
+    }
+  }
+  &[data-stage='HANDLE']{
+    &::before{
+      border: 2rpx dashed rgba($color: $uni-color-primary, $alpha: .8);
+    }
+    &::after{
+      background: rgba($color: $uni-color-primary, $alpha: .8);
+    }
+  }
+  &[data-stage='AUDIT']{
+    &::before{
+      border: 2rpx dashed rgba($color: $uni-color-success, $alpha: .8);
+      height: calc(100% - 150rpx);
+    }
+    &::after{
+      background: rgba($color: $uni-color-success, $alpha: .8);
+    }
+  }
   .tit {
     margin-bottom: 20rpx;
   }
