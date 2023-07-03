@@ -14,14 +14,12 @@
             <text class="fs12">{{ node.stageTime }}</text>
           </view>
           <view class="header">
-            <view>
+            <view class="img-box">
               <image style="width: 50rpx;height: 50rpx;" src="../../static/img/header.png" mode="scaleToFill" />
               {{ node.operator + (node.stage === 'PUSH' ? '(发布人)' : '') }}
             </view>
-            <view>
-              <button type="default" size="mini" @click="showLeaderComment(node.stage, node.stageId)"
-                v-if="store.isGovUser">批示</button>
-            </view>
+              <van-icon color="" name="comment-o" @click="showLeaderComment(node.stage, node.stageId)"
+                v-if="store.isGovUser"/>
 
           </view>
         </view>
@@ -35,19 +33,20 @@
             <view>整改单位: {{ node.content.handleOrg }}</view>
             <view>详细地址: {{ node.content.address }}</view>
           </template>
-        </view>
+
         <!-- 节点上的评论 -->
-        <template v-if="node.commentList">
+        <view class="commentList" v-if="node.commentList">
           <view v-for="(comment, index) in node.commentList" :key="index">
-            <view>
+            <view class="img-box">
               <image style="width: 30rpx;height: 30rpx;" src="../../static/img/header.png" mode="scaleToFill" />
-              {{ comment.leaderName + ' ' + comment.leaderOrgName }}
-            </view>
-            <view>
+              {{comment.leaderOrgName }} 
+              <text style="color: #333;font-weight: 600;">{{ comment.leaderName }}</text>:
               {{ comment.leaderComment }}
             </view>
           </view>
-        </template>
+        </view>
+        </view>
+
       </view>
     </van-skeleton>
   </scroll-view>
@@ -260,6 +259,15 @@ const getDetail = async (id: string) => {
       line-height: 88rpx;
       border-radius: 10px;
     }
+  }
+}
+.commentList{
+  padding: 20rpx;
+}
+.img-box{
+  @include flex-center;
+  image{
+    margin-right: 15rpx;
   }
 }
 </style>
