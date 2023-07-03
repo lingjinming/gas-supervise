@@ -50,6 +50,7 @@
         </template>
       </view>
     </van-skeleton>
+    <button type="default" v-if="data.detail.state === 'WAIT_AUDIT'">审核驳回</button>
   </scroll-view>
   <!-- 领导评论弹窗 -->
   <van-popup :show="data.showComment" position="bottom" custom-style="height: 40%;" @close="closeComment">
@@ -78,6 +79,7 @@ const store = userStore();
 const data = reactive({
   uid: '',
   detail: <Flow>{
+    state: '',
     dangerId: undefined,
     level: undefined,
     _level: undefined,
@@ -139,8 +141,9 @@ const getDetail = async (id: string) => {
     loading.value = true;
     data.uid = id;
 
-    const { level, _level, dangerId, flow } = (await getHidangerFlow(id)).data;
+    const { level, _level, dangerId, flow,state } = (await getHidangerFlow(id)).data;
     data.detail._level = _level;
+    data.detail.state = state;
     data.detail.level = level;
     data.detail.flow = flow;
     data.detail.dangerId = dangerId;
