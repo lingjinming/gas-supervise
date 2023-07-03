@@ -2,6 +2,7 @@
 import { request } from "./request";
 import type { Flow ,LeaderCommentCreate}  from './model/HidangerFlow'
 import type {HidangerOrgPageQuery,HidangerPgaeVO} from './model/HidangerPage'
+import type { AuditCreateReq } from "./model/HidangerAudit";
 
 export interface ICheckPlanVo {
 
@@ -167,5 +168,15 @@ export const createLeaderComment = (body: LeaderCommentCreate) => {
     url: 'gasguard-service-risk-app/hidanger/gov/leader-comment',
     method: 'POST',
     data: body
+  })
+}
+/**
+ * 隐患审核
+ */
+export const hidangerAudit = (data: AuditCreateReq) => {
+  return request<{data: void}>({
+    url: 'gasguard-service-risk-app/hidanger/gov/audit',
+    method: 'PUT',
+    data: data
   })
 }

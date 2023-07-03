@@ -1,5 +1,5 @@
 <template>
-  <van-swipe-cell :right-width="info.state === 'WAIT_AUDIT' ? 160 : 0">
+  <van-swipe-cell :right-width="(info.state === 'WAIT_AUDIT' && !isOrg) ? 160 : 0">
     <van-skeleton title avatar row="2" :loading="data.loading">
       <view class="hidden-box" @click.stop="showFlow(info.uid as string)">
         <view class="tit">
@@ -64,7 +64,10 @@ import type { HidangerPgaeVO } from '@/api/model/HidangerPage';
 import type { PropType } from 'vue'
 import { reactive } from 'vue';
 import { userStore } from "@/state";
+import { hidangerAudit } from '@/api/hidden'
+import type {AuditCreateReq} from '@/api/model/HidangerAudit'
 
+const emits = defineEmits(["onAudit"]);
 const props = defineProps({
   info: {
     type: Object as PropType<HidangerPgaeVO>,
@@ -80,10 +83,10 @@ const data = reactive({
   loading: false,
   showAudit: false,
   isPass: false,
-  audit: {
+  audit: <AuditCreateReq>{
     auditRemark: '',
     auditResult: 'PASS',
-    riskIds: []
+    riskIds: [] as string[]
   }
 })
 
@@ -94,8 +97,16 @@ const showAuditForm = (isPass: boolean) => {
 }
 
 // 提交审核记录
-const submitAudit = () => {
-  data.showAudit = false
+const submitAudit = async () => {
+  const request = data.audit;
+  request.auditResult = data.isPass ? 'PASS' : 'NOT_PASS';
+  request.riskIds = [props.info.uid!]
+  console.log(request);
+  
+  await hidangerAudit(request)
+  data.showAudit = false;
+  // 让列表刷新
+  emits('onAudit')
 }
 
 setTimeout(() => {

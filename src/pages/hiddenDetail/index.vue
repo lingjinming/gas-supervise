@@ -50,7 +50,6 @@
         </template>
       </view>
     </van-skeleton>
-    <button type="default" v-if="data.detail.state === 'WAIT_AUDIT'">审核驳回</button>
   </scroll-view>
   <!-- 领导评论弹窗 -->
   <van-popup :show="data.showComment" position="bottom" custom-style="height: 40%;" @close="closeComment">
@@ -62,7 +61,7 @@
         </textarea>
       </view>
       <view class="btns">
-        <button type="default">取消</button>
+        <button type="default" @click="closeComment">取消</button>
         <button @click="submitLeaderComment">确认</button>
       </view>
     </view>
@@ -72,7 +71,7 @@
 import { ref, reactive } from "vue";
 import { userStore } from "@/state";
 import { getHidangerFlow ,createLeaderComment} from "../../api/hidden";
-import type { Flow,LeaderCommentCreate,Stage} from '@/api/model/Hidanger'
+import type { Flow,LeaderCommentCreate,Stage} from '@/api/model/HidangerFlow'
 
 const store = userStore();
 

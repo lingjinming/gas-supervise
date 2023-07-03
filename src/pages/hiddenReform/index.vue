@@ -68,7 +68,7 @@ const chooseDate = (e) => {
 };
 
 const submit = async () => {
-  if(new Date(reportForm.value.handleDate).getTime() - new Date(checkDate.value).getTime() < 0){
+   if(new Date(reportForm.value.handleDate).getTime() - new Date(checkDate.value).getTime() < 0){
     uni.showToast({
       icon:'none',
       title:'整改日期应在排查日期之后'
