@@ -36,14 +36,15 @@
 
         <!-- 节点上的评论 -->
         <view class="commentList" v-if="node.commentList">
-          <view v-for="(comment, index) in node.commentList" :key="index">
+          <template v-for="(comment, index) in node.commentList" :key="index">
             <view class="img-box">
               <image style="width: 30rpx;height: 30rpx;" src="../../static/img/header.png" mode="scaleToFill" />
               {{comment.leaderOrgName }} 
-              <text style="color: #333;font-weight: 600;">{{ comment.leaderName }}</text>:
-              {{ comment.leaderComment }}
+              <text style="color: #333;font-weight: 600;">{{ comment.leaderName }}</text>: {{ comment.leaderComment }}
+
             </view>
-          </view>
+
+          </template>
         </view>
         </view>
 
@@ -267,9 +268,9 @@ const getDetail = async (id: string) => {
   padding: 20rpx;
 }
 .img-box{
-  @include flex-center;
   image{
-    margin-right: 15rpx;
+    position: relative;
+    top: 5rpx;
   }
 }
 </style>
