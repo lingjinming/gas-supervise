@@ -60,7 +60,7 @@ let loginForm: Ref<req_token> = ref({
   password: "Gsafety@2022",
 });
 let serverValue = ref(null);
-let serverList = store.getServerList;
+let serverList = store.auth.servers;
 
 const login = async () => {
   if (!serverValue.value) {

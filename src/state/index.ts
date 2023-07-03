@@ -21,12 +21,10 @@ export const userStore = defineStore('app-store', {
   getters: {
     // 是否已经登录
     isLogin: (state) => !!state.auth?.token,
-    // 获取用户信息
-    getUserInfo: (state) => state.userInfo,
     // 是否是企业用户
     isOrgUser: (state) => state.userInfo?.organizationVO.orgType === '1',
-    // 获取服务器列表
-    getServerList: (state) => state.auth.servers,
+    // 是否是政府用户
+    isGovUser: (state) => state.userInfo?.organizationVO.orgType === '0',
     // 按 服务器 编码,获取服务器配置
     getServer:(state) => (region: string) => state.auth.servers.find(s => s.region === region)
 

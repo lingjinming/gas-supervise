@@ -1,6 +1,9 @@
 // 导入请求函数
 import { request } from "./request";
+import type { Flow ,LeaderCommentCreate}  from './model/Hidanger'
+
 export interface ICheckPlanVo {
+
   title:string
   startDate:string
   endDate:string
@@ -17,6 +20,7 @@ export interface ICheckPlanVo {
  */
 
 export const addCheckPlan = (data: ICheckPlanVo) => {
+
   return request({
     url: `gasguard-service-risk-app/hidanger/gov/check-plan`,
     method: "POST",
@@ -313,41 +317,24 @@ export const reformHidangerById = (query: { data: any }) => {
 };
 
 
-export interface HiDangerFlow {
-  push:        HandleStage;
-  handleStage: HandleStage;
-  auditStage:  AuditStage;
-}
 
-export interface AuditStage {
-  stageTime:   string;
-  title:       string;
-  operator:    string;
-  operatorOrg: string;
-}
-
-export interface HandleStage {
-  stageTime:    string;
-  title:        string;
-  operator:     string;
-  operatorOrg:  string;
-  handleDate?:  string;
-  level:        string;
-  _level:       string;
-  address:      string;
-  dangerType:   string;
-  _dangerType:  string;
-  subjectType:  string;
-  _subjectType: string;
-  remark:       string;
-  fileIds:      string[];
-  picIds?:      string[];
-  checkDate?:   string;
-}
 
 export const getHidangerFlow = async (uid: string) => {
-  return request<{data: HiDangerFlow}>({
+  return request<{data: Flow}>({
     url: 'gasguard-service-risk-app/hidanger/flow/'+uid,
     method: 'GET'
+  })
+}
+
+/**
+ * 创建领导评论
+ * @param body 领导评论
+ * @returns
+ */
+export const createLeaderComment = (body: LeaderCommentCreate) => {
+  return request<{data: void}>({
+    url: 'gasguard-service-risk-app/hidanger/gov/leader-comment',
+    method: 'POST',
+    data: body
   })
 }

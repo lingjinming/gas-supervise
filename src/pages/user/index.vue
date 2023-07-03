@@ -53,7 +53,7 @@ const form = ref({
 
 
 onShow(() => {
-  const userInfo = store.getUserInfo;
+  const userInfo = store.userInfo;
   if (userInfo) {
     form.value.name = userInfo.name || '--';
     form.value.department = userInfo.organizationVO?.fullName || '--';
