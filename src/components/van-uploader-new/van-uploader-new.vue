@@ -1,6 +1,6 @@
 <template>
   <view class="uploader-box">
-    <text>上传照片</text>
+    <text>上传照片(最多3张)</text>
     <van-uploader
       multiple
       :max-count="3"
@@ -9,7 +9,9 @@
       @delete="delImg"
       @after-read="uploadImg"
     >
-      <van-button icon="photo" plain type="default">最多3张</van-button>
+      <view class="btn">
+        <van-icon name="plus" size="50px" color="#efefef"></van-icon>
+      </view>
     </van-uploader>
   </view>
 </template>
@@ -22,9 +24,9 @@ let fileList: any = ref([]);
 const emits = defineEmits(["update:modelValue"]);
 
 const delImg = (event) => {
-    let temp = JSON.parse(JSON.stringify(fileList.value))
-    temp.splice(event.detail.index, 1);
-    fileList.value = temp
+  let temp = JSON.parse(JSON.stringify(fileList.value));
+  temp.splice(event.detail.index, 1);
+  fileList.value = temp;
   console.log(fileList.value);
 };
 const uploadImg = async (event) => {
@@ -41,7 +43,6 @@ const uploadImg = async (event) => {
     });
   });
   fileList.value = file;
-
 
   const uploadTasks = file.map((item) => {
     return new Promise((resolve) => {
@@ -76,12 +77,20 @@ const uploadImg = async (event) => {
 <style lang="scss" scoped>
 .uploader-box {
   display: flex;
-  gap: 88rpx;
+  gap: 20rpx;
   padding: 30rpx;
   margin-bottom: 20rpx;
   background: #fff;
+  flex-direction: column;
   text {
     @include label;
+  }
+  .btn {
+    width: 200rpx;
+    height: 200rpx;
+    background: #f6f6f6;
+    border: 2rpx solid #efefef;
+    @include flex-center;
   }
 }
 </style>

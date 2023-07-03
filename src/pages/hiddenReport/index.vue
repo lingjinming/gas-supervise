@@ -1,38 +1,54 @@
 <template>
+  <view class="container">
     <van-cell-group>
-      <van-field
-        :value="reportForm.remark"
-        @change="reportForm.remark = $event.detail"
-        label="隐患描述"
-        type="textarea"
-        fixed
-        autosize
-        placeholder="请输入"
-        maxlength="200"
+      <view style="background: #fff;">
+        <van-field :value="reportForm.remark" label="隐患描述" readonly />
+
+<textarea
+  class="remark"
+  maxlength="200"
+  :value="reportForm.remark"
+  @input="reportForm.remark = $event.detail.value"
+  type="text"
+  placeholder="请输入"
+/>
+      </view>
+
+
+      <van-uploader-new v-model="reportForm.fileIds" />
+      <van-cascader-new
+        dicType="RISK_SUBJECT_TYPE_TREE"
+        label="隐患类别"
+        title="隐患类别"
+        v-model="reportForm.dangerType"
+        v-model:subjectType="reportForm.subjectType"
       />
-      <van-field label="位置" @click-input="chooseLocation" right-icon="location-o">
+      <van-field
+        label="位置"
+        @click-input="chooseLocation"
+        right-icon="location-o"
+      >
         <input
           slot="input"
           style="width: 100%"
           :value="reportForm.address"
           placeholder="请选择"
-
         />
       </van-field>
 
       <!-- <van-field
-        :value="districtName"
-        :innerValue="districtName"
-        label="所属区域"
-        fixed
-        autosize
-        placeholder="请点选位置"
-      /> -->
+  :value="districtName"
+  :innerValue="districtName"
+  label="所属区域"
+  fixed
+  autosize
+  placeholder="请点选位置"
+/> -->
 
       <van-picker-new
         dicType="org"
-        :label="isOrg ?  '上报企业' : '责任企业' "
-        :title="isOrg ?  '上报企业' : '责任企业'"
+        :label="isOrg ? '上报企业' : '责任企业'"
+        :title="isOrg ? '上报企业' : '责任企业'"
         v-model="reportForm.orgId"
       />
       <!-- 企业不需要关联检查计划 -->
@@ -52,25 +68,19 @@
         v-model="reportForm.level"
       />
 
-      <van-cascader-new
-        dicType="RISK_SUBJECT_TYPE_TREE"
-        label="隐患类别"
-        title="隐患类别"
-        v-model="reportForm.dangerType"
-        v-model:subjectType="reportForm.subjectType"
-      />
-
       <van-field label="检查日期" disabled :value="reportForm.checkDate">
       </van-field>
-      <van-uploader-new v-model="reportForm.fileIds" />
-
     </van-cell-group>
 
-
-
-    <van-button custom-style="margin:40rpx;width:calc(100% - 80rpx)" type="primary" size="large" color="#006CFF" @click="submit"
+    <van-button
+      custom-style="margin:40rpx;width:calc(100% - 80rpx)"
+      type="primary"
+      size="large"
+      color="#006CFF"
+      @click="submit"
       >确定</van-button
     >
+  </view>
 </template>
 <script setup lang="ts">
 import { reactive, ref, type Ref } from "vue";
@@ -83,7 +93,6 @@ import { userStore } from "@/state";
 const store = userStore();
 
 const isOrg: boolean = store.isOrgUser;
-
 
 onShow(() => {
   isOrg &&
@@ -144,6 +153,9 @@ const chooseLocation = () => {
 };
 </script>
 <style lang="scss" scoped>
+.container{
+  background: none;
+}
 .top {
   line-height: 100rpx;
 }
@@ -152,5 +164,13 @@ const chooseLocation = () => {
   gap: 88rpx;
   padding: 30rpx;
   margin-bottom: 20rpx;
+}
+.remark {
+  height: 250rpx;
+  width: calc(100% - 100rpx);
+  margin: 0 30rpx;
+  background: $uni-text-color-grey;
+  border-radius: 10rpx;
+  padding: 20rpx;
 }
 </style>
