@@ -57,7 +57,7 @@
     <van-field
       label="主管部门"
       disabled
-      :value="store.userInfo.organizationVO.fullName"
+      :value="orgFullName"
     >
     </van-field>
   </van-cell-group>
@@ -73,14 +73,16 @@
   />
 </template>
 <script setup lang="ts">
-import { reactive, ref, watch } from "vue";
-import { addCheckPlan, type ICheckPlanVo } from "../../api/hidden";
+import {  ref, watch } from "vue";
+import { addCheckPlan} from "../../api/checkPlan";
+import type { ICheckPlanCreateReq } from "@/api/model/CheckPlan";
 import { formatDate } from "@/utils";
 import { minDate, showToast, tomorrowDate } from "@/hooks";
 import { userStore } from "@/state";
 let errorMessage= ref('')
 const store = userStore();
 const isOrg: boolean = store.isOrgUser;
+const orgFullName = store.userInfo?.organizationVO.fullName
 
 let isShow = ref(false);
 
@@ -89,11 +91,11 @@ const onConfirm = (e) => {
   reportForm.value.endDate = formatDate(e.detail[1]);
   isShow.value = false;
 };
-let reportForm: ICheckPlanVo = ref({
+let reportForm = ref({
   targetOrgAddr: "",
   startDate: formatDate(minDate),
   endDate: formatDate(tomorrowDate),
-});
+} as ICheckPlanCreateReq);
 
 watch(reportForm,(val)=>{
   let rules = {

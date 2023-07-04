@@ -15,7 +15,9 @@
 </template>
 <script setup lang="ts">
 import { getDictList, getOrg } from "@/api/dic";
-import { getCheckPlanByOrg } from "@/api/hidden";
+import { getCheckPlanByOrg } from "@/api/checkPlan";
+import type { DicItem ,SysOrgItem} from "@/api/model/SysDictionary";
+import type { CheckPlanOptions } from "@/api/model/CheckPlan";
 
 const emits = defineEmits(["update:modelValue"]);
 const props = defineProps({
@@ -29,19 +31,19 @@ const props = defineProps({
   },
 });
 let isShow = ref(false);
-let columns = ref([]);
+let columns: Ref<DicItem[] | SysOrgItem[] | CheckPlanOptions[]> = ref([]);
 let pickerVal = ref([]);
 
 const columnsObj = {
   org: async () => {
-    let data = (await getOrg())["data"];
+    let data = await getOrg();
     data.forEach((ele) => {
       ele.text = ele.shortName;
     });
     columns.value = data;
   },
   planCode: async () => {
-    let data = (await getCheckPlanByOrg(props.orgId))["data"];
+    let data = await getCheckPlanByOrg(props.orgId);
     data.forEach((ele) => {
       ele.text = ele.value;
     });
@@ -57,7 +59,7 @@ const columnsObj = {
 };
 
 const getDictListFn = async (type:string) =>{
-  let data = (await getDictList(type))["data"][type];
+  let data = (await getDictList(type))[type];
   columns.value = data;
 }
 

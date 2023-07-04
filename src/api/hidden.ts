@@ -1,160 +1,69 @@
 // 导入请求函数
-import { request } from "./request";
+import { defHttp } from '@/utils/http';
+import { userStore } from "@/state";
+
 import type { Flow ,LeaderCommentCreate}  from './model/HidangerFlow'
 import type {HidangerOrgPageQuery,HidangerPgaeVO} from './model/HidangerPage'
 import type { AuditCreateReq } from "./model/HidangerAudit";
-
-export interface ICheckPlanVo {
-
-  title:string
-  startDate:string
-  endDate:string
-  type:string
-  targetOrgId:string
-  targetOrgOwner:string
-  targetOrgPhone:string
-  checkers:string
-  address:string
-  targetOrgAddr:''
-}
-/**
- * @description 新增检查计划
- */
-
-export const addCheckPlan = (data: ICheckPlanVo) => {
-
-  return request({
-    url: `gasguard-service-risk-app/hidanger/gov/check-plan`,
-    method: "POST",
-    data
-  });
-};
+import type { HidangerCreateReq ,HidangerHandleReq} from "./model/Hidanger";
+import type { BasePageResponse, BaseResponse } from "./model/BaseModel";
 
 
-/**
- * @description  获取检查计划
- *
- */
-export const getCheckPlanByOrg = (orgId: string) => {
-  return request({
-    url: `gasguard-service-risk-app/hidanger/gov/check-plan/selections?targetOrgId=${orgId}`,
-    method: "GET",
-  });
-};
 
 /**
  * @description 新增隐患
  *
  */
-export type req_addHidden = {
-  isOrg: Boolean;
-  subjectType: String;
-  dangerType: String;
-  orgId: String;
-  checkDate: String;
-  longitude: Number;
-  latitude: Number;
-  address: String;
-  remark: String;
-  fileIds: String[];
-  level: String;
-  planCode: String;
-  districtId: String;
-};
-export const addHidden = (data: req_addHidden) => {
-  return request({
-    url: data.isOrg
-      ? "gasguard-service-risk-app/hidanger/org"
-      : "gasguard-service-risk-app/hidanger/gov",
-    method: "POST",
-    data,
+export const addHidden = (data: HidangerCreateReq) => {
+  const store = userStore();
+  const isOrg = store.isOrgUser;
+  const url = isOrg ? "gasguard-service-risk-app/hidanger/org" : "gasguard-service-risk-app/hidanger/gov";
+  return defHttp.post({
+    url,
+    data
   });
 };
 
 /**
- * 消息提醒
- *
+ * 隐患分页请求
  */
-export const getNotice = (data: { recipient: string }) => {
-  return request({
-    url: `gasguard-service-system-app/urge/get/allMsg/page`,
-    method: "GET",
-    data,
-  });
-};
-
-
 export const hidangerPage = (query: HidangerOrgPageQuery) => {
-  const url = `gasguard-service-risk-app/hidanger/${
-    query.isOrg ? "org" : "gov"
-  }/page`;
-  return request<{ data: HidangerPgaeVO[]; total: number }>({
-    url,
-    method: "GET",
-    data: query,
-  });
-};
-export type CheckVo = {
-  checkers: string;
-  endDate: string;
-  handleState: string;
-  masterOrgId: string;
-  planCode: string;
-  startDate: string;
-  title: string;
-  type: string;
-  uid: string;
-  _handleState: string;
-  _masterOrgId: string;
-  _type: string;
-  planCreator:string
-};
+  const store = userStore();
+  const isOrg = store.isOrgUser;
+  const url = `gasguard-service-risk-app/hidanger/${isOrg ? "org" : "gov"}/page`;
 
-export const checkPlanPage = (query: CheckVo) => {
-  const url = `gasguard-service-risk-app/hidanger/gov/check-plan/page`;
-  return request({
+  return defHttp.get<BasePageResponse<HidangerPgaeVO>>({
     url,
-    method: "GET",
     data: query,
-  });
-};
-export const checkPlanDelById = (query: { uid: string }) => {
-  const url = `gasguard-service-risk-app/hidanger/gov/check-plan/${query.uid}`;
-  return request<{ data: HidangerPgaeVO[]; total: number }>({
-    url,
-    method: "DELETE",
-    data: query,
+  },{
+    isTransformResponse: false
   });
 };
 
-export const checkPlanFinishById = (query: { uid: string }) => {
-  const url = `gasguard-service-risk-app/hidanger/gov/check-plan/finish/${query.uid}`;
-  return request<{ data: HidangerPgaeVO[]; total: number }>({
-    url,
-    method: "POST",
-    data: query,
-  });
-};
+
 
 /**
  * @description 隐患整改
  */
-export const reformHidangerById = (query: { data: any }) => {
-  const url = `gasguard-service-risk-app/hidanger/org/handle/${query.uid}`;
-  return request({
+export const reformHidangerById = (uid: string,data: HidangerHandleReq) => {
+  const url = `gasguard-service-risk-app/hidanger/org/handle/${uid}`;
+  return defHttp.put<BaseResponse<void>>({
     url,
-    method: "PUT",
-    data: query,
+    data,
+  },{
+    isTransformResponse: false
   });
 };
 
 
-
-
+/**
+ * 按隐患主键获取隐患整改流程
+ * @param uid 隐患主键
+ * @returns 整改流程
+ */
 export const getHidangerFlow = async (uid: string) => {
-  return request<{data: Flow}>({
+  return defHttp.get<Flow>({
     url: 'gasguard-service-risk-app/hidanger/flow/'+uid,
-    method: 'GET'
   })
 }
 
@@ -163,20 +72,18 @@ export const getHidangerFlow = async (uid: string) => {
  * @param body 领导评论
  * @returns
  */
-export const createLeaderComment = (body: LeaderCommentCreate) => {
-  return request<{data: void}>({
+export const createLeaderComment = (data: LeaderCommentCreate) => {
+  return defHttp.post<void>({
     url: 'gasguard-service-risk-app/hidanger/gov/leader-comment',
-    method: 'POST',
-    data: body
+    data
   })
 }
 /**
  * 隐患审核
  */
 export const hidangerAudit = (data: AuditCreateReq) => {
-  return request<{data: void}>({
+  return defHttp.put<void>({
     url: 'gasguard-service-risk-app/hidanger/gov/audit',
-    method: 'PUT',
     data: data
   })
 }

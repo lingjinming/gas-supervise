@@ -36,7 +36,8 @@
   />
 </template>
 <script setup lang="ts">
-import { checkPlanPage } from "@/api/hidden";
+import { checkPlanPage } from "@/api/checkPlan";
+import type { CheckPageVo ,CheckPlanQueryReq} from "@/api/model/CheckPlan";
 import { formatDate } from "@/utils";
 import { userStore } from "@/state";
 
@@ -45,11 +46,13 @@ const isOrg: boolean = store.isOrgUser;
 
 let loading = ref(true);
 
-let checks = ref([]);
+let checks = ref([] as CheckPageVo[]);
 let reportForm = ref({
   startTime: "",
   endTime: "",
-});
+  // TODO 先查出所有数据, 后面优化分页
+  paging: false,
+} as CheckPlanQueryReq);
 const addCheck = () => {
   uni.navigateTo({
     url: "/pages/addCheck/index",
@@ -66,7 +69,7 @@ const showCalendar = () => {
   isShow.value = true;
 };
 const getcheckPlanPageFn = async (reportForm) => {
-  let data = (await checkPlanPage(reportForm))["data"];
+  let {total,data} = await checkPlanPage(reportForm);
   checks.value = data;
   isShow.value = false;
   loading.value = false;

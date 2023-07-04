@@ -8,6 +8,7 @@
 </template>
 <script setup lang="ts">
 import { getDictList, getDistrict } from "@/api/dic";
+import type { DicItem ,SysDistrictItem} from "@/api/model/SysDictionary";
 
 const emits = defineEmits(["update:modelValue", "update:subjectType"]);
 const props = defineProps({
@@ -21,21 +22,20 @@ const props = defineProps({
   },
 });
 let isShow = ref(false);
-let options = ref([]);
+let options:Ref<DicItem[] | SysDistrictItem[]> = ref([]);
 let cascaderVal = ref('');
 
 const columnsObj = {
   RISK_SUBJECT_TYPE_TREE: async () => {
-    let data = (await getDictList(props.dicType))["data"][props.dicType];
+    let data = (await getDictList(props.dicType))[props.dicType];
     options.value = data;
   },
   district: async () => {
-    let data = [(await getDistrict())["data"]];
-    console.log(data);
+    let data = [(await getDistrict())];
     data.forEach((item) => {
       item.text = item.name;
       item.value = item.code;
-      if (item.children.length) {
+      if (item.children && item.children.length) {
         item.children.forEach((item2) => {
           item2.text = item2.name;
           item2.value = item2.code;

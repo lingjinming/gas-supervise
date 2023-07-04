@@ -4,14 +4,14 @@
       <view style="background: #fff;">
         <van-field :value="reportForm.remark" label="隐患描述" readonly />
 
-<textarea
-  class="remark"
-  maxlength="200"
-  :value="reportForm.remark"
-  @input="reportForm.remark = $event.detail.value"
-  type="text"
-  placeholder="请输入"
-/>
+        <textarea
+          class="remark"
+          maxlength="200"
+          :value="reportForm.remark"
+          @input="reportForm.remark = $event.detail.value"
+          type="text"
+          placeholder="请输入"
+        />
       </view>
 
 
@@ -83,8 +83,9 @@
   </view>
 </template>
 <script setup lang="ts">
-import { reactive, ref, type Ref } from "vue";
-import { addHidden, type req_addHidden } from "../../api/hidden";
+import { ref } from "vue";
+import { addHidden } from "../../api/hidden";
+import type { HidangerCreateReq } from "@/api/model/Hidanger";
 import { formatDate } from "@/utils";
 import { getDistrictId } from "@/utils/qqMapUtil";
 import { minDate, maxDate } from "@/hooks";
@@ -103,8 +104,7 @@ onShow(() => {
 
 let checkDatePopupIsShow = ref(false);
 const districtName = ref("");
-let reportForm: req_addHidden = ref({
-  isOrg: isOrg,
+let reportForm = ref({
   remark: "",
   address: "",
   orgId: "",
@@ -117,7 +117,7 @@ let reportForm: req_addHidden = ref({
   longitude: "",
   latitude: "",
   districtId: "",
-});
+} as HidangerCreateReq);
 
 const submit = async () => {
   let data = await addHidden(reportForm.value);
@@ -138,8 +138,6 @@ const chooseLocation = () => {
           reportForm.value.latitude = res.latitude;
 
           getDistrictId(res.latitude, res.longitude).then((data) => {
-            console.log(data);
-
             reportForm.value.districtId = data.code;
             districtName.value = data.name;
           });

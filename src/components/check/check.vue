@@ -27,17 +27,14 @@
   </van-swipe-cell>
 </template>
 <script setup lang="ts">
-import {
-  checkPlanDelById,
-  checkPlanFinishById,
-  type CheckVo,
-} from "@/api/hidden";
+import { checkPlanDelById ,checkPlanFinishById} from "@/api/checkPlan";
+import type { CheckPageVo } from "@/api/model/CheckPlan";
 import { showToast } from "@/hooks";
 import type { PropType } from "vue";
 
 const props = defineProps({
   data: {
-    type: Object as PropType<CheckVo>,
+    type: Object as PropType<CheckPageVo>,
     default: {},
   },
 });
