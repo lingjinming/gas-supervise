@@ -1,0 +1,3 @@
+export enum EventType {
+  DANGER_PAGE_REFRESH = 'DANGER_PAGE_REFRESH'
+}

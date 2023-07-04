@@ -7,8 +7,8 @@
   </view>
   <!-- 隐患列表 -->
   <scroll-view style="height: calc(100% - 100rpx);" scroll-y="true" class="scroll-Y" @scrolltolower="nextPage">
-    <template v-if="state.list.length">
-      <hidden v-for="(item, i) in state.list" :key="i" :info="item" @onAudit="doQuery"></hidden>
+    <template v-if="state.total">
+      <hidden v-for="(item, i) in state.list" :key="i" :info="item"></hidden>
     </template>
     <van-empty v-else description="暂无数据"></van-empty>
   </scroll-view>
@@ -58,6 +58,7 @@ import { hidangerPage } from '@/api/hidden';
 import { reactive } from 'vue';
 import { getDictList } from '@/api/dic';
 import { userStore } from "@/state";
+import { EventType } from '@/enums/eventType'
 
 const store = userStore();
 
@@ -78,11 +79,16 @@ const state = reactive({
     page: 1,
     size: 10,
     state: [],
-    //dangerSource: [],
-    //level: [],
+    orgId: '',
+    dangerSource: [],
+    level: [],
     dangerType: '',
     dangerSubType: ''
   } as HidangerOrgPageQuery
+})
+
+uni.$on(EventType.DANGER_PAGE_REFRESH,() => {
+  doQuery();
 })
 
 // 下拉到底部 加载下一页
@@ -102,10 +108,7 @@ const cancel = () => {
 // 关闭查询面板/点击确定 执行查询
 const doQuery = () => {
   state.showQuery = false;
-  // 重置分页
-  state.query.page = 1;
-  state.list.length = 0;
-  fetchPage();
+  fetchPage(true);
 }
 
 // 加载所需字典
@@ -118,19 +121,31 @@ const loadDic = async () => {
 
 }
 // 分页查询
-const fetchPage = async () => {
-  const { total, data } = await hidangerPage({ ...state.query });
-  state.total = total;
-  state.list.push(...data)
+const fetchPage = async (reset?: boolean) => {
+  uni.showToast({
+    icon: 'loading',
+    title: '加载中...'
+  })
+  try {
+    if(reset) {
+      state.query.page = 1;
+    }
+    const { total, data } = await hidangerPage({ ...state.query });
+    state.total = total;
+    if(reset) {
+      state.list.length = 0;
+    }
+    state.list.push(...data)
+  }finally {
+    uni.hideToast();
+  }
+  
 }
 onLoad(() => {
   loadDic();
   fetchPage();
 })
-onShow(() => {
-  // 刷新页面
-  doQuery();
-})
+
 </script>
 <style lang="scss" scoped>
 .top {

@@ -58,7 +58,25 @@ const transforms: RequestTransform = {
       })
     }
     return data;
+  },
+
+  /**
+   * http 状态码错误
+   */
+  responseInterceptorsCatch: (error: UniApp.GeneralCallbackResult,opt: PerRequestOptions) => {
+    console.log('error=====================================');
+    
+    console.log(error);
+
+    uni.showToast({
+      icon: 'error',
+      title: '服务器出现了一些问题...'
+    })
+
+    return  Promise.reject('系统出错!');
   }
+
+  
 }
 
 

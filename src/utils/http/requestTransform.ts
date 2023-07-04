@@ -14,4 +14,11 @@ export abstract class RequestTransform {
    */
   beforeRequestHook?: (option: UniApp.RequestOptions,per?: PerRequestOptions) => UniApp.RequestOptions
 
+
+
+  /**
+   * 请求出错时的处理方式
+   */
+  responseInterceptorsCatch?: (error: UniApp.GeneralCallbackResult,opt: PerRequestOptions) => Promise<any>
+
 }

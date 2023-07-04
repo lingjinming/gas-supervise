@@ -77,6 +77,8 @@
       type="primary"
       size="large"
       color="#006CFF"
+      :loading="loading"
+      loading-text="请稍后..." 
       @click="submit"
       >确定</van-button
     >
@@ -102,7 +104,7 @@ onShow(() => {
     });
 });
 
-let checkDatePopupIsShow = ref(false);
+let loading = ref(false);
 const districtName = ref("");
 let reportForm = ref({
   remark: "",
@@ -120,11 +122,25 @@ let reportForm = ref({
 } as HidangerCreateReq);
 
 const submit = async () => {
-  let data = await addHidden(reportForm.value);
-  data.success &&
-    setTimeout(() => {
-      uni.navigateBack();
-    }, 1500);
+  loading.value = true;
+  try {
+    let {success,message} = await addHidden(reportForm.value);
+    if(success) {
+      setTimeout(() => {
+        loading.value = false;
+        uni.navigateBack();
+      }, 1500);
+    } else {
+      uni.showToast({
+        icon: 'error',
+        title: message
+      })
+    }
+      
+  } catch(e) {
+    loading.value = false;
+  }
+  
 };
 
 const chooseLocation = () => {

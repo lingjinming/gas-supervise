@@ -36,18 +36,26 @@
     </van-cell-group>
 
 
-    <van-button custom-style="margin:40rpx;width:calc(100% - 80rpx)" type="primary" size="large" color="#006CFF" @click="submit"
-      >确定</van-button
-    >
+    <van-button 
+      custom-style="margin:40rpx;width:calc(100% - 80rpx)" 
+      :loading="loading"
+      loading-text="请稍后..."
+      type="primary" 
+      size="large" 
+      color="#006CFF" 
+      @click="submit"
+      >确定</van-button>
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
 import { reformHidangerById } from "../../api/hidden";
 import type { HidangerHandleReq } from "@/api/model/Hidanger";
 import { formatDate} from "@/utils";
+import { EventType } from '@/enums/eventType'
 
 let checkDate = ref(0)
 let handleDatePopupIsShow = ref(false);
+let loading = ref(false)
 
 let reportForm = ref({
   uid:'',
@@ -77,12 +85,28 @@ const submit = async () => {
     })
     return
   }
-  let data = await reformHidangerById(reportForm.value.uid,reportForm.value);
+  try {
+    loading.value = true;
+    let {success , message} = await reformHidangerById(reportForm.value.uid,reportForm.value);
+    if(success) {
+      setTimeout(() => {
+        loading.value = false;
+        uni.navigateBack();
+         // 让列表刷新
+        uni.$emit(EventType.DANGER_PAGE_REFRESH)
+      }, 1500);
+    } else {
+      uni.showToast({
+        icon:'none',
+        title: message
+      })
+    }
+  }catch(e) {
+    loading.value = false;
+  }
+  
 
-  data.success &&
-    setTimeout(() => {
-      uni.navigateBack();
-    }, 1500);
+    
 };
 
 
