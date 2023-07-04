@@ -3,7 +3,9 @@ import { userStore } from "@/state";
 const BASE_URL = "https://aiot.citysafety.com/gasguard/";
 const SUCESS_CODE = [200];
 
-
+/**
+ * @deprecated
+ */
 export const request = <T = any>(option: UniApp.RequestOptions): Promise<T> => {
   const store = userStore();
   const currentServer = store.auth.activeServer;

@@ -28,10 +28,11 @@
   </van-skeleton>
 </template>
 <script setup lang="ts">
-import { getNotice } from "@/api/hidden";
+import { getNotice } from "@/api/notice";
+import type { SysNoticeItem } from "@/api/model/Notice";
 
 let loading = ref(true);
-const notices = ref([]);
+const notices = ref([] as SysNoticeItem[]);
 
 const props = defineProps({
   num: {
@@ -74,11 +75,7 @@ const format = (t) => {
 };
 
 const getNoticeFn = async () => {
-  let data = (
-    await getNotice({
-      recipient: uni.getStorageSync("USER_INFO")["userId"],
-    })
-  )["data"];
+  let data = await getNotice();
 
   if (props.num) {
     notices.value = data.slice(0, props.num);

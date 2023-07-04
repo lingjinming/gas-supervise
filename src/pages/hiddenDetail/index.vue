@@ -140,7 +140,7 @@ const getDetail = async (id: string) => {
     loading.value = true;
     data.uid = id;
 
-    const { level, _level, dangerId, flow,state } = (await getHidangerFlow(id)).data;
+    const { level, _level, dangerId, flow,state } = await getHidangerFlow(id);
     data.detail._level = _level;
     data.detail.state = state;
     data.detail.level = level;

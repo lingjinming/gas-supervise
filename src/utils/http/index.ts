@@ -3,8 +3,21 @@ import type { UniResponse, ClientOptions,PerRequestOptions } from "./typing";
 import { RestClient } from './RestClient'
 import { userStore } from "@/state";
 
+// 处理一下get下的数组传参
+const handleGetQueryParam = (param: any) => {
+  if(param && typeof param === 'object') {
+    for(let key in param) {
+      const theValue = param[key];
+      if(Array.isArray(theValue)) {
+        param[key] = theValue.join(',');
+      } 
+    }
+  }
+}
+
 const transforms: RequestTransform = {
 
+  // 请求前的参数处理
   beforeRequestHook: (options: UniApp.RequestOptions,per?: PerRequestOptions) => {
     const store = userStore();
     const activeServer = store.auth.activeServer;
@@ -19,9 +32,14 @@ const transforms: RequestTransform = {
       header = Object.assign(header, options.header);
     }
     options.header = header;
+    // 处理一下get下的数组传参,用逗号拼接
+    if(options.method === 'GET' && options.data) {
+      handleGetQueryParam(options.data)
+    }
     return options;
   },
 
+  // 系统正常响应后的处理方式
   transformResponseHook: (response: UniResponse<any>,per?: PerRequestOptions) => {
     // 直接返回uniapp 原始响应,不做任何处理
     if(per?.isReturnNativeResponse) {

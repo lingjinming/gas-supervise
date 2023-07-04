@@ -39,7 +39,8 @@
   </view>
 </template>
 <script setup lang="ts">
-import {getToken, getUserInfo, type req_token} from "@/api/uaa";
+import { getToken, getUserInfo} from "@/api/uaa";
+import type { OAuth2LoginReq } from "@/api/model/UserAuth";
 import {ref, type Ref} from "vue";
 import { userStore } from "@/state";
 
@@ -53,14 +54,13 @@ if(store.isLogin) {
 }
 
 
-let loginForm: Ref<req_token> = ref({
+let loginForm: Ref<OAuth2LoginReq> = ref({
   grant_type: "password",
   scope: "all",
   username: "system",
   password: "Gsafety@2022",
 });
 let serverValue = ref(null);
-let serverList = store.auth.servers;
 
 const login = async () => {
   if (!serverValue.value) {
@@ -100,7 +100,7 @@ const login = async () => {
     });
     return;
   }
-  let USER_INFO = (await getUserInfo())["data"];
+  let USER_INFO = await getUserInfo();
 
   if (USER_INFO) {
     store.setUserInfo(USER_INFO);

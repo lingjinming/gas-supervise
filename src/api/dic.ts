@@ -1,45 +1,37 @@
 // 导入请求函数
-import { request } from './request';
+import { defHttp } from '@/utils/http';
+import type { SysDictionaryResponse ,SysDistrictItem ,SysOrgItem} from './model/SysDictionary'
+
+
 /**
  * 所属区域
 */
 export const getDistrict = () => {
-    return request({
-        url: "gasguard-service-system-app/user/me/district",
-        method: "GET"
-    })
+  return defHttp.get<SysDistrictItem>({
+    url: "gasguard-service-system-app/user/me/district"
+  })
 }
+
+
 
 /**
  * 关联燃气公司
 */
 export const getOrg = () => {
-    return request({
-        url: "gasguard-service-system-app/user/me/org",
-        method: "GET"
-    })
+  return defHttp.get<SysOrgItem[]>({
+    url: "gasguard-service-system-app/user/me/org"
+  })
 }
 
 
 
-export interface DicItem {
-  pid:         string;
-  id:          string;
-  label:       string;
-  value:       string;
-  order:       number;
-  hasChildren: boolean;
-  notes1:      string;
-  systemFlag:  string;
-  text:        string;
-  children?: DicItem[]
-}
 /**
- * 字典
-*/
-export const getDictList = (dicType:string) => {
-    return request<{data: Record<string,DicItem[]>}>({
-        url: `gasguard-service-system-app/dictionary/list?types=${dicType}`,
-        method: "GET"
-    })
+ * 获取数据字典
+ * @param dicType 数据字典类型
+ * @returns 数据字典
+ */
+export const getDictList = (dicType: string) => {
+  return defHttp.get<SysDictionaryResponse>({
+    url: `gasguard-service-system-app/dictionary/list?types=${dicType}`
+  })
 }

@@ -1,5 +1,8 @@
 // 导入请求函数
 import { request } from "./request";
+import { defHttp } from "@/utils/http";
+import { userStore } from "@/state";
+import type { ServerConfig ,SysUserInfo,OAuth2LoginReq} from "./model/UserAuth";
 
 /**
  * 上传文件
@@ -21,27 +24,29 @@ export const upload = (data: any) => {
  *
  */
 export const getConfig = () => {
-  return request<{regions: {region: string,remark: string,auth_header: string}[]}>({
+  return defHttp.get<ServerConfig>({
     url: "config.json",
-    method: "GET",
+  },{
+    isTransformResponse: false
   });
 };
 
 /**
- * 登录认证
- *
+ * 登录获取token
  */
-export type req_token = {
-  grant_type: String;
-  scope: String;
-  username: String;
-  password: String;
-};
-export const getToken = (data: req_token) => {
-  return request({
+export const getToken = (data: OAuth2LoginReq) => {
+  const store = userStore();
+  const authHeader = store.auth.activeServer?.auth_header
+  return defHttp.post({
     url: "apilogin/oauth/token",
-    method: "POST",
     data,
+    header: {
+      Authorization: authHeader,
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  },{
+    withoutToken: true,
+    isTransformResponse: false
   });
 };
 
@@ -50,8 +55,7 @@ export const getToken = (data: req_token) => {
  *
  */
 export const getUserInfo = () => {
-  return request({
+  return defHttp.get<SysUserInfo>({
     url: "gasguard-service-system-app/user/me",
-    method: "GET"
   });
 };

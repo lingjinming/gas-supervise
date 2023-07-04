@@ -41,8 +41,9 @@
     >
 </template>
 <script setup lang="ts">
-import { reactive, ref } from "vue";
-import { addHidden, reformHidangerById, type req_addHidden } from "../../api/hidden";
+import { ref } from "vue";
+import { reformHidangerById } from "../../api/hidden";
+import type { HidangerHandleReq } from "@/api/model/Hidanger";
 import { formatDate} from "@/utils";
 
 let checkDate = ref(0)
@@ -53,12 +54,13 @@ let reportForm = ref({
   handleContent: "",
   handleDate: "",
   picIds: [],
-});
+  fileIds: [],
+} as HidangerHandleReq & {uid: string});
 
 onLoad(options => {
-  reportForm.value.uid = options.uid
-  checkDate.value = new Date(options.checkDate).getTime()
-  reportForm.value.handleDate = formatDate(new Date())
+  reportForm.value.uid = options?.uid
+  checkDate.value = new Date(options?.checkDate).getTime()
+  reportForm.value.handleDate = formatDate(new Date().getTime())
 })
 
 
@@ -75,7 +77,7 @@ const submit = async () => {
     })
     return
   }
-  let data = await reformHidangerById(reportForm.value);
+  let data = await reformHidangerById(reportForm.value.uid,reportForm.value);
 
   data.success &&
     setTimeout(() => {

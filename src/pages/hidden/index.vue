@@ -52,9 +52,11 @@
 
 <script setup lang="ts">
 import type { HidangerPgaeVO,HidangerOrgPageQuery } from '@/api/model/HidangerPage'
+import type { DicItem } from "@/api/model/SysDictionary";
+
 import { hidangerPage } from '@/api/hidden';
-import { reactive, ref } from 'vue';
-import { getDictList, type DicItem } from '@/api/dic';
+import { reactive } from 'vue';
+import { getDictList } from '@/api/dic';
 import { userStore } from "@/state";
 
 const store = userStore();
@@ -109,10 +111,10 @@ const doQuery = () => {
 // 加载所需字典
 const loadDic = async () => {
   const res = await getDictList('RISK_DANGER_STATUS!DANGER,RISK_DANGER_LEVEL,RISK_SUBJECT_TYPE,RISK_DANGER_SOURCE');
-  state.dics.state = res.data['RISK_DANGER_STATUS!DANGER'];
-  state.dics.source = res.data.RISK_DANGER_SOURCE;
-  state.dics.level = res.data?.RISK_DANGER_LEVEL;
-  state.dics.subject = res.data?.RISK_SUBJECT_TYPE;
+  state.dics.state = res['RISK_DANGER_STATUS!DANGER'];
+  state.dics.source = res.RISK_DANGER_SOURCE;
+  state.dics.level = res.RISK_DANGER_LEVEL;
+  state.dics.subject = res.RISK_SUBJECT_TYPE;
 
 }
 // 分页查询

@@ -1,7 +1,16 @@
 import { defineStore } from 'pinia';
 import { setCache, getCache ,removeCache} from '@/utils/cache'
 import { getConfig } from "@/api/uaa";
+import type { SysUserInfo ,OAuth2Token} from '@/api/model/UserAuth';
 
+interface UserStoreType {
+  auth: {
+    token: OAuth2Token|undefined,
+    servers: Server[],
+    activeServer: Server | undefined
+  },
+  userInfo: SysUserInfo | undefined
+}
 
 export const userStore = defineStore('app-store', {
   state: (): UserStoreType => {
@@ -78,7 +87,7 @@ export const userStore = defineStore('app-store', {
       setCache('SERVER_CONFIG',server);
       this.auth.activeServer = server;
     },
-    setUserInfo(userInfo: any) {
+    setUserInfo(userInfo: SysUserInfo) {
       setCache('USER_INFO',userInfo);
       this.userInfo = userInfo;
     }
@@ -93,32 +102,4 @@ interface Server {
   region: string;
   auth_header: string;
 }
-interface OAuth2Token {
-  // 过期时间,毫秒
-  expire_at: number;
-  // token有效时长,秒
-  expires_in: number;
-  access_token: string;
-  userName: string;
-  token_type: 'bearer';
-  scope: string;
-}
 
-interface UserStoreType {
-  auth: {
-    token: OAuth2Token|undefined,
-    servers: Server[],
-    activeServer: Server | undefined
-  },
-  userInfo: {
-    name: string;
-    gender: string;
-    phoneNumber: string;
-    contactAddress: string;
-    organizationVO: {
-      fullName: string;
-      // 0-政府,1-企业,2-监测中心
-      orgType: '0' | '1' | '2' 
-    }
-  } | undefined
-}
