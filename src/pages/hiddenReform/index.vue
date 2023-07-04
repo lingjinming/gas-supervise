@@ -1,17 +1,18 @@
 <template>
 
     <van-cell-group>
-      <van-field
-        :value="reportForm.handleContent"
-        @change="reportForm.handleContent = $event.detail"
-        label="隐患描述"
-        type="textarea"
-        fixed
-        autosize="{minHeight: 200rpx}"
-        placeholder="请输入"
-        maxlength="200"
-        size="large"
-      />
+      <view style="background: #fff;">
+        <van-field :value="reportForm.handleContent" label="隐患描述" readonly />
+
+        <textarea
+          class="remark"
+          maxlength="200"
+          :value="reportForm.handleContent"
+          @input="reportForm.handleContent = $event.detail.value"
+          type="text"
+          placeholder="请输入"
+        />
+      </view>
 
       <van-field
         is-link
@@ -120,5 +121,13 @@ const submit = async () => {
   gap: 88rpx;
   padding: 30rpx;
   margin-bottom: 20rpx;
+}
+.remark {
+  height: 250rpx;
+  width: calc(100% - 100rpx);
+  margin: 0 30rpx;
+  background: $uni-text-color-grey;
+  border-radius: 10rpx;
+  padding: 20rpx;
 }
 </style>

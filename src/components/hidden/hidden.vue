@@ -145,8 +145,7 @@ const getTagType = (level: string) => {
   background: #fff;
   border-radius: 4rpx;
   padding: 30rpx;
-  border-radius: 6rpx;
-
+  box-shadow: $uni-box-shadow;
   .tit {
     margin-bottom: 25rpx;
     @include flex-between;

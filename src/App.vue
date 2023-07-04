@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import { onLaunch, onShow, onHide } from "@dcloudio/uni-app";
-import { userStore } from '@/state/index'
+import { userStore } from "@/state/index";
 
 onLaunch(async () => {
-  console.log('onLaunch...');
+  console.log("onLaunch...");
   const store = userStore();
   // 从缓存中恢复数据到pinia
   store.restoreStore();
   // 重新加载服务器配置
   await store.loadServers();
-
 });
 onShow(() => {
   // console.log("App Show");
@@ -55,12 +54,55 @@ page {
     font-weight: 600;
   }
 }
-.hover{
-  transition: all .3s;
+.hover {
+  transition: all 0.3s;
   transform: scale(1.1);
 }
 ::v-deep .van-skeleton__content {
   border-radius: 6px;
   margin: 0 auto;
+}
+.label {
+  @include label;
+}
+
+.state {
+  color: $uni-color-success;
+  position: relative;
+
+  &:before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    left: -26rpx;
+    content: " ";
+    height: 16rpx;
+    width: 16rpx;
+    border-radius: 10rpx;
+  }
+  &.handled {
+    color: $uni-color-success;
+
+    &::before {
+      background-color: $uni-color-success;
+    }
+  }
+
+  &.wait-handle {
+    color: $uni-color-warning;
+
+    &::before {
+      background-color: $uni-color-warning;
+    }
+
+    &-red {
+      color: $uni-color-error;
+
+      &::before {
+        background-color: $uni-color-error;
+      }
+    }
+  }
 }
 </style>

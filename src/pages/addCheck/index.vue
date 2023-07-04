@@ -66,6 +66,7 @@
       >确定</van-button
     >
   <van-calendar
+    allow-same-day
     type="range"
     :show="isShow"
     @close="isShow = false"
@@ -77,7 +78,7 @@ import {  ref, watch } from "vue";
 import { addCheckPlan} from "../../api/checkPlan";
 import type { ICheckPlanCreateReq } from "@/api/model/CheckPlan";
 import { formatDate } from "@/utils";
-import { minDate, showToast, tomorrowDate } from "@/hooks";
+import { minDate, showToast, tomorrowDate,maxDate } from "@/hooks";
 import { userStore } from "@/state";
 let errorMessage= ref('')
 const store = userStore();
@@ -94,7 +95,7 @@ const onConfirm = (e) => {
 let reportForm = ref({
   targetOrgAddr: "",
   startDate: formatDate(minDate),
-  endDate: formatDate(tomorrowDate),
+  endDate: formatDate(minDate),
 } as ICheckPlanCreateReq);
 
 watch(reportForm,(val)=>{
@@ -114,19 +115,7 @@ watch(reportForm,(val)=>{
 const submit = async () => {
   if(errorMessage.value) return
   let data = await addCheckPlan(reportForm.value);
-
   showToast(data.success,uni.navigateBack)
-  // uni.showToast({
-  //   title: data.message,
-  //   icon: data.success ? "success" : "error",
-  //   mask: true,
-  // });
-  // console.log(data);
-  // if (data.success) {
-  //   setTimeout(() => {
-  //     uni.navigateBack();
-  //   }, 500);
-  // }
 };
 </script>
 <style lang="scss" scoped>

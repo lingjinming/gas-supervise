@@ -1,11 +1,10 @@
 <template>
   <view class="top">
-    <view       v-if="reportForm.endTime && reportForm.startTime"
->
-      <text
-      @click="showCalendar"
-      >{{ reportForm.endTime +'至'+ reportForm.startTime }}</text
-    ><van-icon name="arrow-down" />
+    <view v-if="reportForm.endTime && reportForm.startTime">
+      <text @click="showCalendar">{{
+        reportForm.endTime + "至" + reportForm.startTime
+      }}</text
+      ><van-icon name="arrow-down" />
     </view>
 
     <van-icon
@@ -15,10 +14,9 @@
       name="calendar-o"
       @click="showCalendar"
     />
-
   </view>
   <scroll-view
-    style="height: calc(100% - 240rpx)"
+    :style="{ height: !isOrg ? 'calc(100% - 240rpx)' : 'calc(100% - 80rpx)' }"
     scroll-y="true"
     class="scroll-Y"
   >
@@ -27,7 +25,7 @@
     </van-skeleton>
     <van-empty v-else description="暂无数据"></van-empty>
   </scroll-view>
-  <view class="addCheck-box">
+  <view class="addCheck-box" v-if="!isOrg">
     <van-button
       custom-style="border-color:#a7a7a7;border-radius:10rpx"
       color="#a7a7a7"
@@ -35,7 +33,6 @@
       size="large"
       icon="plus"
       type="default"
-      v-if="!isOrg"
       @click="addCheck"
       >新增检查计划</van-button
     >
@@ -49,17 +46,16 @@
     allow-same-day
     :min-date="minDate"
     :max-date="maxDate"
-
   />
 </template>
 <script setup lang="ts">
 import { checkPlanPage } from "@/api/checkPlan";
-import type { CheckPageVo ,CheckPlanQueryReq} from "@/api/model/CheckPlan";
+import type { CheckPageVo, CheckPlanQueryReq } from "@/api/model/CheckPlan";
 import { formatDate } from "@/utils";
 import { userStore } from "@/state";
 
-const minDate = new Date('2023, 01, 01').getTime()
-const maxDate = new Date().getTime()
+const minDate = new Date("2023-01-01").getTime();
+const maxDate = new Date().getTime();
 const store = userStore();
 const isOrg: boolean = store.isOrgUser;
 
@@ -88,7 +84,7 @@ const showCalendar = () => {
   isShow.value = true;
 };
 const getcheckPlanPageFn = async (reportForm) => {
-  let {total,data} = await checkPlanPage(reportForm);
+  let { total, data } = await checkPlanPage(reportForm);
   checks.value = data;
   isShow.value = false;
   loading.value = false;

@@ -37,13 +37,13 @@ const uploadImg = async (event) => {
   let { file } = event.detail;
   file.map((item) => {
     item = Object.assign(item, {
-      url: file.tempFilePath,
+      // url: file.tempFilePath,
       status: "uploading",
       message: "上传中",
     });
   });
   fileList.value = file;
-
+  console.log(fileList)
   const uploadTasks = file.map((item) => {
     return new Promise((resolve) => {
       uni.uploadFile({
