@@ -58,7 +58,7 @@ import type { CheckPageVo ,CheckPlanQueryReq} from "@/api/model/CheckPlan";
 import { formatDate } from "@/utils";
 import { userStore } from "@/state";
 
-const minDate = new Date('2023, 01, 01').getTime()
+const minDate = new Date('2023-01-01').getTime()
 const maxDate = new Date().getTime()
 const store = userStore();
 const isOrg: boolean = store.isOrgUser;

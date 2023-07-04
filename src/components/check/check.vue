@@ -52,8 +52,11 @@ const finishPlan = async (uid) => {
 
 <style lang="scss" scoped>
 .data-box {
-    flex: 1;
-    padding: 30rpx;
+  margin: 0 30rpx 30rpx;
+  background: #fff;
+  border-radius: 4rpx;
+  padding: 30rpx;
+  box-shadow: $uni-box-shadow;
 
     .tit {
       @include flex-between;
@@ -67,7 +70,9 @@ const finishPlan = async (uid) => {
         width: 100rpx;
       }
   }
-  .right {
+
+}
+.right {
     height: 100%;
     @include flex-between;
     width: 320rpx;
@@ -84,5 +89,4 @@ const finishPlan = async (uid) => {
       background: $uni-color-error;
     }
   }
-}
 </style>
