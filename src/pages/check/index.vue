@@ -2,7 +2,7 @@
   <view class="top">
     <view v-if="reportForm.endTime && reportForm.startTime">
       <text @click="showCalendar">{{
-        reportForm.endTime + "至" + reportForm.startTime
+        reportForm.startTime + "至" + reportForm.endTime
       }}</text
       ><van-icon name="arrow-down" />
     </view>
@@ -20,9 +20,10 @@
     scroll-y="true"
     class="scroll-Y"
   >
-    <van-skeleton title row="6" :loading="loading" v-if="checks.length">
-      <check v-for="(item, i) in checks" :key="i" :data="item" />
-    </van-skeleton>
+    <template v-if="checks.length">
+      <check v-for="(item, i) in checks" :data="item" :key="i" />
+    </template>
+
     <van-empty v-else description="暂无数据"></van-empty>
   </scroll-view>
   <view class="addCheck-box" v-if="!isOrg">
@@ -59,8 +60,6 @@ const maxDate = new Date().getTime();
 const store = userStore();
 const isOrg: boolean = store.isOrgUser;
 
-let loading = ref(true);
-
 let checks = ref([] as CheckPageVo[]);
 let reportForm = ref({
   startTime: "",
@@ -87,7 +86,6 @@ const getcheckPlanPageFn = async (reportForm) => {
   let { total, data } = await checkPlanPage(reportForm);
   checks.value = data;
   isShow.value = false;
-  loading.value = false;
 };
 onShow(() => {
   getcheckPlanPageFn(reportForm.value);

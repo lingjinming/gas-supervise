@@ -1,31 +1,33 @@
 <template>
-  <van-skeleton
-    title
-    avatar
-    row="2"
-    :loading="loading"
-    v-for="(notice, i) in notices"
-    :key="i"
-    :right-width="50"
-  >
-    <view class="notice-box">
-      <view class="tit">
-        
-        <view style="display: flex;align-items: center;gap: 10rpx;">
-          <van-icon
-          :name="'/static/img/'+notice.msgType + '.png'"
-          size="36rpx"
-        />{{ notice.title }}
+  <template v-if="notices.length">
+    <van-skeleton
+      title
+      avatar
+      row="2"
+      :loading="loading"
+      v-for="(notice, i) in notices"
+      :key="i"
+      :right-width="50"
+    >
+      <view class="notice-box">
+        <view class="tit">
+          <view style="display: flex; align-items: center; gap: 10rpx">
+            <van-icon
+              :name="'/static/img/' + notice.msgType + '.png'"
+              size="36rpx"
+            />{{ notice.title }}
+          </view>
+
+          <text class="time">{{ format(notice.sendTime) }}</text>
+        </view>
+        <view class="con">
+          <text class="name">燃气管理处-{{ notice.createBy }} </text>
+          <text class="content">{{ notice.content }}</text>
+        </view>
       </view>
-   
-        <text class="time">{{ format(notice.sendTime) }}</text>
-      </view>
-      <view class="con">
-        <text class="name">燃气管理处-{{ notice.createBy }} </text>
-        <text class="content">{{ notice.content }}</text>
-      </view>
-    </view>
-  </van-skeleton>
+    </van-skeleton>
+  </template>
+  <van-empty v-else description="暂无数据"></van-empty>
 </template>
 <script setup lang="ts">
 import { getNotice } from "@/api/notice";

@@ -1,41 +1,58 @@
 <template>
-  <van-swipe-cell :right-width="160">
-    <van-cell-group>
-      <view class="data-box">
-        <view class="tit">
-          <text>{{ data.title + data.planCode }} </text>
-        </view>
-        <view class="con">
-          <view>
-            <text class="name">
-              {{ data._type }} :{{ data.startDate + "~" + data.endDate }}</text
-            >
-            <view class="checkers"> 检查人员：{{ data.checkers }} </view>
+  <van-skeleton title avatar row="2" :loading="loading">
+    <van-swipe-cell :right-width="160">
+      <van-cell-group>
+        <view class="data-box">
+          <view class="tit">
+            <text>{{ data.title + data.planCode }} </text>
           </view>
-
-          <view class="bottom">
+          <view class="con">
             <view>
-              <van-icon name="user-o" :size="18" /> 由<text class="label">
-                {{ data.planCreator }} </text
-              >创建</view
-            >
+              <text class="name">
+                {{ data._type }} :{{
+                  data.startDate + "~" + data.endDate
+                }}</text
+              >
+              <view class="checkers"> 检查人员：{{ data.checkers }} </view>
+            </view>
 
-            <view class="state" :class="data.handleState == 'UNCOMPLETED' ? 'wait-handle-red' : 'handled'"> {{ data._handleState }} </view>
+            <view class="bottom">
+              <view>
+                <van-icon name="user-o" :size="18" /> 由<text class="label">
+                  {{ data.planCreator }} </text
+                >创建</view
+              >
+
+              <view
+                class="state"
+                :class="
+                  data.handleState == 'UNCOMPLETED'
+                    ? 'wait-handle-red'
+                    : 'handled'
+                "
+              >
+                {{ data._handleState }}
+              </view>
+            </view>
           </view>
         </view>
+      </van-cell-group>
+      <view slot="right" class="right">
+        <view class="done" @click="finishPlan(data.uid)">标记已完成</view>
+        <view class="del" @click="deletePlan(data.uid)">删除</view>
       </view>
-    </van-cell-group>
-    <view slot="right" class="right">
-      <view class="done" @click="finishPlan(data.uid)">标记已完成</view>
-      <view class="del" @click="deletePlan(data.uid)">删除</view>
-    </view>
-  </van-swipe-cell>
+    </van-swipe-cell>
+  </van-skeleton>
 </template>
 <script setup lang="ts">
 import { checkPlanDelById, checkPlanFinishById } from "@/api/checkPlan";
 import type { CheckPageVo } from "@/api/model/CheckPlan";
 import { showToast } from "@/hooks";
 import type { PropType } from "vue";
+
+let loading = ref(true)
+
+onMounted(() => loading.value = !Boolean(props.data.uid))
 
 const props = defineProps({
   data: {
@@ -69,7 +86,7 @@ const finishPlan = async (uid) => {
     margin: 20rpx 0;
     font-size: 28rpx;
   }
-  .label{
+  .label {
     margin: 0 10rpx;
   }
   .con {
@@ -77,7 +94,6 @@ const finishPlan = async (uid) => {
     .checkers {
       line-height: 50rpx;
     }
-    
   }
   .bottom {
     line-height: 60rpx;
