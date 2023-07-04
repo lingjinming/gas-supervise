@@ -86,10 +86,10 @@ import type { HidangerPgaeVO } from "@/api/model/HidangerPage";
 import type { PropType } from "vue";
 import { reactive } from "vue";
 import { userStore } from "@/state";
-import { hidangerAudit } from "@/api/hidden";
-import type { AuditCreateReq } from "@/api/model/HidangerAudit";
+import { hidangerAudit } from '@/api/hidden'
+import type {AuditCreateReq} from '@/api/model/HidangerAudit'
+import { EventType } from '@/enums/eventType'
 
-const emits = defineEmits(["onAudit"]);
 const props = defineProps({
   info: {
     type: Object as PropType<HidangerPgaeVO>,
@@ -128,8 +128,8 @@ const submitAudit = async () => {
   await hidangerAudit(request);
   data.showAudit = false;
   // 让列表刷新
-  emits("onAudit");
-};
+  uni.$emit(EventType.DANGER_PAGE_REFRESH)
+}
 
 setTimeout(() => {
   data.loading = false;
@@ -204,7 +204,7 @@ const getTagType = (level: string) => {
     @include flex-between;
 
     .publisher {
-      font-weight: 700;
+      font-weight: 600;
       margin: 0 10rpx;
     }
 

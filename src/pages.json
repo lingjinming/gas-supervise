@@ -43,7 +43,8 @@
     {
       "path": "pages/hidden/index",
       "style": {
-        "navigationBarTitleText": "隐患管理"
+        "navigationBarTitleText": "隐患管理",
+        "enablePullDownRefresh": true
       }
     },
     {

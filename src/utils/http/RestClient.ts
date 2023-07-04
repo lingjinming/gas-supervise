@@ -67,14 +67,13 @@ export class RestClient {
 
     const opt: PerRequestOptions = Object.assign({}, perRequestOptions, per);
     
-    const { beforeRequestHook, transformResponseHook } = transforms || {}
+    const { beforeRequestHook, transformResponseHook , responseInterceptorsCatch} = transforms || {}
     // 请求前处理请求参数
     if(beforeRequestHook && isFunction(beforeRequestHook)) {
       option = beforeRequestHook(option,opt);
     }
 
     const fullUrl = this.options.baseUrl + option.url;
-    console.log('=-=======',fullUrl);
     
     return new Promise((resolve, reject) => {
       uni.request({
@@ -90,6 +89,10 @@ export class RestClient {
           resolve(res as unknown as Promise<T>)
         },
         fail: (err: UniApp.GeneralCallbackResult) => {
+          if(responseInterceptorsCatch && isFunction(responseInterceptorsCatch)) {
+            reject(responseInterceptorsCatch(err,opt));
+            return;
+          }
           reject(err);
         }
       });
