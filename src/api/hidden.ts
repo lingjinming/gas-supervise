@@ -18,9 +18,11 @@ export const addHidden = (data: HidangerCreateReq) => {
   const store = userStore();
   const isOrg = store.isOrgUser;
   const url = isOrg ? "gasguard-service-risk-app/hidanger/org" : "gasguard-service-risk-app/hidanger/gov";
-  return defHttp.post({
+  return defHttp.post<BaseResponse<void>>({
     url,
     data
+  },{
+    isTransformResponse: false
   });
 };
 
