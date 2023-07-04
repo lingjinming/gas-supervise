@@ -96,7 +96,7 @@ const store = userStore();
 const isOrg: boolean = store.isOrgUser;
 
 onShow(() => {
-  isOrg &&
+  !isOrg &&
     uni.setNavigationBarTitle({
       title: "安全检查下发",
     });

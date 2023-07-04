@@ -3,31 +3,36 @@
     <van-cell-group>
       <view class="data-box">
         <view class="tit">
-          <text>{{ data.title }} ({{ data.planCode }}) </text>
-          <van-tag :type="data.handleState == 'UNCOMPLETED' ? 'danger' : 'success'">{{ data._handleState }}</van-tag>
-
+          <text>{{ data.title + data.planCode }} </text>
         </view>
         <view class="con">
           <view>
             <text class="name">
-              {{ data._type }} ({{ data.startDate + "-" + data.endDate }})</text
+              {{ data._type }} :{{ data.startDate + "~" + data.endDate }}</text
             >
-            <view>创建人: {{ data.planCreator }}</view>
+            <view class="checkers"> 检查人员：{{ data.checkers }} </view>
           </view>
-          <view class="checkers">
-            {{ data.checkers }}
+
+          <view class="bottom">
+            <view>
+              <van-icon name="user-o" :size="18" /> 由<text class="label">
+                {{ data.planCreator }} </text
+              >创建</view
+            >
+
+            <view class="state" :class="data.handleState == 'UNCOMPLETED' ? 'wait-handle-red' : 'handled'"> {{ data._handleState }} </view>
           </view>
         </view>
       </view>
     </van-cell-group>
     <view slot="right" class="right">
-      <view class="done" @click="finishPlan(data.uid)">完成</view>
+      <view class="done" @click="finishPlan(data.uid)">标记已完成</view>
       <view class="del" @click="deletePlan(data.uid)">删除</view>
     </view>
   </van-swipe-cell>
 </template>
 <script setup lang="ts">
-import { checkPlanDelById ,checkPlanFinishById} from "@/api/checkPlan";
+import { checkPlanDelById, checkPlanFinishById } from "@/api/checkPlan";
 import type { CheckPageVo } from "@/api/model/CheckPlan";
 import { showToast } from "@/hooks";
 import type { PropType } from "vue";
@@ -41,12 +46,12 @@ const props = defineProps({
 
 const deletePlan = async (uid) => {
   let data = await checkPlanDelById({ uid });
-  showToast(data.success)
+  showToast(data.success);
 };
 
 const finishPlan = async (uid) => {
   let data = await checkPlanFinishById({ uid });
-  showToast(data.success)
+  showToast(data.success);
 };
 </script>
 
@@ -58,35 +63,42 @@ const finishPlan = async (uid) => {
   padding: 30rpx;
   box-shadow: $uni-box-shadow;
 
-    .tit {
-      @include flex-between;
-    }
-    .con {
-      @include flex-between;
-      .name {
-        color: $uni-color-primary;
-      }
-      .checkers {
-        width: 100rpx;
-      }
+  .tit {
+    @include flex-between;
+    @include label;
+    margin: 20rpx 0;
+    font-size: 28rpx;
   }
-
+  .label{
+    margin: 0 10rpx;
+  }
+  .con {
+    .name,
+    .checkers {
+      line-height: 50rpx;
+    }
+    
+  }
+  .bottom {
+    line-height: 60rpx;
+    @include flex-between;
+  }
 }
 .right {
+  height: 100%;
+  @include flex-between;
+  width: 320rpx;
+  view {
+    @include flex-center;
+    width: 50%;
     height: 100%;
-    @include flex-between;
-    width: 320rpx;
-    view {
-      @include flex-center;
-      width: 50%;
-      height: 100%;
-      color: #fff;
-    }
-    .done {
-      background: $uni-color-success;
-    }
-    .del {
-      background: $uni-color-error;
-    }
+    color: #fff;
   }
+  .done {
+    background: $uni-color-primary;
+  }
+  .del {
+    background: $uni-color-error;
+  }
+}
 </style>

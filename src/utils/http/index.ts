@@ -66,7 +66,7 @@ function createHttpInstance(opt: Partial<ClientOptions>) {
   return new RestClient({
     timeout: 1000 * 30,
     baseUrl: 'https://aiot.citysafety.com/gasguard/',
-    transforms: {},
+    transforms,
     perRequestOptions: {
       isReturnNativeResponse: false,
       isTransformResponse: true,

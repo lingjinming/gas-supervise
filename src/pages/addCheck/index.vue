@@ -115,19 +115,7 @@ watch(reportForm,(val)=>{
 const submit = async () => {
   if(errorMessage.value) return
   let data = await addCheckPlan(reportForm.value);
-
   showToast(data.success,uni.navigateBack)
-  // uni.showToast({
-  //   title: data.message,
-  //   icon: data.success ? "success" : "error",
-  //   mask: true,
-  // });
-  // console.log(data);
-  // if (data.success) {
-  //   setTimeout(() => {
-  //     uni.navigateBack();
-  //   }, 500);
-  // }
 };
 </script>
 <style lang="scss" scoped>

@@ -22,7 +22,7 @@ export const addCheckPlan = (data: ICheckPlanCreateReq) => {
     url: "gasguard-service-risk-app/hidanger/gov/check-plan",
     data
   },{
-    isTransformResponse: false
+    isTransformResponse: true
   })
 }
 
