@@ -1,7 +1,7 @@
 <template>
-  <van-swipe-cell class="data-box" :right-width="160">
+  <van-swipe-cell :right-width="160">
     <van-cell-group>
-      <view class="left">
+      <view class="data-box">
         <view class="tit">
           <text>{{ data.title }} ({{ data.planCode }}) </text>
           <van-tag :type="data.handleState == 'UNCOMPLETED' ? 'danger' : 'success'">{{ data._handleState }}</van-tag>
@@ -52,7 +52,6 @@ const finishPlan = async (uid) => {
 
 <style lang="scss" scoped>
 .data-box {
-  .left {
     flex: 1;
     padding: 30rpx;
 
@@ -67,7 +66,6 @@ const finishPlan = async (uid) => {
       .checkers {
         width: 100rpx;
       }
-    }
   }
   .right {
     height: 100%;
