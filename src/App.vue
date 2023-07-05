@@ -24,7 +24,7 @@ page {
   background: $uni-bg-color;
   font-size: 28rpx;
   height: 100vh;
-  overflow: hidden;
+  // overflow: hidden;
 }
 
 .container {
@@ -103,6 +103,24 @@ page {
         background-color: $uni-color-error;
       }
     }
+  }
+}
+
+.right {
+  height: 100%;
+  @include flex-between;
+  width: 320rpx;
+  view {
+    @include flex-center;
+    width: 50%;
+    height: 100%;
+    color: #fff;
+  }
+  .done {
+    background: $uni-color-primary;
+  }
+  .del {
+    background: $uni-color-error;
   }
 }
 </style>

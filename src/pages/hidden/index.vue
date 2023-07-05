@@ -6,12 +6,10 @@
     </view>
   </view>
   <!-- 隐患列表 -->
-  <scroll-view style="height: calc(100% - 100rpx);" scroll-y="true" class="scroll-Y" @scrolltolower="nextPage">
-    <template v-if="state.total">
-      <hidden v-for="(item, i) in state.list" :key="i" :info="item"></hidden>
-    </template>
-    <van-empty v-else description="暂无数据"></van-empty>
-  </scroll-view>
+  <template v-if="state.total">
+    <hidden v-for="(item, i) in state.list" :key="i" :info="item"></hidden>
+  </template>
+  <van-empty v-else description="暂无数据"></van-empty>
 
   <!-- 搜索面板 -->
   <van-popup :show="state.showQuery" position="top" custom-style="padding: 30rpx" @close="cancel">
@@ -138,6 +136,7 @@ const fetchPage = async (reset?: boolean) => {
     state.list.push(...data)
   }finally {
     uni.hideToast();
+    uni.stopPullDownRefresh();
   }
   
 }
@@ -146,6 +145,8 @@ onLoad(() => {
   fetchPage();
 })
 
+onPullDownRefresh(() =>  fetchPage())
+onReachBottom(() => nextPage())
 </script>
 <style lang="scss" scoped>
 .top {

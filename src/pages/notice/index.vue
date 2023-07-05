@@ -1,11 +1,25 @@
+import { getNotice } from "@/api/notice";
+
 <template>
-  <scroll-view
-    style="height: 100%;"
-    scroll-y="true"
-    class="scroll-Y"
-  >
-    <view style="padding:0 20rpx;">    <notice />
-</view>
+  <scroll-view style="height: 100%" scroll-y="true" class="scroll-Y" @scrolltolower="nextPage">
+    <view v-if="notices.length" style="padding: 0 20rpx"> 
+      <notice :notices="notices"/> 
+    </view>
+    <van-empty v-else description="暂无数据"></van-empty>
   </scroll-view>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+import { EventType } from '@/enums/eventType';
+import { getNoticeFn ,notices,nextPage} from '.';
+
+onShow(() => {
+  getNoticeFn(true);
+
+  uni.$on(EventType.NOTICE_REFRESH,() => {
+  getNoticeFn();
+})
+});
+
+
+</script>

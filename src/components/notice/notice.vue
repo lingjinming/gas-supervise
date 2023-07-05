@@ -1,45 +1,50 @@
 <template>
-  <template v-if="notices.length">
-    <van-skeleton
-      title
-      avatar
-      row="2"
-      :loading="loading"
-      v-for="(notice, i) in notices"
-      :key="i"
-      :right-width="50"
-    >
-      <view class="notice-box">
-        <view class="tit">
-          <view style="display: flex; align-items: center; gap: 10rpx">
-            <van-icon
-              :name="'/static/img/' + notice.msgType + '.png'"
-              size="36rpx"
-            />{{ notice.title }}
-          </view>
+  <van-skeleton
+    title
+    avatar
+    row="2"
+    :loading="loading"
+    :right-width="50"
+    v-for="(notice, i) in notices"
+    :key="i"
+  >
+  <van-swipe-cell :right-width="80">
 
-          <text class="time">{{ format(notice.sendTime) }}</text>
+    <view class="notice-box">
+      <view class="tit">
+        <view style="display: flex; align-items: center; gap: 10rpx">
+          <van-icon
+            :name="'/static/img/' + notice.msgType + '.png'"
+            size="36rpx"
+          />{{ notice.title }}
         </view>
-        <view class="con">
-          <text class="name">燃气管理处-{{ notice.createBy }} </text>
-          <text class="content">{{ notice.content }}</text>
-        </view>
+
+        <text class="time">{{ format(notice.sendTime) }}</text>
       </view>
-    </van-skeleton>
-  </template>
-  <van-empty v-else description="暂无数据"></van-empty>
+      <view class="con">
+        <!-- <text class="name">燃气管理处-{{ notice.createBy }} </text> -->
+        <text class="content">{{ notice.content }}</text>
+      </view>
+    </view>
+    <view slot="right" class="right">
+      <view class="del" @click="del(notice)">删除</view>
+    </view>
+  </van-swipe-cell>
+
+  </van-skeleton>
 </template>
 <script setup lang="ts">
-import { getNotice } from "@/api/notice";
 import type { SysNoticeItem } from "@/api/model/Notice";
+import { readNotice } from "@/api/notice";
+import { EventType } from "@/enums/eventType";
 
-let loading = ref(true);
-const notices = ref([] as SysNoticeItem[]);
+let loading = ref(false);
+// onMounted(() => (loading.value = Boolean(props.notices.length)));
 
 const props = defineProps({
-  num: {
-    type: Number,
-    default: 0,
+  notices: {
+    type: Array<SysNoticeItem>,
+    default: [],
   },
 });
 const format = (t) => {
@@ -76,27 +81,19 @@ const format = (t) => {
   }
 };
 
-const getNoticeFn = async () => {
-  let data = await getNotice();
-
-  if (props.num) {
-    notices.value = data.slice(0, props.num);
-  } else {
-    notices.value = data;
-  }
-  setTimeout(() => {
-    loading.value = false;
-  }, 500);
-};
-
-onShow(() => {
-  getNoticeFn();
-});
+const del =async (notice:SysNoticeItem) => {
+  await readNotice({
+    recipient:notice.recipient,
+    uId:notice.uid
+  })
+  // 让列表刷新
+  uni.$emit(EventType.NOTICE_REFRESH)
+}
 </script>
 <style lang="scss" scoped>
 .notice-box {
   background: #fff;
-  margin: 20rpx 0;
+  margin-bottom: 20rpx;
   padding: 20rpx;
   box-shadow: $uni-box-shadow;
   .tit {

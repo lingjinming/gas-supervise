@@ -58,7 +58,7 @@
   <van-popup
     :show="data.showAudit"
     position="bottom"
-    custom-style="height: 40%;"
+    custom-style="height: 50%;padding:40rpx 0"
     @close="data.showAudit = false"
   >
     <view class="audit">
