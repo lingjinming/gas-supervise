@@ -1,15 +1,9 @@
+import type { BasePageReq } from "./BaseModel";
 
 /**
  * 隐患分页查询条件
  */
-export interface HidangerOrgPageQuery {
-  isOrg: boolean | undefined;
-  page: number;
-  size: number;
-  order?: string;
-  orgId?: string;
-  districtId?: string;
-  keyword?: string;
+export interface HidangerOrgPageQuery extends BasePageReq{
   selectIds?: object[];
   paging?: boolean;
 
