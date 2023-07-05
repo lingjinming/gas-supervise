@@ -1,14 +1,22 @@
 <template>
   <view class="top">
-    <text>共计<text class="total">{{ state.total }}</text>条隐患</text>
+    <text>共计<text class="total">{{ total }}</text>条隐患</text>
     <view @click="state.showQuery = true" class="search">
       筛选<van-icon name="arrow-down" />
     </view>
   </view>
   <!-- 隐患列表 -->
-  <scroll-view style="height: calc(100% - 100rpx);" scroll-y="true" class="scroll-Y" @scrolltolower="nextPage">
-    <template v-if="state.total">
-      <hidden v-for="(item, i) in state.list" :key="i" :info="item"></hidden>
+  <scroll-view 
+    style="height: calc(100% - 100rpx);" 
+    scroll-y="true" class="scroll-Y" 
+    @scrolltolower="nextPage" 
+    refresher-enabled
+    :refresher-triggered="triggered"
+    @refresherpulling="onRefreshPulling"
+    @refresherrefresh="onRefresh"
+    >
+    <template v-if="total">
+      <hidden v-for="(item, i) in list" :key="i" :info="item"></hidden>
     </template>
     <van-empty v-else description="暂无数据"></van-empty>
   </scroll-view>
@@ -59,6 +67,7 @@ import { reactive } from 'vue';
 import { getDictList } from '@/api/dic';
 import { userStore } from "@/state";
 import { EventType } from '@/enums/eventType'
+import { useTable } from '@/hooks/useTable'
 
 const store = userStore();
 
@@ -66,8 +75,7 @@ const isOrg: boolean = store.isOrgUser;
 
 const state = reactive({
   showQuery: false,
-  total: 0,
-  list: [] as HidangerPgaeVO[],
+  //list: [] as HidangerPgaeVO[],
   dics: {
     state: [] as DicItem[],
     source: [] as DicItem[],
@@ -75,7 +83,6 @@ const state = reactive({
     subject: [] as DicItem[]
   },
   query: {
-    isOrg,
     page: 1,
     size: 10,
     state: [],
@@ -87,28 +94,21 @@ const state = reactive({
   } as HidangerOrgPageQuery
 })
 
+const {total,list,search,nextPage,triggered,onRefreshPulling,onRefresh} = useTable<HidangerPgaeVO>(state.query,hidangerPage,{showToast: true})
+
 uni.$on(EventType.DANGER_PAGE_REFRESH,() => {
-  doQuery();
+  search();
 })
 
-// 下拉到底部 加载下一页
-const nextPage = () => {
-  if (state.query.page * state.query.size > state.total) {
-    // no more data
-  } else {
-    state.query.page! += 1;
-    fetchPage();
-  }
-}
 
 const cancel = () => {
   state.showQuery = false;
 }
 
 // 关闭查询面板/点击确定 执行查询
-const doQuery = () => {
+const doQuery = async () => {
   state.showQuery = false;
-  fetchPage(true);
+  search();
 }
 
 // 加载所需字典
@@ -120,30 +120,11 @@ const loadDic = async () => {
   state.dics.subject = res.RISK_SUBJECT_TYPE;
 
 }
-// 分页查询
-const fetchPage = async (reset?: boolean) => {
-  uni.showToast({
-    icon: 'loading',
-    title: '加载中...'
-  })
-  try {
-    if(reset) {
-      state.query.page = 1;
-    }
-    const { total, data } = await hidangerPage({ ...state.query });
-    state.total = total;
-    if(reset) {
-      state.list.length = 0;
-    }
-    state.list.push(...data)
-  }finally {
-    uni.hideToast();
-  }
-  
-}
+
+
 onLoad(() => {
   loadDic();
-  fetchPage();
+  search();
 })
 
 </script>
