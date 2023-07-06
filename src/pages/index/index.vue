@@ -2,8 +2,14 @@
   <image class="bg_img" src="./static/img/bg.png"></image>
   <view class="top">
     <view class="menu-box">
-      <view hover-class="hover" class="menu" v-for="item in menus" :key="item.name" @click="navigato(item.url)">
-        <view >
+      <view
+        hover-class="hover"
+        class="menu"
+        v-for="item in menus"
+        :key="item.name"
+        @click="navigato(item.url)"
+      >
+        <view>
           <image class="menu_img" :src="item.image"></image>
         </view>
         <view>{{ item.name }}</view>
@@ -14,9 +20,14 @@
   <view class="index-box center">
     <view class="tit">
       <view>消息提醒</view>
-      <view hover-class="hover"  @click="navigatoNotice" class="more">更多 ></view>
+      <view hover-class="hover" @click="navigatoNotice" class="more"
+        >更多 ></view
+      >
     </view>
-    <notice :num="2"/>
+    <notice v-if="notices.length" :notices="notices.slice(0, 2)" />
+    <view v-else class="no-content">
+      <image src="/static/img/nodata.png" class="nodata"></image>
+    </view>
   </view>
 
   <view class="index-box bottom">
@@ -24,7 +35,7 @@
       <view>我的待办</view>
       <view hover-class="hover" class="more">更多 ></view>
     </view>
-    <view >
+    <view>
       <view class="no-content">
         <image src="/static/img/nodata.png" class="nodata"></image>
       </view>
@@ -35,6 +46,19 @@
 </template>
 
 <script setup lang="ts">
+import { EventType } from "@/enums/eventType";
+import { getNoticeFn, notices } from "../notice";
+onShow(() => {
+  console.log('onShow')
+  uni.$on(EventType.NOTICE_REFRESH, () => getNoticeFn());
+  getNoticeFn()
+});
+// onHide(() => {
+//   console.log('onHide')
+//   uni.$off(EventType.NOTICE_REFRESH)
+// })
+onPullDownRefresh(() => getNoticeFn());
+
 
 uni.hideTabBar();
 
@@ -45,56 +69,55 @@ const menus = [
   // },
   {
     name: "隐患管理",
-    url:'/pages/hidden/index',
-    image: "/static/img/icon_yhgl.png"
+    url: "/pages/hidden/index",
+    image: "/static/img/icon_yhgl.png",
   },
   {
     name: "检查计划管理",
-    url:'/pages/check/index',
-    image: "/static/img/icon_jcjhgl.png"
+    url: "/pages/check/index",
+    image: "/static/img/icon_jcjhgl.png",
   },
-  
+
   {
     name: "风险管理",
-    image: "/static/img/icon_fxgl.png"
+    image: "/static/img/icon_fxgl.png",
   },
   {
     name: "第三方施工管理",
-    image: "/static/img/icon_dsfsg.png"
+    image: "/static/img/icon_dsfsg.png",
   },
   {
     name: "报警管理",
-    image: "/static/img/icon_bjgl.png"
+    image: "/static/img/icon_bjgl.png",
   },
   {
     name: "事故事件管理",
-    image: "/static/img/icon_sgsjgl.png"
+    image: "/static/img/icon_sgsjgl.png",
   },
 
   {
     name: "更多分类",
-    image: "/static/img/icon_gdfl.png"
+    image: "/static/img/icon_gdfl.png",
   },
 ];
-const navigato = url => {
-  if(!url){
+const navigato = (url) => {
+  if (!url) {
     uni.showToast({
-      icon:'error',
-      title:'功能开发中'
-    })
-    return
+      icon: "error",
+      title: "功能开发中",
+    });
+    return;
   }
   uni.navigateTo({
-    url
-  })
-}
+    url,
+  });
+};
 
 const navigatoNotice = () => {
   uni.navigateTo({
-    url:'/pages/notice/index'
-  })
-}
-
+    url: "/pages/notice/index",
+  });
+};
 </script>
 
 <style lang="scss" scoped>
@@ -107,13 +130,13 @@ const navigatoNotice = () => {
   color: #222222;
   box-shadow: $uni-box-shadow;
   border-radius: 10rpx;
-  .menu-box{
+  .menu-box {
     padding: 25rpx;
     background-color: #ffffff;
     display: flex;
     flex-wrap: wrap;
     gap: 20rpx;
-    box-shadow: 0px 5px 24px 0px rgba(217,222,234,0.51);
+    box-shadow: 0px 5px 24px 0px rgba(217, 222, 234, 0.51);
     border-radius: 6px;
   }
   .menu {
@@ -122,7 +145,7 @@ const navigatoNotice = () => {
     text-align: center;
   }
 }
-.bg_img{
+.bg_img {
   position: absolute;
   left: 0;
   top: 0;
@@ -131,39 +154,40 @@ const navigatoNotice = () => {
   height: 534rpx;
   z-index: -999;
 }
-.menu_img{
+.menu_img {
   width: 75rpx;
   height: 75rpx;
 }
-.no-content{
+.no-content {
   display: flex;
   justify-content: center;
   padding-top: 30rpx;
   font-size: 24rpx;
   font-family: Microsoft YaHei;
   font-weight: 400;
-  color: #53616D;
+  color: #53616d;
 }
-.nodata{
+.nodata {
   width: 527rpx;
-  height: 214rpx
+  height: 214rpx;
 }
 
 .index-box {
   padding: 36rpx 30rpx 0rpx 30rpx;
+  min-height: 250rpx;
   .tit {
     @include flex-between;
     line-height: 60rpx;
     font-size: 32rpx;
     font-family: Microsoft YaHei;
     font-weight: bold;
-    color: #2A2C32;
+    color: #2a2c32;
   }
-  .more{
+  .more {
     font-size: 24rpx;
     font-family: Microsoft YaHei;
     font-weight: 400;
-    color: #4B5B6C;
+    color: #4b5b6c;
   }
 }
 </style>

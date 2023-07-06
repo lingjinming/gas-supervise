@@ -26,8 +26,6 @@
       }
     },
 
-
-
     {
       "path": "pages/hiddenReform/index",
       "style": {
@@ -43,8 +41,7 @@
     {
       "path": "pages/hidden/index",
       "style": {
-        "navigationBarTitleText": "隐患管理",
-        "enablePullDownRefresh": true
+        "navigationBarTitleText": "隐患管理"
       }
     },
     {
@@ -71,18 +68,19 @@
       {
         "pagePath": "pages/index/index",
         "text": "首页",
-        "iconPath":"/static/img/index.png",
-        "selectedIconPath":"/static/img/index_act.png"
+        "iconPath": "/static/img/index.png",
+        "selectedIconPath": "/static/img/index_act.png"
       },
       {
         "pagePath": "pages/user/index",
         "text": "我的",
-        "iconPath":"/static/img/user.png",
-        "selectedIconPath":"/static/img/user_act.png"
+        "iconPath": "/static/img/user.png",
+        "selectedIconPath": "/static/img/user_act.png"
       }
     ]
   },
   "globalStyle": {
+    "enablePullDownRefresh": true,
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
     "navigationBarBackgroundColor": "#F8F8F8",
@@ -105,8 +103,8 @@
       "van-icon": "wxcomponents/vant/icon/index",
       "van-empty": "wxcomponents/vant/empty/index",
       "van-toast": "wxcomponents/vant/toast/index",
-      "van-switch":"wxcomponents/vant/switch/index",
-      "van-skeleton":"wxcomponents/vant/skeleton/index",
+      "van-switch": "wxcomponents/vant/switch/index",
+      "van-skeleton": "wxcomponents/vant/skeleton/index",
       "van-tag": "wxcomponents/vant/tag/index",
       "van-checkbox-group": "wxcomponents/vant/checkbox-group/index",
       "van-checkbox": "wxcomponents/vant/checkbox/index",

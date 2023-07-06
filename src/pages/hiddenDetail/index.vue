@@ -1,7 +1,17 @@
 <template>
-  <scroll-view style="height: 100%;padding-bottom: 100rpx;" scroll-y="true" class="scroll-Y container">
-
-    <van-skeleton title avatar row="3" :loading="data.loading" v-for="(node, i) in data.detail.flow" :key="i">
+  <scroll-view
+    style="height: 100%; padding-bottom: 100rpx"
+    scroll-y="true"
+    class="scroll-Y container"
+  >
+    <van-skeleton
+      title
+      avatar
+      row="3"
+      :loading="data.loading"
+      v-for="(node, i) in data.detail.flow"
+      :key="i"
+    >
       <view class="detail-box" :data-stage="node.stage">
         <view class="tit">
           <view class="top">
@@ -9,56 +19,83 @@
               <van-tag v-if="node.stage === 'PUSH'" :type="getTagType()">
                 {{ data.detail._level }}
               </van-tag>
-              <text style="margin-left: 10rpx;" class="fs16">{{ node.title }}</text>
+              <text style="margin-left: 10rpx" class="fs16">{{
+                node.title
+              }}</text>
             </view>
             <text class="fs12">{{ node.stageTime }}</text>
           </view>
           <view class="header">
             <view class="img-box">
-              <image style="width: 50rpx;height: 50rpx;" src="../../static/img/header.png" mode="scaleToFill" />
-              {{ node.operator + (node.stage === 'PUSH' ? '(发布人)' : '') }}
+              <image
+                style="width: 50rpx; height: 50rpx"
+                src="../../static/img/header.png"
+                mode="scaleToFill"
+              />
+              {{ node.operator + (node.stage === "PUSH" ? "(发布人)" : "") }}
             </view>
-              <van-icon color="" name="comment-o" @click="showLeaderComment(node.stage, node.stageId)"
-                v-if="store.isGovUser"/>
-
+            <van-icon
+              color="#FFA044"
+              size="50rpx"
+              name="comment-o"
+              @click="showLeaderComment(node.stage, node.stageId)"
+              v-if="store.isGovUser"
+            />
           </view>
         </view>
         <view class="con">
           <view class="remark">{{ node?.content?.remark }}</view>
           <view class="region-imgBox" v-if="node?.content?.picIds">
-            <region-img v-for="img in node?.content?.picIds" :key="img" region="test" :id="img" />
+            <region-img
+              v-for="img in node?.content?.picIds"
+              :key="img"
+              region="test"
+              :id="img"
+            />
           </view>
           <template v-if="node.stage == 'PUSH'">
-            <view>隐患类型: {{ node.content._subjectType + node.content._dangerType }}</view>
+            <view
+              >隐患类型:
+              {{ node.content._subjectType + node.content._dangerType }}</view
+            >
             <view>整改单位: {{ node.content.handleOrg }}</view>
             <view>详细地址: {{ node.content.address }}</view>
           </template>
 
-        <!-- 节点上的评论 -->
-        <view class="commentList" v-if="node.commentList">
-          <template v-for="(comment, index) in node.commentList" :key="index">
-            <view class="img-box">
-              <image style="width: 30rpx;height: 30rpx;" src="../../static/img/header.png" mode="scaleToFill" />
-              {{comment.leaderOrgName }} 
-              <text style="color: #333;font-weight: 600;">{{ comment.leaderName }}</text>: {{ comment.leaderComment }}
-
-            </view>
-
-          </template>
+          <!-- 节点上的评论 -->
+          <view class="commentList" v-if="node.commentList">
+            <template v-for="(comment, index) in node.commentList" :key="index">
+              <view class="img-box">
+                <image
+                  style="width: 30rpx; height: 30rpx"
+                  src="../../static/img/header.png"
+                  mode="scaleToFill"
+                />
+                {{ comment.leaderOrgName }}
+                <view style="word-break: break-all;display: inline;">
+                  <text style="color: #333; font-weight: 600">
+                    {{ comment.leaderName }}:
+                  </text>
+                  {{ comment.leaderComment }}
+                </view>
+              </view>
+            </template>
+          </view>
         </view>
-        </view>
-
       </view>
     </van-skeleton>
   </scroll-view>
   <!-- 领导评论弹窗 -->
-  <van-popup :show="data.showComment" position="bottom" custom-style="height: 40%;" @close="closeComment">
+  <van-popup
+    :show="data.showComment"
+    position="bottom"
+    custom-style="height: 50%;padding:40rpx 0"
+    @close="closeComment"
+  >
     <view class="comment">
       <view class="title">领导批示</view>
       <view class="input">
-        <textarea v-model="data.commentBody.comment">
-
-        </textarea>
+        <textarea v-model="data.commentBody.comment"> </textarea>
       </view>
       <view class="btns">
         <button type="default" @click="closeComment">取消</button>
@@ -70,15 +107,19 @@
 <script setup lang="ts">
 import { ref, reactive } from "vue";
 import { userStore } from "@/state";
-import { getHidangerFlow ,createLeaderComment} from "../../api/hidden";
-import type { Flow,LeaderCommentCreate,Stage} from '@/api/model/HidangerFlow'
+import { getHidangerFlow, createLeaderComment } from "../../api/hidden";
+import type {
+  Flow,
+  LeaderCommentCreate,
+  Stage,
+} from "@/api/model/HidangerFlow";
 
 const store = userStore();
 
 const data = reactive({
-  uid: '',
+  uid: "",
   detail: <Flow>{
-    state: '',
+    state: "",
     dangerId: undefined,
     level: undefined,
     _level: undefined,
@@ -86,23 +127,22 @@ const data = reactive({
   },
   loading: false,
   showComment: false,
-  commentBody: <LeaderCommentCreate|any>{
+  commentBody: <LeaderCommentCreate | any>{
     comment: undefined,
-  }
-})
+  },
+});
 
 let loading = ref(true);
 
 const getTagType = () => {
-  if (data.detail.level === 'ZD') {
-    return 'danger';
+  if (data.detail.level === "ZD") {
+    return "danger";
   }
-  if (data.detail.level === 'JD') {
-    return 'warning'
+  if (data.detail.level === "JD") {
+    return "warning";
   }
-  return 'primary'
-}
-
+  return "primary";
+};
 
 onLoad((options) => {
   getDetail(options!.uid);
@@ -114,33 +154,34 @@ const showLeaderComment = (stage: Stage, stageId: string) => {
   data.commentBody.stage = stage;
   data.commentBody.dangerId = data.detail.dangerId!;
   data.showComment = true;
-}
+};
 // 点击关闭领导评论
 const closeComment = () => {
   data.showComment = false;
-  data.commentBody = {}
-}
+  data.commentBody = {};
+};
 // 提交领导评论
 const submitLeaderComment = async () => {
   console.log(data.commentBody);
-  try{
+  try {
     loading.value = true;
     await createLeaderComment(data.commentBody);
     closeComment();
     // 重新拉取流程详情
     await getDetail(data.uid);
-
-  }finally {
+  } finally {
     loading.value = false;
   }
-}
+};
 
 const getDetail = async (id: string) => {
   try {
     loading.value = true;
     data.uid = id;
-
-    const { level, _level, dangerId, flow,state } = await getHidangerFlow(id);
+    console.log((await getHidangerFlow(id))["data"]);
+    const { level, _level, dangerId, flow, state } = (
+      await getHidangerFlow(id)
+    )["data"];
     data.detail._level = _level;
     data.detail.state = state;
     data.detail.level = level;
@@ -149,24 +190,22 @@ const getDetail = async (id: string) => {
   } finally {
     loading.value = false;
   }
-
-
 };
 </script>
 <style lang="scss" scoped>
-
 .detail-box {
   position: relative;
   padding: 40rpx 40rpx 0rpx 80rpx;
 
-  &[data-stage='PUSH'],
-  &[data-stage='HANDLE'],
-  &[data-stage='AUDIT']{
-    &::before,&::after{
-      content: '';
+  &[data-stage="PUSH"],
+  &[data-stage="HANDLE"],
+  &[data-stage="AUDIT"] {
+    &::before,
+    &::after {
+      content: "";
       position: absolute;
     }
-    &::after{
+    &::after {
       top: 50rpx;
 
       left: 30rpx;
@@ -174,35 +213,35 @@ const getDetail = async (id: string) => {
       height: 20rpx;
       border-radius: 50%;
     }
-    &::before{
+    &::before {
       top: 80rpx;
       left: 38rpx;
       height: calc(100% - 50rpx);
     }
   }
-  &[data-stage='PUSH']{
-    &::before{
-      border: 2rpx solid rgba($color: $uni-color-error, $alpha: .8);
+  &[data-stage="PUSH"] {
+    &::before {
+      border: 2rpx solid rgba($color: $uni-color-error, $alpha: 0.8);
     }
-     &::after{
-      background:rgba($color: $uni-color-error, $alpha: .8);
-    }
-  }
-  &[data-stage='HANDLE']{
-    &::before{
-      border: 2rpx dashed rgba($color: $uni-color-primary, $alpha: .8);
-    }
-    &::after{
-      background: rgba($color: $uni-color-primary, $alpha: .8);
+    &::after {
+      background: rgba($color: $uni-color-error, $alpha: 0.8);
     }
   }
-  &[data-stage='AUDIT']{
-    &::before{
-      border: 2rpx dashed rgba($color: $uni-color-success, $alpha: .8);
+  &[data-stage="HANDLE"] {
+    &::before {
+      border: 2rpx dashed rgba($color: $uni-color-primary, $alpha: 0.8);
+    }
+    &::after {
+      background: rgba($color: $uni-color-primary, $alpha: 0.8);
+    }
+  }
+  &[data-stage="AUDIT"] {
+    &::before {
+      border: 2rpx dashed rgba($color: $uni-color-success, $alpha: 0.8);
       height: calc(100% - 150rpx);
     }
-    &::after{
-      background: rgba($color: $uni-color-success, $alpha: .8);
+    &::after {
+      background: rgba($color: $uni-color-success, $alpha: 0.8);
     }
   }
   .tit {
@@ -214,7 +253,8 @@ const getDetail = async (id: string) => {
     gap: 20rpx;
     margin: 20rpx 0;
 
-    button {}
+    button {
+    }
   }
 
   .top {
@@ -264,11 +304,11 @@ const getDetail = async (id: string) => {
     }
   }
 }
-.commentList{
+.commentList {
   padding: 20rpx;
 }
-.img-box{
-  image{
+.img-box {
+  image {
     position: relative;
     top: 5rpx;
   }

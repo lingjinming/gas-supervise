@@ -127,6 +127,8 @@ onLoad(() => {
   search();
 })
 
+onPullDownRefresh(() =>  fetchPage())
+onReachBottom(() => nextPage())
 </script>
 <style lang="scss" scoped>
 .top {

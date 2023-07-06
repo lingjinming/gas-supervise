@@ -66,6 +66,8 @@ export const reformHidangerById = (uid: string,data: HidangerHandleReq) => {
 export const getHidangerFlow = async (uid: string) => {
   return defHttp.get<Flow>({
     url: 'gasguard-service-risk-app/hidanger/flow/'+uid,
+  },{
+    isTransformResponse:false
   })
 }
 
