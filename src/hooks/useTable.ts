@@ -157,7 +157,7 @@ export const useTable = <T>(params: BasePageReq, fun: ApiType<T>, options?: Tabl
     // app 直接追加
     list.value = [...list.value, ...data];
     // 强制触发刷新
-    triggerRef(list);
+    //triggerRef(list);
   }
 
   const search = async () => {
