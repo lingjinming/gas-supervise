@@ -54,32 +54,7 @@
       <view class="del" @click="showAuditForm(false)">驳回</view>
     </view>
   </van-swipe-cell>
-  <!-- 审核弹窗 -->
-  <van-popup
-    :show="data.showAudit"
-    position="bottom"
-    custom-style="height: 40%;"
-    @close="data.showAudit = false"
-  >
-    <view class="audit">
-      <view class="title">{{
-        data.isPass ? "隐患整改通过" : "隐患整改驳回"
-      }}</view>
-      <view class="input">
-        <textarea
-          v-model="data.audit.auditRemark"
-          :placeholder="
-            data.isPass ? '请输入隐患整改通过批示' : '请输入驳回原因'
-          "
-        >
-        </textarea>
-      </view>
-      <view class="btns">
-        <button @click="data.showAudit = false">取消</button>
-        <button @click="submitAudit">确认</button>
-      </view>
-    </view>
-  </van-popup>
+
 </template>
 <script setup lang="ts">
 import type { HidangerPgaeVO } from "@/api/model/HidangerPage";
@@ -103,7 +78,6 @@ const isOrg: boolean = store.isOrgUser;
 uni.request;
 const data = reactive({
   loading: false,
-  showAudit: false,
   isPass: false,
   audit: <AuditCreateReq>{
     auditRemark: "",
@@ -114,8 +88,19 @@ const data = reactive({
 
 // 展示审核弹窗
 const showAuditForm = (isPass: boolean) => {
+  const title = isPass ? '确认消除该隐患?' : '请输入驳回原因'
   data.isPass = isPass;
-  data.showAudit = true;
+  uni.showModal({
+    title: title,
+    editable: !isPass,
+    placeholderText: '驳回原因',
+    success: (res) => {
+      data.audit.auditRemark = res.content;
+      if(res.confirm) {
+        submitAudit();
+      }
+    }
+  })
 };
 
 // 提交审核记录
@@ -126,7 +111,6 @@ const submitAudit = async () => {
   console.log(request);
 
   await hidangerAudit(request);
-  data.showAudit = false;
   // 让列表刷新
   uni.$emit(EventType.DANGER_PAGE_REFRESH)
 }

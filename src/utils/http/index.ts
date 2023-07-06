@@ -60,19 +60,43 @@ const transforms: RequestTransform = {
     return data;
   },
 
+  // 处理http状态码
+  httpCodeHook: (response: UniApp.RequestSuccessCallbackResult,resolve: PromiseLike<any>, reject) => {
+    const { statusCode } = response;
+    if(statusCode === 200) {
+      return true;
+    }
+    // 404 服务不在线,或者区域没选对
+    if(statusCode === 404) {
+        uni.showToast({
+          icon: 'error',
+          title: '服务器不在线!',
+          duration: 1500
+        })
+        reject();
+        return false;
+    }
+    // 401 没有登录
+    if(statusCode === 401) {
+      // 
+    }
+
+    // 403 没有权限
+
+
+
+    reject();
+    return false;
+  },
+
   /**
-   * http 状态码错误
+   * 连接错误
    */
   responseInterceptorsCatch: (error: UniApp.GeneralCallbackResult,opt: PerRequestOptions) => {
-    console.log('error=====================================');
-    
-    console.log(error);
-
     uni.showToast({
       icon: 'error',
-      title: '服务器出现了一些问题...'
+      title: '服务暂不可用'
     })
-
     return  Promise.reject('系统出错!');
   }
 

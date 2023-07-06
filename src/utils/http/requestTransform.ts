@@ -21,4 +21,7 @@ export abstract class RequestTransform {
    */
   responseInterceptorsCatch?: (error: UniApp.GeneralCallbackResult,opt: PerRequestOptions) => Promise<any>
 
+
+  httpCodeHook?: (response: UniApp.RequestSuccessCallbackResult,resolve, reject) => boolean
+
 }

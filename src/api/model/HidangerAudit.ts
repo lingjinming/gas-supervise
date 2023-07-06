@@ -4,5 +4,5 @@
 export  interface  AuditCreateReq{
   riskIds: string[];
   auditResult: 'PASS' | 'NOT_PASS';
-  auditRemark: string;
+  auditRemark: string | undefined;
 }

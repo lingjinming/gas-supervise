@@ -67,7 +67,7 @@ export class RestClient {
 
     const opt: PerRequestOptions = Object.assign({}, perRequestOptions, per);
     
-    const { beforeRequestHook, transformResponseHook , responseInterceptorsCatch} = transforms || {}
+    const { beforeRequestHook, transformResponseHook , responseInterceptorsCatch , httpCodeHook} = transforms || {}
     // 请求前处理请求参数
     if(beforeRequestHook && isFunction(beforeRequestHook)) {
       option = beforeRequestHook(option,opt);
@@ -80,15 +80,28 @@ export class RestClient {
         ...option,
         url: fullUrl,
         success: (res: UniApp.RequestSuccessCallbackResult) => {
+
+          // 处理http状态码
+          if(httpCodeHook && isFunction(httpCodeHook)) {
+            const goOn = httpCodeHook(res,resolve,reject);
+            if(!goOn) {
+              return;
+            }
+          }
+    
+          // 格式话响应
           if(transformResponseHook && isFunction(transformResponseHook)) {
             const gasStyle = res as UniResponse<T>
 
             const response = transformResponseHook(gasStyle,opt);
-            resolve(response)
+            resolve(response);
+            return;
           }
+          // 什么都没做
           resolve(res as unknown as Promise<T>)
         },
         fail: (err: UniApp.GeneralCallbackResult) => {
+          // 应该只有在nginx挂掉的时候才会出现这个错误
           if(responseInterceptorsCatch && isFunction(responseInterceptorsCatch)) {
             reject(responseInterceptorsCatch(err,opt));
             return;
