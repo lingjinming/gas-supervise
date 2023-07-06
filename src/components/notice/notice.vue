@@ -88,6 +88,7 @@ const del =async (notice:SysNoticeItem) => {
   })
   // 让列表刷新
   uni.$emit(EventType.NOTICE_REFRESH)
+
 }
 </script>
 <style lang="scss" scoped>

@@ -48,16 +48,18 @@
 <script setup lang="ts">
 import { EventType } from "@/enums/eventType";
 import { getNoticeFn, notices } from "../notice";
-uni.$on(EventType.NOTICE_REFRESH, () => {
-  getNoticeFn();
-});
 onShow(() => {
-  getNoticeFn();
+  console.log('onShow')
+  uni.$on(EventType.NOTICE_REFRESH, () => getNoticeFn());
+  getNoticeFn()
 });
-onHide(() => uni.$off(EventType.NOTICE_REFRESH));
-onPullDownRefresh(() => {
-  getNoticeFn();
-});
+// onHide(() => {
+//   console.log('onHide')
+//   uni.$off(EventType.NOTICE_REFRESH)
+// })
+onPullDownRefresh(() => getNoticeFn());
+
+
 uni.hideTabBar();
 
 const menus = [

@@ -16,7 +16,7 @@ export interface BasePageReq {
   // 组织机构查询
   orgId?: string;
   // 行政区划查询,多个逗号拼接
-  districtId?: string;
+  districtId: string;
   // 排序方式
   order?: string;
 }
@@ -29,6 +29,14 @@ export interface BaseResponse<T> {
   success: boolean;
   message: string;
   data: T
+}
+
+/**
+ * 分页请求响应基类
+ */
+export interface BasePageResponse<T> extends BaseResponse<T[]>{
+  total: number;
+  data: T[]
 }
 
 /**
