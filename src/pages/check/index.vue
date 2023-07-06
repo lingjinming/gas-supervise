@@ -19,11 +19,16 @@
     :style="{ height: !isOrg ? 'calc(100% - 240rpx)' : 'calc(100% - 80rpx)' }"
     scroll-y="true"
     class="scroll-Y"
+    @scrolltolower="nextPage" 
+    refresher-enabled
+    :refresher-triggered="triggered"
+    @refresherpulling="onRefreshPulling"
+    @refresherrefresh="onRefresh"
   >
 
   
-    <template v-if="checks.length">
-      <check v-for="(item, i) in checks" :data="item" :key="i" />
+    <template v-if="total">
+      <check v-for="(item, i) in list" :data="item" :key="i" />
     </template>
 
     <van-empty v-else description="暂无数据"></van-empty>
@@ -56,42 +61,44 @@ import { checkPlanPage } from "@/api/checkPlan";
 import type { CheckPageVo, CheckPlanQueryReq } from "@/api/model/CheckPlan";
 import { formatDate } from "@/utils";
 import { userStore } from "@/state";
+import { useTable } from "@/hooks/useTable";
 
 const minDate = new Date("2023-01-01").getTime();
 const maxDate = new Date().getTime();
 const store = userStore();
 const isOrg: boolean = store.isOrgUser;
+let isShow = ref(false);
 
-let checks = ref([] as CheckPageVo[]);
-let reportForm = ref({
+let reportForm = ref<CheckPlanQueryReq>({
   startTime: "",
   endTime: "",
-  // TODO 先查出所有数据, 后面优化分页
-  paging: false,
-} as CheckPlanQueryReq);
+});
+
+const { loading ,total,list,nextPage,search,triggered,onRefreshPulling,onRefresh} = useTable<CheckPageVo>(reportForm.value,checkPlanPage,{showToast: true});
+
+
+
+
 const addCheck = () => {
   uni.navigateTo({
     url: "/pages/addCheck/index",
   });
 };
-let isShow = ref(false);
+
 
 const onConfirm = (e) => {
   reportForm.value.startTime = formatDate(e.detail[0]);
   reportForm.value.endTime = formatDate(e.detail[1]);
-  getcheckPlanPageFn(reportForm.value);
+  isShow.value = false;
+  search();
 };
 const showCalendar = () => {
   isShow.value = true;
 };
-const getcheckPlanPageFn = async (reportForm) => {
-  let { total, data } = await checkPlanPage(reportForm);
-  checks.value = data;
-  isShow.value = false;
-};
+
 onShow(() => {
-  getcheckPlanPageFn(reportForm.value);
-  uni.$on("refresh", () => getcheckPlanPageFn(reportForm.value));
+  search();
+  uni.$on("refresh", () => search());
 });
 </script>
 <style lang="scss" scoped>

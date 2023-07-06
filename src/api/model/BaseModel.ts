@@ -16,7 +16,7 @@ export interface BasePageReq {
   // 组织机构查询
   orgId?: string;
   // 行政区划查询,多个逗号拼接
-  districtId: string;
+  districtId?: string;
   // 排序方式
   order?: string;
 }

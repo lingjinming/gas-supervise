@@ -9,13 +9,55 @@ type TableOptions = {
   showToast?: boolean,
 }
 
+type UseTableReturnType<T> = {
+  /**
+   * 是否正在加载中
+   */
+  loading: Ref<boolean>,
+  /**
+   * 用于下拉刷新
+   */
+  triggered: Ref<boolean>,
+  /**
+   * 数据总数
+   */
+  total: Ref<number>,
+  /**
+   * 数据
+   */
+  list: Ref<T[]>,
+  /**
+   * 下一页
+   */
+  nextPage: () => Promise<void>,
+  /**
+   * 查询,用于用户点击查询按钮;
+   * 重置到第一页
+   */
+  search: () => Promise<void>,
+  /**
+   * 重置查询条件,并且重新查询
+   * @returns 
+   */
+  reset: () => void,
+  /**
+   * 用于下拉刷新
+   */
+  onRefreshPulling: () => void,
+  /**
+   * 用于下拉刷新
+   */
+  onRefresh: () => Promise<void>
+
+}
+
 /**
  * 封装分页
  * @param params 查询参数
  * @param fun    分页接口
  * @param options 配置参数
  */
-export const useTable = <T>(params: BasePageReq, fun: ApiType<T>, options?: TableOptions): any => {
+export const useTable = <T>(params: BasePageReq, fun: ApiType<T>, options?: TableOptions): UseTableReturnType<T> => {
   const defaultOptions = Object.assign({ minTime: 600, autoFetch: false, showToast: true }, options || {})
 
   const page = params.page || 1;

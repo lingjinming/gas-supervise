@@ -75,14 +75,13 @@ const isOrg: boolean = store.isOrgUser;
 
 const state = reactive({
   showQuery: false,
-  //list: [] as HidangerPgaeVO[],
   dics: {
     state: [] as DicItem[],
     source: [] as DicItem[],
     level: [] as DicItem[],
     subject: [] as DicItem[]
   },
-  query: {
+  query: <HidangerOrgPageQuery>{
     page: 1,
     size: 10,
     state: [],
@@ -91,7 +90,7 @@ const state = reactive({
     level: [],
     dangerType: '',
     dangerSubType: ''
-  } as HidangerOrgPageQuery
+  }
 })
 
 const {total,list,search,nextPage,triggered,onRefreshPulling,onRefresh} = useTable<HidangerPgaeVO>(state.query,hidangerPage,{showToast: true})
@@ -127,8 +126,6 @@ onLoad(() => {
   search();
 })
 
-onPullDownRefresh(() =>  fetchPage())
-onReachBottom(() => nextPage())
 </script>
 <style lang="scss" scoped>
 .top {

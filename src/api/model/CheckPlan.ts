@@ -25,11 +25,11 @@ export interface CheckPlanOptions {
  * 检查计划分页请求
  */
 export interface CheckPlanQueryReq extends BasePageReq{
-  type: string;
-  title: string;
-  startTime: string;
-  endTime: string;
-  orgIds: string[]
+  type?: string;
+  title?: string;
+  startTime?: string;
+  endTime?: string;
+  orgIds?: string[]
 }
 
 /**
