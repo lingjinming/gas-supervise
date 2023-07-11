@@ -20,31 +20,32 @@ import { userStore } from "@/state";
 
 const store = userStore();
 let fileList: any = ref([]);
-
+let fileIds = ref([]);
 const emits = defineEmits(["update:modelValue"]);
 
 const delImg = (event) => {
   let temp = JSON.parse(JSON.stringify(fileList.value));
   temp.splice(event.detail.index, 1);
+  fileIds.value.splice(event.detail.index, 1);
+
   fileList.value = temp;
   console.log(fileList.value);
 };
+
+
 const uploadImg = async (event) => {
+
   // 当前激活的服务器
   const server = store.auth.activeServer;
   const token = store.auth.token;
 
   let { file } = event.detail;
-  file.map((item) => {
-    item = Object.assign(item, {
-      // url: file.tempFilePath,
-      status: "uploading",
-      message: "上传中",
-    });
-  });
-  fileList.value = file;
-  console.log(fileList)
-  const uploadTasks = file.map((item) => {
+
+  fileList.value = fileList.value.concat(file);
+  console.log('fileList.value-->',fileList.value)
+
+  const uploadTasks = file.map((item,i) => {
+    item.status = 'uploading'
     return new Promise((resolve) => {
       uni.uploadFile({
         url: "https://aiot.citysafety.com/gasguard/gasguard-service-system-app/file/upload",
@@ -61,15 +62,14 @@ const uploadImg = async (event) => {
       });
     });
   });
+
   Promise.all(uploadTasks).then((data) => {
-    let fileIds = [];
     data.map((item, i) => {
       file[i] = Object.assign(file[i], item.data);
-      fileIds.push(item.data.objectName);
+      fileIds.value.push(item.data.objectName);
     });
-    fileList.value = JSON.parse(JSON.stringify(file));
-
-    emits("update:modelValue", fileIds);
+    fileList.value = JSON.parse(JSON.stringify(fileList.value))
+    emits("update:modelValue", fileIds.value);
   });
 };
 </script>

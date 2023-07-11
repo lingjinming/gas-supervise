@@ -15,7 +15,7 @@
       </view>
 
 
-      <van-uploader-new v-model="reportForm.fileIds" />
+      <van-uploader-new v-model="reportForm.fileIds"/>
       <van-cascader-new
         dicType="RISK_SUBJECT_TYPE_TREE"
         label="隐患类别"
