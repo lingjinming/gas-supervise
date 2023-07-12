@@ -46,7 +46,7 @@ const uploadImg = async (event) => {
 
   const uploadTasks = file.map((item,i) => {
     item.status = 'uploading'
-    return new Promise((resolve) => {
+    return new Promise((resolve,reject) => {
       uni.uploadFile({
         url: "https://aiot.citysafety.com/gasguard/gasguard-service-system-app/file/upload",
         filePath: item.tempFilePath,
@@ -59,6 +59,12 @@ const uploadImg = async (event) => {
           item.status = "done";
           resolve(JSON.parse(res.data));
         },
+        fail(err){
+          uni.showToast({
+            icon:'none',
+            title:'上传失败,请重新上传'
+          })
+        }
       });
     });
   });
