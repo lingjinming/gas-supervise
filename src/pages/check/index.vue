@@ -28,7 +28,7 @@
 
   
     <template v-if="total">
-      <check v-for="(item, i) in list" :data="item" :key="i" />
+      <check v-for="(item, i) in list" :data="item" :key="i" @click="navigateToDetail(item)"/>
     </template>
 
     <van-empty v-else description="暂无数据"></van-empty>
@@ -77,6 +77,11 @@ let reportForm = ref<CheckPlanQueryReq>({
 const { loading ,total,list,nextPage,search,triggered,onRefreshPulling,onRefresh} = useTable<CheckPageVo>(reportForm.value,checkPlanPage,{showToast: true});
 
 
+const navigateToDetail = (item) => {
+  uni.navigateTo({
+    url: "/pages/checkDetail/index",
+  });
+}
 
 
 const addCheck = () => {
