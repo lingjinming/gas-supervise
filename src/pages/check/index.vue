@@ -72,7 +72,7 @@ let reportForm = ref<CheckPlanQueryReq>({
   endTime: "",
 });
 
-const { noData ,total,list,nextPage,search,triggered,onRefreshPulling,onRefresh} = useTable<CheckPageVo>(reportForm.value,checkPlanPage,{showToast: true});
+const { noData ,total,list,nextPage,search,triggered,onRefreshPulling,onRefresh} = useTable<CheckPageVo>(reportForm.value,checkPlanPage,{showToast: false});
 
 
 

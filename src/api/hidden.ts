@@ -99,3 +99,29 @@ export const hidangerAudit = (data: AuditCreateReq) => {
     data: data
   })
 }
+
+/**
+ * 下发隐患整改单
+ */
+export const hidangerOrder = (data: {
+  dangerIds:string[]
+  orderDate:string[]
+  deadline:string[]
+  expertSignatures:string[]
+  targetOrgMasterSignatures:string[]
+  expertOpinion:string
+  msgUserIds:string[]
+}) => {
+  return defHttp.post<void>({
+    url: 'gasguard-service-risk-app/hidanger/gov/handle-order',
+    data: data
+  })
+}
+/**
+ * 检查计划详情
+ */
+export const checkPlanDetail = (id:string) => {
+  return defHttp.get<void>({
+    url: `gasguard-service-risk-app/hidanger/gov/check-plan/${id}`,
+  })
+}

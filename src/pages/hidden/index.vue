@@ -47,8 +47,10 @@
         <van-empty v-else description="暂无数据"></van-empty>
       </scroll-view>
     </swiper-item>
-    <swiper-item v-if="isAudit" style="overflow-y: auto;height: calc(100% - 60rpx);  background: #fff;
-">
+    <swiper-item
+      v-if="isAudit"
+      style="overflow-y: auto; height: calc(100% - 60rpx); background: #fff"
+    >
       <van-cell-group>
         <van-field required label="整改单位" value="" />
         <van-field required label="联系电话" value="" />
@@ -60,7 +62,7 @@
           @click-input="handleDatePopupIsShow = true"
         >
           <input
-            :value="reportForm.handleDate"
+            :value="state.order.deadline"
             slot="input"
             disabled
             style="width: 100%"
@@ -68,7 +70,10 @@
           />
         </van-field>
 
-        <view class="signature-box" @click="navigatoSignature('charge')">
+        <view
+          class="signature-box"
+          @click="navigatoSignature('targetOrgMasterSignatures')"
+        >
           <van-field
             title-width="100%"
             :border="false"
@@ -79,13 +84,16 @@
 
           <region-img
             :disabledPreview="true"
-            v-if="state.charge.objectName"
+            v-if="state.targetOrgMasterSignatures.objectName"
             region="test"
-            :id="state.charge.objectName"
+            :id="state.targetOrgMasterSignatures.objectName"
           />
           <image v-else src="../../static/img/bg.png" mode="scaleToFill" />
         </view>
-        <view class="signature-box" @click="navigatoSignature('charge1')">
+        <view
+          class="signature-box"
+          @click="navigatoSignature('expertSignatures1')"
+        >
           <van-field
             title-width="100%"
             :border="false"
@@ -96,13 +104,16 @@
 
           <region-img
             :disabledPreview="true"
-            v-if="state.charge.objectName"
+            v-if="state.expertSignatures1.objectName"
             region="test"
-            :id="state.charge.objectName"
+            :id="state.expertSignatures1.objectName"
           />
           <image v-else src="../../static/img/bg.png" mode="scaleToFill" />
         </view>
-        <view class="signature-box" @click="navigatoSignature('charge2')">
+        <view
+          class="signature-box"
+          @click="navigatoSignature('expertSignatures2')"
+        >
           <van-field
             title-width="100%"
             :border="false"
@@ -112,24 +123,24 @@
           />
           <region-img
             :disabledPreview="true"
-            v-if="state.charge.objectName"
+            v-if="state.expertSignatures2.objectName"
             region="test"
-            :id="state.charge.objectName"
+            :id="state.expertSignatures2.objectName"
           />
           <image v-else src="../../static/img/bg.png" mode="scaleToFill" />
         </view>
 
         <van-button
-        custom-style="margin:40rpx 40rpx 150rpx;width:calc(100% - 80rpx)"
-        :loading="loading"
-        loading-text="请稍后..."
-        type="primary"
-        size="large"
-        color="#006CFF"
-        >确定</van-button
-      >
+          custom-style="margin:40rpx 40rpx 150rpx;width:calc(100% - 80rpx)"
+          :loading="loading"
+          loading-text="请稍后..."
+          type="primary"
+          size="large"
+          color="#006CFF"
+          @click="submit"
+          >确定</van-button
+        >
       </van-cell-group>
-      
     </swiper-item>
   </swiper>
   <!-- 日历 -->
@@ -203,7 +214,7 @@ import type {
 } from "@/api/model/HidangerPage";
 import type { DicItem } from "@/api/model/SysDictionary";
 
-import { hidangerPage } from "@/api/hidden";
+import { hidangerOrder, hidangerPage } from "@/api/hidden";
 import { reactive } from "vue";
 import { getDictList } from "@/api/dic";
 import { userStore } from "@/state";
@@ -233,8 +244,22 @@ const state = reactive({
     dangerType: "",
     dangerSubType: "",
   },
-
-  charge: {
+  order: {
+    dangerIds: [],
+    orderDate: "",
+    deadline: "",
+    expertSignatures: [],
+    targetOrgMasterSignatures: [],
+    expertOpinion: "",
+    msgUserIds: "",
+  },
+  targetOrgMasterSignatures: {
+    objectName: "",
+  },
+  expertSignatures1: {
+    objectName: "",
+  },
+  expertSignatures2: {
     objectName: "",
   },
 });
@@ -258,10 +283,14 @@ const {
 uni.$on(EventType.DANGER_PAGE_REFRESH, () => {
   search();
 });
-
+const submit = async () => {
+  state.order.targetOrgMasterSignatures = [state.targetOrgMasterSignatures.objectName]
+  state.order.expertSignatures = [state.expertSignatures1.objectName,state.expertSignatures2.objectName]
+  await hidangerOrder(state.order);
+};
 const chooseDate = (e) => {
   handleDatePopupIsShow.value = false;
-  reportForm.value.handleDate = formatDate(e.detail);
+  state.order.deadline = formatDate(e.detail);
 };
 // 进入签字页面
 const navigatoSignature = (key) => {
@@ -324,12 +353,20 @@ onLoad((params) => {
 });
 onShow(() => {
   console.log("hidden onShow");
-  uni.getStorage({
-    key: "charge",
-    success({ data }) {
-      console.log(data);
-      state.charge.objectName = data.objectName;
-    },
+  let keys = [
+    "targetOrgMasterSignatures",
+    "expertSignatures1",
+    "expertSignatures2",
+  ];
+  keys.forEach((key) => {
+    uni.getStorage({
+      key,
+      success({ data }) {
+        if (data.objectName) {
+          state[key].objectName = data.objectName;
+        }
+      },
+    });
   });
 });
 </script>
