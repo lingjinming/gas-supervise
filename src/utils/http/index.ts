@@ -7,10 +7,14 @@ import { userStore } from "@/state";
 const handleGetQueryParam = (param: any) => {
   if(param && typeof param === 'object') {
     for(let key in param) {
-      const theValue = param[key];
+      let theValue = param[key];
       if(Array.isArray(theValue)) {
-        param[key] = theValue.join(',');
+        theValue = param[key] = theValue.join(',');
       } 
+      // 过滤掉空字符串和null
+      if(theValue === '' || theValue === null) {
+        delete param[key];
+      }
     }
   }
 }
