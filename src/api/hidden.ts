@@ -9,7 +9,15 @@ import type { HidangerCreateReq ,HidangerHandleReq} from "./model/Hidanger";
 import type { BasePageResponse, BaseResponse } from "./model/BaseModel";
 
 
-
+/**
+ * @description 隐患类型
+ *
+ */
+export const getHidangerTypes = () => {
+  return defHttp.get<BaseResponse<void>>({
+    url:"gasguard-service-risk-app/hidanger/types"
+  });
+};
 /**
  * @description 新增隐患
  *

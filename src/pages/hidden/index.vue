@@ -28,7 +28,6 @@
     :autoplay="false"
     :current="stepsLength - 1"
     @change="handleSwiperChange"
-    
   >
     <swiper-item>
       <!-- 隐患列表 -->
@@ -48,9 +47,97 @@
         <van-empty v-else description="暂无数据"></van-empty>
       </scroll-view>
     </swiper-item>
-    <swiper-item v-if="isAudit"> 22 </swiper-item>
-  </swiper>
+    <swiper-item v-if="isAudit" style="overflow-y: auto;height: calc(100% - 60rpx);  background: #fff;
+">
+      <van-cell-group>
+        <van-field required label="整改单位" value="" />
+        <van-field required label="联系电话" value="" />
+        <van-field required label="地址" value="" />
+        <van-field
+          required
+          is-link
+          label="完成日期"
+          @click-input="handleDatePopupIsShow = true"
+        >
+          <input
+            :value="reportForm.handleDate"
+            slot="input"
+            disabled
+            style="width: 100%"
+            placeholder="请选择"
+          />
+        </van-field>
 
+        <view class="signature-box" @click="navigatoSignature('charge')">
+          <van-field
+            title-width="100%"
+            :border="false"
+            required
+            label="企业负责人"
+            readonly
+          />
+
+          <region-img
+            :disabledPreview="true"
+            v-if="state.charge.objectName"
+            region="test"
+            :id="state.charge.objectName"
+          />
+          <image v-else src="../../static/img/bg.png" mode="scaleToFill" />
+        </view>
+        <view class="signature-box" @click="navigatoSignature('charge1')">
+          <van-field
+            title-width="100%"
+            :border="false"
+            required
+            label="检查人1（专家）"
+            readonly
+          />
+
+          <region-img
+            :disabledPreview="true"
+            v-if="state.charge.objectName"
+            region="test"
+            :id="state.charge.objectName"
+          />
+          <image v-else src="../../static/img/bg.png" mode="scaleToFill" />
+        </view>
+        <view class="signature-box" @click="navigatoSignature('charge2')">
+          <van-field
+            title-width="100%"
+            :border="false"
+            required
+            label="检查人2（专家）"
+            readonly
+          />
+          <region-img
+            :disabledPreview="true"
+            v-if="state.charge.objectName"
+            region="test"
+            :id="state.charge.objectName"
+          />
+          <image v-else src="../../static/img/bg.png" mode="scaleToFill" />
+        </view>
+
+        <van-button
+        custom-style="margin:40rpx 40rpx 150rpx;width:calc(100% - 80rpx)"
+        :loading="loading"
+        loading-text="请稍后..."
+        type="primary"
+        size="large"
+        color="#006CFF"
+        >确定</van-button
+      >
+      </van-cell-group>
+      
+    </swiper-item>
+  </swiper>
+  <!-- 日历 -->
+  <van-calendar
+    :show="handleDatePopupIsShow"
+    @close="handleDatePopupIsShow = false"
+    @confirm="chooseDate"
+  />
   <!-- 搜索面板 -->
   <van-popup
     v-if="!isAudit"
@@ -122,6 +209,7 @@ import { getDictList } from "@/api/dic";
 import { userStore } from "@/state";
 import { EventType } from "@/enums/eventType";
 import { useTable } from "@/hooks/useTable";
+import { formatDate } from "@/utils";
 
 const store = userStore();
 
@@ -145,7 +233,17 @@ const state = reactive({
     dangerType: "",
     dangerSubType: "",
   },
+
+  charge: {
+    objectName: "",
+  },
 });
+
+let reportForm = ref({
+  handleDate: "",
+});
+let loading = ref(false);
+let handleDatePopupIsShow = ref(false);
 
 const {
   total,
@@ -160,6 +258,17 @@ const {
 uni.$on(EventType.DANGER_PAGE_REFRESH, () => {
   search();
 });
+
+const chooseDate = (e) => {
+  handleDatePopupIsShow.value = false;
+  reportForm.value.handleDate = formatDate(e.detail);
+};
+// 进入签字页面
+const navigatoSignature = (key) => {
+  uni.navigateTo({
+    url: `/pages/signature/index?key=${key}`,
+  });
+};
 
 const steps = ["选择需要整改的隐患", "填写整改单信息"];
 let currentSteps = ref(["选择需要整改的隐患"]);
@@ -210,6 +319,18 @@ onLoad((params) => {
     uni.setNavigationBarTitle({
       title: "创建整改单",
     });
+
+  console.log("hidden onLoad");
+});
+onShow(() => {
+  console.log("hidden onShow");
+  uni.getStorage({
+    key: "charge",
+    success({ data }) {
+      console.log(data);
+      state.charge.objectName = data.objectName;
+    },
+  });
 });
 </script>
 <style lang="scss" scoped>
@@ -269,5 +390,24 @@ onLoad((params) => {
 }
 .swiper {
   height: 100%;
+}
+.signature-box {
+  position: relative;
+  height: 400rpx;
+  &::after {
+    position: absolute;
+    content: "";
+    left: 30rpx;
+    right: 30rpx;
+    bottom: 0;
+    height: 2rpx;
+    border-bottom: 1rpx solid $uni-border-color;
+  }
+  ::v-deep .image,
+  image {
+    margin: 0 30rpx;
+    width: calc(100% - 60rpx);
+    height: calc(100% - 100rpx);
+  }
 }
 </style>

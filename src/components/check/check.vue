@@ -1,6 +1,5 @@
 <template>
-  <van-skeleton title avatar row="2" :loading="loading">
-    <van-swipe-cell :right-width="160">
+    <van-swipe-cell :right-width="160" @click="navigateToDetail">
       <van-cell-group>
         <view class="data-box">
           <view class="tit">
@@ -42,7 +41,6 @@
         <view class="del" @click="deletePlan(data.uid)">删除</view>
       </view>
     </van-swipe-cell>
-  </van-skeleton>
 </template>
 <script setup lang="ts">
 import { checkPlanDelById, checkPlanFinishById } from "@/api/checkPlan";
@@ -50,9 +48,6 @@ import type { CheckPageVo } from "@/api/model/CheckPlan";
 import { showToast } from "@/hooks";
 import type { PropType } from "vue";
 
-let loading = ref(true)
-
-onMounted(() => loading.value = !Boolean(props.data.uid))
 
 const props = defineProps({
   data: {
@@ -60,6 +55,11 @@ const props = defineProps({
     default: {},
   },
 });
+const navigateToDetail = (item) => {
+  uni.navigateTo({
+    url: "/pages/checkDetail/index",
+  });
+}
 
 const deletePlan = async (uid) => {
   let data = await checkPlanDelById({ uid });
