@@ -8,6 +8,7 @@
 </template>
 <script setup lang="ts">
 import { getDictList, getDistrict } from "@/api/dic";
+import { getHidangerTypes } from "@/api/hidden";
 import type { DicItem ,SysDistrictItem} from "@/api/model/SysDictionary";
 
 const emits = defineEmits(["update:modelValue", "update:subjectType"]);
@@ -27,7 +28,7 @@ let cascaderVal = ref('');
 
 const columnsObj = {
   RISK_SUBJECT_TYPE_TREE: async () => {
-    let data = (await getDictList(props.dicType))[props.dicType];
+    let data = await getHidangerTypes();
     options.value = data;
   },
   district: async () => {

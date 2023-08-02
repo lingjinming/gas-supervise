@@ -1,6 +1,5 @@
 import { getNotice } from "@/api/notice";
 import type { SysNoticeItem } from "@/api/model/Notice";
-import { EventType } from "@/enums/eventType";
 let page = ref(1);
 let size = ref(10);
 let Total = ref(0);
@@ -20,7 +19,6 @@ export const getNoticeFn = async (reset = true) => {
     notices.value.length = 0;
   }
   notices.value.push(...data);
-  console.log(notices.value)
 
   uni.stopPullDownRefresh();
 };

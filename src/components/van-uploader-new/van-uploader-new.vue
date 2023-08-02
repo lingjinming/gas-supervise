@@ -16,6 +16,7 @@
   </view>
 </template>
 <script lang="ts" setup>
+import { uploadFile } from "@/hooks";
 import { userStore } from "@/state";
 
 const store = userStore();
@@ -35,9 +36,7 @@ const delImg = (event) => {
 
 const uploadImg = async (event) => {
 
-  // 当前激活的服务器
-  const server = store.auth.activeServer;
-  const token = store.auth.token;
+
 
   let { file } = event.detail;
 
@@ -46,24 +45,13 @@ const uploadImg = async (event) => {
 
   const uploadTasks = file.map((item,i) => {
     item.status = 'uploading'
-    return new Promise((resolve) => {
-      uni.uploadFile({
-        url: "https://aiot.citysafety.com/gasguard/gasguard-service-system-app/file/upload",
-        filePath: item.tempFilePath,
-        name: "file",
-        header: {
-          "x-api-region": server?.region,
-          Authorization: "Bearer " + token?.access_token,
-        },
-        success(res) {
-          item.status = "done";
-          resolve(JSON.parse(res.data));
-        },
-      });
+    return new Promise((resolve,reject) => {
+      uploadFile(item,resolve)
     });
   });
 
   Promise.all(uploadTasks).then((data) => {
+    debugger
     data.map((item, i) => {
       file[i] = Object.assign(file[i], item.data);
       fileIds.value.push(item.data.objectName);

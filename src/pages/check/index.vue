@@ -26,12 +26,11 @@
     @refresherrefresh="onRefresh"
   >
 
-  
+    <van-skeleton v-for="i in 3" :key="i" title avatar row="2" :loading="!list.length" />
     <template v-if="total">
-      <check v-for="(item, i) in list" :data="item" :key="i" />
+      <check v-for="(item, i) in list" :data="item" :key="i"/>
     </template>
-
-    <van-empty v-else description="暂无数据"></van-empty>
+    <van-empty v-if="noData" description="暂无数据" />
   </scroll-view>
   <view class="addCheck-box" v-if="!isOrg">
     <van-button
@@ -68,13 +67,13 @@ const maxDate = new Date().getTime();
 const store = userStore();
 const isOrg: boolean = store.isOrgUser;
 let isShow = ref(false);
-
 let reportForm = ref<CheckPlanQueryReq>({
   startTime: "",
   endTime: "",
 });
 
-const { loading ,total,list,nextPage,search,triggered,onRefreshPulling,onRefresh} = useTable<CheckPageVo>(reportForm.value,checkPlanPage,{showToast: true});
+const { noData ,total,list,nextPage,search,triggered,onRefreshPulling,onRefresh} = useTable<CheckPageVo>(reportForm.value,checkPlanPage,{showToast: true});
+
 
 
 

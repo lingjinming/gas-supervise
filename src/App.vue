@@ -65,7 +65,6 @@ page {
 .label {
   @include label;
 }
-
 .state {
   color: $uni-color-success;
   position: relative;

@@ -1,114 +1,130 @@
 {
-  "pages": [
-    //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-    {
-      "path": "pages/login/index",
-      "style": {
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/addCheck/index",
-      "style": {
-        "navigationBarTitleText": "创建检查计划"
-      }
-    },
-    {
-      "path": "pages/hiddenDetail/index",
-      "style": {
-        "navigationBarTitleText": "隐患详情"
-      }
-    },
-    {
-      "path": "pages/index/index",
-      "style": {
-        "navigationStyle": "custom"
-      }
-    },
+	"pages": [
+		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 
-    {
-      "path": "pages/hiddenReform/index",
-      "style": {
-        "navigationBarTitleText": "隐患整改"
-      }
-    },
-    {
-      "path": "pages/hiddenReport/index",
-      "style": {
-        "navigationBarTitleText": "隐患上报"
-      }
-    },
-    {
-      "path": "pages/hidden/index",
-      "style": {
-        "navigationBarTitleText": "隐患管理"
-      }
-    },
-    {
-      "path": "pages/notice/index",
-      "style": {
-        "navigationBarTitleText": "消息提醒"
-      }
-    },
-    {
-      "path": "pages/check/index",
-      "style": {
-        "navigationBarTitleText": "检查计划管理"
-      }
-    },
-    {
-      "path": "pages/user/index",
-      "style": {
-        "navigationStyle": "custom"
-      }
-    }
-  ],
-  "tabBar": {
-    "list": [
-      {
-        "pagePath": "pages/index/index",
-        "text": "首页",
-        "iconPath": "/static/img/index.png",
-        "selectedIconPath": "/static/img/index_act.png"
-      },
-      {
-        "pagePath": "pages/user/index",
-        "text": "我的",
-        "iconPath": "/static/img/user.png",
-        "selectedIconPath": "/static/img/user_act.png"
-      }
-    ]
-  },
-  "globalStyle": {
-    "enablePullDownRefresh": true,
-    "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8",
-    "usingComponents": {
-      "van-button": "wxcomponents/vant/button/index",
-      "van-cell-group": "wxcomponents/vant/cell-group/index",
-      "van-field": "wxcomponents/vant/field/index",
-      "van-picker": "wxcomponents/vant/picker/index",
-      "van-picker-column": "wxcomponents/vant/picker-column/index",
-      "van-cell": "wxcomponents/vant/cell/index",
-      "van-swipe-cell": "wxcomponents/vant/swipe-cell/index",
-      "van-radio": "wxcomponents/vant/radio/index",
-      "van-radio-group": "wxcomponents/vant/radio-group/index",
-      "van-uploader": "wxcomponents/vant/uploader/index",
-      "van-datetime-picker": "wxcomponents/vant/datetime-picker/index",
-      "van-popup": "wxcomponents/vant/popup/index",
-      "van-cascader": "wxcomponents/vant/cascader/index",
-      "van-notify": "wxcomponents/vant/notify/index",
-      "van-icon": "wxcomponents/vant/icon/index",
-      "van-empty": "wxcomponents/vant/empty/index",
-      "van-toast": "wxcomponents/vant/toast/index",
-      "van-switch": "wxcomponents/vant/switch/index",
-      "van-skeleton": "wxcomponents/vant/skeleton/index",
-      "van-tag": "wxcomponents/vant/tag/index",
-      "van-checkbox-group": "wxcomponents/vant/checkbox-group/index",
-      "van-checkbox": "wxcomponents/vant/checkbox/index",
-      "van-calendar": "wxcomponents/vant/calendar/index"
-    }
-  }
+		{
+			"path": "pages/login/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/signature/index",
+			"style": {
+				"navigationBarTitleText": "签名",
+				"disableScroll": true,
+				"pageOrientation":"landscape"
+			}
+		},
+		{
+			"path": "pages/checkDetail/index",
+			"style": {
+				"navigationBarTitleText": "企业合规性检查"
+			}
+		},
+		{
+			"path": "pages/addCheck/index",
+			"style": {
+				"navigationBarTitleText": "创建检查计划"
+			}
+		},
+		{
+			"path": "pages/hiddenDetail/index",
+			"style": {
+				"navigationBarTitleText": "隐患详情"
+			}
+		},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/hiddenReform/index",
+			"style": {
+				"navigationBarTitleText": "隐患整改"
+			}
+		},
+		{
+			"path": "pages/hiddenReport/index",
+			"style": {
+				"navigationBarTitleText": "隐患上报"
+			}
+		},
+		{
+			"path": "pages/hidden/index",
+			"style": {
+				"navigationBarTitleText": "隐患管理",
+				"disableScroll": true
+			}
+		},
+		{
+			"path": "pages/notice/index",
+			"style": {
+				"navigationBarTitleText": "消息提醒"
+			}
+		},
+		{
+			"path": "pages/check/index",
+			"style": {
+				"navigationBarTitleText": "检查计划管理"
+			}
+		},
+		{
+			"path": "pages/user/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		}
+
+	],
+	"tabBar": {
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"text": "首页",
+				"iconPath": "/static/img/index.png",
+				"selectedIconPath": "/static/img/index_act.png"
+			},
+			{
+				"pagePath": "pages/user/index",
+				"text": "我的",
+				"iconPath": "/static/img/user.png",
+				"selectedIconPath": "/static/img/user_act.png"
+			}
+		]
+	},
+	"globalStyle": {
+		"enablePullDownRefresh": true,
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"usingComponents": {
+			"van-button": "wxcomponents/vant/button/index",
+			"van-cell-group": "wxcomponents/vant/cell-group/index",
+			"van-field": "wxcomponents/vant/field/index",
+			"van-picker": "wxcomponents/vant/picker/index",
+			"van-picker-column": "wxcomponents/vant/picker-column/index",
+			"van-cell": "wxcomponents/vant/cell/index",
+			"van-swipe-cell": "wxcomponents/vant/swipe-cell/index",
+			"van-radio": "wxcomponents/vant/radio/index",
+			"van-radio-group": "wxcomponents/vant/radio-group/index",
+			"van-uploader": "wxcomponents/vant/uploader/index",
+			"van-datetime-picker": "wxcomponents/vant/datetime-picker/index",
+			"van-popup": "wxcomponents/vant/popup/index",
+			"van-cascader": "wxcomponents/vant/cascader/index",
+			"van-notify": "wxcomponents/vant/notify/index",
+			"van-icon": "wxcomponents/vant/icon/index",
+			"van-empty": "wxcomponents/vant/empty/index",
+			"van-toast": "wxcomponents/vant/toast/index",
+			"van-switch": "wxcomponents/vant/switch/index",
+			"van-skeleton": "wxcomponents/vant/skeleton/index",
+			"van-tag": "wxcomponents/vant/tag/index",
+			"van-checkbox-group": "wxcomponents/vant/checkbox-group/index",
+			"van-checkbox": "wxcomponents/vant/checkbox/index",
+			"van-calendar": "wxcomponents/vant/calendar/index"
+		}
+	}
 }

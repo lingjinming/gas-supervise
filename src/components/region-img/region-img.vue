@@ -1,5 +1,5 @@
 <template>
-  <image class="image"  :src="src" mode="scaleToFill" @click="preview"/>
+  <image class="image" :src="src" mode="scaleToFill" @click="preview" />
 </template>
 <script lang="ts" setup>
 import { getImg } from "@/api/img";
@@ -12,14 +12,19 @@ const props = defineProps({
   id: {
     type: String,
   },
+  disabledPreview: {
+    type: Boolean,
+    default: false,
+  },
 });
 let src = ref("");
 const preview = () => {
+  !props.disabledPreview &&
     uni.previewImage({
-        urls:[src.value]
-    })
-}
-onMounted(async () => {
+      urls: [src.value],
+    });
+};
+const getImgFn = async () => {
   let urlObj = await getImg(props.id);
   uni.request({
     url: `https://aiot.citysafety.com/gasguard/preview_pic/${
@@ -34,7 +39,20 @@ onMounted(async () => {
       src.value = `data:image/jpg;base64,${base64}`;
     },
   });
-});
+};
+watch(() => props.id, (newValue) => {
+  console.log('region-img newValue',newValue)
+  if (newValue) {
+    getImgFn();
+  }
+},{immediate:true});
+
+// onShow( () => {
+//   console.log('region-img onShow')
+//   getImgFn()
+// });
+
+
 </script>
 <style>
 .image {
