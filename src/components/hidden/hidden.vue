@@ -33,18 +33,8 @@
             <view class="state handled"> {{ info._state }} </view>
           </template>
           <template v-else>
-            <view
-              hover-stop-propagation
-              v-if="isOrg"
-              @click.stop="navigatoReform(info)"
-            >
-              <van-button plain hairline round size="mini" type="primary"
-                >去整改</van-button
-              >
-            </view>
-            <template v-else>
-              <view class="state wait-handle"> 待整改 </view>
-            </template>
+            <view class="state wait-handle"> 待整改 </view>
+            
           </template>
         </view>
       </view>
@@ -119,12 +109,7 @@ setTimeout(() => {
   data.loading = false;
 }, 500);
 
-// 去整改
-const navigatoReform = (info: HidangerPgaeVO) => {
-  uni.navigateTo({
-    url: `/pages/hiddenReform/index?uid=${info.uid}&checkDate=${info.checkDate}`,
-  });
-};
+
 // 查看流程
 const showFlow = (uid: string) => {
   uni.navigateTo({

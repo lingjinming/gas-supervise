@@ -2,7 +2,7 @@
 
     <van-cell-group>
       <view style="background: #fff;">
-        <van-field :value="reportForm.handleContent" label="隐患描述" readonly />
+        <van-field :value="reportForm.handleContent" label="整改情况说明" readonly />
 
         <textarea
           class="remark"
@@ -16,7 +16,7 @@
 
       <van-field
         is-link
-        label="整改日期"
+        label="整改时间"
         @click-input="handleDatePopupIsShow = true"
       >
         <input
@@ -27,6 +27,14 @@
           placeholder="请选择"
         />
       </van-field>
+      <van-picker-new
+        defaultValue="SAME"
+        dicType="RISK_DANGER_CHECK"
+        label="是否和描述一致"
+        title="是否和描述一致"
+        v-model="reportForm.sameWithRemark"
+      />
+      <van-field :value="username"  label="责任人" disabled readonly/>
       <van-calendar
         :show="handleDatePopupIsShow"
         @close="handleDatePopupIsShow = false"
@@ -51,8 +59,11 @@
 import { ref } from "vue";
 import { reformHidangerById } from "../../api/hidden";
 import type { HidangerHandleReq } from "@/api/model/Hidanger";
-import { formatDate} from "@/utils";
+import { timestampToDateTimeString} from "@/utils";
 import { EventType } from '@/enums/eventType'
+import { userStore } from "@/state";
+const store = userStore();
+let username = ref(store.userInfo?.name)
 
 let checkDate = ref(0)
 let handleDatePopupIsShow = ref(false);
@@ -60,6 +71,8 @@ let loading = ref(false)
 
 let reportForm = ref({
   uid:'',
+  handleState:"HANDLING",
+  sameWithRemark: 'SAME',
   handleContent: "",
   handleDate: "",
   picIds: [],
@@ -68,14 +81,16 @@ let reportForm = ref({
 
 onLoad(options => {
   reportForm.value.uid = options?.uid
+  // HANDLING
+  reportForm.value.handleState = options?.isComplete ?  "HANDLED" : "HANDLING";
+  reportForm.value.handleDate = timestampToDateTimeString(new Date().getTime())
   checkDate.value = new Date(options?.checkDate).getTime()
-  reportForm.value.handleDate = formatDate(new Date().getTime())
 })
 
 
 const chooseDate = (e) => {
   handleDatePopupIsShow.value = false;
-  reportForm.value.handleDate = formatDate(e.detail);
+  reportForm.value.handleDate = timestampToDateTimeString(e.detail);
 };
 
 const submit = async () => {
@@ -93,10 +108,11 @@ const submit = async () => {
       setTimeout(() => {
         loading.value = false;
         uni.navigateBack();
-         // 让列表刷新
-        uni.$emit(EventType.DANGER_PAGE_REFRESH)
-      }, 1500);
+         // 刷新详情
+        uni.$emit(EventType.DANGER_DETAIL_REFRESH)
+      }, 800);
     } else {
+      loading.value = false;
       uni.showToast({
         icon:'none',
         title: message

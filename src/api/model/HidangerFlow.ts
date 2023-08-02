@@ -1,4 +1,5 @@
 export interface Flow {
+  dangerSource: string;
   state: string | undefined;
   dangerId: string | undefined;
   level: 'ZD' | 'JD' | 'YB' | undefined;
@@ -6,12 +7,14 @@ export interface Flow {
   flow: NodeTypes[] | undefined
 }
 
-type NodeTypes = PushNode | HandleNode | AuditNode
+type NodeTypes = PushNode | DispatchNode | Receive | HandleNode | StatementNode | AuditNode
 
 
 type PushNode = {
   stage: 'PUSH',
   content: {
+    planCode: string;
+    orderCode: string;
     address: string;
     dangerType: string;
     _dangerType: string;
@@ -23,22 +26,52 @@ type PushNode = {
   }
 } & BaseFlowItem
 
+type DispatchNode = {
+  stage: 'DISPATCH',
+  content : {
+    remark?: string;
+    dispatchRemark: string;
+    receiverName: string;
+    receiverPhone: string;
+    receiverOrgName: string;
+  }
+} & BaseFlowItem
+
+
+type Receive = {
+  stage: 'RECEIVE',
+  content: {
+    remark?: string;
+  }
+} & BaseFlowItem
+
+
+
+
+type HandleNode = {
+  stage: 'HANDLE',
+  content: {
+    handleResult: string;
+    _handleResult: string;
+    sameWithRemark: string;
+    _sameWithRemark: string;
+    handleRemark: string;
+    
+  }
+} & BaseFlowItem
+
+type StatementNode = {
+  stage: 'STATEMENT',
+  content: {
+    remark: string;
+  }
+}  & BaseFlowItem
 
 type AuditNode = {
   stage: 'AUDIT',
   content: {
     remark: string;
     picIds?: string[]
-  }
-} & BaseFlowItem
-
-type HandleNode = {
-  stage: 'HANDLE',
-  content: {
-    handleTime: string;
-    remark: string;
-    picIds: string[]
-    
   }
 } & BaseFlowItem
 
@@ -52,7 +85,7 @@ interface LeaderComment {
   children ?: LeaderComment[];
 }
 
-export type Stage = 'PUSH' | 'HANDLE' | 'AUDIT' | 'COMMENT'
+export type Stage = 'PUSH' | 'DISPATCH' | 'RECEIVE' | 'HANDLE' | 'STATEMENT' | 'AUDIT' | 'COMMENT';
 
 interface BaseFlowItem {
   title: string;
@@ -61,6 +94,8 @@ interface BaseFlowItem {
   stageTime: string;
   operator: string;
   operatorOrgId: string;
+  operatorOrgName: string;
+  picIds?: {id:string,name: string}[]
   commentList?: LeaderComment[];
 }
 

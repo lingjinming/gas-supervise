@@ -16,10 +16,10 @@ export type HidangerCreateReq = {
   districtId: string;
 };
 
-/**
- * 隐患整改请求
- */
+
 export interface HidangerHandleReq {
+  sameWithRemark: 'SAME'| 'NOT_SAME' | 'NOT_SURE';
+  handleState: 'HANDLING' | 'HANDLED'
   handleDate: string;
   handleContent: string;
   fileIds: string[];

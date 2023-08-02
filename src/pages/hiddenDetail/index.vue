@@ -1,6 +1,6 @@
 <template>
   <scroll-view
-    style="height: 100%; padding-bottom: 100rpx"
+    style="height: 100%;"
     scroll-y="true"
     class="scroll-Y container"
   >
@@ -13,18 +13,20 @@
       :key="i"
     >
       <view class="detail-box" :data-stage="node.stage">
+        <!-- 标题 -->
         <view class="tit">
           <view class="top">
             <view>
               <van-tag v-if="node.stage === 'PUSH'" :type="getTagType()">
                 {{ data.detail._level }}
               </van-tag>
-              <text style="margin-left: 10rpx" class="fs16">{{
+              <text style="margin-left: 10rpx;font-weight: 400;" class="fs16">{{
                 node.title
               }}</text>
             </view>
-            <text class="fs12">{{ node.stageTime }}</text>
+            <text class="fs12">{{ formatTime(node.stageTime) }}</text>
           </view>
+          <!-- 操作人 -->
           <view class="header">
             <view class="img-box">
               <image
@@ -43,25 +45,53 @@
             />
           </view>
         </view>
+        <!-- 内容 -->
         <view class="con">
-          <view class="remark">{{ node?.content?.remark }}</view>
-          <view class="region-imgBox" v-if="node?.content?.picIds">
+          <view v-if="node.stage === 'PUSH'" class="remark">{{ node?.content?.remark}}</view>
+          <view class="region-imgBox" v-if="node?.picIds">
             <region-img
-              v-for="img in node?.content?.picIds"
-              :key="img"
+              v-for="img in node?.picIds"
+              :key="img.id"
               region="test"
-              :id="img"
+              :id="img.id"
             />
           </view>
+          <!-- 隐患推送 -->
           <template v-if="node.stage == 'PUSH'">
-            <view
-              >隐患类型:
-              {{ node.content._subjectType + node.content._dangerType }}</view
-            >
+            <template v-if="data.detail.dangerSource === 'GOV'">
+              <view>关联整改单: {{ node.content.planCode }}</view>
+              <view>关联检查计划: {{ node.content.orderCode }}</view>
+            </template>
+            <view>隐患类型: {{ node.content._subjectType + node.content._dangerType }}</view>
+            <view>隐患场景: {{ node.content._subjectType }}</view>
             <view>整改单位: {{ node.content.handleOrg }}</view>
             <view>详细地址: {{ node.content.address }}</view>
           </template>
-
+          <!-- 隐患派单 -->
+          <template v-if="node.stage == 'DISPATCH'">
+            <view>派单说明: {{ node.content.dispatchRemark || '暂无' }}</view>
+            <view>对接人: {{ node.content.receiverName }}</view>
+            <view>所属部门: {{ node.content.receiverOrgName }}</view>
+            <view>联系方式: {{ node.content.receiverPhone }}</view>
+          </template>
+          <!-- 隐患接收 -->
+          <template v-if="node.stage == 'RECEIVE'">
+            <view>接收时间: {{ node.stageTime }}</view>
+          </template>
+          <!-- 隐患整改 -->
+          <template v-if="node.stage == 'HANDLE'">
+            <view>是否和隐患描述一致: {{ node.content._sameWithRemark }}</view>
+            <view>整改进度: {{ node.content._handleResult }}</view>
+            <view>整改描述: {{ node.content.handleRemark }}</view>
+          </template>
+          <!-- 隐患结单 -->
+          <template v-if="node.stage == 'STATEMENT'">
+            <view>情况说明: {{ node.content.remark }}</view>
+          </template>
+          <!-- 隐患审核 -->
+          <template v-if="node.stage == 'AUDIT' && node.title === '隐患驳回'">
+            <view>驳回原因: {{ node.content.remark }}</view>
+          </template>
           <!-- 节点上的评论 -->
           <view class="commentList" v-if="node.commentList">
             <template v-for="(comment, index) in node.commentList" :key="index">
@@ -83,8 +113,15 @@
           </view>
         </view>
       </view>
+      
     </van-skeleton>
+    <view class="bottom"></view>
+    
   </scroll-view>
+  <view class="opt-btn" v-if="shouldShowDangerOptBtn()">
+    <van-button class="danger-btn" block icon="exchange" @click="goToHandle(false)">整改跟进</van-button>
+    <van-button class="danger-btn" block icon="passed" @click="goToHandle(true)">整改完成</van-button>
+  </view>
   <!-- 领导评论弹窗 -->
   <van-popup
     :show="data.showComment"
@@ -107,6 +144,7 @@
 <script setup lang="ts">
 import { ref, reactive } from "vue";
 import { userStore } from "@/state";
+import { EventType } from '@/enums/eventType'
 import { getHidangerFlow, createLeaderComment } from "../../api/hidden";
 import type {
   Flow,
@@ -119,6 +157,7 @@ const store = userStore();
 const data = reactive({
   uid: "",
   detail: <Flow>{
+    dangerSource: "",
     state: "",
     dangerId: undefined,
     level: undefined,
@@ -147,6 +186,24 @@ const getTagType = () => {
 onLoad((options) => {
   getDetail(options!.uid);
 });
+
+// 是否应该展示两个操作按钮
+const shouldShowDangerOptBtn = () => {
+  return store.isOrgUser && data.detail.state === 'WAIT_HANDLE'
+}
+
+// 去整改
+const goToHandle = (isComplete: boolean) => {
+  //@ts-ignore
+  let checkDate = data.detail.flow[0].content.checkDate;
+  uni.navigateTo({
+    url: `/pages/hiddenReform/index?uid=${data.uid}&isComplete=${isComplete}&checkDate=${checkDate}`,
+  });
+};
+
+uni.$on(EventType.DANGER_DETAIL_REFRESH,() => {
+  getDetail(data.uid);
+})
 
 // 点击展示领导批示
 const showLeaderComment = (stage: Stage, stageId: string) => {
@@ -179,7 +236,7 @@ const getDetail = async (id: string) => {
     loading.value = true;
     data.uid = id;
     console.log((await getHidangerFlow(id))["data"]);
-    const { level, _level, dangerId, flow, state } = (
+    const { level, _level, dangerId, flow, state,dangerSource } = (
       await getHidangerFlow(id)
     )["data"];
     data.detail._level = _level;
@@ -187,17 +244,51 @@ const getDetail = async (id: string) => {
     data.detail.level = level;
     data.detail.flow = flow;
     data.detail.dangerId = dangerId;
+    data.detail.dangerSource = dangerSource;
   } finally {
     loading.value = false;
   }
 };
+
+/**
+ * 将 2023-07-25 16:58:26 去掉秒 转为 2023-07-25 16:58
+ * @param time 2023-07-25 16:58:26
+ */
+const formatTime = (time: string) => {
+  // 字符串截取,去掉最后三位
+  return time.slice(0, 16);
+}
 </script>
 <style lang="scss" scoped>
+.opt-btn {
+  position: absolute;
+  display: flex;
+  justify-content:space-around;
+  bottom: 0rpx;
+  left: 0;
+  width: 100%;
+  padding-bottom: 30rpx;
+  background-color: #fff;  
+  .danger-btn {
+    width: 333rpx;
+    height: 88rpx;
+    border-radius: 10rpx;
+  }
+  
+}
+.bottom {
+  height: 120rpx;
+  width: 100%;
+}
 .detail-box {
+  word-break: break-all;
   position: relative;
   padding: 40rpx 40rpx 0rpx 80rpx;
 
   &[data-stage="PUSH"],
+  &[data-stage="DISPATCH"],
+  &[data-stage="RECEIVE"],
+  &[data-stage="STATEMENT"],
   &[data-stage="HANDLE"],
   &[data-stage="AUDIT"] {
     &::before,
@@ -227,6 +318,22 @@ const getDetail = async (id: string) => {
       background: rgba($color: $uni-color-error, $alpha: 0.8);
     }
   }
+  &[data-stage="DISPATCH"] {
+    &::before {
+      border: 2rpx dashed rgba($color: $uni-color-primary, $alpha: 0.8);
+    }
+    &::after {
+      background: rgba($color: $uni-color-primary, $alpha: 0.8);
+    }
+  }
+  &[data-stage="RECEIVE"] {
+    &::before {
+      border: 2rpx dashed rgba($color: $uni-color-primary, $alpha: 0.8);
+    }
+    &::after {
+      background: rgba($color: $uni-color-primary, $alpha: 0.8);
+    }
+  }
   &[data-stage="HANDLE"] {
     &::before {
       border: 2rpx dashed rgba($color: $uni-color-primary, $alpha: 0.8);
@@ -235,6 +342,15 @@ const getDetail = async (id: string) => {
       background: rgba($color: $uni-color-primary, $alpha: 0.8);
     }
   }
+  &[data-stage="STATEMENT"] {
+    &::before {
+      border: 2rpx dashed rgba($color: $uni-color-primary, $alpha: 0.8);
+    }
+    &::after {
+      background: rgba($color: $uni-color-primary, $alpha: 0.8);
+    }
+  }
+ 
   &[data-stage="AUDIT"] {
     &::before {
       border: 2rpx dashed rgba($color: $uni-color-success, $alpha: 0.8);

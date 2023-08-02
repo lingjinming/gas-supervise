@@ -25,6 +25,11 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  // 下拉选的默认值
+  defaultValue: {
+    type: String,
+    default: "",
+  },
   orgId: {
     type: String,
     default: "",
@@ -32,7 +37,7 @@ const props = defineProps({
 });
 let isShow = ref(false);
 let columns: Ref<DicItem[] | SysOrgItem[] | CheckPlanOptions[]> = ref([]);
-let pickerVal = ref([]);
+let pickerVal = ref('');
 
 const columnsObj = {
   org: async () => {
@@ -61,6 +66,17 @@ const columnsObj = {
 const getDictListFn = async (type:string) =>{
   let data = (await getDictList(type))[type];
   columns.value = data;
+  return data;
+}
+// 下拉选默认值
+if(props.defaultValue) {
+  getDictListFn(props.dicType).then((res) => {
+    let theDefault = res.find(e => e.value === props.defaultValue)
+    if(theDefault) {
+      pickerVal.value = theDefault.label;
+      emits("update:modelValue", theDefault.value);
+    }
+  })
 }
 
 const showPicker = () => {
