@@ -11,7 +11,7 @@ import { getDictList, getDistrict } from "@/api/dic";
 import { getHidangerTypes } from "@/api/hidden";
 import type { DicItem ,SysDistrictItem} from "@/api/model/SysDictionary";
 
-const emits = defineEmits(["update:modelValue", "update:subjectType"]);
+const emits = defineEmits(["update:modelValue", "update:subjectType","update:dangerSubtype"]);
 const props = defineProps({
   dicType: {
     type: String,
@@ -57,16 +57,12 @@ const change = (e) => {
   const detail = e.detail;
   console.log(detail);
   if (props.dicType == "RISK_SUBJECT_TYPE_TREE") {
-    if(detail["selectedOptions"].length == 1){//未选择子集
-      cascaderVal.value = detail["selectedOptions"][0]["label"];
-
-      emits("update:subjectType", detail["value"]);
-      emits("update:modelValue", '');
-
-    }else{
-      cascaderVal.value = detail["selectedOptions"][1]["label"];
-      emits("update:modelValue", detail.value);
-      emits("update:subjectType", detail["selectedOptions"][0]["value"]);
+    let paths = detail["selectedOptions"];
+    if(paths.length === 3) {
+      emits("update:subjectType", paths[0].value);
+      emits("update:modelValue", paths[1].value);
+      emits("update:dangerSubtype", paths[2].value);
+      cascaderVal.value = detail["selectedOptions"][2]["text"];
     }
 
   }
