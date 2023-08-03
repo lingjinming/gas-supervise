@@ -1,48 +1,20 @@
 <template>
   <van-tabs :active="activeTab" @change="onChangeTab">
     <van-tab title="计划详情">
-      <van-field required label="计划名称" :value="state.detail.title" />
-      <van-field required label="计划时间" :value="state.detail.startDate" />
-      <van-field required label="检查类型" :value="state.detail._type" />
-      <van-field required label="检查企业" :value="state.detail._targetOrgId" />
-      <van-field
-        required
-        label="企业负责人"
-        :value="state.detail.targetOrgOwner"
-      />
-      <van-field
-        required
-        label="负责人电话"
-        :value="state.detail.targetOrgPhone"
-      />
-      <van-field required label="参与人" :value="state.detail.checkers" />
-      <van-field
-        required
-        label="计划创建时间"
-        :value="state.detail.startDate"
-      />
+      <view v-for="( val,key) in detail.check" :key="key">
+        <text class="label">{{ key }}</text>
+        <text>{{ val.val }}</text>
+      </view>
     </van-tab>
     <van-tab title="隐患整改单">
-      <van-field required label="整改单位" :value="state.detail._targetOrgId" />
-      <van-field
-        required
-        label="联系电话"
-        :value="state.detail.targetOrgPhone"
-      />
-      <van-field required label="地址" :value="state.detail.targetOrgAddr" />
-      <van-field required label="整改完成期限" :value="state.detail.endDate" />
-      <van-field
-        required
-        label="整改单发布时间"
-        :value="state.detail.startDate"
-      />
-      <van-field required label="发布单位" :value="state.detail._masterOrgId" />
+      <van-field label="整改单位" :value="detail._targetOrgId" />
+      <van-field label="联系电话" :value="detail.targetOrgPhone" />
+      <van-field label="地址" :value="detail.targetOrgAddr" />
+      <van-field label="整改完成期限" :value="detail.endDate" />
+      <van-field label="整改单发布时间" :value="detail.startDate" />
+      <van-field label="发布单位" :value="detail._masterOrgId" />
 
-      <hidden
-        v-for="(item, i) in state.detail.handleOrders"
-        :key="i"
-        :info="item"
-      />
+      <hidden v-for="(item, i) in detail.handleOrders" :key="i" :info="item" />
     </van-tab>
   </van-tabs>
 
@@ -67,6 +39,12 @@ const store = userStore();
 const isOrg: boolean = store.isOrgUser;
 
 const addAudit = () => {
+  let keys = [
+    "targetOrgMasterSignatures",
+    "expertSignatures1",
+    "expertSignatures2",
+  ];
+  keys.forEach((key) => uni.removeStorageSync(key));
   uni.navigateTo({
     url: "/pages/hidden/index?audit=true",
   });
@@ -75,28 +53,53 @@ onLoad((options) => {
   getDetail(options!.uid);
 });
 
-let state = reactive({
-  detail: {
-    checkers: "",
-    code: "",
-    endDate: "",
-    handleOrders: [],
-    startDate: "",
-    targetOrgAddr: "",
-    targetOrgOwner: "",
-    targetOrgPhone: "",
-    title: "",
-    _handleState: "",
-    _masterOrgId: "",
-    _targetOrgId: "",
-    _type: "",
+let detail = reactive({
+ check :{
+  '计划名称':{
+    prop:'title',
+    val:''
   },
+  '计划时间':{
+    prop:'startDate',
+    val:''
+  },
+  '检查类型':{
+    prop:'_type',
+    val:''
+  },
+  '检查企业':{
+    prop:'_targetOrgId',
+    val:''
+  },
+  '企业负责人':{
+    prop:'targetOrgOwner',
+    val:''
+  },
+  '负责人电话':{
+    prop:'targetOrgPhone',
+    val:''
+  },
+  '参与人':{
+    prop:'checkers',
+    val:''
+  },
+  '计划创建时间':{
+    prop:'startDate',
+    val:''
+  }
+}
 });
+
+
+  
+
 const getDetail = async (id: string) => {
   try {
     let data = await checkPlanDetail(id);
-    state.detail = Object.assign({}, state.detail, data);
-    console.log(state.detail);
+    Object.values(detail.check).forEach(value => {
+      value.val = data[value.prop]
+    })
+
   } finally {
   }
 };
