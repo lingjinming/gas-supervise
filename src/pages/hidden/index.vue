@@ -352,7 +352,7 @@ onLoad((params) => {
   targetOrgPhone.value = params?.targetOrgPhone;
   targetOrgAddr.value = params?.targetOrgAddr;
 
-  if (state.query.planCode) {
+  if (params?.planCode) {
     state.query.planCode = params?.planCode;
   } else {
     delete state.query.planCode;
