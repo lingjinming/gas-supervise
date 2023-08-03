@@ -180,6 +180,7 @@
     </swiper-item>
   </swiper>
   <van-button
+    v-if="isAudit"
     custom-style="margin:40rpx 40rpx 150rpx;width:calc(100% - 80rpx)"
     :loading="loading"
     loading-text="请稍后..."
@@ -287,7 +288,8 @@ const state = reactive({
   query: <HidangerOrgPageQuery>{
     page: 1,
     size: 10,
-    state: isAudit.value ? "WAIT_HANDLE" : [],
+    planCode: "",
+    state: [],
     orgId: "",
     dangerSource: [],
     level: [],
@@ -350,6 +352,11 @@ onLoad((params) => {
   targetOrgPhone.value = params?.targetOrgPhone;
   targetOrgAddr.value = params?.targetOrgAddr;
 
+  if (state.query.planCode) {
+    state.query.planCode = params?.planCode;
+  } else {
+    delete state.query.planCode;
+  }
   isAudit.value &&
     uni.setNavigationBarTitle({
       title: "创建整改单",
@@ -389,7 +396,8 @@ const submit = async (val) => {
   } else {
     changeStep(steps[1]);
   }
-  if (val == 2) {//下发步骤
+  if (val == 2) {
+    //下发步骤
     if (
       !state.targetOrgMasterSignatures.objectName ||
       !state.expertSignatures1.objectName ||
@@ -410,17 +418,26 @@ const submit = async (val) => {
       ];
     }
 
-    await hidangerOrder(state.order);
-    uni.showToast({
-      icon: "success",
-      title: "下发成功！",
-    });
-
-    setTimeout(() => {
-      uni.redirectTo({
-        url: "/pages/check/index",
+    let { success, message } = await hidangerOrder(state.order);
+    console.log(success);
+    console.log(message);
+    if (success) {
+      uni.showToast({
+        icon: "success",
+        title: "下发成功！",
       });
-    }, 1500);
+
+      setTimeout(() => {
+        uni.redirectTo({
+          url: "/pages/check/index",
+        });
+      }, 1500);
+    } else {
+      uni.showToast({
+        icon: "error",
+        title: message,
+      });
+    }
   }
 };
 
@@ -569,7 +586,7 @@ const loadDic = async () => {
     padding-left: 34rpx;
   }
 }
-.remark{
+.remark {
   width: 100%;
   padding: 20rpx 30rpx;
 }

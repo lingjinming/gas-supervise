@@ -16,11 +16,12 @@ export const showToast = (flag: boolean = true, callback?: Function) => {
   });
 
   flag && uni.$emit("refresh");
-
-  callback && callback();
+  setTimeout(() => {
+    callback && callback();
+  }, 1500);
 };
 
-export const uploadFile = (item,cb) => {
+export const uploadFile = (item, cb) => {
   uni.uploadFile({
     url: "https://aiot.citysafety.com/gasguard/gasguard-service-system-app/file/upload",
     filePath: item.tempFilePath,

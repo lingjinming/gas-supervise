@@ -1,5 +1,5 @@
 <template>
-    <van-swipe-cell :right-width="160" @click="navigateToDetail(data.uid)">
+    <van-swipe-cell :right-width="160" @click="navigateToDetail(data.uid,data.planCode)">
       <van-cell-group>
         <view class="data-box">
           <view class="tit">
@@ -55,9 +55,9 @@ const props = defineProps({
     default: {},
   },
 });
-const navigateToDetail = (uid) => {
+const navigateToDetail = (uid,planCode) => {
   uni.navigateTo({
-    url: `/pages/checkDetail/index?uid=${uid}`,
+    url: `/pages/checkDetail/index?uid=${uid}&planCode=${planCode}`,
   });
 }
 

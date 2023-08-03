@@ -57,20 +57,19 @@
         <view class="tab-detail-box">
           <text class="label">检查人签字签字:</text>
           <view class="img-box">
-          <region-img
-            :disabledPreview="true"
-            v-if="order.expertSign.length"
-            region="test"
-            :id="order.expertSign[0]"
-          />
-          <region-img
-            :disabledPreview="true"
-            v-if="order.expertSign.length"
-            region="test"
-            :id="order.expertSign[0]"
-          />
+            <region-img
+              :disabledPreview="true"
+              v-if="order.expertSign.length"
+              region="test"
+              :id="order.expertSign[0]"
+            />
+            <region-img
+              :disabledPreview="true"
+              v-if="order.expertSign.length"
+              region="test"
+              :id="order.expertSign[0]"
+            />
           </view>
-
         </view>
       </view>
       <!-- <view style="margin-top: 40rpx">
@@ -116,12 +115,12 @@ const addAudit = () => {
     &_targetOrgId=${detail.order["整改单位"]["val"]}
     &targetOrgPhone=${detail.order["联系电话"]["val"]}
     &targetOrgAddr=${detail.order["地址"]["val"]}
-    &orderDate=${detail.check["计划时间"]["val"]}
-    &expertOpinion=${detail.check["计划名称"]["val"]}
+    &planCode=${detail.planCode}
     `,
   });
 };
 onLoad((options) => {
+  detail.planCode = options!.planCode;
   getDetail(options!.uid);
 });
 
@@ -187,6 +186,7 @@ let detail = reactive({
     },
   },
   handleOrders: [],
+  planCode: "",
 });
 
 const getDetail = async (id: string) => {
@@ -204,7 +204,14 @@ const getDetail = async (id: string) => {
 };
 let activeTab = ref("计划详情");
 const onChangeTab = ({ name }) => {
-  activeTab.value = name;
+  if (!detail.handleOrders.length) {
+    uni.showToast({
+      icon: "none",
+      title: "暂无数据",
+    });
+  } else {
+    activeTab.value = name;
+  }
 };
 </script>
 <style lang="scss" scoped>

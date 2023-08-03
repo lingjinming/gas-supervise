@@ -9,6 +9,8 @@
             <van-icon
               v-if="showCheck"
               color="red"
+              size="50rpx"
+              custom-style="margin-right:20rpx"
               :name="uids.includes(info.uid) ? 'passed' : 'circle'"
             />
             <van-tag :type="getTagType(info.level!)">

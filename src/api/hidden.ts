@@ -115,6 +115,8 @@ export const hidangerOrder = (data: {
   return defHttp.post<void>({
     url: 'gasguard-service-risk-app/hidanger/gov/handle-order',
     data: data
+  },{
+    isTransformResponse: false
   })
 }
 /**

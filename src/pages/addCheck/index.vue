@@ -54,17 +54,17 @@
       placeholder="请输入"
       maxlength="200"
     />
-    <van-field
-      label="主管部门"
-      disabled
-      :value="orgFullName"
-    >
-    </van-field>
+    <van-field label="主管部门" disabled :value="orgFullName"> </van-field>
   </van-cell-group>
 
-  <van-button custom-style="margin:40rpx;width:calc(100% - 80rpx)" type="primary" size="large" color="#006CFF" @click="submit"
-      >确定</van-button
-    >
+  <van-button
+    custom-style="margin:40rpx;width:calc(100% - 80rpx)"
+    type="primary"
+    size="large"
+    color="#006CFF"
+    @click="submit"
+    >确定</van-button
+  >
   <van-calendar
     allow-same-day
     type="range"
@@ -74,16 +74,16 @@
   />
 </template>
 <script setup lang="ts">
-import {  ref, watch } from "vue";
-import { addCheckPlan} from "../../api/checkPlan";
+import { ref, watch } from "vue";
+import { addCheckPlan } from "../../api/checkPlan";
 import type { ICheckPlanCreateReq } from "@/api/model/CheckPlan";
 import { formatDate } from "@/utils";
-import { minDate, showToast, tomorrowDate,maxDate } from "@/hooks";
+import { minDate, showToast, tomorrowDate, maxDate } from "@/hooks";
 import { userStore } from "@/state";
-let errorMessage= ref('')
+let errorMessage = ref("");
 const store = userStore();
 const isOrg: boolean = store.isOrgUser;
-const orgFullName = store.userInfo?.organizationVO.fullName
+const orgFullName = store.userInfo?.organizationVO.fullName;
 
 let isShow = ref(false);
 
@@ -98,24 +98,28 @@ let reportForm = ref({
   endDate: formatDate(minDate),
 } as ICheckPlanCreateReq);
 
-watch(reportForm,(val)=>{
-  let rules = {
-    phone:{
-      reg:/^1[3|4|5|7|8|9]\d{9}$/,
-      msg:'请输入合法的手机号'
+watch(
+  reportForm,
+  (val) => {
+    let rules = {
+      phone: {
+        reg: /^1[3|4|5|7|8|9]\d{9}$/,
+        msg: "请输入合法的手机号",
+      },
+    };
+    if (!val.targetOrgPhone.match(rules.phone.reg)) {
+      errorMessage.value = rules.phone.msg;
+    } else {
+      errorMessage.value = "";
     }
-  }
-  if(!val.targetOrgPhone.match(rules.phone.reg)){
-    errorMessage.value = rules.phone.msg
-  }else{
-    errorMessage.value = ''
-  }
-},{deep:true})
+  },
+  { deep: true }
+);
 
 const submit = async () => {
-  if(errorMessage.value) return
-  let data = await addCheckPlan(reportForm.value);
-  showToast(data.success,uni.navigateBack)
+  if (errorMessage.value) return;
+  let { success } = await addCheckPlan(reportForm.value);
+  showToast(success, uni.navigateBack);
 };
 </script>
 <style lang="scss" scoped>

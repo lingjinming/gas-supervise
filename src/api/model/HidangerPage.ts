@@ -4,7 +4,7 @@ import type { BasePageReq } from "./BaseModel";
  * 隐患分页查询条件
  */
 export interface HidangerOrgPageQuery extends BasePageReq{
-
+  planCode?:string;
   /** 隐患主体 */
   subjectType?: string;
 

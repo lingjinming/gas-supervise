@@ -26,7 +26,7 @@
     @refresherrefresh="onRefresh"
   >
 
-    <van-skeleton v-for="i in 3" :key="i" title avatar row="2" :loading="!list.length" />
+    <van-skeleton v-for="i in 3" :key="i" title avatar row="2" :loading="!list.length || noData" />
     <template v-if="total">
       <check v-for="(item, i) in list" :data="item" :key="i"/>
     </template>
