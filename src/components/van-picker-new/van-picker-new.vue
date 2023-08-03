@@ -16,9 +16,14 @@
 <script setup lang="ts">
 import { getDictList, getOrg } from "@/api/dic";
 import { getCheckPlanByOrg } from "@/api/checkPlan";
-import type { DicItem ,SysOrgItem} from "@/api/model/SysDictionary";
-import type { CheckPlanOptions } from "@/api/model/CheckPlan";
+import { userStore } from "@/state";
 
+
+interface Options {
+  text: string;
+  value: string;
+}
+const store = userStore()
 const emits = defineEmits(["update:modelValue"]);
 const props = defineProps({
   dicType: {
@@ -36,30 +41,31 @@ const props = defineProps({
   },
 });
 let isShow = ref(false);
-let columns: Ref<DicItem[] | SysOrgItem[] | CheckPlanOptions[]> = ref([]);
+let columns: Ref<Options[]> = ref([]);
 let pickerVal = ref('');
+
+
 
 const columnsObj = {
   org: async () => {
     let data = await getOrg();
-    data.forEach((ele) => {
-      ele.text = ele.shortName;
-    });
-    columns.value = data;
+    columns.value = data.map(e => ({
+      text: e.shortName,
+      value: e.id
+    }))
   },
   planCode: async () => {
     let data = await getCheckPlanByOrg(props.orgId);
-    data.forEach((ele) => {
-      ele.text = ele.value;
-    });
-    columns.value = data;
+    columns.value = data.map(e => ({
+      text: e.value,
+      value: e.value
+    }))
   },
   SERVER_CONFIG: async () => {
-    let data = uni.getStorageSync("SERVER_LIST");
-    data.forEach((ele) => {
-      ele.text = ele.label;
-    });
-    columns.value = data;
+    columns.value = store.auth.servers.map(e => ({
+      text: e.label,
+      value: e.value
+    }))
   },
 };
 
@@ -81,26 +87,20 @@ if(props.defaultValue) {
 
 const showPicker = () => {
   isShow.value = true;
-  if(Object.keys(columnsObj).includes(props.dicType)){
-    columnsObj[props.dicType]();
-  }else{
-    getDictListFn(props.dicType);
+  if(!columns.value.length) {
+    if(Object.keys(columnsObj).includes(props.dicType)){
+      columnsObj[props.dicType]();
+    }else{
+      getDictListFn(props.dicType);
+    }
   }
 };
 
 const confirm = (e) => {
-  const value = e.detail.value;
+  const value: Options = e.detail.value;
   isShow.value = false;
-
-  if (props.dicType == "planCode") {
-    pickerVal.value = value.value;
-    emits("update:modelValue", value.value);
-  } else if (props.dicType == "org") {
-    pickerVal.value = value.shortName;
-    emits("update:modelValue", value.id);
-  }else{
-    pickerVal.value = value.label;
-    emits("update:modelValue", value.value);
-  }
+  
+  pickerVal.value = value.text;
+  emits("update:modelValue", value.value);
 };
 </script>

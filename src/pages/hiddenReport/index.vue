@@ -22,6 +22,7 @@
         title="隐患类别"
         v-model="reportForm.dangerType"
         v-model:subjectType="reportForm.subjectType"
+        v-model:dangerSubtype="reportForm.dangerSubtype"
       />
       <van-field
         label="位置"
@@ -115,6 +116,7 @@ let reportForm = ref({
   planCode: "",
   subjectType: "",
   dangerType: "",
+  dangerSubtype:"",
   fileIds: [],
   longitude: "",
   latitude: "",

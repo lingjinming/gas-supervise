@@ -4,6 +4,7 @@
 export type HidangerCreateReq = {
   subjectType: string;
   dangerType: string;
+  dangerSubtype: string;
   orgId: string;
   checkDate: string;
   longitude: string | number;

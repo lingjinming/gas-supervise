@@ -82,7 +82,7 @@ let reportForm = ref({
 onLoad(options => {
   reportForm.value.uid = options?.uid
   // HANDLING
-  reportForm.value.handleState = options?.isComplete ?  "HANDLED" : "HANDLING";
+  reportForm.value.handleState = options?.isComplete === 'true' ?  "HANDLED" : "HANDLING";
   reportForm.value.handleDate = timestampToDateTimeString(new Date().getTime())
   checkDate.value = new Date(options?.checkDate).getTime()
 })
