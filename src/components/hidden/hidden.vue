@@ -3,9 +3,14 @@
     :right-width="info.state === 'WAIT_AUDIT' && !isOrg ? 160 : 0"
   >
     <van-skeleton title avatar row="2" :loading="data.loading">
-      <view class="hidden-box" @click.stop="showFlow(info.uid as string)">
-        <view class="tit">
+      <view class="hidden-box">
+        <view class="tit" @click="chooseUid(info.uid)">
           <view>
+            <van-icon
+              v-if="showCheck"
+              color="red"
+              :name="uids.includes(info.uid) ? 'passed' : 'circle'"
+            />
             <van-tag :type="getTagType(info.level!)">
               {{ info._level }}
             </van-tag>
@@ -15,10 +20,10 @@
           </view>
           <text class="ago">{{ info.ago }}</text>
         </view>
-        <view class="con">
+        <view class="con" @click.stop="showFlow(info.uid as string)">
           <text>{{ info.remark || "暂无描述" }}</text>
         </view>
-        <view class="addr">
+        <view class="addr" @click.stop="showFlow(info.uid as string)">
           <van-icon name="location" />
           {{ info.address }}
         </view>
@@ -34,7 +39,6 @@
           </template>
           <template v-else>
             <view class="state wait-handle"> 待整改 </view>
-            
           </template>
         </view>
       </view>
@@ -44,23 +48,29 @@
       <view class="del" @click="showAuditForm(false)">驳回</view>
     </view>
   </van-swipe-cell>
-
 </template>
 <script setup lang="ts">
 import type { HidangerPgaeVO } from "@/api/model/HidangerPage";
 import type { PropType } from "vue";
 import { reactive } from "vue";
 import { userStore } from "@/state";
-import { hidangerAudit } from '@/api/hidden'
-import type {AuditCreateReq} from '@/api/model/HidangerAudit'
-import { EventType } from '@/enums/eventType'
-
+import { hidangerAudit } from "@/api/hidden";
+import type { AuditCreateReq } from "@/api/model/HidangerAudit";
+import { EventType } from "@/enums/eventType";
+const emits = defineEmits(["chooseUid"]);
 const props = defineProps({
   info: {
     type: Object as PropType<HidangerPgaeVO>,
     default: {
       uid: "",
     },
+  },
+  uids: {
+    default: [],
+  },
+  showCheck: {
+    type: Boolean,
+    default: false,
   },
 });
 const store = userStore();
@@ -76,21 +86,25 @@ const data = reactive({
   },
 });
 
+const chooseUid = (uid) => {
+  emits("chooseUid", uid);
+};
+
 // 展示审核弹窗
 const showAuditForm = (isPass: boolean) => {
-  const title = isPass ? '确认消除该隐患?' : '请输入驳回原因'
+  const title = isPass ? "确认消除该隐患?" : "请输入驳回原因";
   data.isPass = isPass;
   uni.showModal({
     title: title,
     editable: !isPass,
-    placeholderText: '驳回原因',
+    placeholderText: "驳回原因",
     success: (res) => {
       data.audit.auditRemark = res.content;
-      if(res.confirm) {
+      if (res.confirm) {
         submitAudit();
       }
-    }
-  })
+    },
+  });
 };
 
 // 提交审核记录
@@ -102,13 +116,12 @@ const submitAudit = async () => {
 
   await hidangerAudit(request);
   // 让列表刷新
-  uni.$emit(EventType.DANGER_PAGE_REFRESH)
-}
+  uni.$emit(EventType.DANGER_PAGE_REFRESH);
+};
 
 setTimeout(() => {
   data.loading = false;
 }, 500);
-
 
 // 查看流程
 const showFlow = (uid: string) => {

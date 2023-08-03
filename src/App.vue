@@ -122,4 +122,37 @@ page {
     background: $uni-color-error;
   }
 }
+
+// 详情
+.tab-detail-wrap {
+  margin-bottom: 30rpx;
+  padding: 20rpx 30rpx;
+  background: #fff;
+  .tab-detail-tit {
+    color: #222222;
+    height: 40rpx;
+    line-height: 40rpx;
+    font-weight: 600;
+  }
+  .tab-detail-box {
+    min-height: 80rpx;
+    line-height: 40rpx;
+    display: flex;
+    align-items: center;
+    .label {
+      width: 200rpx;
+      color: #4b5b6c;
+      font-weight: 600;
+    }
+  }
+  .img-box {
+    display: flex;
+    ::v-deep .image {
+      flex: 1;
+    }
+  }
+  ::v-deep .hidden-box {
+    margin: 0 0 30rpx 0;
+  }
+}
 </style>

@@ -9,6 +9,12 @@
       }
     },
     {
+      "path": "pages/order/index",
+      "style": {
+        "navigationBarTitleText": "创建整改单"
+      }
+    },
+    {
       "path": "pages/signature/index",
       "style": {
         "navigationBarTitleText": "签名",

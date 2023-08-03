@@ -23,16 +23,17 @@
   </view>
   <swiper
     class="swiper"
+    :disable-touch="true"
     :circular="false"
     :indicator-dots="false"
     :autoplay="false"
-    :current="stepsLength - 1"
+    :current="currentSteps.length - 1"
     @change="handleSwiperChange"
   >
     <swiper-item>
       <!-- 隐患列表 -->
       <scroll-view
-        style="height: calc(100% - 100rpx)"
+        style="height: 100%"
         scroll-y="true"
         class="scroll-Y"
         @scrolltolower="nextPage"
@@ -42,24 +43,37 @@
         @refresherrefresh="onRefresh"
       >
         <template v-if="total">
-          <hidden v-for="(item, i) in list" :key="i" :info="item"></hidden>
+          <hidden
+            v-for="(item, i) in list"
+            :key="i"
+            :info="item"
+            :uids="state.order.dangerIds"
+            :showCheck="isAudit"
+            @chooseUid="chooseUid"
+          ></hidden>
         </template>
         <van-empty v-else description="暂无数据"></van-empty>
       </scroll-view>
     </swiper-item>
-    <swiper-item
-      v-if="isAudit"
-      style="overflow-y: auto; height: calc(100% - 60rpx); background: #fff"
-    >
-      <van-cell-group>
-        <van-field required label="整改单位" value="" />
-        <van-field required label="联系电话" value="" />
-        <van-field required label="地址" value="" />
+    <swiper-item v-if="isAudit">
+      <view class="tab-detail-wrap">
+        <view class="tab-detail-box">
+          <text class="label">整改单位</text>
+          <text>{{ _targetOrgId }}</text>
+        </view>
+        <view class="tab-detail-box">
+          <text class="label">联系电话</text>
+          <text>{{ targetOrgPhone }}</text>
+        </view>
+        <view class="tab-detail-box">
+          <text class="label">地址</text>
+          <text>{{ targetOrgAddr }}</text>
+        </view>
         <van-field
           required
           is-link
-          label="完成日期"
-          @click-input="handleDatePopupIsShow = true"
+          label="整改期限"
+          @click-input="showDatePopup('deadline')"
         >
           <input
             :value="state.order.deadline"
@@ -69,6 +83,39 @@
             placeholder="请选择"
           />
         </van-field>
+
+        <van-field
+          required
+          is-link
+          label="发送时间"
+          @click-input="showDatePopup('orderDate')"
+        >
+          <input
+            :value="state.order.orderDate"
+            slot="input"
+            disabled
+            style="width: 100%"
+            placeholder="请选择"
+          />
+        </van-field>
+
+        <view style="background: #fff">
+          <van-field
+            :value="state.order.expertOpinion"
+            label="专家意见"
+            readonly
+            required
+          />
+
+          <textarea
+            class="remark"
+            maxlength="200"
+            :value="state.order.expertOpinion"
+            @input="state.order.expertOpinion = $event.detail.value"
+            type="text"
+            placeholder="请输入"
+          />
+        </view>
 
         <view
           class="signature-box"
@@ -129,20 +176,19 @@
           />
           <image v-else src="../../static/img/bg.png" mode="scaleToFill" />
         </view>
-
-        <van-button
-          custom-style="margin:40rpx 40rpx 150rpx;width:calc(100% - 80rpx)"
-          :loading="loading"
-          loading-text="请稍后..."
-          type="primary"
-          size="large"
-          color="#006CFF"
-          @click="submit"
-          >确定</van-button
-        >
-      </van-cell-group>
+      </view>
     </swiper-item>
   </swiper>
+  <van-button
+    custom-style="margin:40rpx 40rpx 150rpx;width:calc(100% - 80rpx)"
+    :loading="loading"
+    loading-text="请稍后..."
+    type="primary"
+    size="large"
+    color="#006CFF"
+    @click="submit(currentSteps.length)"
+    >{{ currentSteps.length == 2 ? "下发" : "下一步" }}</van-button
+  >
   <!-- 日历 -->
   <van-calendar
     :show="handleDatePopupIsShow"
@@ -225,7 +271,11 @@ import { formatDate } from "@/utils";
 const store = userStore();
 
 const isOrg: boolean = store.isOrgUser;
-
+// 默认隐患列表 反之为创建整改单
+let isAudit = ref(false);
+let _targetOrgId = ref("");
+let targetOrgPhone = ref("");
+let targetOrgAddr = ref("");
 const state = reactive({
   showQuery: false,
   dics: {
@@ -237,7 +287,7 @@ const state = reactive({
   query: <HidangerOrgPageQuery>{
     page: 1,
     size: 10,
-    state: [],
+    state: isAudit.value ? "WAIT_HANDLE" : [],
     orgId: "",
     dangerSource: [],
     level: [],
@@ -251,7 +301,7 @@ const state = reactive({
     expertSignatures: [],
     targetOrgMasterSignatures: [],
     expertOpinion: "",
-    msgUserIds: "",
+    msgUserIds: [],
   },
   targetOrgMasterSignatures: {
     objectName: "",
@@ -263,6 +313,15 @@ const state = reactive({
     objectName: "",
   },
 });
+
+// 选中隐患
+const chooseUid = (uid) => {
+  if (state.order.dangerIds.includes(uid)) {
+    state.order.dangerIds.splice(state.order.dangerIds.indexOf(uid), 1);
+  } else {
+    state.order.dangerIds.push(uid);
+  }
+};
 
 let reportForm = ref({
   handleDate: "",
@@ -283,14 +342,96 @@ const {
 uni.$on(EventType.DANGER_PAGE_REFRESH, () => {
   search();
 });
-const submit = async () => {
-  state.order.targetOrgMasterSignatures = [state.targetOrgMasterSignatures.objectName]
-  state.order.expertSignatures = [state.expertSignatures1.objectName,state.expertSignatures2.objectName]
-  await hidangerOrder(state.order);
+
+onLoad((params) => {
+  console.log("params", params);
+  isAudit.value = params?.audit;
+  _targetOrgId.value = params?._targetOrgId;
+  targetOrgPhone.value = params?.targetOrgPhone;
+  targetOrgAddr.value = params?.targetOrgAddr;
+
+  isAudit.value &&
+    uni.setNavigationBarTitle({
+      title: "创建整改单",
+    });
+  isAudit.value && changeStep(steps[0]);
+  console.log("isAudit", isAudit.value);
+  loadDic();
+  search();
+
+  console.log("hidden onLoad");
+});
+onShow(() => {
+  let keys = [
+    "targetOrgMasterSignatures",
+    "expertSignatures1",
+    "expertSignatures2",
+  ];
+  keys.forEach((key) => {
+    uni.getStorage({
+      key,
+      success({ data }) {
+        if (data.objectName) {
+          state[key].objectName = data.objectName;
+        }
+      },
+    });
+  });
+});
+
+const submit = async (val) => {
+  if (!state.order.dangerIds.length) {
+    uni.showToast({
+      icon: "none",
+      title: "请选择要整改的隐患!",
+    });
+    return;
+  } else {
+    changeStep(steps[1]);
+  }
+  if (val == 2) {//下发步骤
+    if (
+      !state.targetOrgMasterSignatures.objectName ||
+      !state.expertSignatures1.objectName ||
+      !state.expertSignatures2.objectName
+    ) {
+      uni.showToast({
+        icon: "none",
+        title: "请签字!",
+      });
+      return;
+    } else {
+      state.order.targetOrgMasterSignatures = [
+        state.targetOrgMasterSignatures.objectName,
+      ];
+      state.order.expertSignatures = [
+        state.expertSignatures1.objectName,
+        state.expertSignatures2.objectName,
+      ];
+    }
+
+    await hidangerOrder(state.order);
+    uni.showToast({
+      icon: "success",
+      title: "下发成功！",
+    });
+
+    setTimeout(() => {
+      uni.redirectTo({
+        url: "/pages/check/index",
+      });
+    }, 1500);
+  }
 };
+
+let dateKey = ref("");
 const chooseDate = (e) => {
   handleDatePopupIsShow.value = false;
-  state.order.deadline = formatDate(e.detail);
+  state.order[dateKey.value] = formatDate(e.detail);
+};
+const showDatePopup = (key) => {
+  handleDatePopupIsShow.value = true;
+  dateKey.value = key;
 };
 // 进入签字页面
 const navigatoSignature = (key) => {
@@ -301,7 +442,6 @@ const navigatoSignature = (key) => {
 
 const steps = ["选择需要整改的隐患", "填写整改单信息"];
 let currentSteps = ref(["选择需要整改的隐患"]);
-const stepsLength = computed(() => currentSteps.value.length);
 
 const changeStep = (step: string) => {
   if (step == currentSteps.value[0]) {
@@ -311,6 +451,7 @@ const changeStep = (step: string) => {
     // 第二步
     !currentSteps.value.includes(step) && currentSteps.value.push(step);
   }
+  console.log("currentSteps", currentSteps.value);
 };
 
 const handleSwiperChange = (e) => {
@@ -337,38 +478,6 @@ const loadDic = async () => {
   state.dics.level = res.RISK_DANGER_LEVEL;
   state.dics.subject = res.RISK_SUBJECT_TYPE;
 };
-// 默认隐患列表 反之为创建整改单
-const isAudit = ref(false);
-onLoad((params) => {
-  loadDic();
-  search();
-  isAudit.value = params?.audit;
-
-  isAudit.value &&
-    uni.setNavigationBarTitle({
-      title: "创建整改单",
-    });
-
-  console.log("hidden onLoad");
-});
-onShow(() => {
-  console.log("hidden onShow");
-  let keys = [
-    "targetOrgMasterSignatures",
-    "expertSignatures1",
-    "expertSignatures2",
-  ];
-  keys.forEach((key) => {
-    uni.getStorage({
-      key,
-      success({ data }) {
-        if (data.objectName) {
-          state[key].objectName = data.objectName;
-        }
-      },
-    });
-  });
-});
 </script>
 <style lang="scss" scoped>
 .top {
@@ -426,7 +535,7 @@ onShow(() => {
   }
 }
 .swiper {
-  height: 100%;
+  height: calc(100% - 270rpx);
 }
 .signature-box {
   position: relative;
@@ -440,11 +549,28 @@ onShow(() => {
     height: 2rpx;
     border-bottom: 1rpx solid $uni-border-color;
   }
+  &:last-child {
+    &::after {
+      display: none;
+    }
+  }
   ::v-deep .image,
   image {
     margin: 0 30rpx;
     width: calc(100% - 60rpx);
     height: calc(100% - 100rpx);
   }
+}
+.tab-detail-wrap {
+  height: 100%;
+  overflow-y: auto;
+  .label {
+    font-size: 24rpx;
+    padding-left: 34rpx;
+  }
+}
+.remark{
+  width: 100%;
+  padding: 20rpx 30rpx;
 }
 </style>
