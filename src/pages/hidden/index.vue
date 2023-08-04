@@ -1,25 +1,25 @@
 <template>
-  <view class="top">
-    <template v-if="isAudit">
-      <view class="step-box">
-        <view
-          @click="changeStep(step)"
-          v-for="(step, i) in steps"
-          :key="i"
-          :class="{ act: currentSteps.includes(step) }"
-          >{{ step }}</view
-        >
-      </view>
-    </template>
-    <template v-else>
-      <text
-        >共计<text class="total">{{ total }}</text
-        >条隐患</text
-      >
-      <view @click="state.showQuery = true" class="search">
-        筛选<van-icon name="arrow-down" />
-      </view>
-    </template>
+  <view class="step-box" v-if="isAudit">
+    <van-icon
+      name="arrow"
+      custom-style="position:absolute;left:50%;transform:translateX(-50%)"
+    />
+    <view
+      @click="changeStep(step)"
+      v-for="(step, i) in steps"
+      :key="i"
+      :class="{ act: currentSteps.includes(step) }"
+      >{{ step }}</view
+    >
+  </view>
+  <view v-else class="top">
+    <text
+      >共计<text class="total">{{ total }}</text
+      >条隐患</text
+    >
+    <view @click="state.showQuery = true" class="search">
+      筛选<van-icon name="arrow-down" />
+    </view>
   </view>
   <swiper
     class="swiper"
@@ -37,7 +37,7 @@
         scroll-y="true"
         class="scroll-Y"
         @scrolltolower="nextPage"
-        refresher-enabled
+        :refresher-enabled="!isAudit"
         :refresher-triggered="triggered"
         @refresherpulling="onRefreshPulling"
         @refresherrefresh="onRefresh"
@@ -135,7 +135,8 @@
             region="test"
             :id="state.targetOrgMasterSignatures.objectName"
           />
-          <image v-else src="../../static/img/bg.png" mode="scaleToFill" />
+          <view class="image" v-else>请手写签名</view>
+          <!-- <image v-else src="../../static/img/bg.png" mode="scaleToFill" /> -->
         </view>
         <view
           class="signature-box"
@@ -155,7 +156,8 @@
             region="test"
             :id="state.expertSignatures1.objectName"
           />
-          <image v-else src="../../static/img/bg.png" mode="scaleToFill" />
+          <view class="image" v-else>请手写签名</view>
+          <!-- <image v-else src="../../static/img/bg.png" mode="scaleToFill" /> -->
         </view>
         <view
           class="signature-box"
@@ -174,7 +176,8 @@
             region="test"
             :id="state.expertSignatures2.objectName"
           />
-          <image v-else src="../../static/img/bg.png" mode="scaleToFill" />
+          <view class="image" v-else>请手写签名</view>
+          <!-- <image v-else src="../../static/img/bg.png" mode="scaleToFill" /> -->
         </view>
       </view>
     </swiper-item>
@@ -520,15 +523,18 @@ const loadDic = async () => {
     border-radius: 26rpx;
     line-height: 50rpx;
   }
-
-  .step-box {
-    @include flex-center;
-    .act {
-      color: $uni-color-primary;
-    }
+}
+.step-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  line-height: 100rpx;
+  background: #fff;
+  gap: 85rpx;
+  .act {
+    color: $uni-color-primary;
   }
 }
-
 .bottom {
   @include flex-between;
   margin-top: 20rpx;
@@ -576,6 +582,12 @@ const loadDic = async () => {
     margin: 0 30rpx;
     width: calc(100% - 60rpx);
     height: calc(100% - 100rpx);
+  }
+  ::v-deep .image {
+    @include flex-center;
+    background: #fbf8f3;
+    color: #a7a7a7;
+    filter: blur(1px);
   }
 }
 .tab-detail-wrap {

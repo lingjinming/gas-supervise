@@ -1,5 +1,5 @@
 <template>
-  <van-tabs :active="activeTab" @change="onChangeTab">
+  <van-tabs swipeable animated sticky :active="activeTab" @change="onChangeTab">
     <van-tab name="计划详情" title="计划详情">
       <view class="tab-detail-wrap">
         <view
