@@ -1,17 +1,43 @@
 <template>
-  <van-field v-bind="$attrs" @click-input="showCascader" maxlength="200" is-link>
-    <input hold-keyboard disabled readonly :value="cascaderVal" slot="input" style="width: 100%;" placeholder="请选择" />
+  <van-field
+    v-bind="$attrs"
+    @click-input="showCascader"
+    maxlength="200"
+    is-link
+  >
+    <input
+      hold-keyboard
+      disabled
+      readonly
+      :value="cascaderVal"
+      slot="input"
+      style="width: 100%"
+      placeholder="请选择"
+    />
   </van-field>
   <van-popup :show="isShow" round position="bottom">
-    <van-cascader v-bind="$attrs" :options="options" @change="change" @close="isShow=false" @finish="isShow=false"/>
+    <!-- <input @change="filter" v-model="inputVal" type="text" /> -->
+    <van-cascader
+      swipeable
+      active-color="#ee0a24"
+      :value="fieldValue"
+      :options="options"
+      @change="change"
+      @close="isShow = false"
+      @finish="isShow = false"
+    />
   </van-popup>
 </template>
 <script setup lang="ts">
 import { getDictList, getDistrict } from "@/api/dic";
 import { getHidangerTypes } from "@/api/hidden";
-import type { DicItem ,SysDistrictItem} from "@/api/model/SysDictionary";
+import type { DicItem, SysDistrictItem } from "@/api/model/SysDictionary";
 
-const emits = defineEmits(["update:modelValue", "update:subjectType","update:dangerSubtype"]);
+const emits = defineEmits([
+  "update:modelValue",
+  "update:subjectType",
+  "update:dangerSubtype",
+]);
 const props = defineProps({
   dicType: {
     type: String,
@@ -23,8 +49,8 @@ const props = defineProps({
   },
 });
 let isShow = ref(false);
-let options:Ref<DicItem[] | SysDistrictItem[]> = ref([]);
-let cascaderVal = ref('');
+let options: Ref<DicItem[] | SysDistrictItem[]> = ref([]);
+let cascaderVal = ref("");
 
 const columnsObj = {
   RISK_SUBJECT_TYPE_TREE: async () => {
@@ -32,7 +58,7 @@ const columnsObj = {
     options.value = data;
   },
   district: async () => {
-    let data = [(await getDistrict())];
+    let data = [await getDistrict()];
     data.forEach((item) => {
       item.text = item.name;
       item.value = item.code;
@@ -52,19 +78,23 @@ const showCascader = () => {
   Object.keys(columnsObj).includes(props.dicType) &&
     columnsObj[props.dicType]();
 };
+let inputVal = ref("");
+const filter = () => {
+  console.log("val", inputVal.value);
+  emits("update:modelValue", "ZTBZYH001");
+};
 
 const change = (e) => {
   const detail = e.detail;
   console.log(detail);
   if (props.dicType == "RISK_SUBJECT_TYPE_TREE") {
     let paths = detail["selectedOptions"];
-    if(paths.length === 3) {
+    if (paths.length === 3) {
       emits("update:subjectType", paths[0].value);
       emits("update:modelValue", paths[1].value);
       emits("update:dangerSubtype", paths[2].value);
       cascaderVal.value = detail["selectedOptions"][2]["text"];
     }
-
   }
 
   if (props.dicType == "district") {
