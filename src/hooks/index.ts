@@ -22,7 +22,7 @@ export const uploadFile = (item, cb) => {
   // 当前激活的服务器
   const token = store.auth.token;
   uni.uploadFile({
-    url: "https://aiot.citysafety.com/gasguard/gasguard-service-system-app/file/upload",
+    url: "https://aiot.citysafety.com/gasguard/gas-supervise/file/upload",
     filePath: item.tempFilePath,
     name: "file",
     header: {

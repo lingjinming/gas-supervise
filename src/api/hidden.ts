@@ -15,7 +15,7 @@ import type { BasePageResponse, BaseResponse } from "./model/BaseModel";
  */
 export const getHidangerTypes = () => {
   return defHttp.get<BaseResponse<void>>({
-    url:"gasguard-service-risk-app/hidanger/types"
+    url:"gas-supervise/hidanger/types"
   });
 };
 /**
@@ -25,7 +25,7 @@ export const getHidangerTypes = () => {
 export const addHidden = (data: HidangerCreateReq) => {
   const store = userStore();
   const isOrg = store.isOrgUser;
-  const url = isOrg ? "gasguard-service-risk-app/hidanger/org" : "gasguard-service-risk-app/hidanger/gov";
+  const url = isOrg ? "gas-supervise/hidanger/org" : "gas-supervise/hidanger/gov";
   return defHttp.post<BaseResponse<void>>({
     url,
     data
@@ -40,7 +40,7 @@ export const addHidden = (data: HidangerCreateReq) => {
 export const hidangerPage = (query: HidangerOrgPageQuery) => {
   const store = userStore();
   const isOrg = store.isOrgUser;
-  const url = `gasguard-service-risk-app/hidanger/${isOrg ? "org" : "gov"}/page`;
+  const url = `gas-supervise/hidanger/${isOrg ? "org" : "gov"}/page`;
 
   return defHttp.get<BasePageResponse<HidangerPgaeVO>>({
     url,
@@ -56,7 +56,7 @@ export const hidangerPage = (query: HidangerOrgPageQuery) => {
  * @description 隐患整改
  */
 export const reformHidangerById = (uid: string,data: HidangerHandleReq) => {
-  const url = `gasguard-service-risk-app/hidanger/org/handle/${uid}`;
+  const url = `gas-supervise/hidanger/org/handle/${uid}`;
   return defHttp.put<BaseResponse<void>>({
     url,
     data,
@@ -73,7 +73,7 @@ export const reformHidangerById = (uid: string,data: HidangerHandleReq) => {
  */
 export const getHidangerFlow = async (uid: string) => {
   return defHttp.get<Flow>({
-    url: 'gasguard-service-risk-app/hidanger/flow/'+uid,
+    url: 'gas-supervise/hidanger/flow/'+uid,
   },{
     isTransformResponse:false
   })
@@ -86,7 +86,7 @@ export const getHidangerFlow = async (uid: string) => {
  */
 export const createLeaderComment = (data: LeaderCommentCreate) => {
   return defHttp.post<void>({
-    url: 'gasguard-service-risk-app/hidanger/gov/leader-comment',
+    url: 'gas-supervise/hidanger/gov/leader-comment',
     data
   })
 }
@@ -95,7 +95,7 @@ export const createLeaderComment = (data: LeaderCommentCreate) => {
  */
 export const hidangerAudit = (data: AuditCreateReq) => {
   return defHttp.put<void>({
-    url: 'gasguard-service-risk-app/hidanger/gov/audit',
+    url: 'gas-supervise/hidanger/gov/audit',
     data: data
   })
 }
@@ -113,7 +113,7 @@ export const hidangerOrder = (data: {
   msgUserIds:string[]
 }) => {
   return defHttp.post<void>({
-    url: 'gasguard-service-risk-app/hidanger/gov/handle-order',
+    url: 'gas-supervise/hidanger/gov/handle-order',
     data: data
   },{
     isTransformResponse: false
@@ -124,6 +124,6 @@ export const hidangerOrder = (data: {
  */
 export const checkPlanDetail = (id:string) => {
   return defHttp.get<void>({
-    url: `gasguard-service-risk-app/hidanger/gov/check-plan/${id}`,
+    url: `gas-supervise/hidanger/gov/check-plan/${id}`,
   })
 }

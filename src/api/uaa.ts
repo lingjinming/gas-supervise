@@ -10,7 +10,7 @@ import type { ServerConfig ,SysUserInfo,OAuth2LoginReq} from "./model/UserAuth";
  */
 export const upload = (data: any) => {
   return request({
-    url: "gasguard-service-system-app/file/upload",
+    url: "gas-supervise/file/upload",
     method: "POST",
     header: {
       "content-type": "multipart/form-data",
@@ -56,6 +56,6 @@ export const getToken = (data: OAuth2LoginReq) => {
  */
 export const getUserInfo = () => {
   return defHttp.get<SysUserInfo>({
-    url: "gasguard-service-system-app/user/me",
+    url: "gas-supervise/user/me",
   });
 };

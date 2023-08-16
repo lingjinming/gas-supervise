@@ -10,7 +10,7 @@ export const getNotice = (data:BasePageReq) => {
   const store = userStore();
   const userId = store.userInfo?.userId;
   return defHttp.get<SysNoticeItem[]>({
-    url: `gasguard-service-system-app/urge/get/allMsg/page?recipient=${userId}`,
+    url: `gas-supervise/urge/get/allMsg/page?recipient=${userId}`,
     data,
   },{
     isTransformResponse:false
@@ -22,7 +22,7 @@ export const getNotice = (data:BasePageReq) => {
  */
 export const readNotice = (data:ReadSysNoticeReq) => {
   return defHttp.get<SysNoticeItem[]>({
-    url: `gasguard-service-system-app/urge/read`,
+    url: `gas-supervise/urge/read`,
     data,
   });
 };

@@ -7,7 +7,7 @@ import type { ICheckPlanCreateReq ,CheckPlanOptions ,CheckPageVo,CheckPlanQueryR
  */
 export const checkPlanPage = (data: CheckPlanQueryReq) => {
   return defHttp.get<BasePageResponse<CheckPageVo>>({
-    url: "gasguard-service-risk-app/hidanger/gov/check-plan/page",
+    url: "gas-supervise/hidanger/gov/check-plan/page",
     data
   },{
     isTransformResponse: false
@@ -19,7 +19,7 @@ export const checkPlanPage = (data: CheckPlanQueryReq) => {
  */
 export const addCheckPlan = (data: ICheckPlanCreateReq) => {
   return defHttp.post<BaseResponse<void>>({
-    url: "gasguard-service-risk-app/hidanger/gov/check-plan",
+    url: "gas-supervise/hidanger/gov/check-plan",
     data
   },{
     isTransformResponse: false
@@ -30,7 +30,7 @@ export const addCheckPlan = (data: ICheckPlanCreateReq) => {
  * 按主键删除检查计划
  */
 export const checkPlanDelById = (query: { uid: string }) => {
-  const url = `gasguard-service-risk-app/hidanger/gov/check-plan/${query.uid}`;
+  const url = `gas-supervise/hidanger/gov/check-plan/${query.uid}`;
   return defHttp.delete<BaseResponse<void>>({
     url,
   },{
@@ -42,7 +42,7 @@ export const checkPlanDelById = (query: { uid: string }) => {
  * 按主键标记检查计划已完成
  */
 export const checkPlanFinishById = (query: { uid: string }) => {
-  const url = `gasguard-service-risk-app/hidanger/gov/check-plan/finish/${query.uid}`;
+  const url = `gas-supervise/hidanger/gov/check-plan/finish/${query.uid}`;
   return defHttp.post<BaseResponse<void>>({
     url,
   },{
@@ -58,7 +58,7 @@ export const checkPlanFinishById = (query: { uid: string }) => {
  */
 export const getCheckPlanByOrg = (orgId: string) => {
   return defHttp.get<CheckPlanOptions[]>({
-    url: `gasguard-service-risk-app/hidanger/gov/check-plan/selections?targetOrgId=${orgId}`,
+    url: `gas-supervise/hidanger/gov/check-plan/selections?targetOrgId=${orgId}`,
   });
 };
 

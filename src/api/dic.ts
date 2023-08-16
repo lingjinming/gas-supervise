@@ -8,7 +8,7 @@ import type { SysDictionaryResponse ,SysDistrictItem ,SysOrgItem} from './model/
 */
 export const getDistrict = () => {
   return defHttp.get<SysDistrictItem>({
-    url: "gasguard-service-system-app/user/me/district"
+    url: "gas-supervise/user/me/district"
   })
 }
 
@@ -19,7 +19,7 @@ export const getDistrict = () => {
 */
 export const getOrg = () => {
   return defHttp.get<SysOrgItem[]>({
-    url: "gasguard-service-system-app/user/me/org"
+    url: "gas-supervise/user/me/org"
   })
 }
 
@@ -32,6 +32,6 @@ export const getOrg = () => {
  */
 export const getDictList = (dicType: string) => {
   return defHttp.get<SysDictionaryResponse>({
-    url: `gasguard-service-system-app/dictionary/list?types=${dicType}`
+    url: `gas-supervise/dictionary/list?types=${dicType}`
   })
 }

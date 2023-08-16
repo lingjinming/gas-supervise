@@ -9,7 +9,7 @@
       hold-keyboard
       disabled
       readonly
-      :value="cascaderVal"
+      :value="fieldValue"
       slot="input"
       style="width: 100%"
       placeholder="请选择"
@@ -20,7 +20,7 @@
     <van-cascader
       swipeable
       active-color="#ee0a24"
-      :value="fieldValue"
+      :value="cascaderValue"
       :options="options"
       @change="change"
       @close="isShow = false"
@@ -50,7 +50,8 @@ const props = defineProps({
 });
 let isShow = ref(false);
 let options: Ref<DicItem[] | SysDistrictItem[]> = ref([]);
-let cascaderVal = ref("");
+let fieldValue = ref("");
+let cascaderValue = ref([]);
 
 const columnsObj = {
   RISK_SUBJECT_TYPE_TREE: async () => {
@@ -79,10 +80,10 @@ const showCascader = () => {
     columnsObj[props.dicType]();
 };
 let inputVal = ref("");
-const filter = () => {
-  console.log("val", inputVal.value);
-  emits("update:modelValue", "ZTBZYH001");
-};
+// const filter = () => {
+//   console.log("val", inputVal.value);
+//   emits("update:modelValue", "ZTBZYH001");
+// };
 
 const change = (e) => {
   const detail = e.detail;
@@ -93,12 +94,13 @@ const change = (e) => {
       emits("update:subjectType", paths[0].value);
       emits("update:modelValue", paths[1].value);
       emits("update:dangerSubtype", paths[2].value);
-      cascaderVal.value = detail["selectedOptions"][2]["text"];
+      fieldValue.value = detail["selectedOptions"][2]["text"];
+      // cascaderValue.value = [paths[0].value, paths[1].value, paths[2].value];
     }
   }
 
   if (props.dicType == "district") {
-    cascaderVal.value = detail["selectedOptions"][1]["text"];
+    fieldValue.value = detail["selectedOptions"][1]["text"];
     emits("update:modelValue", detail.value);
   }
 };

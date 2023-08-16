@@ -6,7 +6,7 @@ import { request } from './request';
 export const getImg = (id:string) => {
     return request({
         // responseType:'arraybuffer',
-        url: "gasguard-service-system-app/open/file/" + id,
+        url: "gas-supervise/open/file/" + id,
         method: "GET"
     })
 }
