@@ -1,0 +1,21 @@
+<%
+const { utils, route, config, modelTypes } = it;
+const { _, pascalCase, require } = utils;
+const apiClassName = pascalCase(route.moduleName);
+const routes = route.routes;
+const dataContracts = _.map(modelTypes, "name");
+%>
+import type { PerRequestOptions } from '@/utils/http/typing';
+import { defHttp } from '@/utils/http';
+
+import type {  ContentType } from "./<%~ config.fileNames.httpClient %>";
+<% if (dataContracts.length) { %>
+  import type { <%~ dataContracts.join(", ") %> } from "./<%~ config.fileNames.dataContracts %>"
+<% } %>
+
+
+
+
+<% routes.forEach((route) => { %>
+  <%~ includeFile('./procedure-call.ejs', { ...it, route }) %>
+<% }) %>

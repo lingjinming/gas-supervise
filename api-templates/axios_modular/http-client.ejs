@@ -1,0 +1,15 @@
+<%
+const { apiConfig, generateResponses, config } = it;
+%>
+
+//import {  AxiosRequestConfig } from "axios";
+
+//export type RequestParams = Omit<AxiosRequestConfig, "url" | "method" | "params" | "data">;
+
+export enum ContentType {
+  Json = "application/json",
+  FormData = "multipart/form-data",
+  UrlEncoded = "application/x-www-form-urlencoded",
+  Text = "text/plain",
+}
+
