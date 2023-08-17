@@ -1,9 +1,5 @@
 <template>
-  <scroll-view
-    style="height: 100%;"
-    scroll-y="true"
-    class="scroll-Y container"
-  >
+  <scroll-view style="height: 100%" scroll-y="true" class="scroll-Y container">
     <van-skeleton
       title
       avatar
@@ -20,7 +16,7 @@
               <van-tag v-if="node.stage === 'PUSH'" :type="getTagType()">
                 {{ data.detail._level }}
               </van-tag>
-              <text style="margin-left: 10rpx;font-weight: 400;" class="fs16">{{
+              <text style="margin-left: 10rpx; font-weight: 400" class="fs16">{{
                 node.title
               }}</text>
             </view>
@@ -47,7 +43,10 @@
         </view>
         <!-- 内容 -->
         <view class="con">
-          <view v-if="node.stage === 'PUSH'" class="remark">{{ node?.content?.remark}}</view>
+          <view v-if="node.stage == 'HANDLE'" class="tag">处置跟进</view>
+          <view v-if="node.stage === 'PUSH'" class="remark">{{
+            node?.content?.remark
+          }}</view>
           <view class="region-imgBox" v-if="node?.picIds">
             <region-img
               v-for="img in node?.picIds"
@@ -56,20 +55,24 @@
               :id="img.id"
             />
           </view>
+          <view class="region-imgBox" v-if="node?.fileIds"> </view>
           <!-- 隐患推送 -->
           <template v-if="node.stage == 'PUSH'">
             <template v-if="data.detail.dangerSource === 'GOV'">
-              <view>关联整改单: {{ node.content.planCode }}</view>
-              <view>关联检查计划: {{ node.content.orderCode }}</view>
+              <view>关联整改单: {{ node.content.orderCode }}</view>
+              <view>关联检查计划: {{ node.content.planCode }}</view>
             </template>
-            <view>隐患类型: {{ node.content._subjectType + node.content._dangerType }}</view>
+            <view
+              >隐患类型:
+              {{ node.content._subjectType + node.content._dangerType }}</view
+            >
             <view>隐患场景: {{ node.content._subjectType }}</view>
             <view>整改单位: {{ node.content.handleOrg }}</view>
             <view>详细地址: {{ node.content.address }}</view>
           </template>
           <!-- 隐患派单 -->
           <template v-if="node.stage == 'DISPATCH'">
-            <view>派单说明: {{ node.content.dispatchRemark || '暂无' }}</view>
+            <view>派单说明: {{ node.content.dispatchRemark || "暂无" }}</view>
             <view>对接人: {{ node.content.receiverName }}</view>
             <view>所属部门: {{ node.content.receiverOrgName }}</view>
             <view>联系方式: {{ node.content.receiverPhone }}</view>
@@ -102,7 +105,7 @@
                   mode="scaleToFill"
                 />
                 {{ comment.leaderOrgName }}
-                <view style="word-break: break-all;display: inline;">
+                <view style="word-break: break-all; display: inline">
                   <text style="color: #333; font-weight: 600">
                     {{ comment.leaderName }}:
                   </text>
@@ -113,14 +116,20 @@
           </view>
         </view>
       </view>
-      
     </van-skeleton>
     <view class="bottom"></view>
-    
   </scroll-view>
   <view class="opt-btn" v-if="shouldShowDangerOptBtn()">
-    <van-button class="danger-btn" block icon="exchange" @click="goToHandle(false)">整改跟进</van-button>
-    <van-button class="danger-btn" block icon="passed" @click="goToHandle(true)">整改完成</van-button>
+    <van-button
+      class="danger-btn"
+      block
+      icon="exchange"
+      @click="goToHandle(false)"
+      >整改跟进</van-button
+    >
+    <van-button class="danger-btn" block icon="passed" @click="goToHandle(true)"
+      >整改完成</van-button
+    >
   </view>
   <!-- 领导评论弹窗 -->
   <van-popup
@@ -144,7 +153,7 @@
 <script setup lang="ts">
 import { ref, reactive } from "vue";
 import { userStore } from "@/state";
-import { EventType } from '@/enums/eventType'
+import { EventType } from "@/enums/eventType";
 import { getHidangerFlow, createLeaderComment } from "../../api/hidden";
 import type {
   Flow,
@@ -189,8 +198,8 @@ onLoad((options) => {
 
 // 是否应该展示两个操作按钮
 const shouldShowDangerOptBtn = () => {
-  return store.isOrgUser && data.detail.state === 'WAIT_HANDLE'
-}
+  return store.isOrgUser && data.detail.state === "WAIT_HANDLE";
+};
 
 // 去整改
 const goToHandle = (isComplete: boolean) => {
@@ -201,9 +210,9 @@ const goToHandle = (isComplete: boolean) => {
   });
 };
 
-uni.$on(EventType.DANGER_DETAIL_REFRESH,() => {
+uni.$on(EventType.DANGER_DETAIL_REFRESH, () => {
   getDetail(data.uid);
-})
+});
 
 // 点击展示领导批示
 const showLeaderComment = (stage: Stage, stageId: string) => {
@@ -236,7 +245,7 @@ const getDetail = async (id: string) => {
     loading.value = true;
     data.uid = id;
     console.log((await getHidangerFlow(id))["data"]);
-    const { level, _level, dangerId, flow, state,dangerSource } = (
+    const { level, _level, dangerId, flow, state, dangerSource } = (
       await getHidangerFlow(id)
     )["data"];
     data.detail._level = _level;
@@ -257,24 +266,23 @@ const getDetail = async (id: string) => {
 const formatTime = (time: string) => {
   // 字符串截取,去掉最后三位
   return time.slice(0, 16);
-}
+};
 </script>
 <style lang="scss" scoped>
 .opt-btn {
   position: absolute;
   display: flex;
-  justify-content:space-around;
+  justify-content: space-around;
   bottom: 0rpx;
   left: 0;
   width: 100%;
   padding-bottom: 30rpx;
-  background-color: #fff;  
+  background-color: #fff;
   .danger-btn {
     width: 333rpx;
     height: 88rpx;
     border-radius: 10rpx;
   }
-  
 }
 .bottom {
   height: 120rpx;
@@ -350,7 +358,7 @@ const formatTime = (time: string) => {
       background: rgba($color: $uni-color-primary, $alpha: 0.8);
     }
   }
- 
+
   &[data-stage="AUDIT"] {
     &::before {
       border: 2rpx dashed rgba($color: $uni-color-success, $alpha: 0.8);
@@ -384,6 +392,24 @@ const formatTime = (time: string) => {
     view {
       color: #4b5b6c;
       line-height: 50rpx;
+    }
+
+    .tag{
+      display: flex;
+      justify-content: flex-end;
+      line-height: 60rpx;
+      color: $uni-color-primary;
+      position: relative;
+      &::before{
+        content: '';
+        position: absolute;
+        right: 120rpx;
+        top: 24rpx;
+        width: 10rpx;
+        height: 10rpx;
+        border-radius: 50%;
+        background: $uni-color-primary;
+      }
     }
   }
 }

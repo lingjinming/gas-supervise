@@ -83,7 +83,7 @@
     </van-tab>
   </van-tabs>
 
-  <view class="addAudit-box">
+  <view class="addAudit-box" v-if="isGovUser">
     <van-button
       custom-style="border-color:#a7a7a7;border-radius:10rpx"
       color="#a7a7a7"
@@ -102,6 +102,7 @@ import { userStore } from "@/state";
 
 const store = userStore();
 const isOrg: boolean = store.isOrgUser;
+const isGovUser: boolean = store.isGovUser;
 
 const addAudit = () => {
   let keys = [

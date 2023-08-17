@@ -1,18 +1,13 @@
 import { userStore } from "@/state";
 
-const store = userStore();
-const server = store.auth.activeServer;
-// 当前激活的服务器
-const token = store.auth.token;
-
 export const minDate = new Date().getTime();
 export const tomorrowDate = new Date().getTime() + 24 * 60 * 60 * 1000;
 export const maxDate = new Date(2099, 10, 1).getTime();
 
-export const showToast = (flag: boolean = true, callback?: Function) => {
+export const showToast = (flag: boolean = true, msg?:string,callback?: Function) => {
   uni.showToast({
-    icon: flag ? "success" : "error",
-    title: flag ? "操作成功" : "操作失败",
+    icon: flag ? "success" : "none",
+    title: msg ? msg : "操作成功",
   });
 
   flag && uni.$emit("refresh");
@@ -22,8 +17,12 @@ export const showToast = (flag: boolean = true, callback?: Function) => {
 };
 
 export const uploadFile = (item, cb) => {
+  const store = userStore();
+  const server = store.auth.activeServer;
+  // 当前激活的服务器
+  const token = store.auth.token;
   uni.uploadFile({
-    url: "https://aiot.citysafety.com/gasguard/gasguard-service-system-app/file/upload",
+    url: "https://aiot.citysafety.com/gasguard/gas-supervise/file/upload",
     filePath: item.tempFilePath,
     name: "file",
     header: {

@@ -1,46 +1,47 @@
 <template>
-    <van-swipe-cell :right-width="160" @click="navigateToDetail(data.uid,data.planCode)">
-      <van-cell-group>
-        <view class="data-box">
-          <view class="tit">
-            <text>{{ data.title + data.planCode }} </text>
+  <van-swipe-cell :right-width="160">
+    <van-cell-group>
+      <view
+        class="data-box"
+        @click="navigateToDetail(data.uid, data.planCode, $event)"
+      >
+        <view class="tit">
+          <text>{{ data.title + data.planCode }} </text>
+        </view>
+        <view class="con">
+          <view>
+            <text class="name">
+              {{ data._type }} :{{ data.startDate + "~" + data.endDate }}</text
+            >
+            <view class="checkers"> 检查人员：{{ data.checkers }} </view>
           </view>
-          <view class="con">
+
+          <view class="bottom">
             <view>
-              <text class="name">
-                {{ data._type }} :{{
-                  data.startDate + "~" + data.endDate
-                }}</text
-              >
-              <view class="checkers"> 检查人员：{{ data.checkers }} </view>
-            </view>
+              <van-icon name="user-o" :size="18" /> 由<text class="label">
+                {{ data.planCreator }} </text
+              >创建</view
+            >
 
-            <view class="bottom">
-              <view>
-                <van-icon name="user-o" :size="18" /> 由<text class="label">
-                  {{ data.planCreator }} </text
-                >创建</view
-              >
-
-              <view
-                class="state"
-                :class="
-                  data.handleState == 'UNCOMPLETED'
-                    ? 'wait-handle-red'
-                    : 'handled'
-                "
-              >
-                {{ data._handleState }}
-              </view>
+            <view
+              class="state"
+              :class="
+                data.handleState == 'UNCOMPLETED'
+                  ? 'wait-handle-red'
+                  : 'handled'
+              "
+            >
+              {{ data._handleState }}
             </view>
           </view>
         </view>
-      </van-cell-group>
-      <view slot="right" class="right">
-        <view class="done" @click="finishPlan(data.uid)">标记已完成</view>
-        <view class="del" @click="deletePlan(data.uid)">删除</view>
       </view>
-    </van-swipe-cell>
+    </van-cell-group>
+    <view slot="right" class="right">
+      <view class="done" @click="finishPlan(data.uid, $event)">标记已完成</view>
+      <view class="del" @click="deletePlan(data.uid, $event)">删除</view>
+    </view>
+  </van-swipe-cell>
 </template>
 <script setup lang="ts">
 import { checkPlanDelById, checkPlanFinishById } from "@/api/checkPlan";
@@ -48,27 +49,27 @@ import type { CheckPageVo } from "@/api/model/CheckPlan";
 import { showToast } from "@/hooks";
 import type { PropType } from "vue";
 
-
 const props = defineProps({
   data: {
     type: Object as PropType<CheckPageVo>,
     default: {},
   },
 });
-const navigateToDetail = (uid,planCode) => {
+const navigateToDetail = (uid, planCode, e) => {
+  console.log(e);
   uni.navigateTo({
     url: `/pages/checkDetail/index?uid=${uid}&planCode=${planCode}`,
   });
-}
+};
 
 const deletePlan = async (uid) => {
   let data = await checkPlanDelById({ uid });
-  showToast(data.success);
+  showToast(data.success, data.message);
 };
 
 const finishPlan = async (uid) => {
   let data = await checkPlanFinishById({ uid });
-  showToast(data.success);
+  showToast(data.success, data.message);
 };
 </script>
 
@@ -100,5 +101,4 @@ const finishPlan = async (uid) => {
     @include flex-between;
   }
 }
-
 </style>

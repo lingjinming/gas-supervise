@@ -5,54 +5,53 @@
     <div class="login-box">
       <text class="page-title">燃气安全监管</text>
 
-
       <van-cell-group>
-
-      <van-picker-new
+        <van-picker-new
           :is-link="false"
           dicType="SERVER_CONFIG"
           label="地区"
           title="服务器"
           v-model="serverValue"
-      />
-        <van-field
-            :value="loginForm.username"
-            @change="loginForm.username = $event.detail"
-            clearable
-            label="账号"
-            placeholder="请输入账号"
-            maxlength="20"
         />
         <van-field
-            :value="loginForm.password"
-            @change="loginForm.password = $event.detail"
-            clearable
-            type="password"
-            label="密码"
-            placeholder="请输入密码"
-            :border="false"
-            maxlength="20"
+          :value="loginForm.username"
+          @change="loginForm.username = $event.detail"
+          clearable
+          label="账号"
+          placeholder="请输入账号"
+          maxlength="20"
+        />
+        <van-field
+          :value="loginForm.password"
+          @change="loginForm.password = $event.detail"
+          clearable
+          type="password"
+          label="密码"
+          placeholder="请输入密码"
+          :border="false"
+          maxlength="20"
         />
       </van-cell-group>
-      <van-button  type="primary" color="#006CFF" size="large" @click="login">登 录</van-button>
+      <van-button type="primary" color="#006CFF" size="large" @click="login"
+        >登 录</van-button
+      >
     </div>
   </view>
 </template>
 <script setup lang="ts">
-import { getToken, getUserInfo} from "@/api/uaa";
+import { getToken, getUserInfo } from "@/api/uaa";
 import type { OAuth2LoginReq } from "@/api/model/UserAuth";
-import {ref, type Ref} from "vue";
+import { ref, type Ref } from "vue";
 import { userStore } from "@/state";
 
 const store = userStore();
-if(store.isLogin) {
-  console.log('已经登录了');
+if (store.isLogin) {
+  console.log("已经登录了");
 
   uni.switchTab({
-      url: "/pages/index/index",
-    });
+    url: "/pages/index/index",
+  });
 }
-
 
 let loginForm: Ref<OAuth2LoginReq> = ref({
   grant_type: "password",
@@ -65,41 +64,43 @@ let serverValue = ref(null);
 const login = async () => {
   if (!serverValue.value) {
     uni.showToast({
-      icon:'error',
-      title:'请先选择地区'
+      icon: "error",
+      title: "请先选择地区",
     });
     return;
   }
 
   if (!loginForm.value.username) {
     uni.showToast({
-      icon:'error',
-      title:'请输入账号'
+      icon: "error",
+      title: "请输入账号",
     });
     return;
   }
 
   if (!loginForm.value.password) {
     uni.showToast({
-      icon:'error',
-      title:'请输入密码'
+      icon: "error",
+      title: "请输入密码",
     });
     return;
   }
 
-  changeServe()
+  changeServe();
 
-  uni.showLoading({title:'登录中'})
-  let TOKEN_INFO = await getToken(loginForm.value);
-  store.setToken(TOKEN_INFO);
-
-  if (!store.isLogin) {
+  uni.showLoading({ title: "登录中" });
+  try {
+    let TOKEN_INFO = await getToken(loginForm.value);
+    console.log("TOKEN_INFO", TOKEN_INFO);
+    store.setToken(TOKEN_INFO);
+  } catch (err) {
     uni.showToast({
-      icon:'error',
-      title:'账号或密码错误'
+      icon: "error",
+      title: "账号或密码错误",
     });
     return;
   }
+
   let USER_INFO = await getUserInfo();
 
   if (USER_INFO) {
@@ -109,8 +110,8 @@ const login = async () => {
     });
   } else {
     uni.showToast({
-      icon:'error',
-      title:'请重新登录'
+      icon: "error",
+      title: "请重新登录",
     });
   }
 };
@@ -143,7 +144,7 @@ const changeServe = () => {
 
 .page-title {
   text-align: center;
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-weight: bold;
   font-size: 36px;
   text-transform: uppercase;

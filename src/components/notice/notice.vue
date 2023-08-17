@@ -8,29 +8,35 @@
     v-for="(notice, i) in notices"
     :key="i"
   >
-  <van-swipe-cell :right-width="80">
+    <van-swipe-cell :right-width="0">
+      <view class="notice-box">
+        <view class="tit">
+          <view
+            style="
+              display: flex;
+              align-items: center;
+              gap: 10rpx;
+              font-size: 30rpx;
+              font-weight: 600;
+            "
+          >
+            <van-icon
+              :name="'/static/img/' + notice.msgType + '.png'"
+              size="36rpx"
+            />{{ notice.title }}
+          </view>
 
-    <view class="notice-box">
-      <view class="tit">
-        <view style="display: flex; align-items: center; gap: 10rpx">
-          <van-icon
-            :name="'/static/img/' + notice.msgType + '.png'"
-            size="36rpx"
-          />{{ notice.title }}
+          <text class="time">{{ format(notice.sendTime) }}</text>
         </view>
-
-        <text class="time">{{ format(notice.sendTime) }}</text>
+        <view class="con">
+          <!-- <text class="name">燃气管理处-{{ notice.createBy }} </text> -->
+          <text class="content">{{ notice.content }}</text>
+        </view>
       </view>
-      <view class="con">
-        <!-- <text class="name">燃气管理处-{{ notice.createBy }} </text> -->
-        <text class="content">{{ notice.content }}</text>
-      </view>
-    </view>
-    <view slot="right" class="right">
+      <!-- <view slot="right" class="right">
       <view class="del" @click="del(notice)">删除</view>
-    </view>
-  </van-swipe-cell>
-
+    </view> -->
+    </van-swipe-cell>
   </van-skeleton>
 </template>
 <script setup lang="ts">
@@ -81,20 +87,19 @@ const format = (t) => {
   }
 };
 
-const del =async (notice:SysNoticeItem) => {
+const del = async (notice: SysNoticeItem) => {
   await readNotice({
-    recipient:notice.recipient,
-    uId:notice.uid
-  })
+    recipient: notice.recipient,
+    uId: notice.uid,
+  });
   // 让列表刷新
-  uni.$emit(EventType.NOTICE_REFRESH)
-
-}
+  uni.$emit(EventType.NOTICE_REFRESH);
+};
 </script>
 <style lang="scss" scoped>
 .notice-box {
   background: #fff;
-  margin-bottom: 20rpx;
+  margin-bottom: 30rpx;
   padding: 20rpx;
   box-shadow: $uni-box-shadow;
   .tit {
@@ -113,10 +118,8 @@ const del =async (notice:SysNoticeItem) => {
     }
   }
   .con {
-    padding-top: 16rpx;
-    line-height: 33rpx;
-    font-size: $uni-font-size-sm;
     color: #4b5b6c;
+    margin: 20rpx 2rpx;
     .name {
       color: $uni-color-primary;
       margin-right: 10rpx;

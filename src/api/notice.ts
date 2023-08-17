@@ -22,7 +22,7 @@ export const getNotice = (data:BasePageReq) => {
  */
 export const readNotice = (data:ReadSysNoticeReq) => {
   return defHttp.get<SysNoticeItem[]>({
-    url: `gasguard-service-system-app/urge/read`,
+    url: `gas-supervise/urge/read`,
     data,
   });
 };

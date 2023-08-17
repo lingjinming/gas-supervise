@@ -118,8 +118,8 @@ watch(
 
 const submit = async () => {
   if (errorMessage.value) return;
-  let { success } = await addCheckPlan(reportForm.value);
-  showToast(success, uni.navigateBack);
+  let { success,message } = await addCheckPlan(reportForm.value);
+  showToast(success,message,uni.navigateBack);
 };
 </script>
 <style lang="scss" scoped>
