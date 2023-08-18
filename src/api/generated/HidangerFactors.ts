@@ -75,6 +75,8 @@ export const typeSummary = (
   query: {
     /** 燃气管网风险要素类型 */
     type: TypeSummaryParamsType;
+    /** 燃气管网风险要素类型枚举中文描述 */
+    _type: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -100,6 +102,8 @@ export const typePage = (
     /** 燃气管网风险要素类型 */
     type: TypePageParamsType;
     query: HidangerFactorsSummaryPageQuery;
+    /** 燃气管网风险要素类型枚举中文描述 */
+    _type: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -162,7 +166,7 @@ export const summaryPage = (
  */
 export const downloadCvsFile = (
   query?: {
-    url?: string;
+    url: string;
   },
   params: PerRequestOptions = {},
 ) => {

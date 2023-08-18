@@ -136,12 +136,12 @@ export const dispatch = (data: HidangerDispatchDTO, params: PerRequestOptions = 
  * 企业隐患管理 隐患统计
  *
  * @tags 企业隐患管理
- * @name Summary
+ * @name Summary1
  * @summary 隐患统计
  * @request GET:/hidanger/org/summary
  * @response `200` `ResultOrgHidangerTypeSummaryDTO` OK
  */
-export const summary = (params: PerRequestOptions = {}) => {
+export const summary1 = (params: PerRequestOptions = {}) => {
   return defHttp.get<ResultOrgHidangerTypeSummaryDTO>(
     {
       url: `gas-supervise/hidanger/org/summary`,

@@ -158,6 +158,8 @@ export const getUserBook1 = (
   query: {
     code: string;
     orgId: string;
+    /** undefined枚举中文描述 */
+    _orgId: string;
   },
   params: PerRequestOptions = {},
 ) => {

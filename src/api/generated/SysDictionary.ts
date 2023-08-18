@@ -29,7 +29,7 @@ import type {
  */
 export const getDistrict = (
   query?: {
-    code?: string;
+    code: string;
   },
   params: PerRequestOptions = {},
 ) => {

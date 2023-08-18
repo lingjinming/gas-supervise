@@ -250,12 +250,12 @@ export const finishCheckPlan = (id: number, params: PerRequestOptions = {}) => {
  * 监管单位隐患管理 隐患统计
  *
  * @tags 监管单位隐患管理
- * @name Summary1
+ * @name Summary2
  * @summary 隐患统计
  * @request GET:/hidanger/gov/summary
  * @response `200` `ResultOrgHidangerTypeSummaryDTO` OK
  */
-export const summary1 = (params: PerRequestOptions = {}) => {
+export const summary2 = (params: PerRequestOptions = {}) => {
   return defHttp.get<ResultOrgHidangerTypeSummaryDTO>(
     {
       url: `gas-supervise/hidanger/gov/summary`,

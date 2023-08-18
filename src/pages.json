@@ -61,6 +61,27 @@
       }
     },
     {
+      "path": "pages/thirdBuild/index",
+      "style": {
+        "navigationBarTitleText": "第三方施工管理",
+        "disableScroll": true
+      }
+    },
+    {
+      "path": "pages/thirdBuild/pages/thirdBuildDetailPage",
+      "style": {
+        "navigationBarTitleText": "第三方施工详情",
+        "disableScroll": true
+      }
+    },
+    {
+      "path": "pages/thirdBuild/pages/thirdBuildFormPage",
+      "style": {
+        "navigationBarTitleText": "第三方施工上报",
+        "disableScroll": true
+      }
+    },
+    {
       "path": "pages/notice/index",
       "style": {
         "navigationBarTitleText": "消息提醒",

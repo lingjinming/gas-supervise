@@ -12,8 +12,50 @@
 import { defHttp } from "@/utils/http";
 import type { PerRequestOptions } from "@/utils/http/typing";
 
-import type { ResultFileUpdateResponseDTO, ResultString } from "./data-contracts";
+import type {
+  DataMessage,
+  IndoorAlarmQuery,
+  ResultFileUpdateResponseDTO,
+  ResultString,
+  ResultVoid,
+} from "./data-contracts";
 
+/**
+ * @description serialNumber不存在则新增数据,已存在则更新数据
+ *
+ * @tags 监管平台数据接入网关
+ * @name Post
+ * @summary 保存数据
+ * @request POST:/open/data
+ * @response `200` `ResultVoid` OK
+ */
+export const post = (data: DataMessage, params: PerRequestOptions = {}) => {
+  return defHttp.post<ResultVoid>(
+    {
+      url: `gas-supervise/open/data`,
+      data: data,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * @description AIoT数据存储
+ *
+ * @tags 监管平台数据接入网关
+ * @name AiotPost
+ * @summary AIoT数据存储
+ * @request POST:/open/data/aiot
+ * @response `200` `ResultVoid` OK
+ */
+export const aiotPost = (data: IndoorAlarmQuery, params: PerRequestOptions = {}) => {
+  return defHttp.post<ResultVoid>(
+    {
+      url: `gas-supervise/open/data/aiot`,
+      data: data,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
 /**
  * @description 上传文件,并返回文件id
  *
@@ -26,7 +68,7 @@ import type { ResultFileUpdateResponseDTO, ResultString } from "./data-contracts
 export const uploadFile = (
   data: {
     /** @format binary */
-    file?: FormData;
+    file: FormData;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -34,7 +76,6 @@ export const uploadFile = (
     {
       url: `gas-supervise/file/upload`,
       data: data,
-      header: { "Content-Type": "multipart/form-data" },
     },
     { ...params, isTransformResponse: false },
   );

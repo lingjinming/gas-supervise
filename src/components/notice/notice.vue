@@ -26,7 +26,7 @@
             />{{ notice.title }}
           </view>
 
-          <text class="time">{{ format(notice.sendTime) }}</text>
+          <text class="time">{{ notice.timestampLively }}</text>
         </view>
         <view class="con">
           <!-- <text class="name">燃气管理处-{{ notice.createBy }} </text> -->
@@ -87,14 +87,14 @@ const format = (t) => {
   }
 };
 
-const del = async (notice: SysNoticeItem) => {
-  await readNotice({
-    recipient: notice.recipient,
-    uId: notice.uid,
-  });
-  // 让列表刷新
-  uni.$emit(EventType.NOTICE_REFRESH);
-};
+// const del = async (notice: SysNoticeItem) => {
+//   await readNotice({
+//     recipient: notice.recipient,
+//     uId: notice.uid,
+//   });
+//   // 让列表刷新
+//   uni.$emit(EventType.NOTICE_REFRESH);
+// };
 </script>
 <style lang="scss" scoped>
 .notice-box {

@@ -23,6 +23,8 @@
 
 <script setup lang="ts">
 import { ref ,type Ref} from 'vue';
+import { getDictList } from "@/api/dic";
+
 interface Option {
   label: string;
   value: unknown;
@@ -35,17 +37,25 @@ const props = withDefaults(defineProps<{
   useAll?:  boolean,
   // 标题
   title: string,
+  // 数据字典类型,和options二选一
+  type?: string,
   // 选项集合
-  options: Option[]
+  options?: Option[]
 }>(),{
   useAll: false,
   isColumn: false,
+  type: '',
   title: '多选',
   options: () => []
 })
 
 const checked: Ref<unknown[]> = ref([]);
 const allClicked = ref(false)
+if(props.type) {
+  getDictList(props.type).then(dics => {
+    props.options.push(...dics[props.type])
+  })
+}
 
 const onChecked = (option: Option) => {
   // 如果已经选中了 就给反选

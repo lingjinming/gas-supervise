@@ -4,10 +4,14 @@
 <script lang="ts" setup>
 import { getImg } from "@/api/img";
 import { getUrl } from "@/utils";
+import { userStore } from '@/state';
+const store = userStore()
+const region = store.auth.activeServer?.region
 
 const props = defineProps({
   region: {
     type: String,
+    default: 'test'
   },
   id: {
     type: String,
@@ -31,7 +35,7 @@ const getImgFn = async () => {
       getUrl(urlObj.data).path
     }?${getUrl(urlObj.data).query}`,
     header: {
-      "x-api-region": props.region,
+      "x-api-region": props.region || region,
     },
     responseType: "arraybuffer",
     success(res) {

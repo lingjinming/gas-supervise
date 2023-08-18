@@ -77,14 +77,14 @@ const menus = [
     url: "/pages/check/index",
     image: "/static/img/icon_jcjhgl.png",
   },
-
+  {
+    name: "第三方施工管理",
+    url: "/pages/thirdBuild/index",
+    image: "/static/img/icon_dsfsg.png",
+  },
   {
     name: "风险管理",
     image: "/static/img/icon_fxgl.png",
-  },
-  {
-    name: "第三方施工管理",
-    image: "/static/img/icon_dsfsg.png",
   },
   {
     name: "报警管理",

@@ -1,7 +1,9 @@
 import type { BasePageReq, BasePageResponse } from "@/api/model/BaseModel";
 import { reactive, shallowRef, triggerRef, watch } from "vue";
 
-type ApiType<T> = (params: any) => Promise<BasePageResponse<T>>;
+
+
+type ApiType<T> = (params: any) => Promise<BasePageResponse<T> >;
 
 type TableOptions = {
   minTime?: number;
@@ -194,6 +196,7 @@ export const useTable = <T>(
   };
 
   return {
+    noData,
     total,
     list,
     loading,

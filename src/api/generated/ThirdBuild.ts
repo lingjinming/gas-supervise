@@ -18,6 +18,7 @@ import type {
   ResultString,
   ResultThirdBuildDetailVO,
   ResultThirdBuildHandleFlowVO,
+  ResultThirdBuildSummaryVO,
   ResultVoid,
   ThirdBuildBatchImportDTO,
   ThirdBuildCreateDTO,
@@ -28,11 +29,11 @@ import type {
 } from "./data-contracts";
 
 /**
- * 三方施工管理 查看-第三方施工上报记录
+ * 三方施工管理 查看三方施工记录详情
  *
  * @tags 三方施工管理
  * @name Detail
- * @summary 查看-第三方施工上报记录
+ * @summary 查看三方施工记录详情
  * @request GET:/third/build/{id}
  * @response `200` `ResultThirdBuildDetailVO` OK
  */
@@ -45,11 +46,11 @@ export const detail = (id: number, params: PerRequestOptions = {}) => {
   );
 };
 /**
- * 三方施工管理 更新-第三方施工上报记录
+ * 三方施工管理 更新三方施工记录
  *
  * @tags 三方施工管理
  * @name UpdateThirdBuildInfo
- * @summary 更新-第三方施工上报记录
+ * @summary 更新三方施工记录
  * @request PUT:/third/build/{id}
  * @response `200` `ResultVoid` OK
  */
@@ -86,11 +87,11 @@ export const complete = (
   );
 };
 /**
- * 三方施工管理 创建-第三方施工上报记录
+ * 三方施工管理 创建三方施工记录
  *
  * @tags 三方施工管理
  * @name CheckThirdBuildInfo
- * @summary 创建-第三方施工上报记录
+ * @summary 创建三方施工记录
  * @request POST:/third/build
  * @response `200` `ResultString` OK
  */
@@ -156,17 +157,12 @@ export const createThirdBuildGuard = (
  * @request POST:/third/build/pre-import
  * @response `200` `ResultExcelImportValidationVO` OK
  */
-export const thirdBuildImportCheck = (
-  query: {
-    /** @format binary */
-    file: FormData;
-  },
-  params: PerRequestOptions = {},
-) => {
+export const thirdBuildImportCheck = (data: FormData, params: PerRequestOptions = {}) => {
   return defHttp.post<ResultExcelImportValidationVO>(
     {
       url: `gas-supervise/third/build/pre-import`,
-      data: query,
+      data: data,
+      header: { "Content-Type": "multipart/form-data" },
     },
     { ...params, isTransformResponse: false },
   );
@@ -224,11 +220,28 @@ export const exportPointHistoryData = (params: PerRequestOptions = {}) => {
   );
 };
 /**
- * 三方施工管理 分页查询-第三方施工上报记录
+ * 三方施工管理 数量统计
+ *
+ * @tags 三方施工管理
+ * @name Summary
+ * @summary 数量统计
+ * @request GET:/third/build/summary
+ * @response `200` `ResultThirdBuildSummaryVO` OK
+ */
+export const summary = (params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultThirdBuildSummaryVO>(
+    {
+      url: `gas-supervise/third/build/summary`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 三方施工管理 分页查询三方施工记录
  *
  * @tags 三方施工管理
  * @name PageQuery
- * @summary 分页查询-第三方施工上报记录
+ * @summary 分页查询三方施工记录
  * @request GET:/third/build/page
  * @response `200` `PageResultListThirdBuildPageVO` OK
  */

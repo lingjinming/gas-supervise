@@ -35,30 +35,13 @@ export const simpleWithUser = (params: PerRequestOptions = {}) => {
  * 组织机构管理 获取所有组织机构和用户信息
  *
  * @tags 组织机构管理
- * @name SimpleWithUser5
+ * @name SimpleWithUser2
  * @summary 获取所有组织机构和用户信息
  * @request PUT:/org/simple-with-user
  * @response `200` `ResultListTreeVo` OK
  */
-export const simpleWithUser5 = (params: PerRequestOptions = {}) => {
+export const simpleWithUser2 = (params: PerRequestOptions = {}) => {
   return defHttp.put<ResultListTreeVo>(
-    {
-      url: `gas-supervise/org/simple-with-user`,
-    },
-    { ...params, isTransformResponse: false },
-  );
-};
-/**
- * 组织机构管理 获取所有组织机构和用户信息
- *
- * @tags 组织机构管理
- * @name SimpleWithUser4
- * @summary 获取所有组织机构和用户信息
- * @request POST:/org/simple-with-user
- * @response `200` `ResultListTreeVo` OK
- */
-export const simpleWithUser4 = (params: PerRequestOptions = {}) => {
-  return defHttp.post<ResultListTreeVo>(
     {
       url: `gas-supervise/org/simple-with-user`,
     },
@@ -71,10 +54,27 @@ export const simpleWithUser4 = (params: PerRequestOptions = {}) => {
  * @tags 组织机构管理
  * @name SimpleWithUser1
  * @summary 获取所有组织机构和用户信息
- * @request DELETE:/org/simple-with-user
+ * @request POST:/org/simple-with-user
  * @response `200` `ResultListTreeVo` OK
  */
 export const simpleWithUser1 = (params: PerRequestOptions = {}) => {
+  return defHttp.post<ResultListTreeVo>(
+    {
+      url: `gas-supervise/org/simple-with-user`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 组织机构管理 获取所有组织机构和用户信息
+ *
+ * @tags 组织机构管理
+ * @name SimpleWithUser6
+ * @summary 获取所有组织机构和用户信息
+ * @request DELETE:/org/simple-with-user
+ * @response `200` `ResultListTreeVo` OK
+ */
+export const simpleWithUser6 = (params: PerRequestOptions = {}) => {
   return defHttp.delete<ResultListTreeVo>(
     {
       url: `gas-supervise/org/simple-with-user`,
@@ -103,12 +103,12 @@ export const simpleWithUser3 = (params: PerRequestOptions = {}) => {
  * 组织机构管理 获取所有组织机构和用户信息
  *
  * @tags 组织机构管理
- * @name SimpleWithUser6
+ * @name SimpleWithUser5
  * @summary 获取所有组织机构和用户信息
  * @request HEAD:/org/simple-with-user
  * @response `200` `ResultListTreeVo` OK
  */
-export const simpleWithUser6 = (params: PerRequestOptions = {}) => {
+export const simpleWithUser5 = (params: PerRequestOptions = {}) => {
   return defHttp.head<ResultListTreeVo>(
     {
       url: `gas-supervise/org/simple-with-user`,
@@ -120,12 +120,12 @@ export const simpleWithUser6 = (params: PerRequestOptions = {}) => {
  * 组织机构管理 获取所有组织机构和用户信息
  *
  * @tags 组织机构管理
- * @name SimpleWithUser2
+ * @name SimpleWithUser4
  * @summary 获取所有组织机构和用户信息
  * @request PATCH:/org/simple-with-user
  * @response `200` `ResultListTreeVo` OK
  */
-export const simpleWithUser2 = (params: PerRequestOptions = {}) => {
+export const simpleWithUser4 = (params: PerRequestOptions = {}) => {
   return defHttp.patch<ResultListTreeVo>(
     {
       url: `gas-supervise/org/simple-with-user`,
@@ -154,30 +154,13 @@ export const all = (params: PerRequestOptions = {}) => {
  * 组织机构管理 获取所有组织机构信息
  *
  * @tags 组织机构管理
- * @name All5
+ * @name All2
  * @summary 获取所有组织机构信息
  * @request PUT:/org/all
  * @response `200` `ResultListOrganizationVO` OK
  */
-export const all5 = (params: PerRequestOptions = {}) => {
+export const all2 = (params: PerRequestOptions = {}) => {
   return defHttp.put<ResultListOrganizationVO>(
-    {
-      url: `gas-supervise/org/all`,
-    },
-    { ...params, isTransformResponse: false },
-  );
-};
-/**
- * 组织机构管理 获取所有组织机构信息
- *
- * @tags 组织机构管理
- * @name All4
- * @summary 获取所有组织机构信息
- * @request POST:/org/all
- * @response `200` `ResultListOrganizationVO` OK
- */
-export const all4 = (params: PerRequestOptions = {}) => {
-  return defHttp.post<ResultListOrganizationVO>(
     {
       url: `gas-supervise/org/all`,
     },
@@ -190,10 +173,27 @@ export const all4 = (params: PerRequestOptions = {}) => {
  * @tags 组织机构管理
  * @name All1
  * @summary 获取所有组织机构信息
- * @request DELETE:/org/all
+ * @request POST:/org/all
  * @response `200` `ResultListOrganizationVO` OK
  */
 export const all1 = (params: PerRequestOptions = {}) => {
+  return defHttp.post<ResultListOrganizationVO>(
+    {
+      url: `gas-supervise/org/all`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 组织机构管理 获取所有组织机构信息
+ *
+ * @tags 组织机构管理
+ * @name All6
+ * @summary 获取所有组织机构信息
+ * @request DELETE:/org/all
+ * @response `200` `ResultListOrganizationVO` OK
+ */
+export const all6 = (params: PerRequestOptions = {}) => {
   return defHttp.delete<ResultListOrganizationVO>(
     {
       url: `gas-supervise/org/all`,
@@ -222,12 +222,12 @@ export const all3 = (params: PerRequestOptions = {}) => {
  * 组织机构管理 获取所有组织机构信息
  *
  * @tags 组织机构管理
- * @name All6
+ * @name All5
  * @summary 获取所有组织机构信息
  * @request HEAD:/org/all
  * @response `200` `ResultListOrganizationVO` OK
  */
-export const all6 = (params: PerRequestOptions = {}) => {
+export const all5 = (params: PerRequestOptions = {}) => {
   return defHttp.head<ResultListOrganizationVO>(
     {
       url: `gas-supervise/org/all`,
@@ -239,12 +239,12 @@ export const all6 = (params: PerRequestOptions = {}) => {
  * 组织机构管理 获取所有组织机构信息
  *
  * @tags 组织机构管理
- * @name All2
+ * @name All4
  * @summary 获取所有组织机构信息
  * @request PATCH:/org/all
  * @response `200` `ResultListOrganizationVO` OK
  */
-export const all2 = (params: PerRequestOptions = {}) => {
+export const all4 = (params: PerRequestOptions = {}) => {
   return defHttp.patch<ResultListOrganizationVO>(
     {
       url: `gas-supervise/org/all`,
@@ -273,30 +273,13 @@ export const allWithUser = (params: PerRequestOptions = {}) => {
  * 组织机构管理 获取所有组织机构和用户信息
  *
  * @tags 组织机构管理
- * @name AllWithUser5
+ * @name AllWithUser2
  * @summary 获取所有组织机构和用户信息
  * @request PUT:/org/all-with-user
  * @response `200` `ResultListOrganizationVO` OK
  */
-export const allWithUser5 = (params: PerRequestOptions = {}) => {
+export const allWithUser2 = (params: PerRequestOptions = {}) => {
   return defHttp.put<ResultListOrganizationVO>(
-    {
-      url: `gas-supervise/org/all-with-user`,
-    },
-    { ...params, isTransformResponse: false },
-  );
-};
-/**
- * 组织机构管理 获取所有组织机构和用户信息
- *
- * @tags 组织机构管理
- * @name AllWithUser4
- * @summary 获取所有组织机构和用户信息
- * @request POST:/org/all-with-user
- * @response `200` `ResultListOrganizationVO` OK
- */
-export const allWithUser4 = (params: PerRequestOptions = {}) => {
-  return defHttp.post<ResultListOrganizationVO>(
     {
       url: `gas-supervise/org/all-with-user`,
     },
@@ -309,10 +292,27 @@ export const allWithUser4 = (params: PerRequestOptions = {}) => {
  * @tags 组织机构管理
  * @name AllWithUser1
  * @summary 获取所有组织机构和用户信息
- * @request DELETE:/org/all-with-user
+ * @request POST:/org/all-with-user
  * @response `200` `ResultListOrganizationVO` OK
  */
 export const allWithUser1 = (params: PerRequestOptions = {}) => {
+  return defHttp.post<ResultListOrganizationVO>(
+    {
+      url: `gas-supervise/org/all-with-user`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 组织机构管理 获取所有组织机构和用户信息
+ *
+ * @tags 组织机构管理
+ * @name AllWithUser6
+ * @summary 获取所有组织机构和用户信息
+ * @request DELETE:/org/all-with-user
+ * @response `200` `ResultListOrganizationVO` OK
+ */
+export const allWithUser6 = (params: PerRequestOptions = {}) => {
   return defHttp.delete<ResultListOrganizationVO>(
     {
       url: `gas-supervise/org/all-with-user`,
@@ -341,12 +341,12 @@ export const allWithUser3 = (params: PerRequestOptions = {}) => {
  * 组织机构管理 获取所有组织机构和用户信息
  *
  * @tags 组织机构管理
- * @name AllWithUser6
+ * @name AllWithUser5
  * @summary 获取所有组织机构和用户信息
  * @request HEAD:/org/all-with-user
  * @response `200` `ResultListOrganizationVO` OK
  */
-export const allWithUser6 = (params: PerRequestOptions = {}) => {
+export const allWithUser5 = (params: PerRequestOptions = {}) => {
   return defHttp.head<ResultListOrganizationVO>(
     {
       url: `gas-supervise/org/all-with-user`,
@@ -358,12 +358,12 @@ export const allWithUser6 = (params: PerRequestOptions = {}) => {
  * 组织机构管理 获取所有组织机构和用户信息
  *
  * @tags 组织机构管理
- * @name AllWithUser2
+ * @name AllWithUser4
  * @summary 获取所有组织机构和用户信息
  * @request PATCH:/org/all-with-user
  * @response `200` `ResultListOrganizationVO` OK
  */
-export const allWithUser2 = (params: PerRequestOptions = {}) => {
+export const allWithUser4 = (params: PerRequestOptions = {}) => {
   return defHttp.patch<ResultListOrganizationVO>(
     {
       url: `gas-supervise/org/all-with-user`,

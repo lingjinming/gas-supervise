@@ -1,7 +1,6 @@
 const { generateApi, generateTemplates, GenerateApiParamsBase} = require('swagger-typescript-api');
 const path = require("path");
 const fs = require("fs");
-const { log } = require('console');
 
 /**
  * @type GenerateApiParamsBase
@@ -17,7 +16,7 @@ const options = {
   url: 'http://10.5.5.105:8847/gas-supervise/v3/api-docs',
 
   templates: path.resolve(process.cwd(), './api-templates/axios_modular'),
-  defaultResponseAsSuccess: false,
+  defaultResponseAsSuccess: true,
   // 是否生成api客户端
   generateClient: true,
   // 生成的api分割为多个文件
@@ -41,7 +40,7 @@ const options = {
   extractEnums: true,
   // true-生产枚举类型, false-生成联合类型
   generateUnionEnums: true,
-  unwrapResponseData: false,
+  unwrapResponseData: true,
   prettier: { // By default prettier config is load from your project
     printWidth: 120,
     tabWidth: 2,
@@ -71,13 +70,20 @@ const options = {
   fixInvalidEnumKeyPrefix: "Value",
   codeGenConstructs: (constructs) => ({
     ...constructs,
-    RecordType: (key, value) => `Record<string, any>`
+    RecordType: (key, value) => `Record<string, any>`,
+    // 全部都是必填的
+    TypeField: (data) => {
+      return data.key+":"+data.value;
+    },
+    EnumField: (key, value) => `${key} = ${value}`,
+    EnumFieldsWrapper: (contents) =>
+      _.map(contents, ({ key, value }) => `  ${Ts.EnumField(key, value)}`).join(",\n"),
   }),
   primitiveTypeConstructs: (constructs) => ({
     ...constructs,
     file: () => "FormData",
     string: {
-      'date-time': 'Date',
+      'date-time': 'string',
       binary: () => "FormData",
     }
   }),
@@ -97,6 +103,18 @@ const options = {
      */
     onCreateRouteName: (routeNameInfo, rawRouteInfo) => {
       
+    },
+    // 给枚举类型加上_
+    onParseSchema: (a,f) => {
+     if(f.type === 'object') {
+      for (const key in f.properties) {
+        if(f.properties[key].enum) {
+          append(key,f,f.properties[key])
+        } else if('orgId,districtId'.includes(key)) {
+          append(key,f,f.properties[key])
+        }
+      }
+     }
     },
     
     onCreateRoute: (routeData) => {
@@ -122,6 +140,22 @@ const options = {
     }
   }
 
+}
+
+function append(key,item,prop) {
+  const typeDef = {
+    type: 'string',
+    description: prop.description+"枚举中文描述",
+    '$parsed': prop['$parsed']
+  };
+  item.properties['_'+key] = typeDef;
+  item.content.push({
+    type: 'string',
+    description:prop.description+"枚举中文描述",
+    name: '_'+key,
+    value: 'string',
+    field:'_'+key+":string"
+  })
 }
 
 /**
