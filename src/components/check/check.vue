@@ -56,7 +56,7 @@ const props = defineProps({
   },
 });
 const navigateToDetail = (uid, planCode, e) => {
-  console.log(e);
+  console.log(props.data);
   uni.navigateTo({
     url: `/pages/checkDetail/index?uid=${uid}&planCode=${planCode}`,
   });

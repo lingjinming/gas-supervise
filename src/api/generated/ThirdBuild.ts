@@ -13,6 +13,7 @@ import { defHttp } from "@/utils/http";
 import type { PerRequestOptions } from "@/utils/http/typing";
 
 import type {
+  IDsRequestDTO,
   PageResultListThirdBuildPageVO,
   ResultExcelImportValidationVO,
   ResultString,
@@ -37,7 +38,7 @@ import type {
  * @request GET:/third/build/{id}
  * @response `200` `ResultThirdBuildDetailVO` OK
  */
-export const detail = (id: number, params: PerRequestOptions = {}) => {
+export const detail = (id: string, params: PerRequestOptions = {}) => {
   return defHttp.get<ResultThirdBuildDetailVO>(
     {
       url: `gas-supervise/third/build/${id}`,
@@ -54,7 +55,7 @@ export const detail = (id: number, params: PerRequestOptions = {}) => {
  * @request PUT:/third/build/{id}
  * @response `200` `ResultVoid` OK
  */
-export const updateThirdBuildInfo = (id: number, data: ThirdBuildUpdateDTO, params: PerRequestOptions = {}) => {
+export const updateThirdBuildInfo = (id: string, data: ThirdBuildUpdateDTO, params: PerRequestOptions = {}) => {
   return defHttp.put<ResultVoid>(
     {
       url: `gas-supervise/third/build/${id}`,
@@ -72,16 +73,11 @@ export const updateThirdBuildInfo = (id: number, data: ThirdBuildUpdateDTO, para
  * @request PUT:/third/build/complete
  * @response `200` `ResultVoid` OK
  */
-export const complete = (
-  query: {
-    ids: number[];
-  },
-  params: PerRequestOptions = {},
-) => {
+export const complete = (data: IDsRequestDTO, params: PerRequestOptions = {}) => {
   return defHttp.put<ResultVoid>(
     {
       url: `gas-supervise/third/build/complete`,
-      data: query,
+      data: data,
     },
     { ...params, isTransformResponse: false },
   );
@@ -114,7 +110,7 @@ export const checkThirdBuildInfo = (data: ThirdBuildCreateDTO, params: PerReques
  * @response `200` `ResultVoid` OK
  */
 export const createThirdBuildReport = (
-  thirdBuildId: number,
+  thirdBuildId: string,
   data: ThirdBuildReportCreateDTO,
   params: PerRequestOptions = {},
 ) => {
@@ -136,7 +132,7 @@ export const createThirdBuildReport = (
  * @response `200` `ResultVoid` OK
  */
 export const createThirdBuildGuard = (
-  thirdBuildId: number,
+  thirdBuildId: string,
   data: ThirdBuildGuardCreateDTO,
   params: PerRequestOptions = {},
 ) => {
@@ -194,7 +190,7 @@ export const batchImport = (data: ThirdBuildBatchImportDTO, params: PerRequestOp
  * @request GET:/third/build/{id}/flow
  * @response `200` `ResultThirdBuildHandleFlowVO` OK
  */
-export const handleFlow = (id: number, params: PerRequestOptions = {}) => {
+export const handleFlow = (id: string, params: PerRequestOptions = {}) => {
   return defHttp.get<ResultThirdBuildHandleFlowVO>(
     {
       url: `gas-supervise/third/build/${id}/flow`,

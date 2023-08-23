@@ -57,6 +57,10 @@ export interface ResultVoid {
   success: boolean;
 }
 
+export interface IDsRequestDTO {
+  ids: string[];
+}
+
 export interface FileObj {
   id: string;
   name: string;
@@ -247,6 +251,8 @@ export interface ThirdBuildInfoCreateDTO {
   latitude: number;
   /** 行政区划 */
   districtId: string;
+  /** 组织机构id,政府创建时必填 */
+  orgId: string;
   /**
    * 计划施工开始时间
    * @format date
@@ -275,6 +281,8 @@ export interface ThirdBuildInfoCreateDTO {
   supUnitContactPhone: string;
   /** 行政区划枚举中文描述 */
   _districtId: string;
+  /** 组织机构id,政府创建时必填枚举中文描述 */
+  _orgId: string;
   /** 第三方施工状态枚举中文描述 */
   _buildState: string;
 }
@@ -423,8 +431,8 @@ export interface ThirdBuildImportDTO {
    * @pattern 1[3456789]\d{9}
    */
   supUnitContactPhone: string;
-  realBuildTimeStartValid: boolean;
   realBuildTimeEndValid: boolean;
+  realBuildTimeStartValid: boolean;
   /** 关联燃气企业枚举中文描述 */
   _orgId: string;
   /** 所属区域枚举中文描述 */
@@ -464,13 +472,13 @@ export interface ProjectRiskDangerRequest {
    * @format float
    */
   distance: number;
+  districtIdAsList: string[];
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  selectIdsAsString: string[];
   /** @uniqueItems true */
   selectIdsAsLong: number[];
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  districtIdAsSet: string[];
   /** undefined枚举中文描述 */
   _orgId: string;
   /** undefined枚举中文描述 */
@@ -1106,8 +1114,6 @@ export interface ThirdBuildPageQuery {
   selectIds: object[];
   paging: boolean;
   buildType: string[];
-  orgIds: string[];
-  districtIds: string[];
   /** @format date-time */
   startTime: string;
   /** @format date-time */
@@ -1115,13 +1121,13 @@ export interface ThirdBuildPageQuery {
   buildStates: ThirdBuildPageQueryBuildStates[];
   reportStates: ThirdBuildPageQueryReportStates[];
   guardStates: ThirdBuildPageQueryGuardStates[];
+  districtIdAsList: string[];
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  selectIdsAsString: string[];
   /** @uniqueItems true */
   selectIdsAsLong: number[];
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  districtIdAsSet: string[];
   /** undefined枚举中文描述 */
   _orgId: string;
   /** undefined枚举中文描述 */
@@ -1225,13 +1231,13 @@ export interface WarnPageRequest {
    * @pattern yyyy-MM-dd HH:mm:ss
    */
   endTime: string;
+  districtIdAsList: string[];
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  selectIdsAsString: string[];
   /** @uniqueItems true */
   selectIdsAsLong: number[];
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  districtIdAsSet: string[];
   /** undefined枚举中文描述 */
   _orgId: string;
   /** undefined枚举中文描述 */
@@ -1294,6 +1300,8 @@ export interface WarnPageVO {
   latitude: number;
   /** 报警时长 */
   duration: string;
+  /** 预警类型 */
+  warnType: string;
   /** 数据来源 */
   alarmSource: WarnPageVoAlarmSource;
   /** 监测场所枚举中文描述 */
@@ -1337,6 +1345,93 @@ export interface WarnSummaryVO {
   stationCount: number;
 }
 
+export interface ResultListWarnTotalVO {
+  code: string;
+  data: WarnTotalVO[];
+  message: string;
+  success: boolean;
+}
+
+/** 预警统计分析-预警类型统计VO */
+export interface WarnTotalVO {
+  /**
+   * 预警总数
+   * @format int64
+   */
+  total: number;
+  /** 组织机构 */
+  orgId: string;
+  /** 数据类型：数据来源、监测指标、监测场所... */
+  dataType: string;
+  /**
+   * 处置中
+   * @format int64
+   */
+  dispose: number;
+  /**
+   * 已解除
+   * @format int64
+   */
+  relieve: number;
+  /**
+   * 占比
+   * @format float
+   */
+  rate: number;
+  /** 组织机构枚举中文描述 */
+  _orgId: string;
+}
+
+/** 处置中预警明细 */
+export interface DisposeDetail {
+  /** 预警编号 */
+  warnId: string;
+  /** 预警类型 */
+  warnType: string;
+  /** 预警级别 */
+  warnLevel: DisposeDetailWarnLevel;
+  /** 详细地址 */
+  address: string;
+  /** 组织机构 */
+  orgId: string;
+  /**
+   * 预警时间
+   * @format date-time
+   */
+  warnTime: string;
+  /** 经度 */
+  longitude: number;
+  /** 纬度 */
+  latitude: number;
+  /** 报警时长 */
+  duration: string;
+  /** 预警级别枚举中文描述 */
+  _warnLevel: string;
+  /** 组织机构枚举中文描述 */
+  _orgId: string;
+}
+
+export interface ResultWarnDisposeVO {
+  code: string;
+  /** 预警统计分析-处置中预警VO */
+  data: WarnDisposeVO;
+  message: string;
+  success: boolean;
+}
+
+/** 预警统计分析-处置中预警VO */
+export interface WarnDisposeVO {
+  /**
+   * 预警总数
+   * @format int64
+   */
+  total: number;
+  /** 报警类型总数 */
+  disposeTotal: WarnTotalVO[];
+  /** 处置中预警明细 */
+  details: DisposeDetail[];
+}
+
 /** 监管统计请求 */
 export interface StatisticalRequest {
   /** @format int32 */
@@ -1357,13 +1452,15 @@ export interface StatisticalRequest {
   objType: StatisticalRequestObjType[];
   /** 报警状态 */
   alarmState: StatisticalRequestAlarmState[];
+  /** 预警状态 */
+  warnState: StatisticalRequestWarnState[];
+  districtIdAsList: string[];
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  selectIdsAsString: string[];
   /** @uniqueItems true */
   selectIdsAsLong: number[];
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  districtIdAsSet: string[];
   /** undefined枚举中文描述 */
   _orgId: string;
   /** undefined枚举中文描述 */
@@ -1561,13 +1658,13 @@ export interface MonitorRequest {
   monitorIndex: string[];
   /** 监测状态 */
   eqptState: MonitorRequestEqptState[];
+  districtIdAsList: string[];
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  selectIdsAsString: string[];
   /** @uniqueItems true */
   selectIdsAsLong: number[];
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  districtIdAsSet: string[];
   /** undefined枚举中文描述 */
   _orgId: string;
   /** undefined枚举中文描述 */
@@ -1642,7 +1739,7 @@ export interface PageResultListMonitorPageVO {
 /** 实时监测汇总VO */
 export interface MonitorSummaryVO {
   /** 监测场所 */
-  objType: string;
+  objType: MonitorSummaryVoObjType;
   /**
    * count
    * @format int64
@@ -1663,6 +1760,8 @@ export interface MonitorSummaryVO {
    * @format int64
    */
   normalCount: number;
+  /** 监测场所枚举中文描述 */
+  _objType: string;
 }
 
 export interface ResultListMonitorSummaryVO {
@@ -1928,13 +2027,13 @@ export interface AlarmPageRequest {
    * @pattern yyyy-MM-dd HH:mm:ss
    */
   endTime: string;
+  districtIdAsList: string[];
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  selectIdsAsString: string[];
   /** @uniqueItems true */
   selectIdsAsLong: number[];
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  districtIdAsSet: string[];
   /** undefined枚举中文描述 */
   _orgId: string;
   /** undefined枚举中文描述 */
@@ -1951,7 +2050,7 @@ export interface AlarmPageVO {
   eqptId: string;
   /** 设备名称 */
   eqptName: string;
-  /** 监测类型 */
+  /** 监测场所 */
   objType: AlarmPageVoObjType;
   /** 监测编号 */
   objId: string;
@@ -1998,7 +2097,7 @@ export interface AlarmPageVO {
   longitude: number;
   /** 纬度 */
   latitude: number;
-  /** 监测类型枚举中文描述 */
+  /** 监测场所枚举中文描述 */
   _objType: string;
   /** 报警状态枚举中文描述 */
   _alarmState: string;
@@ -2062,7 +2161,7 @@ export interface HistoryAlarmVO {
   eqptId: string;
   /** 监测编号 */
   objId: string;
-  /** 燃气泄漏、沼气聚集、工商业报警、场站报警 */
+  /** 报警类型 */
   alarmType: string;
   /**
    * 预警数量
@@ -2250,6 +2349,19 @@ export interface RiskExportVO {
   _state: string;
   /** 隐患来源枚举中文描述 */
   _dangerSource: string;
+}
+
+export interface ResultListTreeVo {
+  code: string;
+  data: TreeVo[];
+  message: string;
+  success: boolean;
+}
+
+export interface TreeVo {
+  id: string;
+  label: string;
+  children: TreeVo[];
 }
 
 export interface MessageContent {
@@ -2453,17 +2565,17 @@ export interface HidangerOrgPageQuery {
    * @format date
    */
   endTime: string;
-  queryOrder: string;
   dangerTypeStr: string;
   subjectTypeStr: string;
+  queryOrder: string;
   dangerSubTypeStr: string;
+  districtIdAsList: string[];
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  selectIdsAsString: string[];
   /** @uniqueItems true */
   selectIdsAsLong: number[];
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  districtIdAsSet: string[];
   /** undefined枚举中文描述 */
   _orgId: string;
   /** undefined枚举中文描述 */
@@ -2755,13 +2867,13 @@ export interface HiDangerCheckPageQuery {
   /** @uniqueItems true */
   orgIds: string[];
   queryOrder: string;
+  districtIdAsList: string[];
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  selectIdsAsString: string[];
   /** @uniqueItems true */
   selectIdsAsLong: number[];
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  districtIdAsSet: string[];
   /** undefined枚举中文描述 */
   _orgId: string;
   /** undefined枚举中文描述 */
@@ -2965,13 +3077,13 @@ export interface HidangerFactorsSummaryPageQuery {
   materialStr: string;
   dangerSubTypeStr: string;
   pressureLevelCodes: string[];
+  districtIdAsList: string[];
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  selectIdsAsString: string[];
   /** @uniqueItems true */
   selectIdsAsLong: number[];
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  districtIdAsSet: string[];
   /** undefined枚举中文描述 */
   _orgId: string;
   /** undefined枚举中文描述 */
@@ -3149,10 +3261,10 @@ export interface PipelineInfo {
    * @format date
    */
   sdate: string;
+  edepth: number;
+  sdepth: number;
   /** @format date */
   ddate: string;
-  sdepth: number;
-  edepth: number;
   /** 管线权属单位枚举中文描述 */
   _orgId: string;
   /** 材质枚举中文描述 */
@@ -3315,19 +3427,6 @@ export interface ResultListAroundRiskDTO {
   success: boolean;
 }
 
-export interface ResultListTreeVo {
-  code: string;
-  data: TreeVo[];
-  message: string;
-  success: boolean;
-}
-
-export interface TreeVo {
-  id: string;
-  label: string;
-  children: TreeVo[];
-}
-
 /** 第三方施工状态 */
 export type ThirdBuildUpdateDtoBuildState = "NOT_STARTED" | "IN_PROGRESS" | "COMPLETED";
 
@@ -3437,7 +3536,7 @@ export type WarnPageRequestWarnState = "yjzt001" | "yjzt002" | "yjzt010";
 export type WarnPageVoObjType = "OBJ_CZ" | "OBJ_DXKJ" | "OBJ_JMYH" | "OBJ_GSYH";
 
 /** 预警级别 */
-export type WarnPageVoWarnLevel = "YJYJ" | "EJYJ" | "SJYJ";
+export type WarnPageVoWarnLevel = "yjjb001" | "yjjb002" | "yjjb003";
 
 /** 预警状态 */
 export type WarnPageVoState = "yjzt001" | "yjzt002" | "yjzt010";
@@ -3445,11 +3544,17 @@ export type WarnPageVoState = "yjzt001" | "yjzt002" | "yjzt010";
 /** 数据来源 */
 export type WarnPageVoAlarmSource = "LIFELINE" | "GAS_ENTERPRISES" | "AIoT";
 
+/** 预警级别 */
+export type DisposeDetailWarnLevel = "yjjb001" | "yjjb002" | "yjjb003";
+
 /** 监测类型 */
 export type StatisticalRequestObjType = "OBJ_CZ" | "OBJ_DXKJ" | "OBJ_JMYH" | "OBJ_GSYH";
 
 /** 报警状态 */
 export type StatisticalRequestAlarmState = "bjzt001" | "bjzt003" | "bjzt004";
+
+/** 预警状态 */
+export type StatisticalRequestWarnState = "yjzt001" | "yjzt002" | "yjzt010";
 
 /** 监测场所 */
 export type MonitorRequestObjType = "OBJ_CZ" | "OBJ_DXKJ" | "OBJ_JMYH" | "OBJ_GSYH";
@@ -3465,6 +3570,9 @@ export type MonitorPageVoEqptState = "equipRunStatus1" | "equipRunStatus2" | "eq
 
 /** 数据来源 */
 export type MonitorPageVoDataSource = "LIFELINE" | "GAS_ENTERPRISES" | "AIoT";
+
+/** 监测场所 */
+export type MonitorSummaryVoObjType = "OBJ_CZ" | "OBJ_DXKJ" | "OBJ_JMYH" | "OBJ_GSYH";
 
 /**  危险源类型 */
 export type DangerJudgeVoType =
@@ -3534,7 +3642,7 @@ export type AlarmPageRequestObjType = "OBJ_CZ" | "OBJ_DXKJ" | "OBJ_JMYH" | "OBJ_
 /** 报警状态 */
 export type AlarmPageRequestAlarmState = "bjzt001" | "bjzt003" | "bjzt004";
 
-/** 监测类型 */
+/** 监测场所 */
 export type AlarmPageVoObjType = "OBJ_CZ" | "OBJ_DXKJ" | "OBJ_JMYH" | "OBJ_GSYH";
 
 /** 报警状态 */

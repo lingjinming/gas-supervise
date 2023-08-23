@@ -13,7 +13,8 @@ const options = {
   // 隐患后端
   // url: 'http://10.5.5.105:8847/gasguard-service-risk-app/v3/api-docs',
   // 监管后端
-  url: 'http://10.5.5.105:8847/gas-supervise/v3/api-docs',
+  //url: 'http://10.5.5.105:8847/gas-supervise/v3/api-docs',
+  url: 'http://localhost:23071/v3/api-docs',
 
   templates: path.resolve(process.cwd(), './api-templates/axios_modular'),
   defaultResponseAsSuccess: true,
@@ -98,23 +99,18 @@ const options = {
       }
       return templateRouteName;
     },
-    /**
-     * 功能同上
-     */
-    onCreateRouteName: (routeNameInfo, rawRouteInfo) => {
-      
-    },
     // 给枚举类型加上_
-    onParseSchema: (a,f) => {
-     if(f.type === 'object') {
-      for (const key in f.properties) {
-        if(f.properties[key].enum) {
-          append(key,f,f.properties[key])
+    onParseSchema: (rawSchema,schema) => {
+     if(schema.type === 'object') {
+      for (const key in schema.properties) {
+        const prop = schema.properties[key];
+         if(prop.enum) {
+          append(key,schema,prop)
         } else if('orgId,districtId'.includes(key)) {
-          append(key,f,f.properties[key])
+          append(key,schema,prop)
         }
       }
-     }
+     } 
     },
     
     onCreateRoute: (routeData) => {
@@ -141,6 +137,7 @@ const options = {
   }
 
 }
+
 
 function append(key,item,prop) {
   const typeDef = {

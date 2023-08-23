@@ -121,7 +121,7 @@ export const useTable = <T>(
       const { total: totalList, data } = await fun(params);
       total.value = totalList;
 
-      noData.value = Boolean(totalList);
+      noData.value = Boolean(!totalList);
       
       return data;
     } catch (err) {

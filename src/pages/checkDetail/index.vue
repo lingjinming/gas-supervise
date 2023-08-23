@@ -112,12 +112,7 @@ const addAudit = () => {
   ];
   keys.forEach((key) => uni.removeStorageSync(key));
   uni.navigateTo({
-    url: `/pages/hidden/index?audit=true
-    &_targetOrgId=${detail.order["整改单位"]["val"]}
-    &targetOrgPhone=${detail.order["联系电话"]["val"]}
-    &targetOrgAddr=${detail.order["地址"]["val"]}
-    &planCode=${detail.planCode}
-    `,
+    url: `/pages/hidden/index?audit=true&_targetOrgId=${detail.order["整改单位"]["val"]}&targetOrgPhone=${detail.order["联系电话"]["val"]}&targetOrgAddr=${detail.order["地址"]["val"]}&planCode=${detail.planCode}`,
   });
 };
 onLoad((options) => {

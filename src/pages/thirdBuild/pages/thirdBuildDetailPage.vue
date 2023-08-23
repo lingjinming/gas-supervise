@@ -30,17 +30,17 @@
         <view class="title">施工类型 </view>
       </view>
       <view class="info-item">
-        <view class="info">{{ state.info._buildState }}</view>
+        <view :class="['info',isOk(state.info.buildState) ? 'success':'']">{{ state.info._buildState }}</view>
         <view class="title">施工状态 </view>
       </view>
       <view class="info-item">
-        <view class="info"> {{ state.info._reportState }}</view>
+        <view :class="['info',isOk(state.info.reportState) ? 'success':'']"> {{ state.info._reportState }}</view>
         <view class="title">交底状态</view>
       </view>
     </view>
     <view class="info-line gray">
       <view class="info-item">
-        <view class="info"> {{ state.info?._guardState }}</view>
+        <view :class="['info',isOk(state.info.guardState) ? 'success':'']"> {{ state.info?._guardState }}</view>
         <view class="title">看护状态 </view>
       </view>
       <view class="info-item">
@@ -147,45 +147,85 @@
   </view>
   <!-- 底部操作按钮 -->
   <view class="bottom-buttons">
-      <button class="update" @click="goEdit">上报信息修改</button>
-      <button>上传交底</button>
-      <button>新增看护</button>
-      <button>施工完成</button>
+    <view @click="goReport">
+      <van-icon name="upgrade" /> 上传交底</view>
+    <view @click="goGuard">
+      <van-icon name="add-o" />
+      新增看护</view>
+    <view @click="goFinish">
+      <van-icon name="passed" />施工完成</view>
+    <view @click="goEdit"><van-icon name="edit" />修改</view>
   </view>
 </template>
 <script setup lang="ts">
 import { ref ,reactive} from 'vue';
-import { detail } from '@/api/generated/ThirdBuild';
-import type {ThirdBuildDetailVO ,RiskThirdGuardItemDTO} from '@/api/generated/data-contracts'
+import { detail ,complete} from '@/api/generated/ThirdBuild';
+import type {ThirdBuildDetailVO} from '@/api/generated/data-contracts'
 import { userStore } from '@/state';
 const store = userStore()
 const region = store.auth.activeServer?.region
 
 const state = reactive({
+  uid: null,
   info: <ThirdBuildDetailVO> {
     
   }
 })
 
 onLoad((options) => {
+  state.uid = options!.uid
   getDetail(options!.uid);
 });
-
+uni.$on('refreshThirdBuildDetailPage',function(data){
+  if(state.uid) {
+    getDetail(state.uid)
+  }
+})
 
 let activeTab = ref(0);
 const onChangeTab = ({ name }) => {
   activeTab.value = name;
 };
 
-const getDetail = async (uid: number) => {
+const getDetail = async (uid: string) => {
   const { data } = await detail(uid);
   state.info = data;
 }
-
+// 跳转到编辑页面
 const goEdit = () => {
   uni.navigateTo({
     url: '/pages/thirdBuild/pages/thirdBuildFormPage?uid='+state.info.uid
   })
+}
+// 跳转到交底页面
+const goReport = () => {
+  uni.navigateTo({
+    url: '/pages/thirdBuild/pages/thirdBuildReportFormPage?uid='+state.info.uid
+  })
+}
+// 跳转到看护页面
+const goGuard = () => {
+  uni.navigateTo({
+    url: '/pages/thirdBuild/pages/thirdBuildGuardFormPage?uid='+state.info.uid
+  })
+}
+// 施工完成
+const goFinish = () => {
+  uni.showModal({
+    title: '提示',
+    content: '确定施工完成?',
+    success: function (res) {
+      if (res.confirm) {
+        complete({ids: [state.info.uid]}).then(() => {
+          getDetail(state.info.uid)
+        })
+      } 
+    }
+  });
+
+}
+const isOk = (value: string) => {
+  return 'REPORTED,GUARDED,COMPLETED'.includes(value)
 }
 
 </script>
@@ -272,8 +312,6 @@ const goEdit = () => {
           right: -5rpx;
           background: #C8D2EC;
         }
-
-        /* 添加虚线效果 */
         background-image: repeating-linear-gradient(90deg,  #C8D2EC, #C8D2EC 5rpx, transparent 5rpx, transparent 10rpx);
       }
     }
@@ -300,6 +338,13 @@ const goEdit = () => {
         color: #222222;
         line-height: 26rpx;
         margin-bottom: 22rpx;
+        &.success {
+          font-size: 26rpx;
+          font-family: Microsoft YaHei;
+          font-weight: 400;
+          color: #01C14A;
+          line-height: 26rpx;
+        }
       }
     }
   }
@@ -344,6 +389,7 @@ const goEdit = () => {
     }
     .time {
       font-size: 24rpx;
+      margin: 15rpx 0;
       font-family: Microsoft YaHei;
       font-weight: 400;
       color: #989898;
@@ -406,16 +452,21 @@ const goEdit = () => {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
-  & :button:nth-child(1) {
-    flex-basis: 100%;
+  background-color: #fff;
+  border-top: 1rpx solid #ccc;
+  view {
+    text-align: center;
+    flex: 1;
+    border-right: 1rpx solid #ccc;
+    van-icon {
+      margin-right: 10rpx;
+    }
   }
-  button {
-    width: 30%;
-    height: 80rpx;
-  }
-  button.update {
-    flex-basis: 100%;
+
+  view:last-child {
+    border-right: none;
   }
 }
 </style>

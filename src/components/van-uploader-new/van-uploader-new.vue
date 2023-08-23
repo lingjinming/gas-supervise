@@ -1,6 +1,6 @@
 <template>
   <view class="uploader-box">
-    <text>上传照片(最多3张)</text>
+    <text>{{ label }}</text>
     <van-uploader
       multiple
       :max-count="3"
@@ -23,6 +23,12 @@ const store = userStore();
 let fileList: any = ref([]);
 let fileIds = ref([]);
 const emits = defineEmits(["update:modelValue"]);
+
+const props = withDefaults(defineProps<{
+  label?: string,
+}>(),{
+  label: '上传照片(最多3张)',
+})
 
 const delImg = (event) => {
   let temp = JSON.parse(JSON.stringify(fileList.value));

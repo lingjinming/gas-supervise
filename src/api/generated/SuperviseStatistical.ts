@@ -19,9 +19,130 @@ import type {
   ResultListDeviceStateSummaryVO,
   ResultListMonitorDeviceSumVO,
   ResultListOrgDeviceRateVO,
+  ResultListWarnTotalVO,
+  ResultWarnDisposeVO,
   StatisticalRequest,
 } from "./data-contracts";
 
+/**
+ * 预警统计分析-预警类型统计 预警统计分析-预警类型统计
+ *
+ * @tags 预警统计分析-预警类型统计, 监管统计接口
+ * @name WarnTypeSummary
+ * @summary 预警统计分析-预警类型统计
+ * @request GET:/supervise/statistical/warn/type/summary
+ * @response `200` `ResultListWarnTotalVO` OK
+ */
+export const warnTypeSummary = (params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultListWarnTotalVO>(
+    {
+      url: `gas-supervise/supervise/statistical/warn/type/summary`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 预警统计分析-历史预警排名-按类型 预警统计分析-历史预警排名-按类型
+ *
+ * @tags 预警统计分析-历史预警排名-按类型, 监管统计接口
+ * @name WarnTypeSort
+ * @summary 预警统计分析-历史预警排名-按类型
+ * @request GET:/supervise/statistical/warn/type/sort
+ * @response `200` `ResultListWarnTotalVO` OK
+ */
+export const warnTypeSort = (params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultListWarnTotalVO>(
+    {
+      url: `gas-supervise/supervise/statistical/warn/type/sort`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 预警统计分析-历史预警分析-预警类型 预警统计分析-历史预警分析-预警类型
+ *
+ * @tags 预警统计分析-历史预警分析-预警类型, 监管统计接口
+ * @name WarnTypeRate
+ * @summary 预警统计分析-历史预警分析-预警类型
+ * @request GET:/supervise/statistical/warn/type/rate
+ * @response `200` `ResultListWarnTotalVO` OK
+ */
+export const warnTypeRate = (params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultListWarnTotalVO>(
+    {
+      url: `gas-supervise/supervise/statistical/warn/type/rate`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 监管统计接口 预警统计分析-历史预警分析-预警来源
+ *
+ * @tags 监管统计接口, 预警统计分析-历史预警分析-预警来源
+ * @name WarnSourceRate
+ * @summary 预警统计分析-历史预警分析-预警来源
+ * @request GET:/supervise/statistical/warn/source/rate
+ * @response `200` `ResultListWarnTotalVO` OK
+ */
+export const warnSourceRate = (params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultListWarnTotalVO>(
+    {
+      url: `gas-supervise/supervise/statistical/warn/source/rate`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 预警统计分析-历史预警排名-按企业 预警统计分析-历史预警排名-按企业
+ *
+ * @tags 预警统计分析-历史预警排名-按企业, 监管统计接口
+ * @name WarnOrgSort
+ * @summary 预警统计分析-历史预警排名-按企业
+ * @request GET:/supervise/statistical/warn/org/summary
+ * @response `200` `ResultListWarnTotalVO` OK
+ */
+export const warnOrgSort = (params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultListWarnTotalVO>(
+    {
+      url: `gas-supervise/supervise/statistical/warn/org/summary`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 预警统计分析-历史预警分析-预警等级 预警统计分析-历史预警分析-预警等级
+ *
+ * @tags 预警统计分析-历史预警分析-预警等级, 监管统计接口
+ * @name WarnLevelRate
+ * @summary 预警统计分析-历史预警分析-预警等级
+ * @request GET:/supervise/statistical/warn/level/rate
+ * @response `200` `ResultListWarnTotalVO` OK
+ */
+export const warnLevelRate = (params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultListWarnTotalVO>(
+    {
+      url: `gas-supervise/supervise/statistical/warn/level/rate`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 预警统计分析-处置中预警 预警统计分析-处置中预警
+ *
+ * @tags 预警统计分析-处置中预警, 监管统计接口
+ * @name WarnDisposeSummary
+ * @summary 预警统计分析-处置中预警
+ * @request GET:/supervise/statistical/warn/dispose/summary
+ * @response `200` `ResultWarnDisposeVO` OK
+ */
+export const warnDisposeSummary = (params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultWarnDisposeVO>(
+    {
+      url: `gas-supervise/supervise/statistical/warn/dispose/summary`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
 /**
  * 监管统计接口 设备场所在线率
  *
