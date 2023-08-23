@@ -53,7 +53,7 @@
     <van-tabs    :active="activeTab" @change="onChangeTab">
       <scroll-view style="height: 650rpx" scroll-y="true" class="scroll-Y container">
         <van-tab title="看护记录">
-          <van-empty v-if="!state.info.guardList.length" description="暂无数据"></van-empty>
+          <van-empty v-if="!state.info.guardList?.length" description="暂无数据"></van-empty>
           <view v-else>
             <view class="flow-node" v-for="item in state.info.guardList" :key="item.uid">
               <view class="operator">
@@ -162,6 +162,8 @@ import { ref ,reactive} from 'vue';
 import { detail ,complete} from '@/api/generated/ThirdBuild';
 import type {ThirdBuildDetailVO} from '@/api/generated/data-contracts'
 import { userStore } from '@/state';
+import {EventType} from '@/enums/eventType'
+
 const store = userStore()
 const region = store.auth.activeServer?.region
 
@@ -176,7 +178,7 @@ onLoad((options) => {
   state.uid = options!.uid
   getDetail(options!.uid);
 });
-uni.$on('refreshThirdBuildDetailPage',function(data){
+uni.$on(EventType.THIRD_BUILD_REFRESH,function(data){
   if(state.uid) {
     getDetail(state.uid)
   }

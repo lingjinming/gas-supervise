@@ -23,6 +23,8 @@
 import { reactive } from 'vue';
 import type { ThirdBuildGuardCreateDTO, ThirdBuildReportCreateDTO,ThirdBuildInfoCreateDTO} from '@/api/generated/data-contracts'
 import { checkThirdBuildInfo ,createThirdBuildGuard} from '@/api/generated/ThirdBuild'
+import {EventType} from '@/enums/eventType'
+import {useLoading} from '@/hooks/useLoading'
 
 const data = reactive({
   isInChain: false,
@@ -50,30 +52,18 @@ onLoad(options => {
 const save = async () => {
   // 创建三方施工记录
   if(data.isInChain) {
-    uni.showLoading({
-      title: '请稍后...'
-    });
-    try{
-      const { success,message } = await checkThirdBuildInfo({info: data.thirdBuildInfo,report: data.reportInfo,guard: data.form});
-      if(success) {
-        uni.reLaunch({
-          url: '/pages/thirdBuild/index'
-        })
-      } else {
-        uni.hideLoading();
-        uni.showToast({
-          title: message
-        })
-      }
-    }finally {
-      uni.hideLoading();
-    }
-  } else {
-    const {success} = await createThirdBuildGuard(data.thirdBuildUid,data.form);
-    if(success) {
-      uni.$emit('refreshThirdBuildDetailPage')
+    const createResult = checkThirdBuildInfo({info: data.thirdBuildInfo,report: data.reportInfo,guard: data.form});
+    useLoading(createResult, () => {
+      uni.reLaunch({  url: '/pages/thirdBuild/index'  })
+    })
+  }
+  // 创建看护记录 
+  else {
+    const createResult = createThirdBuildGuard(data.thirdBuildUid,data.form);
+    useLoading(createResult, () => {
+      uni.$emit(EventType.THIRD_BUILD_REFRESH)
       uni.navigateBack();
-    }
+    })
   }
   
 }

@@ -33,6 +33,9 @@ import type {  ThirdBuildReportCreateDTO,ThirdBuildInfoCreateDTO} from '@/api/ge
 import { reactive ,getCurrentInstance } from 'vue';
 import {createThirdBuildReport} from '@/api/generated/ThirdBuild'
 import { userStore } from "@/state";
+import {EventType} from '@/enums/eventType'
+import {useLoading} from '@/hooks/useLoading'
+
 const store =  userStore()
 const isOrg = store.isOrgUser
 
@@ -83,13 +86,11 @@ const save = async() => {
     });
     return;
   }
-
-  const {success,message}  = await createThirdBuildReport(data.thirdBuildUid,data.form);
-  // 跳回去
-  if(success) {
-    uni.$emit('refreshThirdBuildDetailPage')
+  const result = createThirdBuildReport(data.thirdBuildUid,data.form);
+  useLoading(result, () => {
+    uni.$emit(EventType.THIRD_BUILD_REFRESH)
     uni.navigateBack();
-  }
+  })
 }
 // 交底至少写个东西
 const atLeastOneParam = () => {

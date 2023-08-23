@@ -11,10 +11,11 @@
   </view>
   <!-- 三方施工列表 -->
   <scroll-view
-    style="height: 100%"
+    style="height: 90%"
     scroll-y="true"
     class="scroll-Y"
     @scrolltolower="nextPage"
+    refresher-enabled
     :refresher-triggered="triggered"
     @refresherpulling="onRefreshPulling"
     @refresherrefresh="onRefresh"

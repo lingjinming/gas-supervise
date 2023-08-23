@@ -44,8 +44,6 @@ let isShow = ref(false);
 let columns: Ref<Options[]> = ref([]);
 let pickerVal = ref('');
 
-
-
 const columnsObj = {
   org: async () => {
     let data = await getOrg();
@@ -70,19 +68,25 @@ const columnsObj = {
 };
 
 const getDictListFn = async (type:string) =>{
+  if(columns.value.length) {
+    return columns.value;
+  }
   let data = (await getDictList(type))[type];
   columns.value = data;
   return data;
 }
 // 下拉选默认值
 if(props.defaultValue) {
-  getDictListFn(props.dicType).then((res) => {
-    let theDefault = res.find(e => e.value === props.defaultValue)
+  const refDefault = toRefs(props).defaultValue
+  watch(refDefault,(val)=> {
+    getDictListFn(props.dicType).then((res) => {
+    let theDefault = findOption(val);
     if(theDefault) {
-      pickerVal.value = theDefault.label;
+      pickerVal.value = theDefault.text;
       emits("update:modelValue", theDefault.value);
     }
   })
+  },{immediate: true})
 }
 
 const showPicker = () => {
@@ -103,4 +107,10 @@ const confirm = (e) => {
   pickerVal.value = value.text;
   emits("update:modelValue", value.value);
 };
+
+const findOption = (value: string) :Options | undefined => {
+  if(columns.value.length) {
+    return columns.value.find(e => e.value === props.defaultValue)
+  }
+}
 </script>
