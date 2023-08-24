@@ -55,7 +55,15 @@
               :id="img.id"
             />
           </view>
-          <view class="region-imgBox" v-if="node?.fileIds"> </view>
+          <view class="region-imgBox" v-if="node?.fileIds">
+            <region-img
+              v-for="file in node?.fileIds"
+              :key="file.id"
+              region="test"
+              :fileId="file.id"
+              :fileName='file.name'
+            />
+          </view>
           <!-- 隐患推送 -->
           <template v-if="node.stage == 'PUSH'">
             <template v-if="data.detail.dangerSource === 'GOV'">
