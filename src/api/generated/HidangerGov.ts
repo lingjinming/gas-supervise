@@ -22,6 +22,7 @@ import type {
   LeaderCommentCreateDTO,
   PageResultListHiDangerCheckPageVO,
   PageResultListHidangerOrgPageVO,
+  ResultCheckPlanInfoVO,
   ResultHidangerCheckPlanDetailVO,
   ResultHiDangerCheckPlanSummaryVO,
   ResultListCheckPlanRelDangerVO,
@@ -59,7 +60,7 @@ export const updateHidanger1 = (uid: number, data: HidangerCreateDTO, params: Pe
  * @request GET:/hidanger/gov/check-plan/{id}
  * @response `200` `ResultHidangerCheckPlanDetailVO` OK
  */
-export const checkPlanDetail = (id: number, params: PerRequestOptions = {}) => {
+export const checkPlanDetail = (id: string, params: PerRequestOptions = {}) => {
   return defHttp.get<ResultHidangerCheckPlanDetailVO>(
     {
       url: `gas-supervise/hidanger/gov/check-plan/${id}`,
@@ -76,7 +77,7 @@ export const checkPlanDetail = (id: number, params: PerRequestOptions = {}) => {
  * @request PUT:/hidanger/gov/check-plan/{id}
  * @response `200` `ResultVoid` OK
  */
-export const updateCheckPlan = (id: number, data: HiDangerCheckPlanUpdateDTO, params: PerRequestOptions = {}) => {
+export const updateCheckPlan = (id: string, data: HiDangerCheckPlanUpdateDTO, params: PerRequestOptions = {}) => {
   return defHttp.put<ResultVoid>(
     {
       url: `gas-supervise/hidanger/gov/check-plan/${id}`,
@@ -238,7 +239,7 @@ export const checkPlanCreate = (data: HiDangerCheckPlanCreateDTO, params: PerReq
  * @request POST:/hidanger/gov/check-plan/finish/{id}
  * @response `200` `ResultVoid` OK
  */
-export const finishCheckPlan = (id: number, params: PerRequestOptions = {}) => {
+export const finishCheckPlan = (id: string, params: PerRequestOptions = {}) => {
   return defHttp.post<ResultVoid>(
     {
       url: `gas-supervise/hidanger/gov/check-plan/finish/${id}`,
@@ -385,6 +386,29 @@ export const checkPlanPage = (
   return defHttp.get<PageResultListHiDangerCheckPageVO>(
     {
       url: `gas-supervise/hidanger/gov/check-plan/page`,
+      data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 安全检查计划 检查计划关联的企业信息
+ *
+ * @tags 安全检查计划
+ * @name DetailByPlanCode
+ * @summary 检查计划关联的企业信息
+ * @request GET:/hidanger/gov/check-plan/org/info
+ * @response `200` `ResultCheckPlanInfoVO` OK
+ */
+export const detailByPlanCode = (
+  query: {
+    planCode: string;
+  },
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.get<ResultCheckPlanInfoVO>(
+    {
+      url: `gas-supervise/hidanger/gov/check-plan/org/info`,
       data: query,
     },
     { ...params, isTransformResponse: false },

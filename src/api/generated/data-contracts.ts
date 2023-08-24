@@ -61,6 +61,93 @@ export interface IDsRequestDTO {
   ids: string[];
 }
 
+/** 企业人员资格证记录信息 */
+export interface PerCertificateQuery {
+  /** 企业人员资格证记录信息ID */
+  uid: string;
+  /** 从业资格证编号 */
+  proQuaNo: string;
+  /** 通过年份 */
+  effectiveDate: string;
+  /**
+   * 过期时间，格式：yyyy-MM-dd
+   * @format date
+   */
+  expirationDate: string;
+}
+
+/** 企业人员岗位信息 */
+export interface PerPositionQuery {
+  /** 企业人员岗位信息ID */
+  uid: string;
+  /** 人员编号 */
+  code: string;
+  /** 所属企业 */
+  enterpriseId: string;
+  /** 所属企业 */
+  enterpriseName: string;
+  /** 岗位 */
+  position: PerPositionQueryPosition;
+  /** 岗位时间，格式：yyyy-MM-dd */
+  startEndTime: string[];
+  /**
+   * 开始时间，格式：yyyy-MM-dd
+   * @format date
+   */
+  startTime: string;
+  /**
+   * 结束时间，格式：yyyy-MM-dd
+   * @format date
+   */
+  endTime: string;
+  /** 岗位枚举中文描述 */
+  _position: string;
+}
+
+/** 新增企业人员资质证照信息 */
+export interface UpdatePerQualificationsQuery {
+  /** 企业人员资质证照ID */
+  uid: string;
+  /** 人员名称 */
+  name: string;
+  /** 所属企业 */
+  enterpriseId: string;
+  /** 身份证号码 */
+  idNo: string;
+  /** 性别 */
+  gender: UpdatePerQualificationsQueryGender;
+  /**
+   * 出生年月，格式：yyyy-MM-dd
+   * @format date
+   */
+  birthday: string;
+  /** 当前岗位 */
+  currentPosition: UpdatePerQualificationsQueryCurrentPosition;
+  /** 是否在岗 */
+  isWorking: UpdatePerQualificationsQueryIsWorking;
+  /**
+   * 联系方式
+   * @minLength 11
+   * @maxLength 11
+   */
+  contactInfo: string;
+  /** 从业资格证编号 */
+  proQuaNo: string;
+  /** 附件 */
+  files: string;
+  code: string;
+  /** 人员岗位信息列表 */
+  positionQuery: PerPositionQuery[];
+  /** 人员资格证信息列表 */
+  certificateQuery: PerCertificateQuery[];
+  /** 性别枚举中文描述 */
+  _gender: string;
+  /** 当前岗位枚举中文描述 */
+  _currentPosition: string;
+  /** 是否在岗枚举中文描述 */
+  _isWorking: string;
+}
+
 export interface FileObj {
   id: string;
   name: string;
@@ -206,6 +293,198 @@ export interface Risk2DangerDTO {
   auditRemark: string;
   /** 风险要素审核结果枚举中文描述 */
   _auditResult: string;
+}
+
+/** 修改用气用户信息 */
+export interface UpdateGasUserQuery {
+  /** 用户名称 */
+  name: string;
+  /** 行政区划id */
+  districtId: string;
+  /** 用户类型 */
+  userType: UpdateGasUserQueryUserType;
+  /** 用气类型 */
+  useType: UpdateGasUserQueryUseType;
+  /** 天然气户号 */
+  gasUserNo: string;
+  /** 地址 */
+  address: string;
+  /**
+   * 所在小区/工商业名称
+   * @minLength 0
+   * @maxLength 255
+   */
+  location: string;
+  /**
+   * 楼栋
+   * @minLength 0
+   * @maxLength 10
+   */
+  buildingNo: string;
+  /**
+   * 楼层
+   * @minLength 0
+   * @maxLength 10
+   */
+  floor: string;
+  /**
+   * 房号
+   * @minLength 0
+   * @maxLength 10
+   */
+  houseNo: string;
+  /**
+   * 常用联系方式
+   * @minLength 11
+   * @maxLength 11
+   */
+  comContactInfo: string;
+  /** 紧急联系方式 */
+  emContactInfo: string;
+  /** 社区/物业名称 */
+  communityName: string;
+  /** 社区/物业联系方式 */
+  communityContactInfo: string;
+  /** 用户编号 */
+  code: string;
+  /** 行政区划id枚举中文描述 */
+  _districtId: string;
+  /** 用户类型枚举中文描述 */
+  _userType: string;
+  /** 用气类型枚举中文描述 */
+  _useType: string;
+}
+
+export interface EnterpriseCreateDTO {
+  /**
+   * 企业名称
+   * @minLength 0
+   * @maxLength 20
+   */
+  name: string;
+  /** 所属区域 */
+  belongArea: string;
+  /**
+   * 经营区域
+   * @maxItems 2147483647
+   * @minItems 1
+   */
+  businessArea: string[];
+  /**
+   * 企业地址
+   * @minLength 0
+   * @maxLength 100
+   */
+  address: string;
+  /**
+   * 经营范围(类别)
+   * @minLength 1
+   * @maxLength 2147483647
+   */
+  businessScope: string;
+  /**
+   * 企业负责人姓名
+   * @minLength 0
+   * @maxLength 5
+   */
+  masterName: string;
+  /**
+   * 企业负责人手机号
+   * @minLength 11
+   * @maxLength 11
+   */
+  masterPhone: string;
+  /**
+   * 营业执照编号
+   * @minLength 0
+   * @maxLength 32
+   */
+  licenseNumber: string;
+  /**
+   * 营业执照有效期
+   * @format date
+   */
+  licenseExpiryDate: string;
+  /**
+   * 营业执照照片
+   * @maxItems 3
+   * @minItems 0
+   */
+  licenseImgs: string[];
+  /**
+   * 经营许可证编号
+   * @minLength 0
+   * @maxLength 32
+   */
+  permitsNumber: string;
+  /**
+   * 经营许可证有效期
+   * @format date
+   */
+  permitsExpiryDate: string;
+  /**
+   * 经营许可证照片
+   * @maxItems 3
+   * @minItems 0
+   */
+  permitsImgs: string[];
+  /**
+   * 员工数量
+   * @format int32
+   */
+  employeeCount: number;
+  /**
+   * 拥有的窨井数量
+   * @format int32
+   */
+  wellsCount: number;
+  /**
+   * 拥有的场站数量
+   * @format int32
+   */
+  stationCount: number;
+  /** 拥有的管线长度,km */
+  pipelineLengthKm: number;
+  /**
+   * 拥有的液化气瓶数量
+   * @format int32
+   */
+  gasBottleCount: number;
+  /**
+   * 特种设备列表
+   * @maxItems 2147483647
+   * @minItems 1
+   */
+  specialEquips: SpecialEquipDTO[];
+  /**
+   * 企业安全负责人列表
+   * @maxItems 2147483647
+   * @minItems 1
+   */
+  csos: EnterpriseCsoDTO[];
+}
+
+/** 企业安全负责人列表 */
+export interface EnterpriseCsoDTO {
+  /** 安全负责人姓名 */
+  name: string;
+  /** 职位 */
+  jobTitle: string;
+  /** 联系方式 */
+  phone: string;
+}
+
+/** 特种设备列表 */
+export interface SpecialEquipDTO {
+  /**
+   * 特种设备数量
+   * @format int32
+   */
+  count: number;
+  /** 特种设备类型 */
+  type: SpecialEquipDtoType;
+  /** 特种设备类型枚举中文描述 */
+  _type: string;
 }
 
 /** 三方施工创建 */
@@ -472,13 +751,13 @@ export interface ProjectRiskDangerRequest {
    * @format float
    */
   distance: number;
-  districtIdAsList: string[];
-  /** @uniqueItems true */
-  selectIdsAsString: string[];
   /** @uniqueItems true */
   selectIdsAsLong: number[];
   /** @uniqueItems true */
   districtIdAsSet: string[];
+  /** @uniqueItems true */
+  selectIdsAsString: string[];
+  districtIdAsList: string[];
   /** undefined枚举中文描述 */
   _orgId: string;
   /** undefined枚举中文描述 */
@@ -543,6 +822,107 @@ export interface ResultListProjectRiskDangerVO {
   data: ProjectRiskDangerVO[];
   message: string;
   success: boolean;
+}
+
+/** 企业人员资质证照信息管理导入 */
+export interface EnterprisePerQuaImportDTO {
+  /**
+   * 员工名称
+   * @minLength 0
+   * @maxLength 20
+   */
+  name: string;
+  /**
+   * 身份证号码
+   * @pattern (^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)
+   */
+  idNo: string;
+  /** 性别 */
+  gender: EnterprisePerQuaImportDtoGender;
+  /**
+   * 出生年月，格式：yyyy-MM-dd
+   * @format date
+   */
+  birthday: string;
+  /** 所属企业 */
+  enterpriseId: string;
+  /** 当前岗位 */
+  currentPosition: EnterprisePerQuaImportDtoCurrentPosition;
+  /**
+   * 联系方式
+   * @minLength 11
+   * @maxLength 11
+   */
+  contactInfo: string;
+  /** 是否在岗 */
+  isWorking: EnterprisePerQuaImportDtoIsWorking;
+  /** 从业资格证编号 */
+  proQuaNo: string;
+  /**
+   * 通过年份
+   * @format int32
+   */
+  effectiveDate: number;
+  /**
+   * 过期时间，格式：yyyy-MM-dd
+   * @format date
+   */
+  expirationDate: string;
+  /** 性别枚举中文描述 */
+  _gender: string;
+  /** 当前岗位枚举中文描述 */
+  _currentPosition: string;
+  /** 是否在岗枚举中文描述 */
+  _isWorking: string;
+}
+
+/** 企业人员资质证照信息导入 */
+export interface ImportPerQualificationsQuery {
+  /** 数据 */
+  items: EnterprisePerQuaImportDTO[];
+}
+
+/** 新增企业人员资质证照信息 */
+export interface AddPerQualificationsQuery {
+  /** 企业人员资质证照ID */
+  uid: string;
+  /** 人员名称 */
+  name: string;
+  /** 所属企业 */
+  enterpriseId: string;
+  /** 身份证号码 */
+  idNo: string;
+  /** 性别 */
+  gender: AddPerQualificationsQueryGender;
+  /**
+   * 出生年月，格式：yyyy-MM-dd
+   * @format date
+   */
+  birthday: string;
+  /** 当前岗位 */
+  currentPosition: AddPerQualificationsQueryCurrentPosition;
+  /** 是否在岗 */
+  isWorking: AddPerQualificationsQueryIsWorking;
+  /**
+   * 联系方式
+   * @minLength 11
+   * @maxLength 11
+   */
+  contactInfo: string;
+  /** 从业资格证编号 */
+  proQuaNo: string;
+  /** 附件 */
+  files: string;
+  /** 人员岗位信息列表 */
+  positionQuery: PerPositionQuery[];
+  /** 人员资格证信息列表 */
+  certificateQuery: PerCertificateQuery[];
+  /** 性别枚举中文描述 */
+  _gender: string;
+  /** 当前岗位枚举中文描述 */
+  _currentPosition: string;
+  /** 是否在岗枚举中文描述 */
+  _isWorking: string;
 }
 
 export interface DataMessage {
@@ -661,8 +1041,8 @@ export interface HiDangerSendHandleOrderDTO {
    * @uniqueItems true
    */
   msgUserIds: string[];
-  targetOrgMasterSignaturesStr: string;
   expertSignaturesStr: string;
+  targetOrgMasterSignaturesStr: string;
 }
 
 /** 安全检查计划创建DTO */
@@ -717,6 +1097,120 @@ export interface ResultBoolean {
   success: boolean;
 }
 
+/** 用气用户导入 */
+export interface GasUserImportDTO {
+  /**
+   * 用户名称
+   * @minLength 0
+   * @maxLength 20
+   */
+  name: string;
+  /** 用户类型 */
+  userType: GasUserImportDtoUserType;
+  /** 用气类型 */
+  useType: GasUserImportDtoUseType;
+  /** 所属区域 */
+  districtId: string;
+  /** 天然气户号 */
+  gasUserNo: string;
+  /**
+   * 地址
+   * @minLength 0
+   * @maxLength 100
+   */
+  address: string;
+  /** 所在小区/工商业名称 */
+  location: string;
+  /** 楼号（栋） */
+  buildingNo: string;
+  /** 楼层（层） */
+  floor: string;
+  /** 房号 */
+  houseNo: string;
+  /**
+   * 常用联系方式
+   * @minLength 11
+   * @maxLength 11
+   */
+  comContactInfo: string;
+  /** 紧急联系方式 */
+  emContactInfo: string;
+  /** 社区/物业名称 */
+  communityName: string;
+  /** 社区/物业联系方式 */
+  communityContactInfo: string;
+  /** 用户类型枚举中文描述 */
+  _userType: string;
+  /** 用气类型枚举中文描述 */
+  _useType: string;
+  /** 所属区域枚举中文描述 */
+  _districtId: string;
+}
+
+/** 用气用户批量导入 */
+export interface ImportGasUserQuery {
+  /** 数据 */
+  items: GasUserImportDTO[];
+}
+
+/** 新增用气用户信息 */
+export interface AddGasUserQuery {
+  /** 用户名称 */
+  name: string;
+  /** 行政区划id */
+  districtId: string;
+  /** 用户类型 */
+  userType: AddGasUserQueryUserType;
+  /** 用气类型 */
+  useType: AddGasUserQueryUseType;
+  /** 天然气户号 */
+  gasUserNo: string;
+  /** 地址 */
+  address: string;
+  /**
+   * 所在小区/工商业名称
+   * @minLength 0
+   * @maxLength 255
+   */
+  location: string;
+  /**
+   * 楼栋
+   * @minLength 0
+   * @maxLength 10
+   */
+  buildingNo: string;
+  /**
+   * 楼层
+   * @minLength 0
+   * @maxLength 10
+   */
+  floor: string;
+  /**
+   * 房号
+   * @minLength 0
+   * @maxLength 10
+   */
+  houseNo: string;
+  /**
+   * 常用联系方式
+   * @minLength 11
+   * @maxLength 11
+   */
+  comContactInfo: string;
+  /** 紧急联系方式 */
+  emContactInfo: string;
+  /** 社区/物业名称 */
+  communityName: string;
+  /** 社区/物业联系方式 */
+  communityContactInfo: string;
+  /** 行政区划id枚举中文描述 */
+  _districtId: string;
+  /** 用户类型枚举中文描述 */
+  _userType: string;
+  /** 用气类型枚举中文描述 */
+  _useType: string;
+}
+
 export interface FileUpdateResponseDTO {
   fileName: string;
   objectName: string;
@@ -731,6 +1225,172 @@ export interface ResultFileUpdateResponseDTO {
   data: FileUpdateResponseDTO;
   message: string;
   success: boolean;
+}
+
+export interface EnterpriseBatchImportDTO {
+  items: EnterpriseImportDTO[];
+}
+
+export interface EnterpriseImportDTO {
+  /**
+   * 企业名称
+   * @minLength 0
+   * @maxLength 20
+   */
+  name: string;
+  /** 所属区域 */
+  belongArea: string;
+  /**
+   * 企业地址
+   * @minLength 0
+   * @maxLength 100
+   */
+  address: string;
+  /** 经营区域 */
+  businessArea: string;
+  /** 经营范围(类别) */
+  businessScope: EnterpriseImportDtoBusinessScope;
+  /**
+   * 企业负责人姓名
+   * @minLength 0
+   * @maxLength 5
+   */
+  masterName: string;
+  /**
+   * 企业负责人手机号
+   * @minLength 11
+   * @maxLength 11
+   */
+  masterPhone: string;
+  /**
+   * 员工数量
+   * @format int32
+   */
+  employeeCount: number;
+  /**
+   * 拥有的窨井数量
+   * @format int32
+   */
+  wellsCount: number;
+  /** 拥有的管线长度,km */
+  pipelineLengthKm: number;
+  /**
+   * 拥有的液化气瓶数量
+   * @format int32
+   */
+  gasBottleCount: number;
+  /**
+   * 拥有的场站数量
+   * @format int32
+   */
+  stationCount: number;
+  /** 特种设备类型 */
+  specialEquipType: EnterpriseImportDtoSpecialEquipType;
+  /**
+   * 特种设备数量
+   * @format int32
+   */
+  specialEquipmentCount: number;
+  /**
+   * 安全负责人姓名
+   * @minLength 0
+   * @maxLength 5
+   */
+  csoName: string;
+  /**
+   * 职位
+   * @minLength 0
+   * @maxLength 20
+   */
+  csoJobTitle: string;
+  /**
+   * 联系方式
+   * @minLength 11
+   * @maxLength 11
+   */
+  csoPhone: string;
+  /**
+   * 营业执照编号
+   * @minLength 0
+   * @maxLength 32
+   */
+  licenseNumber: string;
+  /**
+   * 营业执照有效期
+   * @pattern ^\d{4}-\d{2}-\d{2}$
+   */
+  licenseExpiryDate: string;
+  /**
+   * 经营许可证编号
+   * @minLength 0
+   * @maxLength 32
+   */
+  permitsNumber: string;
+  /**
+   * 经营许可证有效期
+   * @pattern ^\d{4}-\d{2}-\d{2}$
+   */
+  permitsExpiryDate: string;
+  /** 经营范围(类别)枚举中文描述 */
+  _businessScope: string;
+  /** 特种设备类型枚举中文描述 */
+  _specialEquipType: string;
+}
+
+export interface EnterpriseInfoImportVO {
+  hasBadData: boolean;
+  badData: string[];
+  goodData: object[];
+}
+
+export interface ResultEnterpriseInfoImportVO {
+  code: string;
+  data: EnterpriseInfoImportVO;
+  message: string;
+  success: boolean;
+}
+
+/** 公告信息新增 */
+export interface UpdateBulletinQuery {
+  /** 公告类型 */
+  bulletinType: UpdateBulletinQueryBulletinType;
+  /** 公告标题 */
+  bulletinTitle: string;
+  /** 公告正文 */
+  bulletinText: string;
+  /**
+   * 发布时间
+   * @format date-time
+   */
+  publishTime: string;
+  /** 附件id */
+  fileId: string;
+  /**
+   * 公告ID
+   * @format int64
+   */
+  uid: number;
+  /** 公告类型枚举中文描述 */
+  _bulletinType: string;
+}
+
+/** 公告信息新增 */
+export interface AddBulletinQuery {
+  /** 公告类型 */
+  bulletinType: AddBulletinQueryBulletinType;
+  /** 公告标题 */
+  bulletinTitle: string;
+  /** 公告正文 */
+  bulletinText: string;
+  /**
+   * 发布时间
+   * @format date-time
+   */
+  publishTime: string;
+  /** 附件id */
+  fileId: string;
+  /** 公告类型枚举中文描述 */
+  _bulletinType: string;
 }
 
 /** 响应错误详情 */
@@ -1121,13 +1781,13 @@ export interface ThirdBuildPageQuery {
   buildStates: ThirdBuildPageQueryBuildStates[];
   reportStates: ThirdBuildPageQueryReportStates[];
   guardStates: ThirdBuildPageQueryGuardStates[];
-  districtIdAsList: string[];
-  /** @uniqueItems true */
-  selectIdsAsString: string[];
   /** @uniqueItems true */
   selectIdsAsLong: number[];
   /** @uniqueItems true */
   districtIdAsSet: string[];
+  /** @uniqueItems true */
+  selectIdsAsString: string[];
+  districtIdAsList: string[];
   /** undefined枚举中文描述 */
   _orgId: string;
   /** undefined枚举中文描述 */
@@ -1217,6 +1877,8 @@ export interface WarnPageRequest {
   warnLevel: WarnPageRequestWarnLevel[];
   /** 预警场所 */
   objType: WarnPageRequestObjType[];
+  /** 预警类型 */
+  warnType: string[];
   /** 预警状态 */
   warnState: WarnPageRequestWarnState[];
   /**
@@ -1231,13 +1893,13 @@ export interface WarnPageRequest {
    * @pattern yyyy-MM-dd HH:mm:ss
    */
   endTime: string;
-  districtIdAsList: string[];
-  /** @uniqueItems true */
-  selectIdsAsString: string[];
   /** @uniqueItems true */
   selectIdsAsLong: number[];
   /** @uniqueItems true */
   districtIdAsSet: string[];
+  /** @uniqueItems true */
+  selectIdsAsString: string[];
+  districtIdAsList: string[];
   /** undefined枚举中文描述 */
   _orgId: string;
   /** undefined枚举中文描述 */
@@ -1300,6 +1962,10 @@ export interface WarnPageVO {
   latitude: number;
   /** 报警时长 */
   duration: string;
+  /** 设备编号 */
+  eqptId: string;
+  /** 监测编号 */
+  objId: string;
   /** 预警类型 */
   warnType: string;
   /** 数据来源 */
@@ -1454,13 +2120,13 @@ export interface StatisticalRequest {
   alarmState: StatisticalRequestAlarmState[];
   /** 预警状态 */
   warnState: StatisticalRequestWarnState[];
-  districtIdAsList: string[];
-  /** @uniqueItems true */
-  selectIdsAsString: string[];
   /** @uniqueItems true */
   selectIdsAsLong: number[];
   /** @uniqueItems true */
   districtIdAsSet: string[];
+  /** @uniqueItems true */
+  selectIdsAsString: string[];
+  districtIdAsList: string[];
   /** undefined枚举中文描述 */
   _orgId: string;
   /** undefined枚举中文描述 */
@@ -1658,13 +2324,13 @@ export interface MonitorRequest {
   monitorIndex: string[];
   /** 监测状态 */
   eqptState: MonitorRequestEqptState[];
-  districtIdAsList: string[];
-  /** @uniqueItems true */
-  selectIdsAsString: string[];
   /** @uniqueItems true */
   selectIdsAsLong: number[];
   /** @uniqueItems true */
   districtIdAsSet: string[];
+  /** @uniqueItems true */
+  selectIdsAsString: string[];
+  districtIdAsList: string[];
   /** undefined枚举中文描述 */
   _orgId: string;
   /** undefined枚举中文描述 */
@@ -1739,7 +2405,7 @@ export interface PageResultListMonitorPageVO {
 /** 实时监测汇总VO */
 export interface MonitorSummaryVO {
   /** 监测场所 */
-  objType: MonitorSummaryVoObjType;
+  objType: string;
   /**
    * count
    * @format int64
@@ -1760,8 +2426,6 @@ export interface MonitorSummaryVO {
    * @format int64
    */
   normalCount: number;
-  /** 监测场所枚举中文描述 */
-  _objType: string;
 }
 
 export interface ResultListMonitorSummaryVO {
@@ -1981,8 +2645,8 @@ export interface MonitorCurveVO {
   max: Difference[];
   /** 最小值 */
   min: Difference[];
-  ydata: Record<string, any>;
   xdata: string[];
+  ydata: Record<string, any>;
 }
 
 export interface ResultMonitorCurveVO {
@@ -2027,13 +2691,13 @@ export interface AlarmPageRequest {
    * @pattern yyyy-MM-dd HH:mm:ss
    */
   endTime: string;
-  districtIdAsList: string[];
-  /** @uniqueItems true */
-  selectIdsAsString: string[];
   /** @uniqueItems true */
   selectIdsAsLong: number[];
   /** @uniqueItems true */
   districtIdAsSet: string[];
+  /** @uniqueItems true */
+  selectIdsAsString: string[];
+  districtIdAsList: string[];
   /** undefined枚举中文描述 */
   _orgId: string;
   /** undefined枚举中文描述 */
@@ -2351,6 +3015,255 @@ export interface RiskExportVO {
   _dangerSource: string;
 }
 
+/** 企业人员资质证照分页查询 */
+export interface PerCertificatePageQuery {
+  /** @format int32 */
+  page: number;
+  /** @format int32 */
+  size: number;
+  order: string;
+  originalOrder: string;
+  orgId: string;
+  districtId: string;
+  keyword: string;
+  /** @uniqueItems true */
+  selectIds: object[];
+  paging: boolean;
+  /** 性别 */
+  gender: PerCertificatePageQueryGender;
+  /**
+   * 截止有效日期开始
+   * @format date
+   * @pattern yyyy-MM-dd
+   */
+  startTime: string;
+  /**
+   * 截止有效日期结束
+   * @format date
+   * @pattern yyyy-MM-dd
+   */
+  endTime: string;
+  /** 所属企业 */
+  enterpriseId: number[];
+  /** 是否过期 */
+  isExpiration: PerCertificatePageQueryIsExpiration;
+  /** 当前岗位 */
+  currentPosition: PerCertificatePageQueryCurrentPosition;
+  /** 人员编号 */
+  code: string;
+  /** @uniqueItems true */
+  selectIdsAsLong: number[];
+  /** @uniqueItems true */
+  districtIdAsSet: string[];
+  /** @uniqueItems true */
+  selectIdsAsString: string[];
+  districtIdAsList: string[];
+  /** undefined枚举中文描述 */
+  _orgId: string;
+  /** undefined枚举中文描述 */
+  _districtId: string;
+  /** 性别枚举中文描述 */
+  _gender: string;
+  /** 是否过期枚举中文描述 */
+  _isExpiration: string;
+  /** 当前岗位枚举中文描述 */
+  _currentPosition: string;
+}
+
+export interface PageResultListPerCertificatePageVO {
+  code: string;
+  data: PerCertificatePageVO[];
+  message: string;
+  /** @format int64 */
+  total: number;
+  success: boolean;
+}
+
+/** 企业人员资质证照分页查询 */
+export interface PerCertificatePageVO {
+  /** 企业人员岗位信息ID */
+  uid: string;
+  /** 人员名称 */
+  name: string;
+  /** 人员编号 */
+  code: string;
+  /** 所属企业 */
+  enterpriseId: string;
+  /** 所属企业 */
+  enterpriseName: string;
+  /** 经营范围(类别) */
+  businessScope: PerCertificatePageVoBusinessScope[];
+  /** 身份证号码 */
+  idNo: string;
+  /** 性别 */
+  gender: PerCertificatePageVoGender;
+  /**
+   * 出生年月
+   * @format date
+   */
+  birthday: string;
+  /** 当前岗位 */
+  currentPosition: PerCertificatePageVoCurrentPosition;
+  /** 是否在岗 */
+  isWorking: PerCertificatePageVoIsWorking;
+  /** 从业资格证编号 */
+  proQuaNo: string;
+  /** 联系方式 */
+  contactInfo: string;
+  /** 是否过期 */
+  isExpiration: PerCertificatePageVoIsExpiration;
+  /** 过期时间 */
+  expirationDate: string;
+  /** 通过年份 */
+  effectiveDate: string;
+  /** 性别枚举中文描述 */
+  _gender: string;
+  /** 当前岗位枚举中文描述 */
+  _currentPosition: string;
+  /** 是否在岗枚举中文描述 */
+  _isWorking: string;
+  /** 是否过期枚举中文描述 */
+  _isExpiration: string;
+}
+
+/** 企业人员资质证照信息详情 */
+export interface PerCertificateDetailVO {
+  /** 企业人员岗位信息ID */
+  uid: string;
+  /** 人员名称 */
+  name: string;
+  /** 人员编号 */
+  code: string;
+  /** 所属企业 */
+  enterpriseId: string;
+  /** 所属企业 */
+  enterpriseName: string;
+  /** 经营范围(类别) */
+  businessScope: PerCertificateDetailVoBusinessScope[];
+  /** 身份证号码 */
+  idNo: string;
+  /** 性别 */
+  gender: PerCertificateDetailVoGender;
+  /**
+   * 出生年月
+   * @format date
+   */
+  birthday: string;
+  /** 当前岗位 */
+  currentPosition: PerCertificateDetailVoCurrentPosition;
+  /** 是否在岗 */
+  isWorking: PerCertificateDetailVoIsWorking;
+  /** 从业资格证编号 */
+  proQuaNo: string;
+  /** 联系方式 */
+  contactInfo: string;
+  /** 是否过期 */
+  isExpiration: PerCertificateDetailVoIsExpiration;
+  /** 过期时间 */
+  expirationDate: string;
+  /** 通过年份 */
+  effectiveDate: string;
+  /** 附件 */
+  files: FileObj[];
+  /** 人员岗位信息列表 */
+  positionQuery: PerPositionQuery[];
+  /** 人员资格证信息列表 */
+  certificateQuery: PerCertificateQuery[];
+  /** 性别枚举中文描述 */
+  _gender: string;
+  /** 当前岗位枚举中文描述 */
+  _currentPosition: string;
+  /** 是否在岗枚举中文描述 */
+  _isWorking: string;
+  /** 是否过期枚举中文描述 */
+  _isExpiration: string;
+}
+
+export interface ResultPerCertificateDetailVO {
+  code: string;
+  /** 企业人员资质证照信息详情 */
+  data: PerCertificateDetailVO;
+  message: string;
+  success: boolean;
+}
+
+/** 企业人员资质证照信息汇总 */
+export interface PerCertificateCountVO {
+  /**
+   * 企业员工总数
+   * @format int64
+   */
+  perTotal: number;
+  /**
+   * 企业负责人
+   * @format int64
+   */
+  qyfzrCnt: number;
+  /**
+   * 安全管理人员
+   * @format int64
+   */
+  aqglryCnt: number;
+  /**
+   * 燃气输配场站工
+   * @format int64
+   */
+  rqspczgCnt: number;
+  /**
+   * 液化石油气库站工
+   * @format int64
+   */
+  yhsyqkzgCnt: number;
+  /**
+   * 压缩天然气场站工
+   * @format int64
+   */
+  ystrqzgCnt: number;
+  /**
+   * 液化天然气储运工
+   * @format int64
+   */
+  yhtrqcygCnt: number;
+  /**
+   * 汽车加气站操作工
+   * @format int64
+   */
+  qcjqzczgCnt: number;
+  /**
+   * 燃气管网工
+   * @format int64
+   */
+  rqgwgCnt: number;
+  /**
+   * 燃气用户安装检修工
+   * @format int64
+   */
+  rqyhazjxgCnt: number;
+  /**
+   * 瓶装燃气送气工
+   * @format int64
+   */
+  pzrqsqgCnt: number;
+  /**
+   * 在岗人员
+   * @format int64
+   */
+  onDutyCnt: number;
+  /**
+   * 离职人员
+   * @format int64
+   */
+  departCnt: number;
+}
+
+export interface ResultPerCertificateCountVO {
+  code: string;
+  /** 企业人员资质证照信息汇总 */
+  data: PerCertificateCountVO;
+  message: string;
+  success: boolean;
+}
+
 export interface ResultListTreeVo {
   code: string;
   data: TreeVo[];
@@ -2539,6 +3452,7 @@ export interface HidangerOrgPageQuery {
   paging: boolean;
   /** 检查计划编号.小程序创建隐患整改单时专用.其他请勿使用 */
   planCode: string;
+  canSendHandleOrder: boolean;
   /** 隐患主体 */
   subjectType: string;
   /** 风险要素类别 */
@@ -2565,17 +3479,17 @@ export interface HidangerOrgPageQuery {
    * @format date
    */
   endTime: string;
-  dangerTypeStr: string;
-  subjectTypeStr: string;
   queryOrder: string;
   dangerSubTypeStr: string;
-  districtIdAsList: string[];
-  /** @uniqueItems true */
-  selectIdsAsString: string[];
+  dangerTypeStr: string;
+  subjectTypeStr: string;
   /** @uniqueItems true */
   selectIdsAsLong: number[];
   /** @uniqueItems true */
   districtIdAsSet: string[];
+  /** @uniqueItems true */
+  selectIdsAsString: string[];
+  districtIdAsList: string[];
   /** undefined枚举中文描述 */
   _orgId: string;
   /** undefined枚举中文描述 */
@@ -2867,13 +3781,13 @@ export interface HiDangerCheckPageQuery {
   /** @uniqueItems true */
   orgIds: string[];
   queryOrder: string;
-  districtIdAsList: string[];
-  /** @uniqueItems true */
-  selectIdsAsString: string[];
   /** @uniqueItems true */
   selectIdsAsLong: number[];
   /** @uniqueItems true */
   districtIdAsSet: string[];
+  /** @uniqueItems true */
+  selectIdsAsString: string[];
+  districtIdAsList: string[];
   /** undefined枚举中文描述 */
   _orgId: string;
   /** undefined枚举中文描述 */
@@ -2922,6 +3836,24 @@ export interface PageResultListHiDangerCheckPageVO {
   message: string;
   /** @format int64 */
   total: number;
+  success: boolean;
+}
+
+export interface CheckPlanInfoVO {
+  /** 目标检查企业id */
+  targetOrgId: string;
+  /** 目标检查企业负责人 */
+  targetOrgOwner: string;
+  /** 目标检查企业联系方式 */
+  targetOrgPhone: string;
+  /** 目标检查企业地址 */
+  targetOrgAddr: string;
+}
+
+export interface ResultCheckPlanInfoVO {
+  code: string;
+  data: CheckPlanInfoVO;
+  message: string;
   success: boolean;
 }
 
@@ -3073,17 +4005,17 @@ export interface HidangerFactorsSummaryPageQuery {
   years: string[];
   /** 压力级别 */
   pressureLevels: HidangerFactorsSummaryPageQueryPressureLevels[];
-  dangerTypeStr: string;
-  materialStr: string;
   dangerSubTypeStr: string;
   pressureLevelCodes: string[];
-  districtIdAsList: string[];
-  /** @uniqueItems true */
-  selectIdsAsString: string[];
+  dangerTypeStr: string;
+  materialStr: string;
   /** @uniqueItems true */
   selectIdsAsLong: number[];
   /** @uniqueItems true */
   districtIdAsSet: string[];
+  /** @uniqueItems true */
+  selectIdsAsString: string[];
+  districtIdAsList: string[];
   /** undefined枚举中文描述 */
   _orgId: string;
   /** undefined枚举中文描述 */
@@ -3262,9 +4194,9 @@ export interface PipelineInfo {
    */
   sdate: string;
   edepth: number;
-  sdepth: number;
   /** @format date */
   ddate: string;
+  sdepth: number;
   /** 管线权属单位枚举中文描述 */
   _orgId: string;
   /** 材质枚举中文描述 */
@@ -3374,6 +4306,374 @@ export interface ResultObject {
   success: boolean;
 }
 
+/** 用气用户分页查询 */
+export interface PageGasUserQuery {
+  /** @format int32 */
+  page: number;
+  /** @format int32 */
+  size: number;
+  order: string;
+  originalOrder: string;
+  orgId: string;
+  districtId: string;
+  keyword: string;
+  /** @uniqueItems true */
+  selectIds: object[];
+  paging: boolean;
+  /** 用户类型 */
+  userType: PageGasUserQueryUserType[];
+  /** 用气类型 */
+  useType: PageGasUserQueryUseType[];
+  /** @uniqueItems true */
+  selectIdsAsLong: number[];
+  /** @uniqueItems true */
+  districtIdAsSet: string[];
+  /** @uniqueItems true */
+  selectIdsAsString: string[];
+  districtIdAsList: string[];
+  /** undefined枚举中文描述 */
+  _orgId: string;
+  /** undefined枚举中文描述 */
+  _districtId: string;
+}
+
+/** 修改用气用户信息 */
+export interface DetailGasUserVO {
+  /** 用户名称 */
+  name: string;
+  /** 行政区划id */
+  districtId: string;
+  /** 用户类型 */
+  userType: DetailGasUserVoUserType;
+  /** 用气类型 */
+  useType: DetailGasUserVoUseType;
+  /** 天然气户号 */
+  gasUserNo: string;
+  /** 地址 */
+  address: string;
+  /**
+   * 所在小区/工商业名称
+   * @minLength 0
+   * @maxLength 255
+   */
+  location: string;
+  /**
+   * 楼栋
+   * @minLength 0
+   * @maxLength 10
+   */
+  buildingNo: string;
+  /**
+   * 楼层
+   * @minLength 0
+   * @maxLength 10
+   */
+  floor: string;
+  /**
+   * 房号
+   * @minLength 0
+   * @maxLength 10
+   */
+  houseNo: string;
+  /**
+   * 常用联系方式
+   * @minLength 11
+   * @maxLength 11
+   */
+  comContactInfo: string;
+  /** 紧急联系方式 */
+  emContactInfo: string;
+  /** 社区/物业名称 */
+  communityName: string;
+  /** 社区/物业联系方式 */
+  communityContactInfo: string;
+  /** 用户ID */
+  uid: string;
+  /** 用户编号 */
+  code: string;
+  /** 行政区划id枚举中文描述 */
+  _districtId: string;
+  /** 用户类型枚举中文描述 */
+  _userType: string;
+  /** 用气类型枚举中文描述 */
+  _useType: string;
+}
+
+export interface PageResultListDetailGasUserVO {
+  code: string;
+  data: DetailGasUserVO[];
+  message: string;
+  /** @format int64 */
+  total: number;
+  success: boolean;
+}
+
+export interface ResultDetailGasUserVO {
+  code: string;
+  /** 修改用气用户信息 */
+  data: DetailGasUserVO;
+  message: string;
+  success: boolean;
+}
+
+/** 企业人员资质证照信息汇总 */
+export interface GasUserCountVO {
+  /**
+   * 用气用户总数
+   * @format int64
+   */
+  userTotal: number;
+  /**
+   * 天然气用户
+   * @format int64
+   */
+  trqCnt: number;
+  /**
+   * 液化气用户
+   * @format int64
+   */
+  yhqCnt: number;
+  /**
+   * 居民天然气用户
+   * @format int64
+   */
+  jmtrqCnt: number;
+  /**
+   * 居民液化气用户
+   * @format int64
+   */
+  jmyhqCnt: number;
+  /**
+   * 工业天然气用户
+   * @format int64
+   */
+  gytrqCnt: number;
+  /**
+   * 工业液化气用户
+   * @format int64
+   */
+  gyyhqCnt: number;
+  /**
+   * 商业天然气用户
+   * @format int64
+   */
+  sytrqCnt: number;
+  /**
+   * 商业液化气用户
+   * @format int64
+   */
+  syyhqCnt: number;
+}
+
+export interface ResultGasUserCountVO {
+  code: string;
+  /** 企业人员资质证照信息汇总 */
+  data: GasUserCountVO;
+  message: string;
+  success: boolean;
+}
+
+export interface EnterpriseDetailVO {
+  /** 企业名称 */
+  name: string;
+  /** 所属区域 */
+  belongArea: string;
+  /** 经营区域 */
+  businessArea: string[];
+  /** 企业地址 */
+  address: string;
+  /** 经营范围(类别) */
+  businessScope: EnterpriseDetailVoBusinessScope[];
+  /** 企业负责人姓名 */
+  masterName: string;
+  /** 企业负责人手机号 */
+  masterPhone: string;
+  /** 营业执照编号 */
+  licenseNumber: string;
+  /**
+   * 营业执照有效期
+   * @format date
+   */
+  licenseExpiryDate: string;
+  /** 营业执照照片 */
+  licenseImgs: FileObj[];
+  /** 经营许可证编号 */
+  permitsNumber: string;
+  /**
+   * 经营许可证有效期
+   * @format date
+   */
+  permitsExpiryDate: string;
+  /** 经营许可证照片 */
+  permitsImgs: FileObj[];
+  /**
+   * 员工数量
+   * @format int32
+   */
+  employeeCount: number;
+  /**
+   * 拥有的窨井数量
+   * @format int32
+   */
+  wellsCount: number;
+  /**
+   * 拥有的场站数量
+   * @format int32
+   */
+  stationCount: number;
+  /**
+   * 拥有的液化气瓶数量
+   * @format int32
+   */
+  gasBottleCount: number;
+  /** 拥有的管线长度,km */
+  pipelineLengthKm: number;
+  /** 特种设备列表 */
+  specialEquips: SpecialEquipDTO[];
+  /** 企业安全负责人列表 */
+  csos: EnterpriseCsoDTO[];
+}
+
+export interface ResultEnterpriseDetailVO {
+  code: string;
+  data: EnterpriseDetailVO;
+  message: string;
+  success: boolean;
+}
+
+export interface EnterpriseSummaryVO {
+  /**
+   * 企业总数
+   * @format int32
+   */
+  total: number;
+  /**
+   * 管道气经营企业数量
+   * @format int32
+   */
+  pipelineGas: number;
+  /**
+   * 液化气经营企业数量
+   * @format int32
+   */
+  liquefiedGas: number;
+  /**
+   * 汽车加气站企业数量
+   * @format int32
+   */
+  carGas: number;
+  /** 拥有的燃气管网长度,km */
+  totalPipelineLength: number;
+  /**
+   * 拥有的燃气场站
+   * @format int32
+   */
+  stationTotal: number;
+  /**
+   * 拥有的液化气瓶
+   * @format int32
+   */
+  liquefiedTotal: number;
+  /**
+   * 拥有的特种设备
+   * @format int32
+   */
+  specialEquipTotal: number;
+}
+
+export interface ResultEnterpriseSummaryVO {
+  code: string;
+  data: EnterpriseSummaryVO;
+  message: string;
+  success: boolean;
+}
+
+export interface EnterpriseInfoPageQuery {
+  /** @format int32 */
+  page: number;
+  /** @format int32 */
+  size: number;
+  order: string;
+  originalOrder: string;
+  orgId: string;
+  districtId: string;
+  keyword: string;
+  /** @uniqueItems true */
+  selectIds: object[];
+  paging: boolean;
+  /** 经营区域 */
+  businessArea: string[];
+  /** 经营类别 */
+  businessScope: EnterpriseInfoPageQueryBusinessScope[];
+  /** @uniqueItems true */
+  selectIdsAsLong: number[];
+  /** @uniqueItems true */
+  districtIdAsSet: string[];
+  /** @uniqueItems true */
+  selectIdsAsString: string[];
+  districtIdAsList: string[];
+  /** undefined枚举中文描述 */
+  _orgId: string;
+  /** undefined枚举中文描述 */
+  _districtId: string;
+}
+
+export interface EnterpriseInfoPageVO {
+  /** 主键 */
+  uid: string;
+  /** 企业名称 */
+  name: string;
+  /** 所属区域 */
+  belongArea: string;
+  /** 经营区域 */
+  businessArea: string[];
+  /** 地址 */
+  address: string;
+  /** 经营范围 */
+  businessScope: EnterpriseInfoPageVoBusinessScope[];
+  /** 企业负责人姓名 */
+  masterName: string;
+  /** 企业负责人手机号 */
+  masterPhone: string;
+  /** 营业执照编号 */
+  licenseNumber: string;
+  /**
+   * 营业执照有效期
+   * @format date
+   */
+  licenseExpiryDate: string;
+  /** 经营许可证编号 */
+  permitsNumber: string;
+  /**
+   * 经营许可证有效期
+   * @format date
+   */
+  permitsExpiryDate: string;
+  /** 所属区域 */
+  districtId: string;
+  /**
+   * 员工数量
+   * @format int32
+   */
+  employeeCount: number;
+  /**
+   * 特种设备数量
+   * @format int32
+   */
+  specialEquipmentCount: number;
+  /** 所属区域枚举中文描述 */
+  _districtId: string;
+}
+
+export interface PageResultListEnterpriseInfoPageVO {
+  code: string;
+  data: EnterpriseInfoPageVO[];
+  message: string;
+  /** @format int64 */
+  total: number;
+  success: boolean;
+}
+
 export interface ResultListDistrictVO {
   code: string;
   data: DistrictVO[];
@@ -3384,6 +4684,182 @@ export interface ResultListDistrictVO {
 export interface ResultMapStringListDictionaryItem {
   code: string;
   data: Record<string, any>;
+  message: string;
+  success: boolean;
+}
+
+/** 公告信息查询 */
+export interface BulletinQuery {
+  /** @format int32 */
+  page: number;
+  /** @format int32 */
+  size: number;
+  order: string;
+  originalOrder: string;
+  orgId: string;
+  districtId: string;
+  keyword: string;
+  /** @uniqueItems true */
+  selectIds: object[];
+  paging: boolean;
+  /** @uniqueItems true */
+  districtIds: string[];
+  /** 公告标题 */
+  bulletinTitle: string;
+  /** 公告类型 */
+  bulletinType: BulletinQueryBulletinType[];
+  /**
+   * 发布时间开始
+   * @format date-time
+   * @pattern yyyy-MM-dd HH:mm:ss
+   */
+  startTime: string;
+  /**
+   * 发布时间结束
+   * @format date-time
+   * @pattern yyyy-MM-dd HH:mm:ss
+   */
+  endTime: string;
+  /** @uniqueItems true */
+  selectIdsAsLong: number[];
+  /** @uniqueItems true */
+  districtIdAsSet: string[];
+  /** @uniqueItems true */
+  selectIdsAsString: string[];
+  districtIdAsList: string[];
+  /** undefined枚举中文描述 */
+  _orgId: string;
+  /** undefined枚举中文描述 */
+  _districtId: string;
+}
+
+/** 公告信息VO */
+export interface BulletinVO {
+  /** id */
+  uid: string;
+  /** 公告类型 */
+  bulletinType: BulletinVoBulletinType;
+  /** 公告标题 */
+  bulletinTitle: string;
+  /** 公告正文 */
+  bulletinText: string;
+  /**
+   * 发布时间
+   * @format date-time
+   */
+  publishTime: string;
+  /**
+   * 创建时间
+   * @format date-time
+   */
+  createTime: string;
+  /** 创建人 */
+  createBy: string;
+  /**
+   * 最后更新时间
+   * @format date-time
+   */
+  lastUpdateTime: string;
+  /** 更新人 */
+  lastUpdateBy: string;
+  /**
+   * 通知日期
+   * @format date
+   */
+  noticeTime: string;
+  /** 主管单位 */
+  managerBy: string;
+  /** 通知公司 */
+  noticeCompany: string;
+  fileId: string;
+  /** 公告类型枚举中文描述 */
+  _bulletinType: string;
+}
+
+export interface PageResultListBulletinVO {
+  code: string;
+  data: BulletinVO[];
+  message: string;
+  /** @format int64 */
+  total: number;
+  success: boolean;
+}
+
+/** 公告信息VO */
+export interface BulletinDetailVO {
+  /**
+   * id
+   * @format int64
+   */
+  uid: number;
+  /** 公告类型 */
+  bulletinType: BulletinDetailVoBulletinType;
+  /** 公告标题 */
+  bulletinTitle: string;
+  /** 公告正文 */
+  bulletinText: string;
+  /**
+   * 发布时间
+   * @format date-time
+   */
+  publishTime: string;
+  /**
+   * 创建时间
+   * @format date-time
+   */
+  createTime: string;
+  /** 创建人 */
+  createBy: string;
+  /**
+   * 最后更新时间
+   * @format date-time
+   */
+  lastUpdateTime: string;
+  /** 更新人 */
+  lastUpdateBy: string;
+  /** 主管单位 */
+  managerBy: string;
+  fileId: string;
+  /** 公告类型枚举中文描述 */
+  _bulletinType: string;
+}
+
+export interface ResultBulletinDetailVO {
+  code: string;
+  /** 公告信息VO */
+  data: BulletinDetailVO;
+  message: string;
+  success: boolean;
+}
+
+/** 公告信息统计 */
+export interface BulletinCountVO {
+  /**
+   * 公告总数
+   * @format int32
+   */
+  total: number;
+  /**
+   * 法律法规
+   * @format int32
+   */
+  lrCnt: number;
+  /**
+   * 政策文件
+   * @format int32
+   */
+  pdCnt: number;
+  /**
+   * 通知公告
+   * @format int32
+   */
+  naCnt: number;
+}
+
+export interface ResultBulletinCountVO {
+  code: string;
+  /** 公告信息统计 */
+  data: BulletinCountVO;
   message: string;
   success: boolean;
 }
@@ -3430,6 +4906,38 @@ export interface ResultListAroundRiskDTO {
 /** 第三方施工状态 */
 export type ThirdBuildUpdateDtoBuildState = "NOT_STARTED" | "IN_PROGRESS" | "COMPLETED";
 
+/** 岗位 */
+export type PerPositionQueryPosition =
+  | "QYFZR"
+  | "AQGLRY"
+  | "RQSPCZG"
+  | "YHSYQKZG"
+  | "YSTRQZG"
+  | "YHTRQCYG"
+  | "QCJQZCZG"
+  | "RQGWG"
+  | "RQYHAZJXG"
+  | "PZRQSQG";
+
+/** 性别 */
+export type UpdatePerQualificationsQueryGender = "xb001" | "xb002";
+
+/** 当前岗位 */
+export type UpdatePerQualificationsQueryCurrentPosition =
+  | "QYFZR"
+  | "AQGLRY"
+  | "RQSPCZG"
+  | "YHSYQKZG"
+  | "YSTRQZG"
+  | "YHTRQCYG"
+  | "QCJQZCZG"
+  | "RQGWG"
+  | "RQYHAZJXG"
+  | "PZRQSQG";
+
+/** 是否在岗 */
+export type UpdatePerQualificationsQueryIsWorking = "ON_DUTY" | "DEPART";
+
 /** 风险要素等级 */
 export type HidangerCreateDtoLevel = "ZD" | "JD" | "YB";
 
@@ -3454,6 +4962,21 @@ export type OrgHidangerHandleDtoHandleState =
 /** 风险要素审核结果 */
 export type Risk2DangerDtoAuditResult = "PASS" | "NOT_PASS";
 
+/** 用户类型 */
+export type UpdateGasUserQueryUserType = "RESIDENT" | "INDUSTRY" | "BUSINESS";
+
+/** 用气类型 */
+export type UpdateGasUserQueryUseType = "GAS" | "LIQUEFIED_GAS";
+
+/** 特种设备类型 */
+export type SpecialEquipDtoType =
+  | "COMPRESSOR"
+  | "OIL_PUMP"
+  | "BUFFER_TANK"
+  | "GAS_CYLINDER"
+  | "WELL_OR_TANK"
+  | "GAS_MACHINE";
+
 /** 第三方施工状态 */
 export type ThirdBuildInfoCreateDtoBuildState = "NOT_STARTED" | "IN_PROGRESS" | "COMPLETED";
 
@@ -3465,6 +4988,44 @@ export type ProjectRiskDangerVoState = "DRAFT" | "WAIT_HANDLE" | "WAIT_AUDIT" | 
 
 /** 风险要素等级 */
 export type ProjectRiskDangerVoLevel = "ZD" | "JD" | "YB";
+
+/** 性别 */
+export type EnterprisePerQuaImportDtoGender = "xb001" | "xb002";
+
+/** 当前岗位 */
+export type EnterprisePerQuaImportDtoCurrentPosition =
+  | "QYFZR"
+  | "AQGLRY"
+  | "RQSPCZG"
+  | "YHSYQKZG"
+  | "YSTRQZG"
+  | "YHTRQCYG"
+  | "QCJQZCZG"
+  | "RQGWG"
+  | "RQYHAZJXG"
+  | "PZRQSQG";
+
+/** 是否在岗 */
+export type EnterprisePerQuaImportDtoIsWorking = "ON_DUTY" | "DEPART";
+
+/** 性别 */
+export type AddPerQualificationsQueryGender = "xb001" | "xb002";
+
+/** 当前岗位 */
+export type AddPerQualificationsQueryCurrentPosition =
+  | "QYFZR"
+  | "AQGLRY"
+  | "RQSPCZG"
+  | "YHSYQKZG"
+  | "YSTRQZG"
+  | "YHTRQCYG"
+  | "QCJQZCZG"
+  | "RQGWG"
+  | "RQYHAZJXG"
+  | "PZRQSQG";
+
+/** 是否在岗 */
+export type AddPerQualificationsQueryIsWorking = "ON_DUTY" | "DEPART";
 
 /** 隐患来源 */
 export type HidangerImportDtoSource = "SYSTEM" | "GOV" | "COMPANY";
@@ -3489,6 +5050,36 @@ export type HiDangerCheckPlanCreateDtoType =
   | "LG_TRANSPORT"
   | "NG_STATION"
   | "INDOOR_NG";
+
+/** 用户类型 */
+export type GasUserImportDtoUserType = "RESIDENT" | "INDUSTRY" | "BUSINESS";
+
+/** 用气类型 */
+export type GasUserImportDtoUseType = "GAS" | "LIQUEFIED_GAS";
+
+/** 用户类型 */
+export type AddGasUserQueryUserType = "RESIDENT" | "INDUSTRY" | "BUSINESS";
+
+/** 用气类型 */
+export type AddGasUserQueryUseType = "GAS" | "LIQUEFIED_GAS";
+
+/** 经营范围(类别) */
+export type EnterpriseImportDtoBusinessScope = "PIPELINE_GAS" | "LIQUEFIED_GAS" | "CAR_GAS";
+
+/** 特种设备类型 */
+export type EnterpriseImportDtoSpecialEquipType =
+  | "COMPRESSOR"
+  | "OIL_PUMP"
+  | "BUFFER_TANK"
+  | "GAS_CYLINDER"
+  | "WELL_OR_TANK"
+  | "GAS_MACHINE";
+
+/** 公告类型 */
+export type UpdateBulletinQueryBulletinType = "NOTICE_LR" | "NOTICE_PD" | "NOTICE_NA";
+
+/** 公告类型 */
+export type AddBulletinQueryBulletinType = "NOTICE_LR" | "NOTICE_PD" | "NOTICE_NA";
 
 /** 施工类型 */
 export type ThirdBuildDetailVoBuildType = "DTJS" | "DLGZ";
@@ -3524,7 +5115,7 @@ export type ThirdBuildPageVoReportState = "REPORTED" | "UNREPORTED";
 export type ThirdBuildPageVoGuardState = "GUARDED" | "UNGUARDED";
 
 /** 预警级别 */
-export type WarnPageRequestWarnLevel = "YJYJ" | "EJYJ" | "SJYJ";
+export type WarnPageRequestWarnLevel = "yjjb001" | "yjjb002" | "yjjb003";
 
 /** 预警场所 */
 export type WarnPageRequestObjType = "OBJ_CZ" | "OBJ_DXKJ" | "OBJ_JMYH" | "OBJ_GSYH";
@@ -3570,9 +5161,6 @@ export type MonitorPageVoEqptState = "equipRunStatus1" | "equipRunStatus2" | "eq
 
 /** 数据来源 */
 export type MonitorPageVoDataSource = "LIFELINE" | "GAS_ENTERPRISES" | "AIoT";
-
-/** 监测场所 */
-export type MonitorSummaryVoObjType = "OBJ_CZ" | "OBJ_DXKJ" | "OBJ_JMYH" | "OBJ_GSYH";
 
 /**  危险源类型 */
 export type DangerJudgeVoType =
@@ -3659,6 +5247,75 @@ export type RiskExportVoState = "DRAFT" | "WAIT_HANDLE" | "WAIT_AUDIT" | "HANDLE
 
 /** 隐患来源 */
 export type RiskExportVoDangerSource = "SYSTEM" | "GOV" | "COMPANY";
+
+/** 性别 */
+export type PerCertificatePageQueryGender = "xb001" | "xb002";
+
+/** 是否过期 */
+export type PerCertificatePageQueryIsExpiration = "NO" | "YES";
+
+/** 当前岗位 */
+export type PerCertificatePageQueryCurrentPosition =
+  | "QYFZR"
+  | "AQGLRY"
+  | "RQSPCZG"
+  | "YHSYQKZG"
+  | "YSTRQZG"
+  | "YHTRQCYG"
+  | "QCJQZCZG"
+  | "RQGWG"
+  | "RQYHAZJXG"
+  | "PZRQSQG";
+
+/** 经营范围(类别) */
+export type PerCertificatePageVoBusinessScope = "PIPELINE_GAS" | "LIQUEFIED_GAS" | "CAR_GAS";
+
+/** 性别 */
+export type PerCertificatePageVoGender = "xb001" | "xb002";
+
+/** 当前岗位 */
+export type PerCertificatePageVoCurrentPosition =
+  | "QYFZR"
+  | "AQGLRY"
+  | "RQSPCZG"
+  | "YHSYQKZG"
+  | "YSTRQZG"
+  | "YHTRQCYG"
+  | "QCJQZCZG"
+  | "RQGWG"
+  | "RQYHAZJXG"
+  | "PZRQSQG";
+
+/** 是否在岗 */
+export type PerCertificatePageVoIsWorking = "ON_DUTY" | "DEPART";
+
+/** 是否过期 */
+export type PerCertificatePageVoIsExpiration = "NO" | "YES";
+
+/** 经营范围(类别) */
+export type PerCertificateDetailVoBusinessScope = "PIPELINE_GAS" | "LIQUEFIED_GAS" | "CAR_GAS";
+
+/** 性别 */
+export type PerCertificateDetailVoGender = "xb001" | "xb002";
+
+/** 当前岗位 */
+export type PerCertificateDetailVoCurrentPosition =
+  | "QYFZR"
+  | "AQGLRY"
+  | "RQSPCZG"
+  | "YHSYQKZG"
+  | "YSTRQZG"
+  | "YHTRQCYG"
+  | "QCJQZCZG"
+  | "RQGWG"
+  | "RQYHAZJXG"
+  | "PZRQSQG";
+
+/** 是否在岗 */
+export type PerCertificateDetailVoIsWorking = "ON_DUTY" | "DEPART";
+
+/** 是否过期 */
+export type PerCertificateDetailVoIsExpiration = "NO" | "YES";
 
 /** 风险要素等级 */
 export type RiskStatisticsVoLevel = "ZD" | "JD" | "YB";
@@ -4210,8 +5867,42 @@ export type RiskDetailInfoSubType =
   | "SD11"
   | "OTHER";
 
+/** 用户类型 */
+export type PageGasUserQueryUserType = "RESIDENT" | "INDUSTRY" | "BUSINESS";
+
+/** 用气类型 */
+export type PageGasUserQueryUseType = "GAS" | "LIQUEFIED_GAS";
+
+/** 用户类型 */
+export type DetailGasUserVoUserType = "RESIDENT" | "INDUSTRY" | "BUSINESS";
+
+/** 用气类型 */
+export type DetailGasUserVoUseType = "GAS" | "LIQUEFIED_GAS";
+
+/** 经营范围(类别) */
+export type EnterpriseDetailVoBusinessScope = "PIPELINE_GAS" | "LIQUEFIED_GAS" | "CAR_GAS";
+
+/** 经营类别 */
+export type EnterpriseInfoPageQueryBusinessScope = "PIPELINE_GAS" | "LIQUEFIED_GAS" | "CAR_GAS";
+
+/** 经营范围 */
+export type EnterpriseInfoPageVoBusinessScope = "PIPELINE_GAS" | "LIQUEFIED_GAS" | "CAR_GAS";
+
+/** 公告类型 */
+export type BulletinQueryBulletinType = "NOTICE_LR" | "NOTICE_PD" | "NOTICE_NA";
+
+/** 公告类型 */
+export type BulletinVoBulletinType = "NOTICE_LR" | "NOTICE_PD" | "NOTICE_NA";
+
+/** 公告类型 */
+export type BulletinDetailVoBulletinType = "NOTICE_LR" | "NOTICE_PD" | "NOTICE_NA";
+
+export type ImportEnterpriseParamsType = "ENTERPRISE_INFO_IMPORT" | "GAS_USER_IMPORT" | "PER_QUA_IMPORT";
+
 /** 燃气管网风险要素类型 */
 export type TypeSummaryParamsType = "GW_SG" | "GW_MSBZ" | "GW_CY" | "GW_ZY" | "GW_JJBZ" | "GW_LH" | "OTHER";
 
 /** 燃气管网风险要素类型 */
 export type TypePageParamsType = "GW_SG" | "GW_MSBZ" | "GW_CY" | "GW_ZY" | "GW_JJBZ" | "GW_LH" | "OTHER";
+
+export type DownloadTemplateParamsType = "ENTERPRISE_INFO_IMPORT" | "GAS_USER_IMPORT" | "PER_QUA_IMPORT";

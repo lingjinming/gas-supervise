@@ -72,49 +72,18 @@
           </view>
         </view>
       </view>
-      <!-- <view style="margin-top: 40rpx">
-          <view class="tab-detail-tit">整改隐患信息</view>
-          <hidden
-            v-for="(item, i) in detail.handleOrders"
-            :key="i"
-            :info="item"
-          />
-        </view> -->
     </van-tab>
   </van-tabs>
 
-  <view class="addAudit-box" v-if="isGovUser">
-    <van-button
-      custom-style="border-color:#a7a7a7;border-radius:10rpx"
-      color="#a7a7a7"
-      plain
-      size="large"
-      icon="plus"
-      type="default"
-      @click="addAudit"
-      >创建整改单</van-button
-    >
-  </view>
 </template>
 <script setup lang="ts">
-import { checkPlanDetail, hidangerOrder } from "@/api/hidden";
 import { userStore } from "@/state";
+import { checkPlanDetail } from '@/api/generated/HidangerGov'
+import type {HidangerHandleOrderDTO} from '@/api/generated/data-contracts'
 
 const store = userStore();
-const isOrg: boolean = store.isOrgUser;
-const isGovUser: boolean = store.isGovUser;
 
-const addAudit = () => {
-  let keys = [
-    "targetOrgMasterSignatures",
-    "expertSignatures1",
-    "expertSignatures2",
-  ];
-  keys.forEach((key) => uni.removeStorageSync(key));
-  uni.navigateTo({
-    url: `/pages/hidden/index?audit=true&_targetOrgId=${detail.order["整改单位"]["val"]}&targetOrgPhone=${detail.order["联系电话"]["val"]}&targetOrgAddr=${detail.order["地址"]["val"]}&planCode=${detail.planCode}`,
-  });
-};
+
 onLoad((options) => {
   detail.planCode = options!.planCode;
   getDetail(options!.uid);
@@ -181,13 +150,13 @@ let detail = reactive({
       val: "",
     },
   },
-  handleOrders: [],
+  handleOrders: <HidangerHandleOrderDTO[]>[],
   planCode: "",
 });
 
 const getDetail = async (id: string) => {
   try {
-    let data = await checkPlanDetail(id);
+    let {data} = await checkPlanDetail(id);
     Object.values(detail.check).forEach((value) => {
       value.val = data[value.prop];
     });

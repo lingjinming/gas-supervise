@@ -21,6 +21,7 @@ import type {
   ResultMonitorCurveVO,
   ResultPerimeterSearchVO,
   ResultSuperviseObjDetailVO,
+  ResultVoid,
 } from "./data-contracts";
 
 /**
@@ -91,6 +92,23 @@ export const perimeterSearch = (
     {
       url: `gas-supervise/supervise/monitor/perimeter`,
       data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 监管端报警管理接口 初始化AIoT设备
+ *
+ * @tags 监管端报警管理接口, 初始化AIoT设备
+ * @name InitAiot
+ * @summary 初始化AIoT设备
+ * @request GET:/supervise/monitor/init/aiot
+ * @response `200` `ResultVoid` OK
+ */
+export const initAiot = (params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultVoid>(
+    {
+      url: `gas-supervise/supervise/monitor/init/aiot`,
     },
     { ...params, isTransformResponse: false },
   );

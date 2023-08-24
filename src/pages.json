@@ -29,6 +29,12 @@
       }
     },
     {
+      "path": "pages/handleOrder/index",
+      "style": {
+        "navigationBarTitleText": "创建整改单"
+      }
+    },
+    {
       "path": "pages/hiddenDetail/index",
       "style": {
         "navigationBarTitleText": "隐患详情"

@@ -66,11 +66,11 @@ let actions = [
         optType: ['org'],
         url: '/pages/hiddenReport/index'
       },
-      // TODO 待实现
-      // {
-      //   name: '创建整改单',
-      //   optType: ['gov']
-      // }
+      {
+        name: '创建整改单',
+        optType: ['gov'],
+        url: '/pages/handleOrder/index'
+      }
     ]
 const functions = computed(() => {
   return actions.filter(act => act.optType.includes(store.isGovUser?'gov':'org'))

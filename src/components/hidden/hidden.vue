@@ -4,15 +4,9 @@
   >
     <van-skeleton title avatar row="2" :loading="data.loading">
       <view class="hidden-box">
-        <view class="tit" @click="chooseUid(info.uid)">
+        <view class="tit">
           <view>
-            <van-icon
-              v-if="showCheck"
-              color="red"
-              size="36rpx"
-              custom-style="margin-right:20rpx;top:4rpx"
-              :name="uids.includes(info.uid) ? 'passed' : 'circle'"
-            />
+            <slot></slot>
             <van-tag :type="getTagType(info.level!)">
               {{ info._level }}
             </van-tag>
@@ -59,21 +53,13 @@ import { userStore } from "@/state";
 import { hidangerAudit } from "@/api/hidden";
 import type { AuditCreateReq } from "@/api/model/HidangerAudit";
 import { EventType } from "@/enums/eventType";
-const emits = defineEmits(["chooseUid"]);
 const props = defineProps({
   info: {
     type: Object as PropType<HidangerPgaeVO>,
     default: {
       uid: "",
     },
-  },
-  uids: {
-    default: [],
-  },
-  showCheck: {
-    type: Boolean,
-    default: false,
-  },
+  }
 });
 const store = userStore();
 const isOrg: boolean = store.isOrgUser;
@@ -88,9 +74,7 @@ const data = reactive({
   },
 });
 
-const chooseUid = (uid) => {
-  emits("chooseUid", uid);
-};
+
 
 // 展示审核弹窗
 const showAuditForm = (isPass: boolean) => {

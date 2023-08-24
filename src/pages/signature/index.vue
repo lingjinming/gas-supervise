@@ -26,15 +26,19 @@
 
 <script setup lang="ts">
 import { uploadFile } from "@/hooks";
+import { getCurrentInstance } from 'vue'
 
 let canvasCtx = uni.createCanvasContext("canvas_sign", this); //创建绘图对象; //绘图图像
 let points = ref([]); //路径点集合
 let hasSign = ref(false); //是否签过字
 let isInit = ref(false);
 let key = ""; //
-
+let eventChannel = null;
 onLoad((options) => {
   key = options?.key;
+  const _this = getCurrentInstance();
+  // @ts-ignore
+  eventChannel = _this!.ctx.getOpenerEventChannel();
 });
 //设置画笔样式
 canvasCtx.lineWidth = 6;
@@ -129,13 +133,7 @@ const autographClick = (type) => {
             success: function (res) {
               let path = res.tempFilePath;
               uploadFile(res, ({ data }) => {
-                uni.setStorage({
-                  key,
-                  data,
-                  success() {
-                    uni.navigateBack();
-                  },
-                });
+                sendBack(data);
               });
             },
             fail: (err) => {
@@ -148,6 +146,13 @@ const autographClick = (type) => {
     });
   }
 };
+
+const sendBack = (data) => {
+  // @ts-ignore
+  eventChannel?.emit && eventChannel.emit("onSignature",{key: key,data});
+  eventChannel = null;
+  uni.navigateBack();
+}
 </script>
 <style lang="scss" scoped>
 /*
