@@ -32,18 +32,7 @@
     </template>
     <van-empty v-if="noData" description="暂无数据" />
   </scroll-view>
-  <view class="addCheck-box" v-if="!isOrg">
-    <van-button
-      custom-style="border-color:#a7a7a7;border-radius:10rpx"
-      color="#a7a7a7"
-      plain
-      size="large"
-      icon="plus"
-      type="default"
-      @click="addCheck"
-      >新增检查计划</van-button
-    >
-  </view>
+
 
   <van-calendar
     type="range"
@@ -78,12 +67,6 @@ const { noData ,total,list,nextPage,search,triggered,onRefreshPulling,onRefresh}
 
 
 
-const addCheck = () => {
-  uni.navigateTo({
-    url: "/pages/addCheck/index",
-  });
-};
-
 
 const onConfirm = (e) => {
   reportForm.value.startTime = formatDate(e.detail[0]);
@@ -106,9 +89,5 @@ onShow(() => {
   height: 80rpx;
   padding: 0 40rpx;
 }
-.addCheck-box {
-  background: #fff;
-  height: 160rpx;
-  padding: 30rpx 20rpx;
-}
+
 </style>

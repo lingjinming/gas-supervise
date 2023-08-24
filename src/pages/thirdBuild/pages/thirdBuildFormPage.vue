@@ -105,8 +105,30 @@
 </van-cell-group>
 
 <view class="opts">
-  <button v-if="form.isEdit" @click="save">保存</button>
-  <button v-else  @click="nextStep">下一步</button>
+  <view class="btn-save" v-if="form.isEdit">
+    <van-button
+      custom-style="border-color:#a7a7a7;border-radius:10rpx"
+      color="#a7a7a7"
+      plain
+      size="large"
+      icon="plus"
+      type="default"
+      @click="save"
+      >保存</van-button
+    >
+  </view>
+  <view class="btn-save"  v-else>
+    <van-button
+      custom-style="border-color:#a7a7a7;border-radius:10rpx"
+      color="#a7a7a7"
+      plain
+      size="large"
+      icon="plus"
+      type="default"
+      @click="nextStep"
+      >下一步</van-button
+    >
+  </view>
 </view>
 
 <van-calendar
@@ -211,7 +233,11 @@ const openMapAndChooseLocation = async() => {
   margin: 15rpx 0;
 }
 .opts {
-
+  .btn-save {
+    background: #fff;
+    height: 160rpx;
+    padding: 30rpx 20rpx;
+  }
 }
 
 </style>
