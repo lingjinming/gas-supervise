@@ -162,7 +162,7 @@ const nextStep = () => {
   })
   } else {
     uni.showToast({
-      icon: 'fail',
+      icon: 'none',
       title: validator?.errorList[0].msg
     })
   }
@@ -241,7 +241,7 @@ const message:Messages<ThirdBuildInfoCreateDTO> = {
   },
   buildUnitContactPhone: {
     required: '请输入建设单位联系方式',
-    tel: '请输入正确的设单位联系方式'
+    tel: '请输入正确的建设单位联系方式'
   },
   supUnitName: {
     required: '请输入监理单位',
