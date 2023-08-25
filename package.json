@@ -2,7 +2,7 @@
   "name": "gas-supervise",
   "version": "1.0.0",
   "scripts": {
-    "api:build":"node ./api-templates/index.js",
+    "api:build": "node ./api-templates/index.js",
     "dev:mp-weixin": "uni -p mp-weixin",
     "dev:app": "uni -p app",
     "dev:app-android": "uni -p app-android",
@@ -53,6 +53,7 @@
     "@dcloudio/uni-mp-toutiao": "3.0.0-alpha-3070720230316001",
     "@dcloudio/uni-mp-weixin": "3.0.0-alpha-3070720230316001",
     "@dcloudio/uni-quickapp-webview": "3.0.0-alpha-3070720230316001",
+    "@dcloudio/uni-ui": "^1.4.28",
     "@vant/weapp": "^1.10.19",
     "miniprogram-api-typings": "^3.10.0",
     "pinia": "2.0.36",

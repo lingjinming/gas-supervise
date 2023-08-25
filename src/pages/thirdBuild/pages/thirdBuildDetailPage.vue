@@ -141,20 +141,52 @@
             </view>
 
           </view>
+          <!-- 交底图片 -->
+          <view class="info-form">
+            <view class="title">交底图片</view>
+            <view class="info-images">
+              <template v-if="state.info.reportPicIds?.length">
+              <region-img  v-for="img in state.info.reportPicIds" :key="img.id"  :id="img.id" />
+              </template>
+              <template v-else>
+                <view>未上传</view>
+              </template>
+            </view>
+          </view>
+          <!-- 管网保护方案图片 -->
+          <view class="info-form">
+            <view class="title">管网保护方案图片</view>
+            <view class="info-images">
+              <template v-if="state.info.protocolPicIds?.length">
+              <region-img  v-for="img in state.info.protocolPicIds" :key="img.id"  :id="img.id" />
+              </template>
+              <template v-else>
+                <view>未上传</view>
+              </template>
+            </view>
+          </view>
+          <!-- 管网保护协议照片 -->
+          <view class="info-form">
+            <view class="title">管网保护方案图片</view>
+            <view class="info-images">
+              <template v-if="state.info.schemaPicIds?.length">
+              <region-img  v-for="img in state.info.schemaPicIds" :key="img.id"  :id="img.id" />
+              </template>
+              <template v-else>
+                <view>未上传</view>
+              </template>
+            </view>
+          </view>
         </van-tab>
       </scroll-view>
     </van-tabs>
   </view>
   <!-- 底部操作按钮 -->
   <view class="bottom-buttons">
-    <view @click="goReport">
-      <van-icon name="upgrade" /> 上传交底</view>
-    <view @click="goGuard">
-      <van-icon name="add-o" />
-      新增看护</view>
-    <view @click="goFinish">
-      <van-icon name="passed" />施工完成</view>
-    <view @click="goEdit"><van-icon name="edit" />修改</view>
+    <view @click="goReport"> <van-icon name="upgrade" /> 上传交底</view>
+    <view @click="goGuard"> <van-icon name="add-o" /> 新增看护</view>
+    <view @click="goFinish"  v-if="state.info.buildState !== 'COMPLETED'"> <van-icon name="passed" />施工完成</view>
+    <view @click="goEdit" v-if="state.info.buildState !== 'COMPLETED'"><van-icon name="edit" />修改</view>
   </view>
 </template>
 <script setup lang="ts">
@@ -195,9 +227,18 @@ const getDetail = async (uid: string) => {
 }
 // 跳转到编辑页面
 const goEdit = () => {
-  uni.navigateTo({
-    url: '/pages/thirdBuild/pages/thirdBuildFormPage?uid='+state.info.uid
-  })
+  // 已完成的不给修改
+  if(state.info.buildState === 'COMPLETED') {
+    uni.showToast({
+      icon: 'error',
+      title: '施工已完成!'
+    })
+  } else {
+    uni.navigateTo({
+      url: '/pages/thirdBuild/pages/thirdBuildFormPage?uid='+state.info.uid
+    })
+  }
+  
 }
 // 跳转到交底页面
 const goReport = () => {
@@ -358,6 +399,9 @@ const isOk = (value: string) => {
     border-top: 1rpx solid #ccc;
     padding-top: 30rpx;
   }
+  & .flow-node:last-child {
+    margin-bottom: 60rpx;
+  }
   .flow-node {
     display: flex;
     justify-content: space-between;
@@ -397,11 +441,16 @@ const isOk = (value: string) => {
       color: #989898;
     }
     .content {
-      width: 100%;
+      width: calc(100% - 28rpx);
       background: #F8F8F8;
       padding: 28rpx;
       .remark {
         margin-bottom: 28rpx;
+        // 换行
+        white-space: pre-line;
+        word-break: break-all;
+        word-wrap: break-word;
+
       }
 
       .imgs {
@@ -443,6 +492,9 @@ const isOk = (value: string) => {
         color: #222222;
         line-height: 26rpx;
       }
+    }
+    .info-images {
+      display: flex;
     }
   }
 }

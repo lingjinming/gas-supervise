@@ -27,7 +27,7 @@ export const useMap = (): UserMapReturnType => {
           const { code } = await getDistrictId(location.latitude, location.longitude)
           res({
             success: true,
-            lon: location.latitude,
+            lon: location.longitude,
             lat: location.latitude,
             address: location.address,
             districtId:code

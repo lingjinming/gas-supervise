@@ -1,32 +1,51 @@
 <template>
-  <!-- 交底上报页面 -->
-  <van-cell-group>
-    <van-field
-      :value="data.form.reporterName"
-      @change="data.form.reporterName = $event.detail"
-      label="交底人员"
-      placeholder="请输入交底人员姓名"
-      maxlength="16"
-    />
-    <van-field
-      :value="data.form.reporterPhone"
-      @change="data.form.reporterPhone = $event.detail"
-      label="联系电话"
-      placeholder="请输入交底人员联系电话"
-      maxlength="16"
-    />
-    <!-- 交底照片 -->
-    <van-uploader-new label="上传交底照片" v-model="data.form.reportPicIds"/>
-    <!-- 管网保护方案照片 -->
-    <van-uploader-new label="上传管网保护方案照片" v-model="data.form.schemaPicIds"/>
-    <!-- 管网保护协议照片 -->
-    <van-uploader-new label="上传管网保护协议照片" v-model="data.form.protocolPicIds"/>
-  </van-cell-group>
-  <view class="opts">
-    <button v-if="data.isInChain" @click="nextStep">下一步</button>
-    <button v-else  @click="save">保存</button>
-  </view>
+  <view class="report-container">
+    <!-- 交底上报页面 -->
+    <van-cell-group>
+      <van-field
+        :value="data.form.reporterName"
+        @change="data.form.reporterName = $event.detail"
+        label="交底人员"
+        placeholder="请输入交底人员姓名"
+        maxlength="16"
+      />
+      <van-field
+        :value="data.form.reporterPhone"
+        @change="data.form.reporterPhone = $event.detail"
+        label="联系电话"
+        placeholder="请输入交底人员联系电话"
+        maxlength="16"
+      />
+      <!-- 交底照片 -->
+      <van-uploader-new label="上传交底照片" v-model="data.form.reportPicIds"/>
+      <!-- 管网保护方案照片 -->
+      <van-uploader-new label="上传管网保护方案照片" v-model="data.form.schemaPicIds"/>
+      <!-- 管网保护协议照片 -->
+      <van-uploader-new label="上传管网保护协议(施工方签字)照片" v-model="data.form.protocolPicIds"/>
       
+    </van-cell-group>
+  </view>
+  <view class="info">  注:支持jpg、jpeg、png 每项可上传最多三张. </view>
+  <view class="opts">
+      <van-button v-if="data.isInChain"
+      custom-style="background-color:#006CFF;color:#fff;border-radius:10rpx"
+        color="#a7a7a7"
+        plain
+        size="large"
+        type="default"
+        @click="nextStep"
+        >下一步</van-button
+      >
+      <van-button v-else
+      custom-style="background-color:#006CFF;color:#fff;border-radius:10rpx"
+        color="#a7a7a7"
+        plain
+        size="large"
+        type="default"
+        @click="save"
+        >保存</van-button
+      >
+    </view>
 </template>
 <script lang="ts" setup>
 import type {  ThirdBuildReportCreateDTO,ThirdBuildInfoCreateDTO} from '@/api/generated/data-contracts'
@@ -99,3 +118,19 @@ const atLeastOneParam = () => {
 
 
 </script>
+
+<style lang="scss" scoped>
+.report-container {
+  background-color: #fff;
+  padding: 0 20rpx;
+  
+}
+.opts {
+    height: 160rpx;
+    padding: 30rpx 20rpx;
+  }
+  .info {
+    margin: 20rpx 30rpx;
+    color: #a7a7a7;
+  }
+</style>

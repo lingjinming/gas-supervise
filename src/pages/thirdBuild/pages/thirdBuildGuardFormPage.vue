@@ -1,23 +1,35 @@
 <template>
   <!-- 看护页面 -->
-  <van-cell-group>
-    <view style="background: #fff;">
-      <van-field :value="data.form.remark" label="看护描述" readonly />
-      <textarea
-        class="remark"
-        maxlength="200"
-        :value="data.form.remark"
-        @input="data.form.remark = $event.detail.value"
-        type="text"
-        placeholder="请输入看护描述"
-      />
+  <view class="guard-container">
+    <uni-forms :modelValue="data.form" label-position="top">
+
+      <view class="form-item">
+      <uni-forms-item  name="name">
+        <template #label>
+          <view class="label">看护描述</view>
+        </template>
+        <uni-easyinput type="textarea" v-model="data.form.remark" placeholder="请输入看护描述" maxlength="300"/>
+      </uni-forms-item>
     </view>
-    <!-- 看护照片 -->
+    </uni-forms>
     <van-uploader-new label="看护照片" v-model="data.form.picIds"/>
-  </van-cell-group>
-  <view class="opts">
-    <button  @click="save">保存</button>
+    <view class="required">*需要上传人员旁站照片</view>
+    
   </view>
+  <view class="info">
+      注:jpg、jpeg、png 最多可上传最多三张.
+    </view>
+    <view class="opts">
+      <van-button
+        custom-style="background-color:#006CFF;color:#fff;border-radius:10rpx"
+        color="#a7a7a7"
+        plain
+        size="large"
+        type="default"
+        @click="save"
+        >确认上报</van-button
+      >
+    </view>
 </template>
 <script lang="ts" setup>
 import { reactive } from 'vue';
@@ -70,3 +82,29 @@ const save = async () => {
 
 
 </script>
+<style lang="scss" scoped>
+.guard-container {
+  background-color: #fff;
+  padding-bottom: 30rpx;
+  .form-item {
+    padding: 30rpx;
+    .label {
+      margin-bottom: 20rpx;
+    }
+  }
+  .required {
+    margin-top: -30rpx;
+    margin-left: 30rpx;
+    color: #F63724
+  }
+  
+}
+.opts {
+  height: 160rpx;
+  padding: 30rpx 20rpx;
+}
+.info {
+  margin: 20rpx 30rpx;
+  color: #a7a7a7;
+}
+</style>
