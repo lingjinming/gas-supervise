@@ -30,11 +30,11 @@ import type {
 } from "./data-contracts";
 
 /**
- * 三方施工管理 查看三方施工记录详情
+ * 三方施工管理 详情
  *
  * @tags 三方施工管理
  * @name Detail
- * @summary 查看三方施工记录详情
+ * @summary 详情
  * @request GET:/third/build/{id}
  * @response `200` `ResultThirdBuildDetailVO` OK
  */
@@ -47,11 +47,11 @@ export const detail = (id: string, params: PerRequestOptions = {}) => {
   );
 };
 /**
- * 三方施工管理 更新三方施工记录
+ * 三方施工管理 编辑
  *
  * @tags 三方施工管理
  * @name UpdateThirdBuildInfo
- * @summary 更新三方施工记录
+ * @summary 编辑
  * @request PUT:/third/build/{id}
  * @response `200` `ResultVoid` OK
  */
@@ -83,11 +83,11 @@ export const complete = (data: IDsRequestDTO, params: PerRequestOptions = {}) =>
   );
 };
 /**
- * 三方施工管理 创建三方施工记录
+ * 三方施工管理 创建
  *
  * @tags 三方施工管理
  * @name CheckThirdBuildInfo
- * @summary 创建三方施工记录
+ * @summary 创建
  * @request POST:/third/build
  * @response `200` `ResultString` OK
  */
@@ -233,11 +233,11 @@ export const summary = (params: PerRequestOptions = {}) => {
   );
 };
 /**
- * 三方施工管理 分页查询三方施工记录
+ * 三方施工管理 分页
  *
  * @tags 三方施工管理
  * @name PageQuery
- * @summary 分页查询三方施工记录
+ * @summary 分页
  * @request GET:/third/build/page
  * @response `200` `PageResultListThirdBuildPageVO` OK
  */

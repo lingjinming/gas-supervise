@@ -18,7 +18,7 @@
       </view
     >
     <view hover-class="hover"	 class="midBtn" @click="show = true">
-      <image src="/static/img/icon_photo.png" class="photo"></image>
+      <image src="/static/img/icon_add.png" class="photo"></image>
     </view>
   </view>
 
