@@ -65,14 +65,11 @@ let actions = [
         name: '隐患上报',
         optType: ['org'],
         url: '/pages/hiddenReport/index'
-      },
-      {
-        name: '创建整改单',
-        optType: ['gov'],
-        url: '/pages/handleOrder/index'
       }
     ]
 const functions = computed(() => {
+  console.log(store.userInfo);
+  
   return actions.filter(act => act.optType.includes(store.isGovUser?'gov':'org'))
 })
 let switchTab = (route: any) => {

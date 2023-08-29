@@ -197,14 +197,15 @@ const data  = reactive({
 
   },
   query: <HidangerOrgPageQuery>{
+    planCode: '',
     paging: false,
-    canSendHandleOrder: true
   },
 })
 const hasSing = computed(() => data.targetOrgMasterSignatures && data.expertSignatures1 && data.expertSignatures2)
 const { total, list, search } = useTable<HidangerOrgPageVO>(data.query, page1, { showToast: true });
 
-onLoad(() => {
+onLoad((param) => {
+  data.query.planCode = param!.planCode
   search()
 })
 let dateKey = ref("");
@@ -290,7 +291,7 @@ const save = () => {
   console.log(data.order);
   const result = sendHandleOrder(data.order);
   useLoading(result,() => {
-    uni.navigateTo({
+    uni.redirectTo({
       url: '/pages/check/index',
     });
   })

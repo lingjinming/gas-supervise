@@ -4,7 +4,7 @@
     <image class="bg_img" src="./static/img/bg.png"></image>
     <view class="user">
       <view class="av">
-        <van-icon name="https://b.yzcdn.cn/vant/icon-demo-1126.png" />
+        <image  src="./static/img/avt.png" mode="aspectFill"></image>
       </view>
       <view class="info">
         <view class="name">
@@ -47,7 +47,7 @@
         </view>
       </view>
     </view>
-    <button @click="" class="logout-btn">
+    <button @click="logout" class="logout-btn">
       退出账号
     </button>
 
@@ -162,23 +162,31 @@ const logout = () => {
     align-items: center;
     width: 100%;
     .av {
-      margin-top: 15rpx;
-      font-size: 100rpx;
-      line-height: 100rpx;
-      margin-right: 30rpx;
+      width: 120rpx;
+      height: 120rpx;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: 20rpx;
+      image {
+        width: 100%;
+        height: 100%;
+      }
     }
     .info {
       .name {
         display: flex;
-        font-size: 36rpx;
+        font-size: 32rpx;
         font-family: Microsoft YaHei;
         font-weight: 400;
         color: #222222;
         line-height: 70rpx;
         align-items: center;
         .company {
+          max-width: 250rpx;
+          overflow: hidden;
+          word-break: break-all;
+          white-space: nowrap;
           margin-left: 20rpx;
-          padding: 0 20rpx;
           height: 36rpx;
           line-height: 36rpx;
           text-align: center;
