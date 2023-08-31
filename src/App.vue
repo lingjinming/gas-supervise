@@ -134,6 +134,7 @@ page {
     line-height: 40rpx;
     font-weight: 600;
   }
+  
   .tab-detail-box {
     min-height: 80rpx;
     line-height: 40rpx;
