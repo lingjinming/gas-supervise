@@ -138,6 +138,8 @@ export const useTable = <T>(
         } else {
           loading.value = false;
         }
+      } else {
+        loading.value = false;
       }
     }
   };

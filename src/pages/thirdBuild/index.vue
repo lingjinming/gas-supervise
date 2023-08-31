@@ -72,6 +72,10 @@
       title="上报企业"
       v-model="state.query.orgId"
     />
+    <!-- 计划施工时间 -->
+    <van-field  @click-input="showCalender" label="计划施工时间" placeholder="请选择" readonly  >
+      <input slot="input"  disabled style="width: 100%" :value="state.query.startTime + ' - ' + state.query.endTime" />
+    </van-field>
 
     <!-- 确定 -->
     <view class="bottom">
@@ -79,6 +83,14 @@
       <button plain="true" @click="doQuery" class="btn query">查询</button>
     </view>
   </van-popup>
+  <van-calendar
+    allow-same-day
+    :min-date="new Date().getTime() - 3 * 30 * 24 * 60 * 60 * 1000"
+    type="range"
+    :show="isShow"
+    @close="closeCalender"
+    @confirm="onCalendarConfirm"
+  />
 </template>
 <script lang="ts" setup>
 import { reactive } from 'vue';
@@ -87,6 +99,7 @@ import { pageQuery } from '@/api/generated/ThirdBuild';
 import { useTable } from '@/hooks/useTable';
 import type { ThirdBuildPageVO ,ThirdBuildPageQuery} from '@/api/generated/data-contracts'
 import ThirdBuildPageItem from './components/thirdBuildPageItem.vue'
+import { formatDate } from "@/utils";
 
 const store = userStore();
 const isOrg: boolean = store.isOrgUser;
@@ -94,7 +107,9 @@ const state = reactive({
   showQuery: false,
   query: <ThirdBuildPageQuery>{
     page: 1,
-    size: 10
+    size: 10,
+    startTime: '',
+    endTime: ''
   }
 })
 
@@ -117,6 +132,24 @@ const doQuery = () => {
 const cancel = () => {
   state.showQuery = false;
 };
+
+const isShow = ref(false);
+const showCalender = () => {
+  uni.hideKeyboard();
+  state.showQuery = false;
+  isShow.value = true;
+};
+
+const onCalendarConfirm = (e) => {
+  state.query.startTime = formatDate(e.detail[0]);
+  state.query.endTime = formatDate(e.detail[1]);
+  isShow.value = false;
+  state.showQuery = true;
+};
+const closeCalender = () => {
+  isShow.value = false;
+  state.showQuery = true;
+}
 </script>
 <style lang="scss" scoped>
 .top {

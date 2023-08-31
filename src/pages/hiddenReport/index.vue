@@ -26,7 +26,7 @@
       />
       <van-field
         label="位置"
-        @click-input="chooseLocation"
+        @click-input="openMapAndChooseLocation"
         right-icon="location-o"
       >
         <input
@@ -36,15 +36,6 @@
           placeholder="请选择"
         />
       </van-field>
-
-      <!-- <van-field
-  :value="districtName"
-  :innerValue="districtName"
-  label="所属区域"
-  fixed
-  autosize
-  placeholder="请点选位置"
-/> -->
 
       <van-picker-new
         dicType="org"
@@ -78,10 +69,8 @@
       type="primary"
       size="large"
       color="#006CFF"
-      :loading="loading"
-      loading-text="请稍后..." 
       @click="submit"
-      >确定</van-button
+      >保存</van-button
     >
   </view>
 </template>
@@ -90,9 +79,10 @@ import { ref } from "vue";
 import { addHidden } from "../../api/hidden";
 import type { HidangerCreateReq } from "@/api/model/Hidanger";
 import { formatDate } from "@/utils";
-import { getDistrictId } from "@/utils/qqMapUtil";
 import { minDate, maxDate } from "@/hooks";
 import { userStore } from "@/state";
+import { useLoading } from "@/hooks/useLoading";
+import { useMap } from '@/hooks/useMap';
 
 const store = userStore();
 
@@ -105,8 +95,6 @@ onShow(() => {
     });
 });
 
-let loading = ref(false);
-const districtName = ref("");
 let reportForm = ref({
   remark: "",
   address: "",
@@ -124,49 +112,25 @@ let reportForm = ref({
 } as HidangerCreateReq);
 
 const submit = async () => {
-  loading.value = true;
-  try {
-    let {success,message} = await addHidden(reportForm.value);
-    if(success) {
-      setTimeout(() => {
-        loading.value = false;
-        uni.navigateBack();
-      }, 1500);
-    } else {
-      uni.showToast({
-        icon: 'error',
-        title: message
-      })
-    }
-      
-  } catch(e) {
-    loading.value = false;
+  const result  = addHidden(reportForm.value);
+  useLoading(result,() => {
+    uni.navigateBack();
+  })
+};
+
+// 打开地图,选择地址
+const openMapAndChooseLocation = async() => {
+  const {chooseLocation} = useMap();
+  const location = await chooseLocation();
+  if(location.success) {
+    reportForm.value.address = location.address;
+    reportForm.value.longitude = location.lon;
+    reportForm.value.latitude = location.lat;
+    reportForm.value.districtId = location.districtId;
   }
-  
-};
+}
 
-const chooseLocation = () => {
-  uni.authorize({
-    scope: "scope.userLocation",
-    success() {
-      uni.chooseLocation({
-        success: function (res) {
-          reportForm.value.address = res.address + res.name;
-          reportForm.value.longitude = res.longitude;
-          reportForm.value.latitude = res.latitude;
 
-          getDistrictId(res.latitude, res.longitude).then((data) => {
-            reportForm.value.districtId = data.code;
-            districtName.value = data.name;
-          });
-        },
-        fail: function (res) {
-          console.log(res);
-        },
-      });
-    },
-  });
-};
 </script>
 <style lang="scss" scoped>
 .container{

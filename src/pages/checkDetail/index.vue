@@ -11,9 +11,21 @@
           <text>{{ val.val }}</text>
         </view>
       </view>
+      <view class="opts" v-if="isGovUser">
+        <van-button
+          @click="goCreateHandleOrder"
+          custom-style="background-color:#006CFF;color:#fff;border-radius:10rpx"
+          color="#a7a7a7"
+          plain
+          size="large"
+          type="default"
+          >创建整改单</van-button
+        >
+    </view>
     </van-tab>
     <van-tab name="隐患整改单" title="隐患整改单">
-      <view
+      <template v-if="detail.handleOrders?.length">
+        <view
         class="tab-detail-wrap"
         v-for="(order, i) in detail.handleOrders"
         :key="i"
@@ -72,9 +84,14 @@
           </view>
         </view>
       </view>
+      </template>
+      <template v-else>
+        <van-empty  description="暂无关联整改单"></van-empty>
+      </template>
+      
     </van-tab>
   </van-tabs>
-
+  
 </template>
 <script setup lang="ts">
 import { userStore } from "@/state";
@@ -82,6 +99,7 @@ import { checkPlanDetail } from '@/api/generated/HidangerGov'
 import type {HidangerHandleOrderDTO} from '@/api/generated/data-contracts'
 
 const store = userStore();
+const isGovUser = store.isGovUser;
 
 
 onLoad((options) => {
@@ -169,15 +187,15 @@ const getDetail = async (id: string) => {
 };
 let activeTab = ref("计划详情");
 const onChangeTab = ({ name }) => {
-  if (!detail.handleOrders.length) {
-    uni.showToast({
-      icon: "none",
-      title: "暂无数据",
-    });
-  } else {
-    activeTab.value = name;
-  }
+  activeTab.value = name;
 };
+
+const goCreateHandleOrder = () => {
+  uni.navigateTo({
+    url:'/pages/handleOrder/index?planCode='+detail.planCode,
+  })
+  
+}
 </script>
 <style lang="scss" scoped>
 .top {
@@ -192,5 +210,9 @@ const onChangeTab = ({ name }) => {
   position: fixed;
   width: calc(100% - 40rpx);
   bottom: 0;
+}
+.opts {
+  height: 160rpx;
+  padding: 30rpx 20rpx;
 }
 </style>

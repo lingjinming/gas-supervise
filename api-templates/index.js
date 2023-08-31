@@ -13,8 +13,8 @@ const options = {
   // 隐患后端
   // url: 'http://10.5.5.105:8847/gasguard-service-risk-app/v3/api-docs',
   // 监管后端
-  //url: 'http://10.5.5.105:8847/gas-supervise/v3/api-docs',
-  url: 'http://localhost:23071/v3/api-docs',
+  url: 'http://10.5.5.105:8847/gas-supervise/v3/api-docs',
+  //url: 'http://localhost:23071/v3/api-docs',
 
   templates: path.resolve(process.cwd(), './api-templates/axios_modular'),
   defaultResponseAsSuccess: true,

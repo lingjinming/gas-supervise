@@ -102,13 +102,13 @@ export const perimeterSearch = (
  * @tags 监管端报警管理接口, 初始化AIoT设备
  * @name InitAiot
  * @summary 初始化AIoT设备
- * @request GET:/supervise/monitor/init/aiot
+ * @request GET:/supervise/monitor/init/aiot/{installTime}
  * @response `200` `ResultVoid` OK
  */
-export const initAiot = (params: PerRequestOptions = {}) => {
+export const initAiot = (installTime: number, params: PerRequestOptions = {}) => {
   return defHttp.get<ResultVoid>(
     {
-      url: `gas-supervise/supervise/monitor/init/aiot`,
+      url: `gas-supervise/supervise/monitor/init/aiot/${installTime}`,
     },
     { ...params, isTransformResponse: false },
   );
