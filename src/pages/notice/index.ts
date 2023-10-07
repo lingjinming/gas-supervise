@@ -17,7 +17,11 @@ export const getNoticeFn = async (reset = true) => {
     notices.value.length = 0;
   }
   if(total! > 0) {
-    let item = data!.map(d => adapter(d));
+    let item = data!.sort((a,b) => {
+      const timestampA = new Date(a.timestamp).getTime();
+      const timestampB = new Date(b.timestamp).getTime();
+      return timestampB - timestampA;
+    }).map(d => adapter(d));
     notices.value.push(...item);
   }
 

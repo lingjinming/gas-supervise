@@ -51,7 +51,6 @@
             <region-img
               v-for="img in node?.picIds"
               :key="img.id"
-              region="test"
               :id="img.id"
             />
           </view>
@@ -59,7 +58,6 @@
             <region-img
               v-for="file in node?.fileIds"
               :key="file.id"
-              region="test"
               :fileId="file.id"
               :fileName='file.name'
             />

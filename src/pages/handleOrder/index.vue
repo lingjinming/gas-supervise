@@ -108,7 +108,6 @@
           <region-img
             :disabledPreview="true"
             v-if="data.targetOrgMasterSignatures"
-            region="test"
             :id="data.targetOrgMasterSignatures"
           />
           <view class="image" v-else>请手写签名</view>
@@ -124,7 +123,6 @@
           <region-img
             :disabledPreview="true"
             v-if="data.expertSignatures1"
-            region="test"
             :id="data.expertSignatures1"
           />
           <view class="image" v-else>请手写签名</view>
@@ -140,7 +138,6 @@
           <region-img
             :disabledPreview="true"
             v-if="data.expertSignatures2"
-            region="test"
             :id="data.expertSignatures2"
           />
           <view class="image" v-else>请手写签名</view>

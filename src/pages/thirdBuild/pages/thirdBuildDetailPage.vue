@@ -157,8 +157,8 @@
           <view class="info-form">
             <view class="title">管网保护方案图片</view>
             <view class="info-images">
-              <template v-if="state.info.protocolPicIds?.length">
-              <region-img  v-for="img in state.info.protocolPicIds" :key="img.id"  :id="img.id" />
+              <template v-if="state.info.schemaPicIds?.length">
+              <region-img  v-for="img in state.info.schemaPicIds" :key="img.id"  :id="img.id" />
               </template>
               <template v-else>
                 <view>未上传</view>
@@ -167,10 +167,10 @@
           </view>
           <!-- 管网保护协议照片 -->
           <view class="info-form">
-            <view class="title">管网保护方案图片</view>
+            <view class="title">管网保护协议图片(施工方签字照片)</view>
             <view class="info-images">
-              <template v-if="state.info.schemaPicIds?.length">
-              <region-img  v-for="img in state.info.schemaPicIds" :key="img.id"  :id="img.id" />
+              <template v-if="state.info.protocolPicIds?.length">
+              <region-img  v-for="img in state.info.protocolPicIds" :key="img.id"  :id="img.id" />
               </template>
               <template v-else>
                 <view>未上传</view>

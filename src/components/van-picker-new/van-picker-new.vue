@@ -48,7 +48,7 @@ const columnsObj = {
   org: async () => {
     let data = await getOrg();
     columns.value = data.map(e => ({
-      text: e.shortName,
+      text: e.fullName,
       value: e.id
     }))
   },

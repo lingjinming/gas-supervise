@@ -21,7 +21,7 @@
       <!-- 管网保护方案照片 -->
       <van-uploader-new label="上传管网保护方案照片" v-model="data.form.schemaPicIds"/>
       <!-- 管网保护协议照片 -->
-      <van-uploader-new label="上传管网保护协议(施工方签字)照片" v-model="data.form.protocolPicIds"/>
+      <van-uploader-new label="上传管网保护协议(施工方签字照片)" v-model="data.form.protocolPicIds"/>
       
     </van-cell-group>
   </view>
@@ -62,8 +62,8 @@ const data = reactive({
   thirdBuildUid: '',
   isInChain: false,
   form: <ThirdBuildReportCreateDTO>{
-    reporterName: store.userInfo?.name || '',
-    reporterPhone:  store.userInfo?.phoneNumber || ''
+    reporterName: '',
+    reporterPhone:  ''
   },
   thirdBuildInfo: <ThirdBuildInfoCreateDTO>{}
 })
@@ -81,10 +81,10 @@ onLoad(options => {
     data.thirdBuildUid = options?.uid
   }
   // 如果是企业用户,需要填充当前用户信息
-  if(isOrg) {
-    data.form.reporterName = store.userInfo?.name || ''
-    data.form.reporterPhone = store.userInfo?.phoneNumber || ''
-  }
+  // if(isOrg) {
+  //   data.form.reporterName = store.userInfo?.name || ''
+  //   data.form.reporterPhone = store.userInfo?.phoneNumber || ''
+  // }
 })
 
 const nextStep = () => {

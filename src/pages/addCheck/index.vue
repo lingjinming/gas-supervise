@@ -48,6 +48,12 @@
       :error-message="errorMessage"
     />
     <van-field
+      :value="reportForm.targetOrgAddr"
+      @change="reportForm.targetOrgAddr = $event.detail"
+      label="企业地址"
+      placeholder="请输入"
+    />
+    <van-field
       :value="reportForm.checkers"
       @change="reportForm.checkers = $event.detail"
       label="参与人"

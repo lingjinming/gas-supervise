@@ -20,12 +20,13 @@
     <van-cascader
       swipeable
       active-color="#ee0a24"
-      :value="cascaderValue"
+      :innerValue="cascaderValue"
       :options="options"
       @change="change"
       @close="isShow = false"
       @finish="isShow = false"
-    />
+    >
+    </van-cascader>
   </van-popup>
 </template>
 <script setup lang="ts">
@@ -87,7 +88,6 @@ let inputVal = ref("");
 
 const change = (e) => {
   const detail = e.detail;
-  console.log(detail);
   if (props.dicType == "RISK_SUBJECT_TYPE_TREE") {
     let paths = detail["selectedOptions"];
     if (paths.length === 3) {
