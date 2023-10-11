@@ -9,17 +9,14 @@
   <text class="file-txt" @click="previewFile" v-else>{{ fileName }}</text>
 </template>
 <script lang="ts" setup>
-import { getImg } from "@/api/img";
-import { getUrl } from "@/utils";
+import { downloadFile,loadFileBase64} from "@/api/img";
 import { userStore } from "@/state";
+
 const store = userStore();
 const region = store.auth.activeServer?.region;
 
+let src = ref("");
 const props = defineProps({
-  region: {
-    type: String,
-    default: "test",
-  },
   fileId: {
     type: String,
   },
@@ -34,7 +31,7 @@ const props = defineProps({
     default: false,
   },
 });
-let src = ref("");
+
 
 const preview = () => {
   if (props.disabledPreview) return;
@@ -43,43 +40,21 @@ const preview = () => {
   });
 };
 const getImgFn = async () => {
-  let urlObj = await getImg(props.id);
-  uni.request({
-    url: `https://aiot.citysafety.com/gasguard/preview_pic/${
-      getUrl(urlObj.data).path
-    }?${getUrl(urlObj.data).query}`,
-    header: {
-      "x-api-region": props.region || region,
-    },
-    responseType: "arraybuffer",
-    success(res) {
-      const base64 = uni.arrayBufferToBase64(res.data);
-      src.value = `data:image/jpg;base64,${base64}`;
-    },
-  });
+  if(props.id) {
+    const base64 = await loadFileBase64(props.id)
+    src.value = `data:image/jpg;base64,${base64}`;
+  }
 };
 const previewFile = async () => {
-  uni.showLoading({
-    title:'下载中...'
-  })
-  let urlObj = await getImg(props.fileId);
-  uni.downloadFile({
-    url: `https://aiot.citysafety.com/gasguard/preview_pic/${
-      getUrl(urlObj.data).path
-    }?${getUrl(urlObj.data).query}`,
-    header: {
-      "x-api-region": props.region || region,
-    },
-    responseType: "arraybuffer",
-    success(res) {
-      console.log(res);
-
+  if(props.fileId) {
+    uni.showLoading({ title:'下载中...' });
+    downloadFile(props.fileId)
+    .then(path => {
       uni.openDocument({
-        filePath: res.tempFilePath,
+        filePath: path,
         fileType: "pdf",
         success: function (res) {
           uni.hideLoading();
-          console.log("打开文档成功");
         },
         fail(err) {
           uni.showModal({
@@ -88,14 +63,18 @@ const previewFile = async () => {
           uni.hideLoading();
         },
       });
-    },
-  });
+    }).catch(() => {
+      uni.hideLoading();
+    })
+
+  }
+
 };
 watch(
   () => props.id,
   (newValue) => {
     console.log("region-img newValue", newValue);
-    if (newValue) {
+    if (newValue && 'null' !== newValue) {
       getImgFn();
     }
   },

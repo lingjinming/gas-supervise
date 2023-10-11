@@ -29,13 +29,16 @@ export function timestampToDateTimeString(timestamp: number) {
 }
 
 
-export const getUrl = (url) => {
+export const getUrl = (url: string): {path: string,query: string} => {
   var parse_url = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/;
   var result = parse_url.exec(url);
   let urlObj = {}
-  var names = ["url","scheme","slash","host","port","path","query","hash"];
-  for(var i=0; i <names.length;i++){
-      urlObj[names[i]] = result[i]
+  if(result) {
+    var names = ["url","scheme","slash","host","port","path","query","hash"];
+    for(var i=0; i <names.length;i++){
+        urlObj[names[i]] = result[i]
+    }
   }
-  return urlObj
+  return urlObj as {path: string,query: string}
+  
 };

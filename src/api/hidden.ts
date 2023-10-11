@@ -7,6 +7,7 @@ import type {HidangerOrgPageQuery,HidangerPgaeVO} from './model/HidangerPage'
 import type { AuditCreateReq } from "./model/HidangerAudit";
 import type { HidangerCreateReq ,HidangerHandleReq} from "./model/Hidanger";
 import type { BasePageResponse, BaseResponse } from "./model/BaseModel";
+import type { DicItem } from "@/api/model/SysDictionary";
 
 
 /**
@@ -14,7 +15,7 @@ import type { BasePageResponse, BaseResponse } from "./model/BaseModel";
  *
  */
 export const getHidangerTypes = () => {
-  return defHttp.get<BaseResponse<void>>({
+  return defHttp.get<DicItem[]>({
     url:"gas-supervise/hidanger/types"
   });
 };

@@ -62,7 +62,6 @@
             <region-img
               :disabledPreview="true"
               v-if="order.targetOrgMasterSign.length"
-              region="test"
               :id="order.targetOrgMasterSign[0]"
           /></view>
         </view>
@@ -72,13 +71,11 @@
             <region-img
               :disabledPreview="true"
               v-if="order.expertSign.length"
-              region="test"
               :id="order.expertSign[0]"
             />
             <region-img
               :disabledPreview="true"
               v-if="order.expertSign.length"
-              region="test"
               :id="order.expertSign[0]"
             />
           </view>

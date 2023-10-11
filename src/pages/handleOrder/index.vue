@@ -99,19 +99,52 @@
               />
             </van-field>
 
-            <view style="background: #fff">
-              <van-field
-                :value="data.order.expertOpinion"
-                @change="data.order.expertOpinion = $event.detail"
-                label="专家意见"
-                placeholder="请输入"
-                maxlength="200"
-                type="textarea"
-                :autosize="{
-                  minHeight: 150,
-                }"
-              />
-            </view>
+        <view class="signature-box" @click="navigatoSignature('targetOrgMasterSignatures')" >
+          <van-field
+            title-width="100%"
+            :border="false"
+            required
+            label="企业负责人"
+            readonly
+          />
+          <region-img
+            :disabledPreview="true"
+            v-if="data.targetOrgMasterSignatures"
+            :id="data.targetOrgMasterSignatures"
+          />
+          <view class="image" v-else>请手写签名</view>
+        </view>
+        <view class="signature-box"  @click="navigatoSignature('expertSignatures1')" >
+          <van-field
+            title-width="100%"
+            :border="false"
+            required
+            label="检查人1(专家)"
+            readonly
+          />
+          <region-img
+            :disabledPreview="true"
+            v-if="data.expertSignatures1"
+            :id="data.expertSignatures1"
+          />
+          <view class="image" v-else>请手写签名</view>
+        </view>
+        <view class="signature-box" @click="navigatoSignature('expertSignatures2')" >
+          <van-field
+            title-width="100%"
+            :border="false"
+            required
+            label="检查人2(专家)"
+            readonly
+          />
+          <region-img
+            :disabledPreview="true"
+            v-if="data.expertSignatures2"
+            :id="data.expertSignatures2"
+          />
+          <view class="image" v-else>请手写签名</view>
+        </view>
+      </view>
 
             <view
               class="signature-box"
