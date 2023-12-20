@@ -40,6 +40,10 @@ const transforms: RequestTransform = {
     if(options.method === 'GET' && options.data) {
       handleGetQueryParam(options.data)
     }
+    // 处理post请求 没有请求体的情况
+    if(options.method === 'POST' && !options.data) {
+      options.data = {}
+    }
     return options;
   },
 

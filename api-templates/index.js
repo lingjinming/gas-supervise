@@ -1,6 +1,7 @@
 const { generateApi, generateTemplates, GenerateApiParamsBase} = require('swagger-typescript-api');
 const path = require("path");
 const fs = require("fs");
+const _ = require("lodash");
 
 /**
  * @type GenerateApiParamsBase
@@ -8,13 +9,13 @@ const fs = require("fs");
 const options = {
   name: "MySuperbApi.ts",
   // set to `false` to prevent the tool from writing to disk
-  output: path.resolve(process.cwd(), "./src/api/generated"),
+  output: path.resolve(process.cwd(), "./src/api/gen"),
 
   // 隐患后端
   // url: 'http://10.5.5.105:8847/gasguard-service-risk-app/v3/api-docs',
   // 监管后端
-  url: 'http://10.5.5.105:8847/gas-supervise/v3/api-docs',
-  //url: 'http://localhost:23071/v3/api-docs',
+  //url: 'http://10.5.5.105:8847/gas-supervise/v3/api-docs',
+  url: 'http://localhost:23071/v3/api-docs',
 
   templates: path.resolve(process.cwd(), './api-templates/axios_modular'),
   defaultResponseAsSuccess: true,
@@ -89,15 +90,48 @@ const options = {
     }
   }),
   hooks: {
+    onCreateRouteName: (routeNameInfo, rawRouteInfo) =>{
+    },
+
     /**
-     * 自定义接口名称
+     * 1. 取全部路径作为接口名称
+     * 2. 所有接口定义统一放在一个文件中
      */
     onFormatRouteName: (routeInfo, templateRouteName) => {
-      // 防止关键字
-      if(templateRouteName.toLowerCase() === 'delete') {
-        return templateRouteName+"Data";
-      }
-      return templateRouteName;
+      const {
+        operationId,
+        method,
+        route,
+        moduleName,
+        responsesTypes,
+        description,
+        tags,
+        summary,
+        pathArgs,
+      } = routeInfo;
+      const methodAliases = {
+        get: (pathName, pathVarName) => _.camelCase(`get_${pathName}_by_${pathVarName}`),
+        post: (pathName, pathVarName) => _.camelCase(`post_${pathName}_by_${pathVarName}`),
+        put: (pathName, pathVarName) => _.camelCase(`put_${pathName}_by_${pathVarName}`),
+        delete: (pathName, pathVarName) => _.camelCase(`delete_${pathName}_by_${pathVarName}`),
+      };
+      const createCustomOperationId = (method, route, moduleName) => {
+        const regx =  /\{(\w){1,}\}/g;
+        // 是否有路径参数
+        const hasPathInserts = regx.test(route);
+        // 去除路径参数后,按/分割
+        const splitedRouteBySlash = _.compact(_.replace(route, /\{(\w){1,}\}/g, "").split("/"));
+        let routeParts = splitedRouteBySlash.join("_");
+        // 如果有路径参数,转换成 get_xxx_by_xxx
+        if(hasPathInserts) {
+          const pathInserts = route.match(regx);
+          return methodAliases[method](routeParts, pathInserts[0]);
+        }
+        // 否则,直接请求方法名+全部路径做为接口名称,绝对不会再重复
+        return _.camelCase(method+"_"+routeParts);
+      };
+      return createCustomOperationId(method, route, moduleName);
+
     },
     // 给枚举类型加上_
     onParseSchema: (rawSchema,schema) => {
@@ -114,7 +148,6 @@ const options = {
     },
     
     onCreateRoute: (routeData) => {
-      
       // 过滤掉不用的接口
       if(routeData.request.path.startsWith('/admin/cache')) {
         return false;
@@ -122,14 +155,11 @@ const options = {
       if(routeData.request.path.startsWith('/v1/portal/application/')) {
         return false;
       }
-
-      // 取路径前两段作为接口文件名
-      let namespace = convertPathToCamelCase(routeData.request.path);
       // 处理文件上传
       if(routeData?.requestBodySchema?.dataType === 'multipart/form-data') {
         routeData.request.payload.type = 'FormData';
       }
-      routeData.namespace = namespace;
+      routeData.namespace = "GasSuperviseApi";
 
       return routeData;
       
