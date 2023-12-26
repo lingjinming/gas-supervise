@@ -24,7 +24,7 @@
         >更多 ></view
       >
     </view>
-    <notice v-if="notices.length" :notices="notices.slice(0, 2)" />
+    <NoticePageItem v-if="notices.length" :notices="notices.slice(0, 2)" />
     <view v-else class="no-content">
       <image src="/static/img/nodata.png" class="nodata"></image>
     </view>
@@ -46,6 +46,7 @@
 </template>
 
 <script setup lang="ts">
+import NoticePageItem from '@/pages/notice/components/NoticePageItem.vue'
 import { EventType } from "@/enums/eventType";
 import { getNoticeFn, notices } from "../notice";
 onShow(() => {

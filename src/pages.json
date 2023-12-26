@@ -24,25 +24,25 @@
       }
     },
     {
-      "path": "pages/checkDetail/index",
+      "path": "pages/check/pages/CheckPlanDetailPage",
       "style": {
         "navigationBarTitleText": "企业合规性检查"
       }
     },
     {
-      "path": "pages/addCheck/index",
+      "path": "pages/check/pages/CheckPlanCreatePage",
       "style": {
         "navigationBarTitleText": "创建检查计划"
       }
     },
     {
-      "path": "pages/handleOrder/index",
+      "path": "pages/check/pages/HandleOrderCreatePage",
       "style": {
         "navigationBarTitleText": "创建整改单"
       }
     },
     {
-      "path": "pages/hiddenDetail/index",
+      "path": "pages/hidden/pages/HiddenDetailPage",
       "style": {
         "navigationBarTitleText": "隐患详情"
       }
@@ -55,13 +55,13 @@
       }
     },
     {
-      "path": "pages/hiddenReform/index",
+      "path": "pages/hidden/pages/HiddenReformPage",
       "style": {
         "navigationBarTitleText": "整改跟进"
       }
     },
     {
-      "path": "pages/hiddenReport/index",
+      "path": "pages/hidden/pages/HiddenReportPage",
       "style": {
         "navigationBarTitleText": "隐患上报"
       }

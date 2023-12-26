@@ -46,16 +46,16 @@
   </van-swipe-cell>
 </template>
 <script setup lang="ts">
-import type { HidangerPgaeVO } from "@/api/model/HidangerPage";
-import type { PropType } from "vue";
 import { reactive } from "vue";
 import { userStore } from "@/state";
-import { hidangerAudit } from "@/api/hidden";
-import type { AuditCreateReq } from "@/api/model/HidangerAudit";
 import { EventType } from "@/enums/eventType";
+import {putHidangerGovAudit} from '@/api/gen/GasSuperviseApi'
+import type {Risk2DangerDTO} from '@/api/gen/data-contracts'
+
+
 const props = defineProps({
   info: {
-    type: Object as PropType<HidangerPgaeVO>,
+    type: Object,
     default: {
       uid: "",
     },
@@ -63,14 +63,13 @@ const props = defineProps({
 });
 const store = userStore();
 const isOrg: boolean = store.isOrgUser;
-uni.request;
 const data = reactive({
   loading: false,
   isPass: false,
-  audit: <AuditCreateReq>{
+  audit: <Risk2DangerDTO>{
     auditRemark: "",
     auditResult: "PASS",
-    riskIds: [] as string[],
+    riskIds: [] as number[],
   },
 });
 
@@ -98,9 +97,8 @@ const submitAudit = async () => {
   const request = data.audit;
   request.auditResult = data.isPass ? "PASS" : "NOT_PASS";
   request.riskIds = [props.info.uid!];
-  console.log(request);
 
-  await hidangerAudit(request);
+  await putHidangerGovAudit(request);
   // 让列表刷新
   uni.$emit(EventType.DANGER_PAGE_REFRESH);
 };
@@ -112,7 +110,7 @@ setTimeout(() => {
 // 查看流程
 const showFlow = (uid: string) => {
   uni.navigateTo({
-    url: `/pages/hiddenDetail/index?uid=${uid}`,
+    url: `/pages/hidden/pages/HiddenDetailPage?uid=${uid}`,
   });
 };
 

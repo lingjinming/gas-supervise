@@ -27,9 +27,8 @@
 <script setup lang="ts">
 import { uploadFile } from "@/hooks";
 import { getCurrentInstance } from 'vue'
-
 let canvasCtx = uni.createCanvasContext("canvas_sign", this); //创建绘图对象; //绘图图像
-let points = ref([]); //路径点集合
+let points = ref<any[]>([]); //路径点集合
 let hasSign = ref(false); //是否签过字
 let isInit = ref(false);
 let key = ""; //

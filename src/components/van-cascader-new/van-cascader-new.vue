@@ -30,9 +30,8 @@
   </van-popup>
 </template>
 <script setup lang="ts">
-import { getDictList, getDistrict } from "@/api/dic";
-import { getHidangerTypes } from "@/api/hidden";
-import type { DicItem, SysDistrictItem } from "@/api/model/SysDictionary";
+import { getHidangerTypes ,getUserMeDistrict} from "@/api/gen/GasSuperviseApi";
+
 
 const emits = defineEmits([
   "update:modelValue",
@@ -49,29 +48,29 @@ const props = defineProps({
     default: "",
   },
 });
+type DicTytpe = {
+  text?: string,
+  value?: string|number,
+  children?: DicTytpe[]
+}
 let isShow = ref(false);
-let options: Ref<DicItem[] | SysDistrictItem[]> = ref([]);
+let options: Ref<DicTytpe[]> = ref([]);
 let fieldValue = ref("");
 let cascaderValue = ref([]);
 
 const columnsObj = {
   RISK_SUBJECT_TYPE_TREE: async () => {
     let data = await getHidangerTypes();
-    options.value = data;
+    options.value = data.data || [];
   },
   district: async () => {
-    let data = [await getDistrict()];
-    data.forEach((item) => {
-      item.text = item.name;
-      item.value = item.code;
-      if (item.children && item.children.length) {
-        item.children.forEach((item2) => {
-          item2.text = item2.name;
-          item2.value = item2.code;
-        });
-      }
-    });
-    options.value = data;
+    let district = (await getUserMeDistrict()).data;
+    if(district) {
+      let {name,code,children} = district;
+      options.value = [{text:name,value: code,children: children?.map(e => ({text: e.name,value: e.code}))}]
+    } else {
+      options.value = []
+    }
   },
 };
 

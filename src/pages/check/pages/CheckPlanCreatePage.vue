@@ -81,11 +81,14 @@
 </template>
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { addCheckPlan } from "../../api/checkPlan";
-import type { ICheckPlanCreateReq } from "@/api/model/CheckPlan";
 import { formatDate } from "@/utils";
-import { minDate, showToast, tomorrowDate, maxDate } from "@/hooks";
+import { minDate, showToast} from "@/hooks";
 import { userStore } from "@/state";
+
+import {postHidangerGovCheckPlan} from '@/api/gen/GasSuperviseApi'
+import type {HiDangerCheckPlanCreateDTO} from '@/api/gen/data-contracts'
+
+
 let errorMessage = ref("");
 const store = userStore();
 const isOrg: boolean = store.isOrgUser;
@@ -102,7 +105,7 @@ let reportForm = ref({
   targetOrgAddr: "",
   startDate: formatDate(minDate),
   endDate: formatDate(minDate),
-} as ICheckPlanCreateReq);
+} as HiDangerCheckPlanCreateDTO);
 
 watch(
   reportForm,
@@ -113,7 +116,7 @@ watch(
         msg: "请输入合法的手机号",
       },
     };
-    if (!val.targetOrgPhone.match(rules.phone.reg)) {
+    if (val.targetOrgPhone && !val.targetOrgPhone.match(rules.phone.reg)) {
       errorMessage.value = rules.phone.msg;
     } else {
       errorMessage.value = "";
@@ -124,7 +127,7 @@ watch(
 
 const submit = async () => {
   if (errorMessage.value) return;
-  let { success,message } = await addCheckPlan(reportForm.value);
+  let { success,message } = await postHidangerGovCheckPlan(reportForm.value);
   showToast(success,message,uni.navigateBack);
 };
 </script>

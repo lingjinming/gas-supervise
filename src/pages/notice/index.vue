@@ -8,12 +8,13 @@ import { getNotice } from "@/api/notice";
     @scrolltolower="nextPage"
   >
     <view v-if="notices.length" style="padding: 0 20rpx">
-      <notice :notices="notices" />
+      <NoticePageItem :notices="notices" />
     </view>
     <van-empty v-else description="暂无数据"></van-empty>
   </scroll-view>
 </template>
 <script setup lang="ts">
+import NoticePageItem from './components/NoticePageItem.vue'
 import { EventType } from "@/enums/eventType";
 import { getNoticeFn, notices, nextPage } from ".";
 

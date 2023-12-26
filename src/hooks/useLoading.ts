@@ -1,4 +1,4 @@
-type ResponseType = Promise<{success: boolean,message: string, data: any}>
+type ResponseType = Promise<{success?: boolean,message?: string, data?: any}>
 
 export const useLoading  = async (response: ResponseType,callback?: (data ?: any) => void) => {
   let startTime = new Date().getTime();

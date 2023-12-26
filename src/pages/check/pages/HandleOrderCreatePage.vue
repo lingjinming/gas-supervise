@@ -14,13 +14,13 @@
         <scroll-view style="height: 85%" scroll-y="true" class="scroll-Y">
           <template v-if="list.length" v-for="item in list" :key="item.uid">
             <view @click.capture.stop="chooseUid(item)">
-              <hidden :info="item">
+              <HiddenPageItem :info="item">
                 <van-icon :color="item.planCode === data.planCode || data.planCode === ''
                     ? '#006CFF'
                     : 'gray'
                   " size="36rpx" custom-style="margin-right:20rpx;top:4rpx"
-                  :name="data.uids.includes(item.uid) ? 'passed' : 'circle'" />
-              </hidden>
+                  :name="data.uids.includes(item.uid!) ? 'passed' : 'circle'" />
+              </HiddenPageItem>
             </view>
           </template>
           <van-empty v-else description="暂无需要处理的隐患"></van-empty>
@@ -100,17 +100,14 @@
   </view>
 </template>
 <script lang="ts" setup>
+import HiddenPageItem from "@/pages/hidden/components/HiddenPageItem.vue";
 import { reactive, computed } from "vue";
-import type {
-  HidangerOrgPageQuery,
-  HidangerOrgPageVO,
-  HiDangerSendHandleOrderDTO,
-} from "@/api/generated/data-contracts";
-import { page1, sendHandleOrder } from "@/api/generated/HidangerGov";
-import { detailByPlanCode } from "@/api/generated/HidangerGov";
+
 import { useTable } from "@/hooks/useTable";
 import { formatDate } from "@/utils";
 import { useLoading } from "@/hooks/useLoading";
+import {getHidangerGovCheckPlanOrgInfo,getHidangerGovPage,postHidangerGovHandleOrder} from '@/api/gen/GasSuperviseApi'
+import type {HidangerOrgPageVO,HidangerOrgPageQuery,HiDangerSendHandleOrderDTO} from '@/api/gen/data-contracts'
 
 const data = reactive({
   currentStep: 0,
@@ -142,7 +139,7 @@ const hasSing = computed(
     data.expertSignatures1 &&
     data.expertSignatures2
 );
-const { total, list, search } = useTable<HidangerOrgPageVO>(data.query, page1, {
+const { total, list, search } = useTable<HidangerOrgPageVO>(data.query, getHidangerGovPage, {
   showToast: true,
 });
 
@@ -169,7 +166,7 @@ const changeStep = (step: number) => {
     });
     return;
   }
-  const result = detailByPlanCode({ planCode: data.planCode });
+  const result = getHidangerGovCheckPlanOrgInfo({ planCode: data.planCode });
   useLoading(result, (result) => {
     data.currentStep = step;
     data.address = result.targetOrgAddr;
@@ -180,12 +177,12 @@ const changeStep = (step: number) => {
 
 const chooseUid = (item: HidangerOrgPageVO) => {
   if (!data.planCode || data.planCode === item.planCode) {
-    data.planCode = item.planCode;
-    if (data.uids.includes(item.uid)) {
-      data.uids.splice(data.uids.indexOf(item.uid), 1);
+    data.planCode = item.planCode!;
+    if (data.uids.includes(item.uid!)) {
+      data.uids.splice(data.uids.indexOf(item.uid!), 1);
       data.planCode = "";
     } else {
-      data.uids.push(item.uid);
+      data.uids.push(item.uid!);
     }
   } else {
     uni.showToast({
@@ -223,15 +220,17 @@ const save = () => {
     return;
   }
   // 组织数据
+  // @ts-ignore
   data.order.expertSignatures.push(
     data.expertSignatures1,
     data.expertSignatures2
-  );
+    );
+  // @ts-ignore
   data.order.targetOrgMasterSignatures.push(data.targetOrgMasterSignatures);
   // @ts-ignore
   data.order.dangerIds.push(...data.uids);
 
-  const result = sendHandleOrder(data.order);
+  const result = postHidangerGovHandleOrder(data.order);
   useLoading(result, () => {
     uni.redirectTo({
       url: "/pages/check/index",

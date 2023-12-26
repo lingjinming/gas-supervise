@@ -48,7 +48,7 @@ let  props = defineProps({
 let actions = [
       {
         name: '创建检查计划',
-        url:'/pages/addCheck/index',
+        url:'/pages/check/pages/CheckPlanCreatePage',
         optType: ['gov']
       },
       {
@@ -59,12 +59,12 @@ let actions = [
       {
         name: '安全检查下发',
         optType: ['gov'],
-        url: '/pages/hiddenReport/index'
+        url: '/pages/hidden/pages/HiddenReportPage'
       },
       {
         name: '隐患上报',
         optType: ['org'],
-        url: '/pages/hiddenReport/index'
+        url: '/pages/hidden/pages/HiddenReportPage'
       }
     ]
 const functions = computed(() => {

@@ -7,7 +7,7 @@
     <!-- 右边详情 -->
     <view class="right-item">
       <view class="title">
-        {{ info._orgId+info._buildType }}
+        {{ info._orgId!+info._buildType }}
       </view>
       <view :class="['build-state', isOk(info.buildState) ? 'handled' : 'wait-handle']">{{ info._buildState }}</view>
       <view class="tags">
@@ -27,8 +27,8 @@
   </view>
 </template>
 <script lang="ts" setup>
-import { reactive } from 'vue'
-import type { ThirdBuildPageVO } from '@/api/generated/data-contracts'
+import type { ThirdBuildPageVO } from '@/api/gen/data-contracts'
+
 const props = defineProps({
   info: {
     type: Object as PropType<ThirdBuildPageVO>,
@@ -44,11 +44,11 @@ const goDetail = () => {
     url: `/pages/thirdBuild/pages/thirdBuildDetailPage?uid=${props.info.uid}`,
   });
 }
-const getImg = (type: string) => {
+const getImg = (type: string|undefined) => {
   return `/static/img/third_build_${type}.png`;
 }
-const isOk = (value: string) => {
-  return 'REPORTED,GUARDED,COMPLETED'.includes(value)
+const isOk = (value: string|undefined) => {
+  return value&&'REPORTED,GUARDED,COMPLETED'.includes(value)
 }
 </script>
 <style lang="scss" scoped>

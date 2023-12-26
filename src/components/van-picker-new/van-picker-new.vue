@@ -15,8 +15,9 @@
 </template>
 <script setup lang="ts">
 import { getDictList, getOrg } from "@/api/dic";
-import { getCheckPlanByOrg } from "@/api/checkPlan";
 import { userStore } from "@/state";
+import {getHidangerGovCheckPlanSelections} from '@/api/gen/GasSuperviseApi'
+// hidanger/gov/check-plan/selections
 
 
 interface Options {
@@ -53,11 +54,14 @@ const columnsObj = {
     }))
   },
   planCode: async () => {
-    let data = await getCheckPlanByOrg(props.orgId);
-    columns.value = data.map(e => ({
-      text: e.value,
-      value: e.value
-    }))
+    let {data} = await getHidangerGovCheckPlanSelections({targetOrgId: props.orgId});
+    if(data) {
+      columns.value = data.map(e => ({
+        text: e.value!,
+        value: e.value!
+      }))
+    }
+    
   },
   SERVER_CONFIG: async () => {
     columns.value = store.auth.servers.map(e => ({

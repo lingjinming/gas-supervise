@@ -11,54 +11,54 @@
 
 export interface ThirdBuildUpdateDTO {
   /** 行政区划 */
-  districtId: string;
+  districtId?: string;
   /** 施工类型 */
-  buildType: string;
+  buildType?: string;
   /** 第三方施工状态 */
-  buildState: ThirdBuildUpdateDtoBuildState;
+  buildState?: ThirdBuildUpdateDtoBuildState;
   /** 施工位置 */
-  constructionAddress: string;
+  constructionAddress?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /**
    * 计划施工开始时间
    * @format date
    */
-  planTimeStart: string;
+  planTimeStart?: string;
   /**
    * 计划施结束工时间
    * @format date
    */
-  planTimeEnd: string;
+  planTimeEnd?: string;
   /** 建设单位名称 */
-  buildUnitName: string;
+  buildUnitName?: string;
   /** 建设单位联系人姓名 */
-  buildUnitContactName: string;
+  buildUnitContactName?: string;
   /** 建设单位联系电话 */
-  buildUnitContactPhone: string;
+  buildUnitContactPhone?: string;
   /** 监理单位名称 */
-  supUnitName: string;
+  supUnitName?: string;
   /** 监理单位联系人 */
-  supUnitContactName: string;
+  supUnitContactName?: string;
   /** 监理单位联系人手机号 */
-  supUnitContactPhone: string;
+  supUnitContactPhone?: string;
   /** 行政区划枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 第三方施工状态枚举中文描述 */
-  _buildState: string;
+  _buildState?: string;
 }
 
 export interface ResultVoid {
-  code: string;
-  data: object;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: object;
+  message?: string;
+  success?: boolean;
 }
 
 export interface IDsRequestDTO {
-  ids: string[];
+  ids?: Array<string> | string;
 }
 
 export interface SysNotifyTemplateDTO {
@@ -67,191 +67,191 @@ export interface SysNotifyTemplateDTO {
    * @minLength 0
    * @maxLength 32
    */
-  title: string;
+  title?: string;
   /** 通知方式:SMS/PHONE */
-  method: SysNotifyTemplateDtoMethod;
+  method?: SysNotifyTemplateDtoMethod;
   /**
    * 模板内容
    * @minLength 0
    * @maxLength 100
    */
-  content: string;
+  content?: string;
   /** 关联系统功能模块 */
-  module: SysNotifyTemplateDtoModule;
+  module?: SysNotifyTemplateDtoModule;
   /** 通知方式:SMS/PHONE枚举中文描述 */
-  _method: string;
+  _method?: string;
   /** 关联系统功能模块枚举中文描述 */
-  _module: string;
+  _module?: string;
 }
 
 export interface SysNotifyRuleDTO {
   /** 规则 */
-  rule: string;
+  rule?: string;
   /**
    * 模板id
    * @format int64
    */
-  refTemplateId: number;
+  refTemplateId?: number;
   /** 是否启用 */
-  enable: boolean;
+  enable?: boolean;
 }
 
 /** 企业人员资格证记录信息 */
 export interface PerCertificateQuery {
   /** 企业人员资格证记录信息ID */
-  uid: string;
+  uid?: string;
   /** 从业资格证编号 */
-  proQuaNo: string;
+  proQuaNo?: string;
   /** 通过年份 */
-  effectiveDate: string;
+  effectiveDate?: string;
   /**
    * 过期时间，格式：yyyy-MM-dd
    * @format date
    */
-  expirationDate: string;
+  expirationDate?: string;
 }
 
 /** 企业人员岗位信息 */
 export interface PerPositionQuery {
   /** 企业人员岗位信息ID */
-  uid: string;
+  uid?: string;
   /** 人员编号 */
-  code: string;
+  code?: string;
   /** 所属企业 */
-  enterpriseId: string;
+  enterpriseId?: string;
   /** 所属企业 */
-  enterpriseName: string;
+  enterpriseName?: string;
   /** 岗位 */
-  position: PerPositionQueryPosition;
+  position?: PerPositionQueryPosition;
   /** 岗位时间，格式：yyyy-MM-dd */
-  startEndTime: string[];
+  startEndTime?: Array<string> | string;
   /**
    * 开始时间，格式：yyyy-MM-dd
    * @format date
    */
-  startTime: string;
+  startTime?: string;
   /**
    * 结束时间，格式：yyyy-MM-dd
    * @format date
    */
-  endTime: string;
+  endTime?: string;
   /** 岗位枚举中文描述 */
-  _position: string;
+  _position?: string;
 }
 
 /** 新增企业人员资质证照信息 */
 export interface UpdatePerQualificationsQuery {
   /** 企业人员资质证照ID */
-  uid: string;
+  uid?: string;
   /** 人员名称 */
-  name: string;
+  name?: string;
   /** 所属企业 */
-  enterpriseId: string;
+  enterpriseId?: string;
   /** 身份证号码 */
-  idNo: string;
+  idNo?: string;
   /** 性别 */
-  gender: UpdatePerQualificationsQueryGender;
+  gender?: UpdatePerQualificationsQueryGender;
   /**
    * 出生年月，格式：yyyy-MM-dd
    * @format date
    */
-  birthday: string;
+  birthday?: string;
   /** 当前岗位 */
-  currentPosition: UpdatePerQualificationsQueryCurrentPosition;
+  currentPosition?: UpdatePerQualificationsQueryCurrentPosition;
   /** 是否在岗 */
-  isWorking: UpdatePerQualificationsQueryIsWorking;
+  isWorking?: UpdatePerQualificationsQueryIsWorking;
   /**
    * 联系方式
    * @minLength 11
    * @maxLength 11
    */
-  contactInfo: string;
+  contactInfo?: string;
   /** 从业资格证编号 */
-  proQuaNo: string;
+  proQuaNo?: string;
   /** 附件 */
-  files: string;
-  code: string;
+  files?: string;
+  code?: string;
   /** 人员岗位信息列表 */
-  positionQuery: PerPositionQuery[];
+  positionQuery?: Array<PerPositionQuery>;
   /** 人员资格证信息列表 */
-  certificateQuery: PerCertificateQuery[];
+  certificateQuery?: Array<PerCertificateQuery>;
   /** 性别枚举中文描述 */
-  _gender: string;
+  _gender?: string;
   /** 当前岗位枚举中文描述 */
-  _currentPosition: string;
+  _currentPosition?: string;
   /** 是否在岗枚举中文描述 */
-  _isWorking: string;
+  _isWorking?: string;
 }
 
 export interface FileObj {
-  id: string;
-  name: string;
+  id?: string;
+  name?: string;
 }
 
 /** 新增隐患 */
 export interface HidangerCreateDTO {
   /** 检查计划-政府创建时提供 */
-  planCode: string;
+  planCode?: string;
   /** 隐患主体类型 */
-  subjectType: string;
+  subjectType?: string;
   /** 隐患类别 */
-  dangerType: string;
+  dangerType?: string;
   /** 隐患子类别 */
-  dangerSubtype: string;
+  dangerSubtype?: string;
   /** 风险要素等级 */
-  level: HidangerCreateDtoLevel;
+  level?: HidangerCreateDtoLevel;
   /** 行政区划 */
-  districtId: string;
+  districtId?: string;
   /** 组织机构 */
-  orgId: string;
+  orgId?: string;
   /**
    * 排查日期
    * @format date
    */
-  checkDate: string;
+  checkDate?: string;
   /**
    * 坐标经度
    * @format double
    */
-  longitude: number;
+  longitude?: number;
   /**
    * 坐标纬度
    * @format double
    */
-  latitude: number;
+  latitude?: number;
   /**
    * 地址
    * @minLength 0
    * @maxLength 50
    */
-  address: string;
+  address?: string;
   /**
    * 隐患描述
    * @minLength 0
    * @maxLength 300
    */
-  remark: string;
+  remark?: string;
   /** 隐患图片 */
-  fileIds: FileObj[];
+  fileIds?: Array<FileObj>;
   /** 风险要素状态 */
-  state: HidangerCreateDtoState;
+  state?: HidangerCreateDtoState;
   /**
    * 整改完成日期
    * @format date
    */
-  completionDate: string;
+  completionDate?: string;
   /** 隐患来源 */
-  dangerSource: HidangerCreateDtoDangerSource;
+  dangerSource?: HidangerCreateDtoDangerSource;
   /** 风险要素等级枚举中文描述 */
-  _level: string;
+  _level?: string;
   /** 行政区划枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 组织机构枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 风险要素状态枚举中文描述 */
-  _state: string;
+  _state?: string;
   /** 隐患来源枚举中文描述 */
-  _dangerSource: string;
+  _dangerSource?: string;
 }
 
 export interface HidangerStatementDTO {
@@ -260,38 +260,38 @@ export interface HidangerStatementDTO {
    * @minLength 0
    * @maxLength 200
    */
-  remark: string;
+  remark?: string;
   /** 附件 */
-  fileIds: string[];
+  fileIds?: Array<string> | string;
   /** 现场照片 */
-  picIds: string[];
+  picIds?: Array<string> | string;
 }
 
 /** 燃气企业隐患整改 */
 export interface OrgHidangerHandleDTO {
   /** 是否和隐患描述一致 */
-  sameWithRemark: OrgHidangerHandleDtoSameWithRemark;
+  sameWithRemark?: OrgHidangerHandleDtoSameWithRemark;
   /** 整改进度 */
-  handleState: OrgHidangerHandleDtoHandleState;
+  handleState?: OrgHidangerHandleDtoHandleState;
   /**
    * 整改时间
    * @format date-time
    */
-  handleDate: string;
+  handleDate?: string;
   /**
    * 整改情况说明
    * @minLength 0
    * @maxLength 200
    */
-  handleContent: string;
+  handleContent?: string;
   /** 整改图片 */
-  picIds: string[];
+  picIds?: Array<string> | string;
   /** 相关附件 */
-  fileIds: string[];
+  fileIds?: Array<string> | string;
   /** 是否和隐患描述一致枚举中文描述 */
-  _sameWithRemark: string;
+  _sameWithRemark?: string;
   /** 整改进度枚举中文描述 */
-  _handleState: string;
+  _handleState?: string;
 }
 
 export interface RiskIdsReqDTO {
@@ -301,46 +301,46 @@ export interface RiskIdsReqDTO {
    * @minItems 1
    * @uniqueItems true
    */
-  riskIds: number[];
+  riskIds?: Array<number> | number;
 }
 
 /** 安全检查计划更新 */
 export interface HiDangerCheckPlanUpdateDTO {
   /** 安全检查计划ID */
-  title: string;
+  title?: string;
   /** 安全检查计划ID */
-  checkers: string;
+  checkers?: string;
 }
 
 export interface Risk2DangerDTO {
   /** 隐患审核结果 */
-  auditResult: Risk2DangerDtoAuditResult;
+  auditResult?: Risk2DangerDtoAuditResult;
   /** 附件id */
-  fileIds: string[];
+  fileIds?: Array<string> | string;
   /**
    * 隐患id
    * @maxItems 2147483647
    * @minItems 1
    * @uniqueItems true
    */
-  riskIds: number[];
+  riskIds?: Array<number> | number;
   /** 审核内容 */
-  auditRemark: string;
+  auditRemark?: string;
   /** 隐患审核结果枚举中文描述 */
-  _auditResult: string;
+  _auditResult?: string;
 }
 
 export interface HidangerDictionaryUpdateDTO {
   /** 隐患配置编码 */
-  code: string;
+  code?: string;
   /** 主管部门编码 */
-  masterDepts: string[];
+  masterDepts?: Array<string> | string;
   /** 协同部门编码 */
-  helperDepts: string[];
+  helperDepts?: Array<string> | string;
   /** 风险要素等级 */
-  dangerLevel: HidangerDictionaryUpdateDtoDangerLevel;
+  dangerLevel?: HidangerDictionaryUpdateDtoDangerLevel;
   /** 风险要素等级枚举中文描述 */
-  _dangerLevel: string;
+  _dangerLevel?: string;
 }
 
 export interface GovDeptUserCreateDTO {
@@ -348,100 +348,100 @@ export interface GovDeptUserCreateDTO {
    * 用户id,更新时必填
    * @format int64
    */
-  uid: number;
+  uid?: number;
   /**
    * 姓名
    * @minLength 0
    * @maxLength 16
    */
-  name: string;
+  name?: string;
   /** 手机号 */
-  phone: string;
+  phone?: string;
   /**
    * 职务
    * @minLength 0
    * @maxLength 64
    */
-  jobTitle: string;
+  jobTitle?: string;
   /** 是否接收短信 */
-  smsFlag: boolean;
+  smsFlag?: boolean;
   /**
    * 部门名称
    * @minLength 0
    * @maxLength 64
    */
-  deptAlias: string;
+  deptAlias?: string;
   /** 所属部门编码 */
-  deptCode: string;
-  phoneValid: boolean;
+  deptCode?: string;
+  phoneValid?: boolean;
 }
 
 /** 修改用气用户信息 */
 export interface UpdateGasUserQuery {
   /** 用户名称 */
-  name: string;
+  name?: string;
   /** 行政区划id */
-  districtId: string;
+  districtId?: string;
   /** 所属燃气公司 */
-  orgId: string;
+  orgId?: string;
   /** 用户类型 */
-  userType: UpdateGasUserQueryUserType;
+  userType?: UpdateGasUserQueryUserType;
   /** 用户标签 */
-  userTag: UpdateGasUserQueryUserTag;
+  userTag?: UpdateGasUserQueryUserTag;
   /** 用气类型 */
-  useType: UpdateGasUserQueryUseType;
+  useType?: UpdateGasUserQueryUseType;
   /** 天然气户号 */
-  gasUserNo: string;
+  gasUserNo?: string;
   /** 地址 */
-  address: string;
+  address?: string;
   /**
    * 所在小区/工商业名称
    * @minLength 0
    * @maxLength 255
    */
-  location: string;
+  location?: string;
   /**
    * 楼栋
    * @minLength 0
    * @maxLength 10
    */
-  buildingNo: string;
+  buildingNo?: string;
   /**
    * 楼层
    * @minLength 0
    * @maxLength 10
    */
-  floor: string;
+  floor?: string;
   /**
    * 房号
    * @minLength 0
    * @maxLength 10
    */
-  houseNo: string;
+  houseNo?: string;
   /**
    * 常用联系方式
    * @minLength 11
    * @maxLength 11
    */
-  comContactInfo: string;
+  comContactInfo?: string;
   /** 紧急联系方式 */
-  emContactInfo: string;
+  emContactInfo?: string;
   /** 社区/物业名称 */
-  communityName: string;
+  communityName?: string;
   /** 社区/物业联系方式 */
-  communityContactInfo: string;
+  communityContactInfo?: string;
   /** 用户编号 */
-  code: string;
+  code?: string;
   /** 行政区划id枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 所属燃气公司枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 用户类型枚举中文描述 */
-  _userType: string;
+  _userType?: string;
   /** 用户标签枚举中文描述 */
-  _userTag: string;
+  _userTag?: string;
   /** 用气类型枚举中文描述 */
-  _useType: string;
+  _useType?: string;
 }
 
 export interface GasSupplyDTO {
@@ -449,81 +449,81 @@ export interface GasSupplyDTO {
    * 供气用气日期
    * @format date
    */
-  supplyDate: string;
+  supplyDate?: string;
   /**
    * 门站日合同量（万立方米）
    * @format double
    * @min 0.01
    * @exclusiveMin false
    */
-  planSum: number;
+  planSum?: number;
   /**
    * 门站合同落实量（万立方米）
    * @format double
    * @min 0.01
    * @exclusiveMin false
    */
-  actualSum: number;
+  actualSum?: number;
   /**
    * 日供气总量（万立方米）
    * @format double
    * @min 0.01
    * @exclusiveMin false
    */
-  supplySum: number;
+  supplySum?: number;
   /**
    * 日压减气量（万立方米）
    * @format double
    * @min 0.01
    * @exclusiveMin false
    */
-  decrSum: number;
+  decrSum?: number;
   /**
    * 日停供用户数量（户）
    * @format int32
    * @min 1
    */
-  stopSupplyCnt: number;
+  stopSupplyCnt?: number;
   /**
    * 日限供用户数量（户）
    * @format int32
    * @min 1
    */
-  limitSupplyCnt: number;
+  limitSupplyCnt?: number;
 }
 
 export interface LinePatrolDTO {
   /** 巡线计划名称 */
-  planName: string;
+  planName?: string;
   /**
    * 巡线计划开始日期
    * @format date
    */
-  startDate: string;
+  startDate?: string;
   /**
    * 巡线计划结束日期
    * @format date
    */
-  endDate: string;
+  endDate?: string;
   /** 所属区域 */
-  districtId: string;
+  districtId?: string;
   /** 所属燃气公司 */
-  orgId: string;
+  orgId?: string;
   /** 巡线类型 */
-  patrolType: string;
+  patrolType?: string;
   /** 管道压力 */
-  linePressure: string;
+  linePressure?: string;
   /**
    * 计划巡线公里数
    * @format int32
    */
-  lineKm: number;
+  lineKm?: number;
   /** 巡检频次 */
-  patrolFreq: string;
+  patrolFreq?: string;
   /** 所属区域枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 所属燃气公司枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 export interface EnterpriseCreateDTO {
@@ -532,117 +532,117 @@ export interface EnterpriseCreateDTO {
    * @minLength 0
    * @maxLength 20
    */
-  name: string;
+  name?: string;
   /** 所属区域 */
-  belongArea: string;
+  belongArea?: string;
   /**
    * 经营区域
    * @maxItems 2147483647
    * @minItems 1
    */
-  businessArea: string[];
+  businessArea?: Array<string> | string;
   /**
    * 企业地址
    * @minLength 0
    * @maxLength 100
    */
-  address: string;
+  address?: string;
   /**
    * 经营范围(类别)
    * @minLength 1
    * @maxLength 2147483647
    */
-  businessScope: string;
+  businessScope?: string;
   /**
    * 企业负责人姓名
    * @minLength 0
    * @maxLength 5
    */
-  masterName: string;
+  masterName?: string;
   /**
    * 企业负责人手机号
    * @minLength 11
    * @maxLength 11
    */
-  masterPhone: string;
+  masterPhone?: string;
   /**
    * 营业执照编号
    * @minLength 0
    * @maxLength 32
    */
-  licenseNumber: string;
+  licenseNumber?: string;
   /**
    * 营业执照有效期
    * @format date
    */
-  licenseExpiryDate: string;
+  licenseExpiryDate?: string;
   /**
    * 营业执照照片
    * @maxItems 3
    * @minItems 0
    */
-  licenseImgs: string[];
+  licenseImgs?: Array<string> | string;
   /**
    * 经营许可证编号
    * @minLength 0
    * @maxLength 32
    */
-  permitsNumber: string;
+  permitsNumber?: string;
   /**
    * 经营许可证有效期
    * @format date
    */
-  permitsExpiryDate: string;
+  permitsExpiryDate?: string;
   /**
    * 经营许可证照片
    * @maxItems 3
    * @minItems 0
    */
-  permitsImgs: string[];
+  permitsImgs?: Array<string> | string;
   /**
    * 员工数量
    * @format int32
    */
-  employeeCount: number;
+  employeeCount?: number;
   /**
    * 拥有的窨井数量
    * @format int32
    */
-  wellsCount: number;
+  wellsCount?: number;
   /**
    * 拥有的场站数量
    * @format int32
    */
-  stationCount: number;
+  stationCount?: number;
   /** 拥有的管线长度,km */
-  pipelineLengthKm: number;
+  pipelineLengthKm?: number;
   /**
    * 拥有的液化气瓶数量
    * @format int32
    */
-  gasBottleCount: number;
+  gasBottleCount?: number;
   /**
    * 特种设备列表
    * @maxItems 2147483647
    * @minItems 1
    */
-  specialEquips: SpecialEquipDTO[];
+  specialEquips?: Array<SpecialEquipDTO>;
   /**
    * 企业安全负责人列表
    * @maxItems 2147483647
    * @minItems 1
    */
-  csos: EnterpriseCsoDTO[];
+  csos?: Array<EnterpriseCsoDTO>;
 }
 
 /** 企业安全负责人列表 */
 export interface EnterpriseCsoDTO {
   /** 安全负责人姓名 */
-  name: string;
+  name?: string;
   /** 职位 */
-  jobTitle: string;
+  jobTitle?: string;
   /** 联系方式 */
-  phone: string;
+  phone?: string;
 }
 
 /** 特种设备列表 */
@@ -651,11 +651,11 @@ export interface SpecialEquipDTO {
    * 特种设备数量
    * @format int32
    */
-  count: number;
+  count?: number;
   /** 特种设备类型 */
-  type: SpecialEquipDtoType;
+  type?: SpecialEquipDtoType;
   /** 特种设备类型枚举中文描述 */
-  _type: string;
+  _type?: string;
 }
 
 export interface SecurityCheckDTO {
@@ -663,33 +663,33 @@ export interface SecurityCheckDTO {
    * 安检年度
    * @format int32
    */
-  planYear: number;
+  planYear?: number;
   /** 安检批次 */
-  planBatch: string;
+  planBatch?: string;
   /**
    * 安检计划开始日期
    * @format date
    */
-  startDate: string;
+  startDate?: string;
   /**
    * 安检计划结束日期
    * @format date
    */
-  endDate: string;
+  endDate?: string;
   /** 所属燃气公司 */
-  orgId: string;
+  orgId?: string;
   /** 所属燃气公司枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 /** 三方施工创建 */
 export interface ThirdBuildCreateDTO {
   /** 三方施工基本信息 */
-  info: ThirdBuildInfoCreateDTO;
+  info?: ThirdBuildInfoCreateDTO;
   /** 三方施工交底创建DTO */
-  report: ThirdBuildReportCreateDTO;
+  report?: ThirdBuildReportCreateDTO;
   /** 三方施工看护信息 */
-  guard: ThirdBuildGuardCreateDTO;
+  guard?: ThirdBuildGuardCreateDTO;
 }
 
 /** 三方施工看护信息 */
@@ -699,127 +699,127 @@ export interface ThirdBuildGuardCreateDTO {
    * @minLength 0
    * @maxLength 300
    */
-  remark: string;
+  remark?: string;
   /**
    * 看护记录图片
    * @maxItems 3
    * @minItems 0
    */
-  picIds: string[];
+  picIds?: Array<string> | string;
   /**
    * 看护时间
    * @format date-time
    */
-  guardTime: string;
+  guardTime?: string;
   /**
    * 看护人员姓名
    * @minLength 0
    * @maxLength 16
    */
-  guarderName: string;
+  guarderName?: string;
 }
 
 /** 三方施工基本信息 */
 export interface ThirdBuildInfoCreateDTO {
   /** 施工位置 */
-  constructionAddress: string;
+  constructionAddress?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /** 行政区划 */
-  districtId: string;
+  districtId?: string;
   /** 组织机构id,政府创建时必填 */
-  orgId: string;
+  orgId?: string;
   /**
    * 计划施工开始时间
    * @format date
    */
-  planTimeStart: string;
+  planTimeStart?: string;
   /**
    * 计划施结束工时间
    * @format date
    */
-  planTimeEnd: string;
+  planTimeEnd?: string;
   /** 第三方施工状态 */
-  buildState: ThirdBuildInfoCreateDtoBuildState;
+  buildState?: ThirdBuildInfoCreateDtoBuildState;
   /** 施工类型 */
-  buildType: string;
+  buildType?: string;
   /** 建设单位名称 */
-  buildUnitName: string;
+  buildUnitName?: string;
   /** 建设单位联系人姓名 */
-  buildUnitContactName: string;
+  buildUnitContactName?: string;
   /** 建设单位联系电话 */
-  buildUnitContactPhone: string;
+  buildUnitContactPhone?: string;
   /** 监理单位名称 */
-  supUnitName: string;
+  supUnitName?: string;
   /** 监理单位联系人 */
-  supUnitContactName: string;
+  supUnitContactName?: string;
   /** 监理单位联系人手机号 */
-  supUnitContactPhone: string;
+  supUnitContactPhone?: string;
   /** 行政区划枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 组织机构id,政府创建时必填枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 第三方施工状态枚举中文描述 */
-  _buildState: string;
+  _buildState?: string;
 }
 
 /** 三方施工交底创建DTO */
 export interface ThirdBuildReportCreateDTO {
   /** 交底人姓名 */
-  reporterName: string;
+  reporterName?: string;
   /** 交底人手机号 */
-  reporterPhone: string;
+  reporterPhone?: string;
   /**
    * 交底照片id
    * @maxItems 3
    * @minItems 0
    */
-  reportPicIds: string[];
+  reportPicIds?: Array<string> | string;
   /**
    * 管网保护方案照片
    * @maxItems 3
    * @minItems 0
    */
-  schemaPicIds: string[];
+  schemaPicIds?: Array<string> | string;
   /**
    * 管网保护协议照片
    * @maxItems 3
    * @minItems 0
    */
-  protocolPicIds: string[];
+  protocolPicIds?: Array<string> | string;
   /**
    * 交底相关附件id
    * @maxItems 5
    * @minItems 0
    */
-  fileIds: string[];
+  fileIds?: Array<string> | string;
   /**
    * 交底时间,默认当前时间
    * @format date-time
    */
-  reportTime: string;
+  reportTime?: string;
 }
 
 export interface ResultString {
-  code: string;
-  data: string;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: string;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ExcelImportValidationVO {
-  hasBadData: boolean;
-  badData: string[];
-  goodData: object[];
+  hasBadData?: boolean;
+  badData?: Array<string> | string;
+  goodData?: Array<object>;
 }
 
 export interface ResultExcelImportValidationVO {
-  code: string;
-  data: ExcelImportValidationVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: ExcelImportValidationVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ThirdBuildBatchImportDTO {
@@ -827,200 +827,200 @@ export interface ThirdBuildBatchImportDTO {
    * @maxItems 2147483647
    * @minItems 1
    */
-  items: ThirdBuildImportDTO[];
+  items?: Array<ThirdBuildImportDTO>;
 }
 
 export interface ThirdBuildImportDTO {
   /** 施工类型 */
-  buildType: string;
+  buildType?: string;
   /** 关联燃气企业 */
-  orgId: string;
+  orgId?: string;
   /** 所属区域 */
-  districtId: string;
+  districtId?: string;
   /**
    * 地址
    * @minLength 0
    * @maxLength 64
    */
-  constructionAddress: string;
+  constructionAddress?: string;
   /**
    * 计划施工开始时间
    * @format date
    */
-  planTimeStart: string;
+  planTimeStart?: string;
   /**
    * 计划施工结束工时间
    * @format date
    */
-  planTimeEnd: string;
+  planTimeEnd?: string;
   /**
    * 实际施工开始工时间
    * @format date
    */
-  realBuildTimeStart: string;
+  realBuildTimeStart?: string;
   /**
    * 实际施工结束时间
    * @format date
    */
-  realBuildTimeEnd: string;
+  realBuildTimeEnd?: string;
   /**
    * 上报人
    * @minLength 0
    * @maxLength 16
    */
-  reportBy: string;
+  reportBy?: string;
   /** 第三方施工状态 */
-  buildState: ThirdBuildImportDtoBuildState;
+  buildState?: ThirdBuildImportDtoBuildState;
   /**
    * 建设单位名称
    * @minLength 0
    * @maxLength 16
    */
-  buildUnitName: string;
+  buildUnitName?: string;
   /**
    * 建设单位联系人姓名
    * @minLength 0
    * @maxLength 16
    */
-  buildUnitContactName: string;
+  buildUnitContactName?: string;
   /**
    * 建设单位联系电话
    * @minLength 0
    * @maxLength 11
    * @pattern 1[3456789]\d{9}
    */
-  buildUnitContactPhone: string;
+  buildUnitContactPhone?: string;
   /**
    * 监理单位名称
    * @minLength 0
    * @maxLength 16
    */
-  supUnitName: string;
+  supUnitName?: string;
   /**
    * 监理单位联系人
    * @minLength 0
    * @maxLength 16
    */
-  supUnitContactName: string;
+  supUnitContactName?: string;
   /**
    * 监理单位联系人手机号
    * @minLength 0
    * @maxLength 11
    * @pattern 1[3456789]\d{9}
    */
-  supUnitContactPhone: string;
-  realBuildTimeEndValid: boolean;
-  realBuildTimeStartValid: boolean;
+  supUnitContactPhone?: string;
+  realBuildTimeEndValid?: boolean;
+  realBuildTimeStartValid?: boolean;
   /** 关联燃气企业枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 所属区域枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 第三方施工状态枚举中文描述 */
-  _buildState: string;
+  _buildState?: string;
 }
 
 /** 研判分析-隐患分析列表请求 */
 export interface ProjectRiskDangerRequest {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 报警编号 */
-  alarmId: string;
+  alarmId?: string;
   /**
    * 报警经度
    * @format float
    */
-  longitude: number;
+  longitude?: number;
   /**
    * 报警纬度
    * @format float
    */
-  latitude: number;
+  latitude?: number;
   /**
    * 报警纬度
    * @format float
    */
-  distance: number;
+  distance?: number;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 /** 研判分析-隐患分析列表 */
 export interface ProjectRiskDangerVO {
   /** 隐患编号 */
-  id: string;
+  id?: string;
   /** 描述 */
-  remark: string;
+  remark?: string;
   /** 风险要素主体 */
-  subjectType: string;
+  subjectType?: string;
   /** 风险要素类型 */
-  dangerType: string;
+  dangerType?: string;
   /** 风险要素子类型 */
-  dangerSubtype: string;
+  dangerSubtype?: string;
   /** 所属区域id */
-  districtId: string;
+  districtId?: string;
   /** 所属机构id */
-  orgId: string;
+  orgId?: string;
   /** 具体位置 */
-  address: string;
+  address?: string;
   /**
    * 经度
    * @format double
    */
-  longitude: number;
+  longitude?: number;
   /**
    * 纬度
    * @format double
    */
-  latitude: number;
+  latitude?: number;
   /** 主体编号 */
-  subjectId: string;
+  subjectId?: string;
   /** 推送人 */
-  pushBy: string;
+  pushBy?: string;
   /**
    * 推送时间
    * @format date-time
    */
-  pushTime: string;
+  pushTime?: string;
   /** 整改建议 */
-  measure: string;
+  measure?: string;
   /** 风险要素状态 */
-  state: ProjectRiskDangerVoState;
+  state?: ProjectRiskDangerVoState;
   /** 风险要素等级 */
-  level: ProjectRiskDangerVoLevel;
+  level?: ProjectRiskDangerVoLevel;
   /** 所属区域id枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 所属机构id枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 风险要素状态枚举中文描述 */
-  _state: string;
+  _state?: string;
   /** 风险要素等级枚举中文描述 */
-  _level: string;
+  _level?: string;
 }
 
 export interface ResultListProjectRiskDangerVO {
-  code: string;
-  data: ProjectRiskDangerVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<ProjectRiskDangerVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 企业人员资质证照信息管理导入 */
@@ -1030,219 +1030,219 @@ export interface EnterprisePerQuaImportDTO {
    * @minLength 0
    * @maxLength 20
    */
-  name: string;
+  name?: string;
   /**
    * 身份证号码
    * @pattern (^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)
    */
-  idNo: string;
+  idNo?: string;
   /** 性别 */
-  gender: EnterprisePerQuaImportDtoGender;
+  gender?: EnterprisePerQuaImportDtoGender;
   /**
    * 出生年月，格式：yyyy-MM-dd
    * @format date
    */
-  birthday: string;
+  birthday?: string;
   /** 所属企业 */
-  enterpriseId: string;
+  enterpriseId?: string;
   /** 当前岗位 */
-  currentPosition: EnterprisePerQuaImportDtoCurrentPosition;
+  currentPosition?: EnterprisePerQuaImportDtoCurrentPosition;
   /**
    * 联系方式
    * @minLength 11
    * @maxLength 11
    */
-  contactInfo: string;
+  contactInfo?: string;
   /** 是否在岗 */
-  isWorking: EnterprisePerQuaImportDtoIsWorking;
+  isWorking?: EnterprisePerQuaImportDtoIsWorking;
   /** 从业资格证编号 */
-  proQuaNo: string;
+  proQuaNo?: string;
   /**
    * 通过年份
    * @format int32
    */
-  effectiveDate: number;
+  effectiveDate?: number;
   /**
    * 过期时间，格式：yyyy-MM-dd
    * @format date
    */
-  expirationDate: string;
+  expirationDate?: string;
   /** 性别枚举中文描述 */
-  _gender: string;
+  _gender?: string;
   /** 当前岗位枚举中文描述 */
-  _currentPosition: string;
+  _currentPosition?: string;
   /** 是否在岗枚举中文描述 */
-  _isWorking: string;
+  _isWorking?: string;
 }
 
 /** 企业人员资质证照信息导入 */
 export interface ImportPerQualificationsQuery {
   /** 数据 */
-  items: EnterprisePerQuaImportDTO[];
+  items?: Array<EnterprisePerQuaImportDTO>;
 }
 
 /** 新增企业人员资质证照信息 */
 export interface AddPerQualificationsQuery {
   /** 企业人员资质证照ID */
-  uid: string;
+  uid?: string;
   /** 人员名称 */
-  name: string;
+  name?: string;
   /** 所属企业 */
-  enterpriseId: string;
+  enterpriseId?: string;
   /** 身份证号码 */
-  idNo: string;
+  idNo?: string;
   /** 性别 */
-  gender: AddPerQualificationsQueryGender;
+  gender?: AddPerQualificationsQueryGender;
   /**
    * 出生年月，格式：yyyy-MM-dd
    * @format date
    */
-  birthday: string;
+  birthday?: string;
   /** 当前岗位 */
-  currentPosition: AddPerQualificationsQueryCurrentPosition;
+  currentPosition?: AddPerQualificationsQueryCurrentPosition;
   /** 是否在岗 */
-  isWorking: AddPerQualificationsQueryIsWorking;
+  isWorking?: AddPerQualificationsQueryIsWorking;
   /**
    * 联系方式
    * @minLength 11
    * @maxLength 11
    */
-  contactInfo: string;
+  contactInfo?: string;
   /** 从业资格证编号 */
-  proQuaNo: string;
+  proQuaNo?: string;
   /** 附件 */
-  files: string;
+  files?: string;
   /** 人员岗位信息列表 */
-  positionQuery: PerPositionQuery[];
+  positionQuery?: Array<PerPositionQuery>;
   /** 人员资格证信息列表 */
-  certificateQuery: PerCertificateQuery[];
+  certificateQuery?: Array<PerCertificateQuery>;
   /** 性别枚举中文描述 */
-  _gender: string;
+  _gender?: string;
   /** 当前岗位枚举中文描述 */
-  _currentPosition: string;
+  _currentPosition?: string;
   /** 是否在岗枚举中文描述 */
-  _isWorking: string;
+  _isWorking?: string;
 }
 
 export interface DataMessage {
-  source: string;
-  catalog: string;
+  source?: string;
+  catalog?: string;
   /** @format int64 */
-  timestamp: number;
-  serialNumber: string;
-  payload: JsonNode;
+  timestamp?: number;
+  serialNumber?: string;
+  payload?: JsonNode;
 }
 
 export type JsonNode = object;
 
 export interface IndoorAlarmQuery {
-  type: string;
-  timestamp: string;
-  data: object[];
+  type?: string;
+  timestamp?: string;
+  data?: Array<object>;
 }
 
 /** 更新老旧管网改造进度 */
 export interface UpdateOldPipeBuildQuery {
   /** ID */
-  uid: string;
+  uid?: string;
   /** 改造进度（%） */
-  buildSpeed: number;
+  buildSpeed?: number;
   /** 改造进度照片 */
-  fileIds: string;
+  fileIds?: string;
 }
 
 /** 老旧管网改造计划新增 */
 export interface AddOldPipeBuildQuery {
   /** 项目名称 */
-  buildName: string;
+  buildName?: string;
   /** 管道、管线编号 */
-  pipeId: string;
+  pipeId?: string;
   /** 行政区划id */
-  districtId: string;
+  districtId?: string;
   /** 组织机构id */
-  orgId: string;
+  orgId?: string;
   /** 项目地址 */
-  address: string;
+  address?: string;
   /**
    * 施工开始时间
    * @format date
    */
-  buildStart: string;
+  buildStart?: string;
   /**
    * 施工结束时间
    * @format date
    */
-  buildEnd: string;
+  buildEnd?: string;
   /** 改造类型 */
-  buildType: AddOldPipeBuildQueryBuildType;
+  buildType?: AddOldPipeBuildQueryBuildType;
   /** 管网材质类型 */
-  pmaterialType: AddOldPipeBuildQueryPmaterialType;
+  pmaterialType?: AddOldPipeBuildQueryPmaterialType;
   /** 压力级别 */
-  volclassLevel: AddOldPipeBuildQueryVolclassLevel;
+  volclassLevel?: AddOldPipeBuildQueryVolclassLevel;
   /**
    * 改造公里数
    * @min 0
    */
-  buildKilometer: number;
+  buildKilometer?: number;
   /** 改造施工方案 */
-  fileIds: string;
+  fileIds?: string;
   /** 建设单位 */
-  buildUnit: string;
+  buildUnit?: string;
   /** 建设单位联系人 */
-  buildContactsMan: string;
+  buildContactsMan?: string;
   /** 建设单位联系电话 */
-  buildContactsPhone: string;
+  buildContactsPhone?: string;
   /** 监理单位 */
-  supervisionUnit: string;
+  supervisionUnit?: string;
   /** 监理单位联系人 */
-  supervisionContactsNam: string;
+  supervisionContactsNam?: string;
   /** 监理单位联系人电话 */
-  supervisionContactsPhone: string;
+  supervisionContactsPhone?: string;
   /** 行政区划id枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 组织机构id枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 改造类型枚举中文描述 */
-  _buildType: string;
+  _buildType?: string;
   /** 管网材质类型枚举中文描述 */
-  _pmaterialType: string;
+  _pmaterialType?: string;
   /** 压力级别枚举中文描述 */
-  _volclassLevel: string;
+  _volclassLevel?: string;
 }
 
 /** 应急演练新增VO */
 export interface AddEmresDrillRequest {
   /** 应急演练ID */
-  uid: string;
+  uid?: string;
   /**
    * 应急演练名称
    * @minLength 0
    * @maxLength 100
    */
-  drillName: string;
+  drillName?: string;
   /** 演练类型 */
-  drillType: AddEmresDrillRequestDrillType;
+  drillType?: AddEmresDrillRequestDrillType;
   /** 行政区划id */
-  districtId: string;
+  districtId?: string;
   /** 组织机构id */
-  orgId: string;
+  orgId?: string;
   /** 文件id集合，多个以逗号分隔 */
-  fileIds: string;
+  fileIds?: string;
   /**
    * 演练时间
    * @format date
    */
-  drillTime: string;
+  drillTime?: string;
   /** 演练状态 未开始、已完成、逾期 */
-  drillState: AddEmresDrillRequestDrillState;
+  drillState?: AddEmresDrillRequestDrillState;
   /** 演练类型枚举中文描述 */
-  _drillType: string;
+  _drillType?: string;
   /** 行政区划id枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 组织机构id枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 演练状态 未开始、已完成、逾期枚举中文描述 */
-  _drillState: string;
+  _drillState?: string;
 }
 
 export interface HidangerDoUrgeDTO {
@@ -1250,43 +1250,43 @@ export interface HidangerDoUrgeDTO {
    * @maxItems 2147483647
    * @minItems 1
    */
-  uids: number[];
+  uids?: Array<number> | number;
   /** 是否通知主体责任单位 */
-  notifyMaster: boolean;
+  notifyMaster?: boolean;
   /** 是否通知协同单位 */
-  notifyHelper: boolean;
+  notifyHelper?: boolean;
   /** 通知其他人 */
-  othersPhone: string[];
+  othersPhone?: Array<string> | string;
   /** 同企业是否合并发送 */
-  orgMarge: boolean;
+  orgMarge?: boolean;
 }
 
 export interface HidangerUrgePreviewVO {
   /** @uniqueItems true */
-  masterDepts: string[];
+  masterDepts?: Array<string> | string;
   /** @uniqueItems true */
-  helperDepts: string[];
-  smsTemplate: string;
+  helperDepts?: Array<string> | string;
+  smsTemplate?: string;
 }
 
 export interface ResultHidangerUrgePreviewVO {
-  code: string;
-  data: HidangerUrgePreviewVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: HidangerUrgePreviewVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface HidangerImportVO {
-  hasBadData: boolean;
-  badData: string[];
-  goodData: HidangerCreateDTO[];
+  hasBadData?: boolean;
+  badData?: Array<string> | string;
+  goodData?: Array<HidangerCreateDTO>;
 }
 
 export interface ResultHidangerImportVO {
-  code: string;
-  data: HidangerImportVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: HidangerImportVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface HidangerDispatchDTO {
@@ -1296,204 +1296,204 @@ export interface HidangerDispatchDTO {
    * @minItems 1
    * @uniqueItems true
    */
-  uids: number[];
+  uids?: Array<number> | number;
   /** 隐患处置人员id */
-  receiverId: string;
+  receiverId?: string;
   /**
    * 派单说明
    * @minLength 0
    * @maxLength 200
    */
-  remark: string;
+  remark?: string;
   /** 附件 */
-  fileIds: string[];
+  fileIds?: Array<string> | string;
   /** 现场照片 */
-  imgIds: string[];
+  imgIds?: Array<string> | string;
   /** 是否发送短信 */
-  sendMsg: boolean;
+  sendMsg?: boolean;
 }
 
 export interface HidangerImportDTO {
   /** 目标组织机构 */
-  orgId: string;
+  orgId?: string;
   /** 隐患来源 */
-  source: HidangerImportDtoSource;
+  source?: HidangerImportDtoSource;
   /** 整改计划编号,政府创建/导入时必须提供 */
-  planCode: string;
+  planCode?: string;
   /** 隐患数据 */
-  items: HidangerCreateDTO[];
+  items?: Array<HidangerCreateDTO>;
   /** 目标组织机构枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 隐患来源枚举中文描述 */
-  _source: string;
+  _source?: string;
 }
 
 export interface LeaderCommentCreateDTO {
   /** 隐患编号 */
-  dangerId: string;
+  dangerId?: string;
   /** 处置流程阶段 */
-  stage: LeaderCommentCreateDtoStage;
+  stage?: LeaderCommentCreateDtoStage;
   /**
    * 阶段id
    * @format int64
    */
-  stageId: number;
+  stageId?: number;
   /** 评论内容 */
-  comment: string;
+  comment?: string;
   /** 相关附件 */
-  fileIds: string[];
+  fileIds?: Array<string> | string;
   /** 处置流程阶段枚举中文描述 */
-  _stage: string;
+  _stage?: string;
 }
 
 export interface HiDangerSendHandleOrderDTO {
   /** 企业负责人签名 */
-  targetOrgMasterSignatures: string[];
+  targetOrgMasterSignatures?: Array<string> | string;
   /** 专家签名 */
-  expertSignatures: string[];
+  expertSignatures?: Array<string> | string;
   /**
    * 隐患id集合
    * @maxItems 2147483647
    * @minItems 1
    * @uniqueItems true
    */
-  dangerIds: number[];
+  dangerIds?: Array<number> | number;
   /**
    * 整改单日期
    * @format date
    */
-  orderDate: string;
+  orderDate?: string;
   /**
    * 整改单完成期限
    * @format date
    */
-  deadline: string;
+  deadline?: string;
   /** 专家意见 */
-  expertOpinion: string;
+  expertOpinion?: string;
   /**
    * 需要发短信的用户id集合
    * @uniqueItems true
    */
-  msgUserIds: string[];
-  targetOrgMasterSignaturesStr: string;
-  expertSignaturesStr: string;
+  msgUserIds?: Array<string> | string;
+  targetOrgMasterSignaturesStr?: string;
+  expertSignaturesStr?: string;
 }
 
 /** 安全检查计划创建DTO */
 export interface HiDangerCheckPlanCreateDTO {
   /** 安全检查计划类型 */
-  type: HiDangerCheckPlanCreateDtoType;
+  type?: HiDangerCheckPlanCreateDtoType;
   /** 安全检查形式 */
-  mode: HiDangerCheckPlanCreateDtoMode;
+  mode?: HiDangerCheckPlanCreateDtoMode;
   /** 标题 */
-  title: string;
+  title?: string;
   /**
    * 检查时间开始
    * @format date
    */
-  startDate: string;
+  startDate?: string;
   /**
    * 检查时间结束
    * @format date
    */
-  endDate: string;
+  endDate?: string;
   /** 目标检查企业 */
-  targetOrgId: string;
+  targetOrgId?: string;
   /** 目标检查企业负责人 */
-  targetOrgOwner: string;
+  targetOrgOwner?: string;
   /** 目标检查企业联系方式 */
-  targetOrgPhone: string;
+  targetOrgPhone?: string;
   /** 目标检查企业地址 */
-  targetOrgAddr: string;
+  targetOrgAddr?: string;
   /** 检查人员 */
-  checkers: string;
+  checkers?: string;
   /** 安全检查计划类型枚举中文描述 */
-  _type: string;
+  _type?: string;
   /** 安全检查形式枚举中文描述 */
-  _mode: string;
+  _mode?: string;
 }
 
 export interface RiskComputedCallbackDTO {
   /** 评估时间 */
-  date: string;
+  date?: string;
   /** 风险/指标评估文件 */
-  files: RiskPipelineFileDTO[];
+  files?: Array<RiskPipelineFileDTO>;
 }
 
 /** 区域风险管网数据 */
 export interface RiskPipelineFileDTO {
   /** 文件地址 */
-  link: string;
+  link?: string;
   /** 文件类型:RISK/NORM */
-  type: string;
+  type?: string;
 }
 
 export interface ResultBoolean {
-  code: string;
-  data: boolean;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: boolean;
+  message?: string;
+  success?: boolean;
 }
 
 export interface AnalysBaseMnKnowledgeDTO {
   /** 主键id */
-  uid: string;
+  uid?: string;
   /** 知识库编号 */
-  knowledgeId: string;
+  knowledgeId?: string;
   /** 知识库名称 */
-  knowledgeName: string;
+  knowledgeName?: string;
   /** 知识库名称类型：法律法规、技术标准、国家政策 */
-  knowledgeType: string;
+  knowledgeType?: string;
   /**  发布单位 */
-  publishCompany: string;
+  publishCompany?: string;
   /**
    * 发布日期
    * @format date
    */
-  publishDate: string;
+  publishDate?: string;
   /**
    * 实施日期
    * @format date
    */
-  practiceDate: string;
+  practiceDate?: string;
   /** 附件id */
-  fileId: string;
+  fileId?: string;
 }
 
 export interface AnalysBaseMnCaseDTO {
   /** 案例库id */
-  uid: string;
+  uid?: string;
   /** 案例编号 */
-  caseId: string;
+  caseId?: string;
   /**  事故名称 */
-  accidentName: string;
+  accidentName?: string;
   /** 事故类型：燃气管网事故、管道燃气用户事故、液化气用户事故 */
-  accidentType: string;
+  accidentType?: string;
   /** 事故等级:特别重大、重大、较大、一般 */
-  accidentLevel: string;
+  accidentLevel?: string;
   /**
    * 事故时间
    * @format date-time
    */
-  accidentTime: string;
+  accidentTime?: string;
   /** 所属区域 */
-  districtId: string;
+  districtId?: string;
   /** 事故地址 */
-  address: string;
+  address?: string;
   /** 死亡人数 */
-  death: string;
+  death?: string;
   /** 受伤人数 */
-  fatal: string;
+  fatal?: string;
   /** 经济损失（万元） */
-  economicLosses: number;
+  economicLosses?: number;
   /** 涉事企业 */
-  involveCompany: string;
+  involveCompany?: string;
   /** 事故直接原因 */
-  reason: string;
+  reason?: string;
   /** 附件id */
-  fileId: string;
+  fileId?: string;
   /** 所属区域枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface SuperviseActivitiesCreateDTO {
@@ -1502,39 +1502,39 @@ export interface SuperviseActivitiesCreateDTO {
    * @minLength 0
    * @maxLength 100
    */
-  title: string;
+  title?: string;
   /**
    * 活动地址
    * @minLength 0
    * @maxLength 100
    */
-  address: string;
+  address?: string;
   /**
    * 主办方
    * @minLength 0
    * @maxLength 100
    */
-  organizer: string;
+  organizer?: string;
   /**
    * 活动参与人数
    * @format int32
    */
-  participantsCount: number;
+  participantsCount?: number;
   /**
    * 活动时间
    * @format date
    */
-  eventDate: string;
+  eventDate?: string;
   /**
    * 活动图片id
    * @maxItems 3
    * @minItems 0
    */
-  imgIds: string[];
+  imgIds?: Array<string> | string;
 }
 
 export interface GovDeptCreateDTO {
-  deptNames: string[];
+  deptNames?: Array<string> | string;
 }
 
 /** 用气用户导入 */
@@ -1544,130 +1544,130 @@ export interface GasUserImportDTO {
    * @minLength 0
    * @maxLength 20
    */
-  name: string;
+  name?: string;
   /** 用户类型 */
-  userType: GasUserImportDtoUserType;
+  userType?: GasUserImportDtoUserType;
   /** 用户标签 */
-  userTag: GasUserImportDtoUserTag;
+  userTag?: GasUserImportDtoUserTag;
   /** 用气类型 */
-  useType: GasUserImportDtoUseType;
+  useType?: GasUserImportDtoUseType;
   /** 所属区域 */
-  districtId: string;
+  districtId?: string;
   /** 天然气户号 */
-  gasUserNo: string;
+  gasUserNo?: string;
   /**
    * 地址
    * @minLength 0
    * @maxLength 100
    */
-  address: string;
+  address?: string;
   /** 所在小区/工商业名称 */
-  location: string;
+  location?: string;
   /** 楼号（栋） */
-  buildingNo: string;
+  buildingNo?: string;
   /** 楼层（层） */
-  floor: string;
+  floor?: string;
   /** 房号 */
-  houseNo: string;
+  houseNo?: string;
   /**
    * 常用联系方式
    * @minLength 11
    * @maxLength 11
    */
-  comContactInfo: string;
+  comContactInfo?: string;
   /** 紧急联系方式 */
-  emContactInfo: string;
+  emContactInfo?: string;
   /** 社区/物业名称 */
-  communityName: string;
+  communityName?: string;
   /** 社区/物业联系方式 */
-  communityContactInfo: string;
+  communityContactInfo?: string;
   /** 用户类型枚举中文描述 */
-  _userType: string;
+  _userType?: string;
   /** 用户标签枚举中文描述 */
-  _userTag: string;
+  _userTag?: string;
   /** 用气类型枚举中文描述 */
-  _useType: string;
+  _useType?: string;
   /** 所属区域枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 /** 用气用户批量导入 */
 export interface ImportGasUserQuery {
   /** 数据 */
-  items: GasUserImportDTO[];
+  items?: Array<GasUserImportDTO>;
 }
 
 /** 新增用气用户信息 */
 export interface AddGasUserQuery {
   /** 用户名称 */
-  name: string;
+  name?: string;
   /** 行政区划id */
-  districtId: string;
+  districtId?: string;
   /** 所属燃气公司 */
-  orgId: string;
+  orgId?: string;
   /** 用户类型 */
-  userType: AddGasUserQueryUserType;
+  userType?: AddGasUserQueryUserType;
   /** 用户标签 */
-  userTag: AddGasUserQueryUserTag;
+  userTag?: AddGasUserQueryUserTag;
   /** 用气类型 */
-  useType: AddGasUserQueryUseType;
+  useType?: AddGasUserQueryUseType;
   /** 天然气户号 */
-  gasUserNo: string;
+  gasUserNo?: string;
   /** 地址 */
-  address: string;
+  address?: string;
   /**
    * 所在小区/工商业名称
    * @minLength 0
    * @maxLength 255
    */
-  location: string;
+  location?: string;
   /**
    * 楼栋
    * @minLength 0
    * @maxLength 10
    */
-  buildingNo: string;
+  buildingNo?: string;
   /**
    * 楼层
    * @minLength 0
    * @maxLength 10
    */
-  floor: string;
+  floor?: string;
   /**
    * 房号
    * @minLength 0
    * @maxLength 10
    */
-  houseNo: string;
+  houseNo?: string;
   /**
    * 常用联系方式
    * @minLength 11
    * @maxLength 11
    */
-  comContactInfo: string;
+  comContactInfo?: string;
   /** 紧急联系方式 */
-  emContactInfo: string;
+  emContactInfo?: string;
   /** 社区/物业名称 */
-  communityName: string;
+  communityName?: string;
   /** 社区/物业联系方式 */
-  communityContactInfo: string;
+  communityContactInfo?: string;
   /** 行政区划id枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 所属燃气公司枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 用户类型枚举中文描述 */
-  _userType: string;
+  _userType?: string;
   /** 用户标签枚举中文描述 */
-  _userTag: string;
+  _userTag?: string;
   /** 用气类型枚举中文描述 */
-  _useType: string;
+  _useType?: string;
 }
 
 export interface GasStationImportDTO {
-  gasType: GasStationImportDtoGasType;
-  items: GasStationImportItemDTO[];
+  gasType?: GasStationImportDtoGasType;
+  items?: Array<GasStationImportItemDTO>;
   /** undefined枚举中文描述 */
-  _gasType: string;
+  _gasType?: string;
 }
 
 export interface GasStationImportItemDTO {
@@ -1676,100 +1676,100 @@ export interface GasStationImportItemDTO {
    * @minLength 0
    * @maxLength 64
    */
-  stationId: string;
+  stationId?: string;
   /**
    * 场站名称
    * @minLength 0
    * @maxLength 64
    */
-  stationName: string;
+  stationName?: string;
   /** 场站类型 */
-  stationType: GasStationImportItemDtoStationType;
+  stationType?: GasStationImportItemDtoStationType;
   /** 所属企业 */
-  orgId: string;
+  orgId?: string;
   /** 所属区域 */
-  districtId: string;
+  districtId?: string;
   /**
    * 场站地址
    * @minLength 0
    * @maxLength 100
    */
-  address: string;
+  address?: string;
   /**
    * 日最大输气能力（万立方）
    * @format double
    */
-  gasSupplyMax: number;
+  gasSupplyMax?: number;
   /**
    * 设计储气能力（万立方）
    * @format double
    */
-  gasCapacityDesign: number;
+  gasCapacityDesign?: number;
   /**
    * 经度
    * @format double
    */
-  longitude: number;
+  longitude?: number;
   /**
    * 纬度
    * @format double
    */
-  latitude: number;
+  latitude?: number;
   /** 场站类型枚举中文描述 */
-  _stationType: string;
+  _stationType?: string;
   /** 所属企业枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 所属区域枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface FileUpdateResponseDTO {
-  fileName: string;
-  objectName: string;
-  previewUrl: string;
-  bucketName: string;
+  fileName?: string;
+  objectName?: string;
+  previewUrl?: string;
+  bucketName?: string;
   /** @format double */
-  fileMbSize: number;
+  fileMbSize?: number;
 }
 
 export interface ResultFileUpdateResponseDTO {
-  code: string;
-  data: FileUpdateResponseDTO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: FileUpdateResponseDTO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 评分列表 */
 export interface EnterpriseScoringItemDTO {
   /** 分类 */
-  category: string;
+  category?: string;
   /**
    * 评分项最高分
    * @format int32
    */
-  maximumScore: number;
+  maximumScore?: number;
   /** 评分项名称 */
-  scoringItem: string;
+  scoringItem?: string;
   /** 评分项编码 */
-  scoringCode: string;
+  scoringCode?: string;
   /**
    * 实际得分
    * @format int32
    */
-  scoringValue: number;
+  scoringValue?: number;
 }
 
 export interface EnterpriseScoringPostDTO {
   /** 企业id */
-  orgId: string;
+  orgId?: string;
   /** 评分列表 */
-  list: EnterpriseScoringItemDTO[];
+  list?: Array<EnterpriseScoringItemDTO>;
   /** 企业id枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 export interface EnterpriseBatchImportDTO {
-  items: EnterpriseImportDTO[];
+  items?: Array<EnterpriseImportDTO>;
 }
 
 export interface EnterpriseImportDTO {
@@ -1778,123 +1778,123 @@ export interface EnterpriseImportDTO {
    * @minLength 0
    * @maxLength 20
    */
-  name: string;
+  name?: string;
   /** 所属区域 */
-  belongArea: string;
+  belongArea?: string;
   /**
    * 企业地址
    * @minLength 0
    * @maxLength 100
    */
-  address: string;
+  address?: string;
   /** 经营区域 */
-  businessArea: string;
+  businessArea?: string;
   /** 经营范围(类别) */
-  businessScope: EnterpriseImportDtoBusinessScope;
+  businessScope?: EnterpriseImportDtoBusinessScope;
   /**
    * 企业负责人姓名
    * @minLength 0
    * @maxLength 5
    */
-  masterName: string;
+  masterName?: string;
   /**
    * 企业负责人手机号
    * @minLength 11
    * @maxLength 11
    */
-  masterPhone: string;
+  masterPhone?: string;
   /**
    * 员工数量
    * @format int32
    */
-  employeeCount: number;
+  employeeCount?: number;
   /**
    * 拥有的窨井数量
    * @format int32
    */
-  wellsCount: number;
+  wellsCount?: number;
   /** 拥有的管线长度,km */
-  pipelineLengthKm: number;
+  pipelineLengthKm?: number;
   /**
    * 拥有的液化气瓶数量
    * @format int32
    */
-  gasBottleCount: number;
+  gasBottleCount?: number;
   /**
    * 拥有的场站数量
    * @format int32
    */
-  stationCount: number;
+  stationCount?: number;
   /** 特种设备类型 */
-  specialEquipType: EnterpriseImportDtoSpecialEquipType;
+  specialEquipType?: EnterpriseImportDtoSpecialEquipType;
   /**
    * 特种设备数量
    * @format int32
    */
-  specialEquipmentCount: number;
+  specialEquipmentCount?: number;
   /**
    * 安全负责人姓名
    * @minLength 0
    * @maxLength 5
    */
-  csoName: string;
+  csoName?: string;
   /**
    * 职位
    * @minLength 0
    * @maxLength 20
    */
-  csoJobTitle: string;
+  csoJobTitle?: string;
   /**
    * 联系方式
    * @minLength 11
    * @maxLength 11
    */
-  csoPhone: string;
+  csoPhone?: string;
   /**
    * 营业执照编号
    * @minLength 0
    * @maxLength 32
    */
-  licenseNumber: string;
+  licenseNumber?: string;
   /**
    * 营业执照有效期
    * @pattern ^\d{4}-\d{2}-\d{2}$
    */
-  licenseExpiryDate: string;
+  licenseExpiryDate?: string;
   /**
    * 经营许可证编号
    * @minLength 0
    * @maxLength 32
    */
-  permitsNumber: string;
+  permitsNumber?: string;
   /**
    * 经营许可证有效期
    * @pattern ^\d{4}-\d{2}-\d{2}$
    */
-  permitsExpiryDate: string;
+  permitsExpiryDate?: string;
   /** 经营范围(类别)枚举中文描述 */
-  _businessScope: string;
+  _businessScope?: string;
   /** 特种设备类型枚举中文描述 */
-  _specialEquipType: string;
+  _specialEquipType?: string;
 }
 
 export interface EnterpriseInfoImportVO {
-  hasBadData: boolean;
-  badData: string[];
-  goodData: object[];
+  hasBadData?: boolean;
+  badData?: Array<string> | string;
+  goodData?: Array<object>;
 }
 
 export interface ResultEnterpriseInfoImportVO {
-  code: string;
-  data: EnterpriseInfoImportVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: EnterpriseInfoImportVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface SecCheckImportDTO {
   /** @format int64 */
-  checkPlanId: number;
-  items: SecCheckImportItemDTO[];
+  checkPlanId?: number;
+  items?: Array<SecCheckImportItemDTO>;
 }
 
 export interface SecCheckImportItemDTO {
@@ -1903,16 +1903,16 @@ export interface SecCheckImportItemDTO {
    * @minLength 0
    * @maxLength 32
    */
-  gasUserNo: string;
+  gasUserNo?: string;
   /** 安检结果 */
-  checkResult: SecCheckImportItemDtoCheckResult;
+  checkResult?: SecCheckImportItemDtoCheckResult;
   /**
    * 入户安检日期
    * @format date
    */
-  checkDate: string;
+  checkDate?: string;
   /** 安检结果枚举中文描述 */
-  _checkResult: string;
+  _checkResult?: string;
 }
 
 /** 燃气企业底数请求 */
@@ -1921,124 +1921,124 @@ export interface AddBaseDataRequest {
    * 燃气底数ID
    * @format int64
    */
-  uid: number;
+  uid?: number;
   /**
    * 企业ID
    * @format int64
    */
-  enterpriseId: number;
+  enterpriseId?: number;
   /** 主类型 */
-  mainType: string;
+  mainType?: string;
   /** 子类型 */
-  subType: string;
+  subType?: string;
   /** 子类型值 */
-  subValue: string;
+  subValue?: string;
   /**
    * 序号
    * @format int32
    */
-  sort: number;
+  sort?: number;
 }
 
 /** 应急预案新增 */
 export interface AddEmresPlanRequest {
   /** 应急预案ID */
-  uid: string;
+  uid?: string;
   /**
    * 应急预案名称
    * @minLength 0
    * @maxLength 100
    */
-  planName: string;
+  planName?: string;
   /** 预案类型 */
-  planType: AddEmresPlanRequestPlanType;
+  planType?: AddEmresPlanRequestPlanType;
   /** 行政区划id */
-  districtId: string;
+  districtId?: string;
   /** 组织机构id */
-  orgId: string;
+  orgId?: string;
   /** 文件id集合，多个以逗号分隔 */
-  fileIds: string;
+  fileIds?: string;
   /** 更新原因 */
-  updateReason: string;
+  updateReason?: string;
   /** 预案类型枚举中文描述 */
-  _planType: string;
+  _planType?: string;
   /** 行政区划id枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 组织机构id枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 /** 公告信息新增 */
 export interface UpdateBulletinQuery {
   /** 公告类型 */
-  bulletinType: UpdateBulletinQueryBulletinType;
+  bulletinType?: UpdateBulletinQueryBulletinType;
   /** 公告标题 */
-  bulletinTitle: string;
+  bulletinTitle?: string;
   /** 公告正文 */
-  bulletinText: string;
+  bulletinText?: string;
   /**
    * 发布时间
    * @format date-time
    */
-  publishTime: string;
+  publishTime?: string;
   /** 附件id */
-  fileId: string;
+  fileId?: string;
   /**
    * 公告ID
    * @format int64
    */
-  uid: number;
+  uid?: number;
   /** 公告类型枚举中文描述 */
-  _bulletinType: string;
+  _bulletinType?: string;
 }
 
 /** 通知消息新增类 */
 export interface BulletinSendMsgDTO {
   /** 消息标识：隐患编号 或 报警编号等关键标识 */
-  msgFlag: string;
+  msgFlag?: string;
   /** 消息类型，隐患：risk 报警：alarm */
-  msgType: string;
+  msgType?: string;
   /** 通知类型，短信/广播/传真 */
-  type: string;
+  type?: string;
   /** 消息标题 */
-  title: string;
+  title?: string;
   /** 消息内容 */
-  content: string;
+  content?: string;
   /** 创建人 */
-  createBy: string;
+  createBy?: string;
   /** 通知对象 */
-  itemList: UrgeTargetItem[];
+  itemList?: Array<UrgeTargetItem>;
 }
 
 /** 通知对象 */
 export interface UrgeTargetItem {
   /** 消息接收人 */
-  recipient: string;
+  recipient?: string;
   /** 消息接收人名称 */
-  recipientName: string;
+  recipientName?: string;
   /** 消息接收人电话 */
-  recipientPhone: string;
+  recipientPhone?: string;
   /** 消息接收人单位 */
-  recipientUnit: string;
+  recipientUnit?: string;
 }
 
 /** 公告信息新增 */
 export interface AddBulletinQuery {
   /** 公告类型 */
-  bulletinType: AddBulletinQueryBulletinType;
+  bulletinType?: AddBulletinQueryBulletinType;
   /** 公告标题 */
-  bulletinTitle: string;
+  bulletinTitle?: string;
   /** 公告正文 */
-  bulletinText: string;
+  bulletinText?: string;
   /**
    * 发布时间
    * @format date-time
    */
-  publishTime: string;
+  publishTime?: string;
   /** 附件id */
-  fileId: string;
+  fileId?: string;
   /** 公告类型枚举中文描述 */
-  _bulletinType: string;
+  _bulletinType?: string;
 }
 
 /** 救援人员管理 */
@@ -2047,37 +2047,37 @@ export interface EmresMnRetmanDTO {
    * 主键
    * @format int64
    */
-  cmKid: number;
+  cmKid?: number;
   /** 人员编号 */
-  persoNum: string;
+  persoNum?: string;
   /** 成员姓名 */
-  persoName: string;
+  persoName?: string;
   /** 联系电话 */
-  personTel: string;
+  personTel?: string;
   /** 队伍编号 */
-  orgid: string;
+  orgid?: string;
   /** 救援队名称 */
-  orgName: string;
+  orgName?: string;
   /** 职务 */
-  persotitle: string;
+  persotitle?: string;
   /** 专长或特长 */
-  speciality: string;
+  speciality?: string;
   /** 填报人 */
-  cmCreator: string;
+  cmCreator?: string;
   /** 填报人电话 */
-  cmTel: string;
+  cmTel?: string;
   /**
    * 填报时间
    * @format date-time
    */
-  cmAddtime: string;
+  cmAddtime?: string;
   /**
    * 更新时间
    * @format date-time
    */
-  cmUptime: string;
+  cmUptime?: string;
   /** 数据来源单位 */
-  datasource: string;
+  datasource?: string;
 }
 
 /** 救援队伍DTO */
@@ -2086,48 +2086,48 @@ export interface EmresMnReteamDTO {
    * 主键
    * @format int64
    */
-  cmKid: number;
+  cmKid?: number;
   /** 队伍编号 */
-  orgid: string;
+  orgid?: string;
   /** 队伍名称 */
-  name: string;
+  name?: string;
   /** 级别 */
-  levelCode: string;
+  levelCode?: string;
   /** 隶属单位 */
-  cmOrgflag: string;
+  cmOrgflag?: string;
   /** 地址 */
-  address: string;
+  address?: string;
   /** 负责人 */
-  director: string;
+  director?: string;
   /** 联系电话 */
-  dutyTel: string;
+  dutyTel?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /** 填报人 */
-  fillPerson: string;
+  fillPerson?: string;
   /** 填报人电话 */
-  fillPhone: string;
+  fillPhone?: string;
   /**
    * 填报时间
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  fillTime: string;
+  fillTime?: string;
   /** 数据来源 */
-  datasource: string;
+  datasource?: string;
   /**
    * 队伍规模
    * @format int32
    */
-  personnum: number;
+  personnum?: number;
 }
 
 /** 参数查询对象DTO */
 export interface ParamQuery {
   /** 编码 */
-  codes: string;
+  codes?: string;
 }
 
 /** 管点分页信息 */
@@ -2136,44 +2136,44 @@ export interface CifrsPipeMnPipepointPageVO {
    * 主键
    * @format int64
    */
-  cmKid: number;
+  cmKid?: number;
   /**  管点编码 */
-  guid: string;
+  guid?: string;
   /** 行政区划 */
-  cmRegflag: string;
+  cmRegflag?: string;
   /** 所属机构 */
-  cmOrgflag: string;
+  cmOrgflag?: string;
   /** 所在道路 */
-  roadName: string;
+  roadName?: string;
   /** 管点类型 */
-  code: string;
+  code?: string;
   /** 埋深 */
-  deep: number;
+  deep?: number;
   /** 当前状态 */
-  state: string;
+  state?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /** 物探点号 */
-  expNo: string;
+  expNo?: string;
   /**
    * 建设年代（安装日期）
    * @format date
    */
-  installdat: string;
+  installdat?: string;
   /** 附属物 */
-  subSid: string;
+  subSid?: string;
   /** 特征点 */
-  feature: string;
-  scode: string;
+  feature?: string;
+  scode?: string;
 }
 
 export interface ResultListCifrsPipeMnPipepointPageVO {
-  code: string;
-  data: CifrsPipeMnPipepointPageVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<CifrsPipeMnPipepointPageVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 管线信息 */
@@ -2182,66 +2182,66 @@ export interface CifrsPipeMnPipelineVO {
    * 主键Id
    * @format int64
    */
-  cmKid: number;
+  cmKid?: number;
   /** 管线编码 */
-  guid: string;
+  guid?: string;
   /** 管线类型 */
-  code: string;
+  code?: string;
   /** 行政区划 */
-  cmRegflag: string;
+  cmRegflag?: string;
   /** 所属机构 */
-  cmOrgflag: string;
+  cmOrgflag?: string;
   /** 所在道路 */
-  roadName: string;
+  roadName?: string;
   /** 管线材质 */
-  pmaterial: CifrsPipeMnPipelineVoPmaterial;
+  pmaterial?: CifrsPipeMnPipelineVoPmaterial;
   /** 管线管径 */
-  outDS: string;
+  outDS?: string;
   /** 运行压力 */
-  operatPress: string;
+  operatPress?: string;
   /** 压力级别 */
-  volclass: CifrsPipeMnPipelineVoVolclass;
+  volclass?: CifrsPipeMnPipelineVoVolclass;
   /** 管壁厚度 */
-  pipeThink: string;
+  pipeThink?: string;
   /**  管线长度 */
-  pipelen: number;
+  pipelen?: number;
   /** 是否为监测对象 */
-  monitorno: string;
-  cmGeom: string;
+  monitorno?: string;
+  cmGeom?: string;
   /** 建设年代 */
-  mdate: string;
+  mdate?: string;
   /** 管道年限 */
-  pipedate: number;
+  pipedate?: number;
   /** 起点埋深 */
-  sDeep: number;
+  sDeep?: number;
   /** 终点埋深 */
-  eDeep: number;
+  eDeep?: number;
   /** 管线材质枚举中文描述 */
-  _pmaterial: string;
+  _pmaterial?: string;
   /** 压力级别枚举中文描述 */
-  _volclass: string;
+  _volclass?: string;
 }
 
 export interface CifrsPipeSectionVO {
-  pipelineId: string;
-  point: string;
-  height: number;
+  pipelineId?: string;
+  point?: string;
+  height?: number;
   /** 管线信息 */
-  pipeline: CifrsPipeMnPipelineVO;
+  pipeline?: CifrsPipeMnPipelineVO;
 }
 
 export interface ResultListCifrsPipeSectionVO {
-  code: string;
-  data: CifrsPipeSectionVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<CifrsPipeSectionVO>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultListCifrsPipeMnPipelineVO {
-  code: string;
-  data: CifrsPipeMnPipelineVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<CifrsPipeMnPipelineVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 救援物质DTO */
@@ -2250,280 +2250,280 @@ export interface EmresMnMateriDTO {
    * 主键
    * @format int64
    */
-  cmKid: number;
+  cmKid?: number;
   /** 物资装备编号 */
-  materCode: string;
+  materCode?: string;
   /** 物资装备名称 */
-  name: string;
+  name?: string;
   /** 储备库编号 */
-  materhouseCode: string;
+  materhouseCode?: string;
   /** 物资装备种类 */
-  materType: string;
+  materType?: string;
   /** 物资装备品牌 */
-  factory: string;
+  factory?: string;
   /** 物资装备型号 */
-  specification: string;
+  specification?: string;
   /** 物资装备数量 */
-  matNum: number;
+  matNum?: number;
   /** 计量单位 */
-  measureunit: string;
+  measureunit?: string;
   /** 主要功能 */
-  instruction: string;
+  instruction?: string;
   /** 所在队伍编号 */
-  orgid: string;
+  orgid?: string;
   /** 所在位置 */
-  location: string;
+  location?: string;
   /** 经纬度 */
-  cmGeom: string;
+  cmGeom?: string;
   /** 填报人 */
-  fillPerson: string;
+  fillPerson?: string;
   /** 填报人电话 */
-  contacTel: string;
+  contacTel?: string;
   /**
    * 填报时间
    * @format date-time
    */
-  fillTime: string;
+  fillTime?: string;
   /** 数据来源单位 */
-  datasource: string;
+  datasource?: string;
 }
 
 /** 专家信息DTO */
 export interface EmresMnExpertDTO {
   /** 主键 */
-  cmKid: string;
+  cmKid?: string;
   /** 专家编号 */
-  expCode: string;
+  expCode?: string;
   /** 姓名 */
-  name: string;
+  name?: string;
   /** 性别 */
-  sex: string;
+  sex?: string;
   /** 专家类型 */
-  experType: string;
+  experType?: string;
   /** 民族代码 */
-  natioinCode: string;
+  natioinCode?: string;
   /** 手机 */
-  phone: string;
+  phone?: string;
   /** 办公电话 */
-  dutyTel: string;
+  dutyTel?: string;
   /**
    * 出生日期
    * @format date
    */
-  birthday: string;
+  birthday?: string;
   /**  所属单位 */
-  unitName: string;
+  unitName?: string;
   /** 单位地址 */
-  address: string;
+  address?: string;
   /** 身份证号 */
-  idCard: string;
+  idCard?: string;
   /** 学历 */
-  degreeCode: string;
+  degreeCode?: string;
   /** 职务 */
-  duty: string;
+  duty?: string;
   /** 专业 */
-  major: string;
+  major?: string;
   /** 工作部门 */
-  department: string;
+  department?: string;
   /** 所在区域 */
-  area: string;
+  area?: string;
   /** 职称 */
-  protitle: string;
+  protitle?: string;
   /**
    * 授予时间
    * @format date
    */
-  titleDate: string;
+  titleDate?: string;
   /** 专长描述 */
-  speciality: string;
+  speciality?: string;
   /** 毕业院校 */
-  university: string;
+  university?: string;
   /** 邮箱地址 */
-  mail: string;
+  mail?: string;
   /**  附件存储位置 */
-  fileAdder: string;
+  fileAdder?: string;
   /**  所在区域 */
-  cmRegflag: string;
+  cmRegflag?: string;
 }
 
 /** 事故事件修改 */
 export interface UpdateAccidentQuery {
   /** 行政区划id */
-  districtId: string;
+  districtId?: string;
   /** 组织机构id */
-  orgId: string;
+  orgId?: string;
   /** 事故事件地址 */
-  address: string;
+  address?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /**
    * 事故事件发生时间
    * @format date-time
    */
-  accidentTime: string;
+  accidentTime?: string;
   /** 事故类型：火灾、爆炸、爆燃、机械伤害 */
-  accidentType: UpdateAccidentQueryAccidentType;
+  accidentType?: UpdateAccidentQueryAccidentType;
   /** 事故场景：户内、管网、场站 */
-  accidentScene: UpdateAccidentQueryAccidentScene;
+  accidentScene?: UpdateAccidentQueryAccidentScene;
   /** 事故等级：特别重大、重大、较大 */
-  accidentLevel: UpdateAccidentQueryAccidentLevel;
+  accidentLevel?: UpdateAccidentQueryAccidentLevel;
   /** 事故描述 */
-  describe: string;
+  describe?: string;
   /** 事故报告 */
-  fileIds: string;
+  fileIds?: string;
   /**
    * 死亡人数
    * @format int32
    * @min 0
    */
-  deathCnt: number;
+  deathCnt?: number;
   /**
    * 受伤人数
    * @format int32
    * @min 0
    */
-  injuredCnt: number;
+  injuredCnt?: number;
   /** ID */
-  uid: string;
+  uid?: string;
   /** 行政区划id枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 组织机构id枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 事故类型：火灾、爆炸、爆燃、机械伤害枚举中文描述 */
-  _accidentType: string;
+  _accidentType?: string;
   /** 事故场景：户内、管网、场站枚举中文描述 */
-  _accidentScene: string;
+  _accidentScene?: string;
   /** 事故等级：特别重大、重大、较大枚举中文描述 */
-  _accidentLevel: string;
+  _accidentLevel?: string;
 }
 
 /** 事故事件新增 */
 export interface AddAccidentQuery {
   /** 行政区划id */
-  districtId: string;
+  districtId?: string;
   /** 组织机构id */
-  orgId: string;
+  orgId?: string;
   /** 事故事件地址 */
-  address: string;
+  address?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /**
    * 事故事件发生时间
    * @format date-time
    */
-  accidentTime: string;
+  accidentTime?: string;
   /** 事故类型：火灾、爆炸、爆燃、机械伤害 */
-  accidentType: AddAccidentQueryAccidentType;
+  accidentType?: AddAccidentQueryAccidentType;
   /** 事故场景：户内、管网、场站 */
-  accidentScene: AddAccidentQueryAccidentScene;
+  accidentScene?: AddAccidentQueryAccidentScene;
   /** 事故等级：特别重大、重大、较大 */
-  accidentLevel: AddAccidentQueryAccidentLevel;
+  accidentLevel?: AddAccidentQueryAccidentLevel;
   /** 事故描述 */
-  describe: string;
+  describe?: string;
   /** 事故报告 */
-  fileIds: string;
+  fileIds?: string;
   /**
    * 死亡人数
    * @format int32
    * @min 0
    */
-  deathCnt: number;
+  deathCnt?: number;
   /**
    * 受伤人数
    * @format int32
    * @min 0
    */
-  injuredCnt: number;
+  injuredCnt?: number;
   /** 行政区划id枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 组织机构id枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 事故类型：火灾、爆炸、爆燃、机械伤害枚举中文描述 */
-  _accidentType: string;
+  _accidentType?: string;
   /** 事故场景：户内、管网、场站枚举中文描述 */
-  _accidentScene: string;
+  _accidentScene?: string;
   /** 事故等级：特别重大、重大、较大枚举中文描述 */
-  _accidentLevel: string;
+  _accidentLevel?: string;
 }
 
 export interface ResultWeatherInfo {
-  code: string;
-  data: WeatherInfo;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: WeatherInfo;
+  message?: string;
+  success?: boolean;
 }
 
 export interface WeatherData {
   /** @format double */
-  temperature: number;
+  temperature?: number;
   /** @format double */
-  temperatureDiff: number;
+  temperatureDiff?: number;
   /** @format double */
-  airpressure: number;
+  airpressure?: number;
   /** @format double */
-  humidity: number;
+  humidity?: number;
   /** @format double */
-  rain: number;
+  rain?: number;
   /** @format int32 */
-  rcomfort: number;
+  rcomfort?: number;
   /** @format int32 */
-  icomfort: number;
-  info: string;
-  img: string;
-  imgPath: string;
+  icomfort?: number;
+  info?: string;
+  img?: string;
+  imgPath?: string;
   /** @format double */
-  feelst: number;
+  feelst?: number;
 }
 
 export interface WeatherInfo {
-  station: WeatherStation;
-  time: string;
-  weather: WeatherData;
-  wind: WeatherWind;
+  station?: WeatherStation;
+  time?: string;
+  weather?: WeatherData;
+  wind?: WeatherWind;
 }
 
 export interface WeatherStation {
-  code: string;
-  province: string;
-  city: string;
-  url: string;
+  code?: string;
+  province?: string;
+  city?: string;
+  url?: string;
 }
 
 export interface WeatherWind {
-  direct: string;
+  direct?: string;
   /** @format double */
-  degree: number;
-  power: string;
+  degree?: number;
+  power?: string;
   /** @format double */
-  speed: number;
+  speed?: number;
 }
 
 /** 响应错误详情 */
 export interface Error {
   /** Exception完整信息 */
-  detail: string;
+  detail?: string;
   /** 额外的错误信息，目前主要是Validation的Message */
-  message: string;
+  message?: string;
   /** 额外的错误代码，目前主要是Validation的Code */
-  code: string;
+  code?: string;
   /** 额外的错误字段，目前主要是Validation的Field */
-  field: string;
+  field?: string;
   /** 错误堆栈信息 */
-  stackTrace: {
-    classLoaderName: string;
-    moduleName: string;
-    moduleVersion: string;
-    methodName: string;
-    fileName: string;
+  stackTrace?: Array<{
+    classLoaderName?: string;
+    moduleName?: string;
+    moduleVersion?: string;
+    methodName?: string;
+    fileName?: string;
     /** @format int32 */
-    lineNumber: number;
-    className: string;
-    nativeMethod: boolean;
-  }[];
+    lineNumber?: number;
+    className?: string;
+    nativeMethod?: boolean;
+  }>;
 }
 
 /**
@@ -2536,323 +2536,323 @@ export interface Result {
    * 自定义响应编码
    * @format int32
    */
-  code: number;
+  code?: number;
   /** 响应返回信息 */
-  message: string;
+  message?: string;
   /** 请求路径 */
-  path: string;
+  path?: string;
   /** 响应返回数据 */
-  data: object;
+  data?: object;
   /** 链路 TraceId */
-  traceId: string;
+  traceId?: string;
   /**
    * http状态码
    * @format int32
    */
-  status: number;
+  status?: number;
   /**
    * 响应时间戳
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  timestamp: string;
-  error: Error;
+  timestamp?: string;
+  error?: Error;
 }
 
 export interface OrganizationVO {
-  id: string;
-  parentOrg: string;
-  fullName: string;
-  name: string;
-  shortName: string;
-  districtCode: string;
+  id?: string;
+  parentOrg?: string;
+  fullName?: string;
+  name?: string;
+  shortName?: string;
+  districtCode?: string;
   /** @format int32 */
-  sort: number;
-  unifiedSocialCreditIdentifie: string;
-  fax: string;
-  orgType: string;
-  orgCode: string;
-  tel: string;
-  children: OrganizationVO[];
+  sort?: number;
+  unifiedSocialCreditIdentifie?: string;
+  fax?: string;
+  orgType?: string;
+  orgCode?: string;
+  tel?: string;
+  children?: Array<OrganizationVO>;
 }
 
 export interface ResultListUserInfoVO {
-  code: string;
-  data: UserInfoVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<UserInfoVO>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface UserInfoVO {
-  userId: string;
+  userId?: string;
   /** @format int32 */
-  pbfRanking: number;
-  pbfDescription: string;
-  pbfIsReserved: boolean;
+  pbfRanking?: number;
+  pbfDescription?: string;
+  pbfIsReserved?: boolean;
   /** @format int32 */
-  pbfReversion: number;
+  pbfReversion?: number;
   /** @format int32 */
-  pbfStatus: number;
-  avatar: string;
-  attachmentPreviewUrl: string;
-  email: string;
-  nickName: string;
-  phoneNumber: string;
-  userName: string;
-  name: string;
-  organizationId: string;
+  pbfStatus?: number;
+  avatar?: string;
+  attachmentPreviewUrl?: string;
+  email?: string;
+  nickName?: string;
+  phoneNumber?: string;
+  userName?: string;
+  name?: string;
+  organizationId?: string;
   /** @format int32 */
-  sort: number;
-  idcard: string;
-  gender: string;
-  officeNumber: string;
-  job: string;
-  contactAddress: string;
-  organizationFullName: string;
-  organizationShortName: string;
-  organizationVO: OrganizationVO;
-  partOrganizationVOs: OrganizationVO[];
-  partTimeOrganization: string;
-  dataSpecific: string;
-  dataRegional: string;
-  permissionDistrictCode: string;
-  districtObjType: string;
-  permissionSystemDistrictName: string;
-  permissionEnable: boolean;
-  permissionParentDistrictCode: string;
-  permissionParentDistrictName: string;
+  sort?: number;
+  idcard?: string;
+  gender?: string;
+  officeNumber?: string;
+  job?: string;
+  contactAddress?: string;
+  organizationFullName?: string;
+  organizationShortName?: string;
+  organizationVO?: OrganizationVO;
+  partOrganizationVOs?: Array<OrganizationVO>;
+  partTimeOrganization?: string;
+  dataSpecific?: string;
+  dataRegional?: string;
+  permissionDistrictCode?: string;
+  districtObjType?: string;
+  permissionSystemDistrictName?: string;
+  permissionEnable?: boolean;
+  permissionParentDistrictCode?: string;
+  permissionParentDistrictName?: string;
   /** @format int32 */
-  districtObjLevel: number;
+  districtObjLevel?: number;
 }
 
 export interface MenuButtonVO {
-  id: string;
-  menuId: string;
-  name: string;
-  mark: string;
-  type: string;
-  remark: string;
+  id?: string;
+  menuId?: string;
+  name?: string;
+  mark?: string;
+  type?: string;
+  remark?: string;
   /** @format int32 */
-  sort: number;
+  sort?: number;
 }
 
 export interface MenuVO {
-  id: string;
-  parentMenu: string;
-  parentMenuName: string;
-  menuName: string;
-  menuCode: string;
-  menuUrl: string;
-  menuIcon: string;
-  menuDisabled: boolean;
-  menuPopup: boolean;
-  menuHide: boolean;
+  id?: string;
+  parentMenu?: string;
+  parentMenuName?: string;
+  menuName?: string;
+  menuCode?: string;
+  menuUrl?: string;
+  menuIcon?: string;
+  menuDisabled?: boolean;
+  menuPopup?: boolean;
+  menuHide?: boolean;
   /** @format int32 */
-  sort: number;
-  applicationsId: string;
-  buttonChildren: MenuButtonVO[];
+  sort?: number;
+  applicationsId?: string;
+  buttonChildren?: Array<MenuButtonVO>;
 }
 
 export interface ResultListMenuVO {
-  code: string;
-  data: MenuVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<MenuVO>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultListOrganizationVO {
-  code: string;
-  data: OrganizationVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<OrganizationVO>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultUserInfoVO {
-  code: string;
-  data: UserInfoVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: UserInfoVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface DistrictVO {
   /** @format int64 */
-  cmKid: number;
+  cmKid?: number;
   /** @format int64 */
-  parentId: number;
-  parentName: string;
-  parentCode: string;
+  parentId?: number;
+  parentName?: string;
+  parentCode?: string;
   /** @format int32 */
-  objLevel: number;
-  name: string;
+  objLevel?: number;
+  name?: string;
   /** @format int32 */
-  code: number;
-  objX: number;
-  objY: number;
-  children: DistrictVO[];
-  note1: string;
-  note2: string;
-  note3: string;
-  objType: string;
+  code?: number;
+  objX?: number;
+  objY?: number;
+  children?: Array<DistrictVO>;
+  note1?: string;
+  note2?: string;
+  note3?: string;
+  objType?: string;
 }
 
 export interface ResultDistrictVO {
-  code: string;
-  data: DistrictVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: DistrictVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultThirdBuildDetailVO {
-  code: string;
-  data: ThirdBuildDetailVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: ThirdBuildDetailVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 看护记录 */
 export interface RiskThirdGuardItemDTO {
-  uid: string;
+  uid?: string;
   /** 看护记录描述 */
-  remark: string;
+  remark?: string;
   /** 看护记录图片 */
-  picIds: FileObj[];
+  picIds?: Array<FileObj>;
   /**
    * 看护时间
    * @format date-time
    */
-  guardTime: string;
+  guardTime?: string;
   /** 看护人员姓名 */
-  guarderName: string;
+  guarderName?: string;
 }
 
 export interface ThirdBuildDetailVO {
   /** 看护记录 */
-  guardList: RiskThirdGuardItemDTO[];
-  uid: string;
+  guardList?: Array<RiskThirdGuardItemDTO>;
+  uid?: string;
   /** 施工类型 */
-  buildType: ThirdBuildDetailVoBuildType;
+  buildType?: ThirdBuildDetailVoBuildType;
   /** 交底状态 */
-  reportState: ThirdBuildDetailVoReportState;
+  reportState?: ThirdBuildDetailVoReportState;
   /** 看护状态 */
-  guardState: ThirdBuildDetailVoGuardState;
+  guardState?: ThirdBuildDetailVoGuardState;
   /** 所属单位 */
-  orgId: string;
+  orgId?: string;
   /**
    * 计划施工开始时间
    * @format date
    */
-  planTimeStart: string;
+  planTimeStart?: string;
   /**
    * 计划施结束工时间
    * @format date
    */
-  planTimeEnd: string;
+  planTimeEnd?: string;
   /** 第三方施工状态 */
-  buildState: ThirdBuildDetailVoBuildState;
+  buildState?: ThirdBuildDetailVoBuildState;
   /**
    * 上报时间
    * @format date-time
    */
-  createTime: string;
+  createTime?: string;
   /** 所属区域 */
-  districtId: string;
+  districtId?: string;
   /** 施工位置 */
-  constructionAddress: string;
+  constructionAddress?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /**
    * 实际施工开始时间
    * @format date-time
    */
-  realBuildTimeStart: string;
+  realBuildTimeStart?: string;
   /**
    * 实际施工结束时间
    * @format date-time
    */
-  realBuildTimeEnd: string;
+  realBuildTimeEnd?: string;
   /** 交底人姓名 */
-  reporterName: string;
+  reporterName?: string;
   /** 交底人手机号 */
-  reporterPhone: string;
+  reporterPhone?: string;
   /** 建设单位名称 */
-  buildUnitName: string;
+  buildUnitName?: string;
   /** 建设单位联系人姓名 */
-  buildUnitContactName: string;
+  buildUnitContactName?: string;
   /** 建设单位联系电话 */
-  buildUnitContactPhone: string;
+  buildUnitContactPhone?: string;
   /** 监理单位名称 */
-  supUnitName: string;
+  supUnitName?: string;
   /** 监理单位联系人 */
-  supUnitContactName: string;
+  supUnitContactName?: string;
   /** 监理单位联系人手机号 */
-  supUnitContactPhone: string;
+  supUnitContactPhone?: string;
   /** 交底照片 */
-  reportPicIds: FileObj[];
+  reportPicIds?: Array<FileObj>;
   /** 管网保护方案 */
-  schemaPicIds: FileObj[];
+  schemaPicIds?: Array<FileObj>;
   /** 管网保护协议 */
-  protocolPicIds: FileObj[];
+  protocolPicIds?: Array<FileObj>;
   /** 施工类型枚举中文描述 */
-  _buildType: string;
+  _buildType?: string;
   /** 交底状态枚举中文描述 */
-  _reportState: string;
+  _reportState?: string;
   /** 看护状态枚举中文描述 */
-  _guardState: string;
+  _guardState?: string;
   /** 所属单位枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 第三方施工状态枚举中文描述 */
-  _buildState: string;
+  _buildState?: string;
   /** 所属区域枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface ResultThirdBuildHandleFlowVO {
-  code: string;
-  data: ThirdBuildHandleFlowVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: ThirdBuildHandleFlowVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ThirdBuildHandleFlowVO {
-  flows: ThirdBuildHandleItemDTO[];
+  flows?: Array<ThirdBuildHandleItemDTO>;
 }
 
 export interface ThirdBuildHandleItemDTO {
   /** 标题 */
-  title: string;
+  title?: string;
   /**
    * 阶段时间
    * @format date-time
    */
-  stageTime: string;
+  stageTime?: string;
   /** 操作人 */
-  operator: string;
+  operator?: string;
   /** 交底照片 */
-  reportPicIds: FileObj[];
+  reportPicIds?: Array<FileObj>;
   /** 管网保护方案照片 */
-  schemaPicIds: FileObj[];
+  schemaPicIds?: Array<FileObj>;
   /** 管网保护协议照片 */
-  protocolPicIds: FileObj[];
+  protocolPicIds?: Array<FileObj>;
   /** 交底相关附件id */
-  fileIds: FileObj[];
+  fileIds?: Array<FileObj>;
   /** 看护记录描述 */
-  remark: string;
+  remark?: string;
   /**
    * 看护记录图片
    * @maxItems 3
    * @minItems 0
    */
-  picIds: FileObj[];
+  picIds?: Array<FileObj>;
 }
 
 export interface ResultThirdBuildSummaryVO {
-  code: string;
+  code?: string;
   /** 三方施工统计 */
-  data: ThirdBuildSummaryVO;
-  message: string;
-  success: boolean;
+  data?: ThirdBuildSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 三方施工统计 */
@@ -2861,264 +2861,264 @@ export interface ThirdBuildSummaryVO {
    * 施工总数
    * @format int32
    */
-  total: number;
+  total?: number;
   /**
    * 在施工数量
    * @format int32
    */
-  inProgress: number;
+  inProgress?: number;
 }
 
 export interface ThirdBuildPageQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /**
    * 计划施工开始时间
    * @format date
    */
-  startTime: string;
+  startTime?: string;
   /**
    * 计划施工结束时间
    * @format date
    */
-  endTime: string;
+  endTime?: string;
   /** 施工类型 */
-  buildType: string[];
+  buildType?: Array<string> | string;
   /** 施工状态 */
-  buildStates: ThirdBuildPageQueryBuildStates[];
+  buildStates?: Array<ThirdBuildPageQueryBuildStates>;
   /** 上报状态 */
-  reportStates: ThirdBuildPageQueryReportStates[];
+  reportStates?: Array<ThirdBuildPageQueryReportStates>;
   /** 看护状态 */
-  guardStates: ThirdBuildPageQueryGuardStates[];
+  guardStates?: Array<ThirdBuildPageQueryGuardStates>;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface PageResultListThirdBuildPageVO {
-  code: string;
-  data: ThirdBuildPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<ThirdBuildPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 export interface ThirdBuildPageVO {
   /** 施工id */
-  uid: string;
+  uid?: string;
   /** 施工类型 */
-  buildType: ThirdBuildPageVoBuildType;
+  buildType?: ThirdBuildPageVoBuildType;
   /** 第三方施工状态 */
-  buildState: ThirdBuildPageVoBuildState;
+  buildState?: ThirdBuildPageVoBuildState;
   /** 交底状态 */
-  reportState: ThirdBuildPageVoReportState;
+  reportState?: ThirdBuildPageVoReportState;
   /**
    * 交底时间
    * @format date
    */
-  reportTime: string;
+  reportTime?: string;
   /** 看护状态 */
-  guardState: ThirdBuildPageVoGuardState;
+  guardState?: ThirdBuildPageVoGuardState;
   /** 所属单位 */
-  orgId: string;
+  orgId?: string;
   /** 所属区域 */
-  districtId: string;
+  districtId?: string;
   /** 施工位置 */
-  constructionAddress: string;
+  constructionAddress?: string;
   /**
    * 计划施工开始时间
    * @format date
    */
-  planTimeStart: string;
+  planTimeStart?: string;
   /**
    * 计划施结束工时间
    * @format date
    */
-  planTimeEnd: string;
-  latitude: number;
-  longitude: number;
+  planTimeEnd?: string;
+  latitude?: number;
+  longitude?: number;
   /** 施工单位名称 */
-  buildUnitName: string;
+  buildUnitName?: string;
   /** 施工单位联系人手机号 */
-  buildUnitContactPhone: string;
+  buildUnitContactPhone?: string;
   /** 监管单位名称 */
-  supUnitName: string;
+  supUnitName?: string;
   /** 监管单位联系人手机号 */
-  supUnitContactPhone: string;
+  supUnitContactPhone?: string;
   /** 施工类型枚举中文描述 */
-  _buildType: string;
+  _buildType?: string;
   /** 第三方施工状态枚举中文描述 */
-  _buildState: string;
+  _buildState?: string;
   /** 交底状态枚举中文描述 */
-  _reportState: string;
+  _reportState?: string;
   /** 看护状态枚举中文描述 */
-  _guardState: string;
+  _guardState?: string;
   /** 所属单位枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 所属区域枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 /** 模板参数列表 */
 export interface AvailableTemplateVariable {
   /** 参数名称 */
-  paramName: string;
+  paramName?: string;
   /** 参数占位 */
-  paramValue: string;
+  paramValue?: string;
   /** 参数含义说明 */
-  paramDesc: string;
+  paramDesc?: string;
 }
 
 export interface ResultSysNotifyTemplateDetailVO {
-  code: string;
-  data: SysNotifyTemplateDetailVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: SysNotifyTemplateDetailVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface SysNotifyTemplateDetailVO {
   /** 模板id */
-  uid: string;
+  uid?: string;
   /** 模板名称 */
-  title: string;
+  title?: string;
   /** 通知方式:SMS/PHONE */
-  method: SysNotifyTemplateDetailVoMethod;
+  method?: SysNotifyTemplateDetailVoMethod;
   /** 模板内容 */
-  content: string;
+  content?: string;
   /** 关联系统功能模块 */
-  module: SysNotifyTemplateDetailVoModule;
+  module?: SysNotifyTemplateDetailVoModule;
   /** 模板参数列表 */
-  availableTemplateVariables: AvailableTemplateVariable[];
+  availableTemplateVariables?: Array<AvailableTemplateVariable>;
   /** 通知方式:SMS/PHONE枚举中文描述 */
-  _method: string;
+  _method?: string;
   /** 关联系统功能模块枚举中文描述 */
-  _module: string;
+  _module?: string;
 }
 
 export interface SysNotifyTemplatePageQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 通知方式 */
-  method: string;
+  method?: string;
   /** 通知名称 */
-  title: string;
+  title?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface PageResultListSysNotifyTemplatePageVO {
-  code: string;
-  data: SysNotifyTemplatePageVO[];
-  message: string;
+  code?: string;
+  data?: Array<SysNotifyTemplatePageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 export interface SysNotifyTemplatePageVO {
   /** 模板id */
-  uid: string;
+  uid?: string;
   /** 模板名称 */
-  title: string;
+  title?: string;
   /** 通知方式:SMS/PHONE */
-  method: SysNotifyTemplatePageVoMethod;
+  method?: SysNotifyTemplatePageVoMethod;
   /** 模板内容 */
-  content: string;
+  content?: string;
   /** 关联系统功能模块 */
-  module: SysNotifyTemplatePageVoModule;
+  module?: SysNotifyTemplatePageVoModule;
   /** 通知方式:SMS/PHONE枚举中文描述 */
-  _method: string;
+  _method?: string;
   /** 关联系统功能模块枚举中文描述 */
-  _module: string;
+  _module?: string;
 }
 
 export interface PageRequest {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface JSONConfig {
-  order: boolean;
-  ignoreError: boolean;
-  ignoreCase: boolean;
-  dateFormat: string;
-  ignoreNullValue: boolean;
-  transientSupport: boolean;
-  stripTrailingZeros: boolean;
+  order?: boolean;
+  ignoreError?: boolean;
+  ignoreCase?: boolean;
+  dateFormat?: string;
+  ignoreNullValue?: boolean;
+  transientSupport?: boolean;
+  stripTrailingZeros?: boolean;
 }
 
 export interface JSONObject {
-  config: JSONConfig;
-  empty: boolean;
+  config?: JSONConfig;
+  empty?: boolean;
   [key: string]: any;
 }
 
 export interface PageResultListSuperviseNotifyRulePageVO {
-  code: string;
-  data: SuperviseNotifyRulePageVO[];
-  message: string;
+  code?: string;
+  data?: Array<SuperviseNotifyRulePageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 export interface SuperviseNotifyRulePageVO {
@@ -3126,186 +3126,186 @@ export interface SuperviseNotifyRulePageVO {
    * 主键
    * @format int64
    */
-  uid: number;
+  uid?: number;
   /** 规则名称 */
-  ruleName: string;
+  ruleName?: string;
   /** 模板名称 */
-  refTemplateName: string;
+  refTemplateName?: string;
   /**
    * 模板id
    * @format int64
    */
-  refTemplateId: number;
+  refTemplateId?: number;
   /** 是否启用 */
-  enable: boolean;
-  rule: JSONObject;
+  enable?: boolean;
+  rule?: JSONObject;
 }
 
 /** 监管预警信息分页查询请求 */
 export interface WarnPageRequest {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 组织机构列表 */
-  orgIds: string[];
+  orgIds?: Array<string> | string;
   /** 查询过滤 */
-  queryFilter: WarnPageRequestQueryFilter;
+  queryFilter?: WarnPageRequestQueryFilter;
   /** 预警级别 */
-  warnLevel: WarnPageRequestWarnLevel[];
+  warnLevel?: Array<WarnPageRequestWarnLevel>;
   /** 预警场所 */
-  objType: WarnPageRequestObjType[];
+  objType?: Array<WarnPageRequestObjType>;
   /** 预警类型 */
-  warnType: string[];
+  warnType?: Array<string> | string;
   /** 预警状态 */
-  warnState: WarnPageRequestWarnState[];
+  warnState?: Array<WarnPageRequestWarnState>;
   /** 报警来源 */
-  alarmSource: WarnPageRequestAlarmSource[];
+  alarmSource?: Array<WarnPageRequestAlarmSource>;
   /**
    * 预警发布时间开始
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  startTime: string;
+  startTime?: string;
   /**
    * 预警发布时间结束
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  endTime: string;
+  endTime?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 查询过滤枚举中文描述 */
-  _queryFilter: string;
+  _queryFilter?: string;
 }
 
 export interface PageResultListWarnPageVO {
-  code: string;
-  data: WarnPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<WarnPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 /** 监管预警信息分页查询VO */
 export interface WarnPageVO {
   /** ID */
-  uid: string;
+  uid?: string;
   /** 预警编号 */
-  warnId: string;
+  warnId?: string;
   /**
    * 预警时间
    * @format date-time
    */
-  warnTime: string;
+  warnTime?: string;
   /** 监测场所类型 */
-  objType: WarnPageVoObjType;
+  objType?: WarnPageVoObjType;
   /** 预警内容 */
-  warnContent: string;
+  warnContent?: string;
   /** 预警级别 */
-  warnLevel: WarnPageVoWarnLevel;
+  warnLevel?: WarnPageVoWarnLevel;
   /** 报警编号 */
-  alarmId: string;
+  alarmId?: string;
   /** 预警状态 */
-  state: WarnPageVoState;
+  state?: WarnPageVoState;
   /**
    * 创建时间
    * @format date-time
    */
-  createTime: string;
+  createTime?: string;
   /**
    * 更新时间
    * @format date-time
    */
-  updateTime: string;
+  updateTime?: string;
   /** 预警名称 */
-  warnName: string;
+  warnName?: string;
   /** 排查结果 */
-  warnResult: string;
+  warnResult?: string;
   /** 行政区划 */
-  districtId: string;
+  districtId?: string;
   /** 组织机构 */
-  orgId: string;
+  orgId?: string;
   /** 详细地址 */
-  address: string;
+  address?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /** 报警时长 */
-  duration: string;
+  duration?: string;
   /** 设备编号 */
-  eqptId: string;
+  eqptId?: string;
   /** 监测编号 */
-  objId: string;
+  objId?: string;
   /** 预警类型 */
-  warnType: string;
+  warnType?: string;
   /** 数据来源 */
-  alarmSource: WarnPageVoAlarmSource;
+  alarmSource?: WarnPageVoAlarmSource;
   /**
    * 预警解除时间
    * @format date-time
    */
-  relieveTime: string;
+  relieveTime?: string;
   /** @format date-time */
-  startTime: string;
+  startTime?: string;
   /** @format date-time */
-  endTime: string;
+  endTime?: string;
   /** 监测场所类型枚举中文描述 */
-  _objType: string;
+  _objType?: string;
   /** 预警级别枚举中文描述 */
-  _warnLevel: string;
+  _warnLevel?: string;
   /** 预警状态枚举中文描述 */
-  _state: string;
+  _state?: string;
   /** 行政区划枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 组织机构枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 数据来源枚举中文描述 */
-  _alarmSource: string;
+  _alarmSource?: string;
 }
 
 export interface ResultListWarnSummaryVO {
-  code: string;
-  data: WarnSummaryVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<WarnSummaryVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 预警汇总VO */
 export interface WarnSummaryVO {
   /** 预警类型 */
-  warnType: string;
+  warnType?: string;
   /**
    * 预警总数
    * @format int64
    */
-  total: number;
+  total?: number;
 }
 
 export interface ResultListWarnTotalVO {
-  code: string;
-  data: WarnTotalVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<WarnTotalVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 预警统计分析-预警类型统计VO */
@@ -3314,70 +3314,70 @@ export interface WarnTotalVO {
    * 预警总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /** 组织机构 */
-  orgId: string;
+  orgId?: string;
   /** 数据类型：数据来源、监测指标、监测场所... */
-  dataType: string;
+  dataType?: string;
   /**
    * 处置中
    * @format int64
    */
-  dispose: number;
+  dispose?: number;
   /**
    * 已解除
    * @format int64
    */
-  relieve: number;
+  relieve?: number;
   /**
    * 确认燃气泄漏
    * @format int64
    */
-  realTotal: number;
+  realTotal?: number;
   /**
    * 占比
    * @format float
    */
-  rate: number;
+  rate?: number;
   /** 组织机构枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 /** 处置中预警明细 */
 export interface DisposeDetail {
   /** 预警编号 */
-  warnId: string;
+  warnId?: string;
   /** 预警类型 */
-  warnType: string;
+  warnType?: string;
   /** 预警级别 */
-  warnLevel: DisposeDetailWarnLevel;
+  warnLevel?: DisposeDetailWarnLevel;
   /** 详细地址 */
-  address: string;
+  address?: string;
   /** 组织机构 */
-  orgId: string;
+  orgId?: string;
   /**
    * 预警时间
    * @format date-time
    */
-  warnTime: string;
+  warnTime?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /** 报警时长 */
-  duration: string;
+  duration?: string;
   /** 预警级别枚举中文描述 */
-  _warnLevel: string;
+  _warnLevel?: string;
   /** 组织机构枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 export interface ResultWarnDisposeVO {
-  code: string;
+  code?: string;
   /** 预警统计分析-处置中预警VO */
-  data: WarnDisposeVO;
-  message: string;
-  success: boolean;
+  data?: WarnDisposeVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 预警统计分析-处置中预警VO */
@@ -3386,84 +3386,84 @@ export interface WarnDisposeVO {
    * 预警总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /** 报警类型总数 */
-  disposeTotal: WarnTotalVO[];
+  disposeTotal?: Array<WarnTotalVO>;
   /** 处置中预警明细 */
-  details: DisposeDetail[];
+  details?: Array<DisposeDetail>;
 }
 
 /** 监管统计请求 */
 export interface StatisticalRequest {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 组织机构列表 */
-  orgIds: string[];
+  orgIds?: Array<string> | string;
   /** 监测类型 */
-  objType: StatisticalRequestObjType[];
+  objType?: Array<StatisticalRequestObjType>;
   /** 报警状态 */
-  alarmState: StatisticalRequestAlarmState[];
+  alarmState?: Array<StatisticalRequestAlarmState>;
   /** 预警状态 */
-  warnState: StatisticalRequestWarnState[];
+  warnState?: Array<StatisticalRequestWarnState>;
   /** 时间维度，如：本月、本季度、本年度 */
-  timeDimension: StatisticalRequestTimeDimension;
+  timeDimension?: StatisticalRequestTimeDimension;
   /**
    * 时间查询开始
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  startTime: string;
+  startTime?: string;
   /**
    * 时间查询结束
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  endTime: string;
+  endTime?: string;
   /** 报警指标类型 */
-  alarmIndex: string[];
+  alarmIndex?: Array<string> | string;
   /** 用气类型 */
-  gasType: StatisticalRequestGasType[];
+  gasType?: Array<StatisticalRequestGasType>;
   /** 筛选年度 */
-  yearSelect: string[];
+  yearSelect?: Array<string> | string;
   /** 时间点位列表 */
-  timePoints: TimePoint[];
+  timePoints?: Array<TimePoint>;
   /** 数据来源 */
-  dataSource: StatisticalRequestDataSource[];
+  dataSource?: Array<StatisticalRequestDataSource>;
   /** 撒点行政区划ID */
-  byDistrictId: string;
+  byDistrictId?: string;
   /** 管线类型 */
-  code: string[];
+  code?: Array<string> | string;
   /** 数据类型：防护目标类型、危险源类型.... */
-  dataType: string[];
+  dataType?: Array<string> | string;
   /** 燃气企业经营类别 */
-  businessScopes: StatisticalRequestBusinessScopes[];
+  businessScopes?: Array<StatisticalRequestBusinessScopes>;
   /** 管网材质 */
-  pmaterialType: StatisticalRequestPmaterialType[];
+  pmaterialType?: Array<StatisticalRequestPmaterialType>;
   /** 岗位 */
-  position: StatisticalRequestPosition[];
+  position?: Array<StatisticalRequestPosition>;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 时间维度，如：本月、本季度、本年度枚举中文描述 */
-  _timeDimension: string;
+  _timeDimension?: string;
 }
 
 /** 时间点位 */
@@ -3472,20 +3472,20 @@ export interface TimePoint {
    * 开始时间
    * @format date-time
    */
-  startTime: string;
+  startTime?: string;
   /**
    * 结束时间
    * @format date-time
    */
-  endTime: string;
+  endTime?: string;
 }
 
 export interface ResultWarnScreenSummaryVO {
-  code: string;
+  code?: string;
   /** 监测预警大屏-预警统计VO */
-  data: WarnScreenSummaryVO;
-  message: string;
-  success: boolean;
+  data?: WarnScreenSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 监测预警大屏-预警统计VO */
@@ -3494,74 +3494,74 @@ export interface WarnScreenSummaryVO {
    * 报警总数
    * @format int64
    */
-  allCount: number;
+  allCount?: number;
   /** 监测场所预警明细 */
-  objSummaryDetail: WarnTotalVO[];
+  objSummaryDetail?: Array<WarnTotalVO>;
   /** 燃气企业预警处置效率排名 */
-  handlingRate: WarnTotalVO[];
+  handlingRate?: Array<WarnTotalVO>;
 }
 
 /** 管道气大屏-预警事件明细VO */
 export interface PipeGasWarnDetailVO {
   /** 预警ID */
-  uid: string;
+  uid?: string;
   /** 预警编号 */
-  warnId: string;
+  warnId?: string;
   /** 预警类型 */
-  warnType: string;
+  warnType?: string;
   /** 预警级别 */
-  warnLevel: PipeGasWarnDetailVoWarnLevel;
+  warnLevel?: PipeGasWarnDetailVoWarnLevel;
   /** 详细地址 */
-  address: string;
+  address?: string;
   /** 预警状态 */
-  state: PipeGasWarnDetailVoState;
+  state?: PipeGasWarnDetailVoState;
   /** 行政区划 */
-  districtId: string;
+  districtId?: string;
   /** 组织机构 */
-  orgId: string;
+  orgId?: string;
   /**
    * 预警时间
    * @format date-time
    */
-  warnTime: string;
+  warnTime?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /** 响应时长 */
-  duration: string;
+  duration?: string;
   /** 是否挂牌督办 */
-  isSupervision: boolean;
+  isSupervision?: boolean;
   /**
    * 首次处置时间
    * @format date-time
    */
-  firstDisposalTime: string;
+  firstDisposalTime?: string;
   /** 处置时效：正常、超时 */
-  ageing: string;
+  ageing?: string;
   /** 设备编号 */
-  eqptId: string;
+  eqptId?: string;
   /** 监测编号 */
-  objId: string;
+  objId?: string;
   /** 报警编号 */
-  alarmId: string;
-  supervision: string;
+  alarmId?: string;
+  supervision?: string;
   /** 预警级别枚举中文描述 */
-  _warnLevel: string;
+  _warnLevel?: string;
   /** 预警状态枚举中文描述 */
-  _state: string;
+  _state?: string;
   /** 行政区划枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 组织机构枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 export interface ResultWarnStatisticalVO {
-  code: string;
+  code?: string;
   /** 监测预警大屏-预警时间VO */
-  data: WarnStatisticalVO;
-  message: string;
-  success: boolean;
+  data?: WarnStatisticalVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 监测预警大屏-预警时间VO */
@@ -3570,62 +3570,62 @@ export interface WarnStatisticalVO {
    * 预警事件总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 燃气管网泄漏
    * @format int64
    */
-  gasPipelineCnt: number;
+  gasPipelineCnt?: number;
   /**
    * 沼气聚集
    * @format int64
    */
-  methaneCnt: number;
+  methaneCnt?: number;
   /**
    * 场站泄漏
    * @format int64
    */
-  stationCnt: number;
+  stationCnt?: number;
   /**
    * 工商业用户
    * @format int64
    */
-  terminalCnt: number;
+  terminalCnt?: number;
   /** 预警事件明细 */
-  detail: PipeGasWarnDetailVO[];
+  detail?: Array<PipeGasWarnDetailVO>;
 }
 
 /** 管道气大屏-人员资质证照异常明细 */
 export interface QualificationsErrorDetailVO {
   /** 组织机构ID */
-  orgId: string;
+  orgId?: string;
   /**
    * 资质证照总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 资质即将到期
    * @format int64
    */
-  nearExpireCnt: number;
+  nearExpireCnt?: number;
   /**
    * 资质已过期
    * @format int64
    */
-  expireCnt: number;
+  expireCnt?: number;
   /**
    * 人资质证照缺失数
    * @format int64
    */
-  deletion: number;
+  deletion?: number;
   /**
    * 人资质证照正常数量
    * @format int64
    */
-  normal: number;
+  normal?: number;
   /** 组织机构ID枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 /** 管道气大屏-资质证照异常VO */
@@ -3634,27 +3634,27 @@ export interface QualificationsErrorVO {
    * 资质证照总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 资质即将到期
    * @format int64
    */
-  nearExpireCnt: number;
+  nearExpireCnt?: number;
   /**
    * 资质已过期
    * @format int64
    */
-  expireCnt: number;
+  expireCnt?: number;
   /** 管道气大屏-资质证照异常明细列表 */
-  details: QualificationsErrorDetailVO[];
+  details?: Array<QualificationsErrorDetailVO>;
 }
 
 export interface ResultQualificationsErrorVO {
-  code: string;
+  code?: string;
   /** 管道气大屏-资质证照异常VO */
-  data: QualificationsErrorVO;
-  message: string;
-  success: boolean;
+  data?: QualificationsErrorVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 管道气大屏-预警事件VO */
@@ -3663,32 +3663,32 @@ export interface PipeGasWarnTotalVO {
    * 预警总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 处置中
    * @format int64
    */
-  dispose: number;
+  dispose?: number;
   /**
    * 已处置
    * @format int64
    */
-  relieve: number;
+  relieve?: number;
   /**
    * 占比
    * @format float
    */
-  rate: number;
+  rate?: number;
   /** 预警事件明细 */
-  warnDetail: PipeGasWarnDetailVO[];
+  warnDetail?: Array<PipeGasWarnDetailVO>;
 }
 
 export interface ResultPipeGasWarnTotalVO {
-  code: string;
+  code?: string;
   /** 管道气大屏-预警事件VO */
-  data: PipeGasWarnTotalVO;
-  message: string;
-  success: boolean;
+  data?: PipeGasWarnTotalVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 管道气大屏-行业概览VO */
@@ -3697,35 +3697,35 @@ export interface PipelineOverviewVO {
    * 管道气企业
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 燃气管网公里数
    * @format int64
    */
-  pipelineCnt: number;
+  pipelineCnt?: number;
   /**
    * 天然气场站企业数
    * @format int64
    */
-  stationCnt: number;
+  stationCnt?: number;
   /**
    * 用户数
    * @format int64
    */
-  userCnt: number;
+  userCnt?: number;
   /**
    * 从业人员数
    * @format int64
    */
-  quaCnt: number;
+  quaCnt?: number;
 }
 
 export interface ResultPipelineOverviewVO {
-  code: string;
+  code?: string;
   /** 管道气大屏-行业概览VO */
-  data: PipelineOverviewVO;
-  message: string;
-  success: boolean;
+  data?: PipelineOverviewVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 管道气大屏-资质证照异常VO */
@@ -3734,40 +3734,40 @@ export interface InspectionPatrolVO {
    * 计划巡检
    * @format int64
    */
-  planKm: number;
+  planKm?: number;
   /**
    * 实际巡检
    * @format int64
    */
-  endKm: number;
+  endKm?: number;
   /**
    * 巡检完成率
    * @format float
    */
-  endRatio: number;
+  endRatio?: number;
   /**
    * 计划安检
    * @format int64
    */
-  userCnt: number;
+  userCnt?: number;
   /**
    * 实际安检
    * @format int64
    */
-  checkedCnt: number;
+  checkedCnt?: number;
   /**
    * 入户安检完成率
    * @format float
    */
-  checkedRatio: number;
+  checkedRatio?: number;
 }
 
 export interface ResultInspectionPatrolVO {
-  code: string;
+  code?: string;
   /** 管道气大屏-资质证照异常VO */
-  data: InspectionPatrolVO;
-  message: string;
-  success: boolean;
+  data?: InspectionPatrolVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 监测预警大屏-运行概况VO */
@@ -3776,71 +3776,71 @@ export interface AlarmStatisticalVO {
    * 总数
    * @format int64
    */
-  allTotal: number;
+  allTotal?: number;
   /**
    * 报警总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /** 数据类型：数据来源、监测指标、监测场所... */
-  dataType: string;
+  dataType?: string;
   /** 报警统计明细 */
-  detail: AlarmSumVO[];
+  detail?: Array<AlarmSumVO>;
 }
 
 /** 报警类别数量统计VO */
 export interface AlarmSumVO {
   /** 数据类型：数据来源、监测指标、监测场所... */
-  dataType: string;
+  dataType?: string;
   /**
    * 总数
    * @format int64
    */
-  allTotal: number;
+  allTotal?: number;
   /**
    * 报警总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /** 监测场所 */
-  objType: string;
+  objType?: string;
   /** 报警类型 */
-  alarmType: string;
+  alarmType?: string;
   /** 报警级别 */
-  alarmLevel: string;
+  alarmLevel?: string;
   /**
    * 占比
    * @format float
    */
-  rate: number;
+  rate?: number;
 }
 
 export interface ResultListAlarmStatisticalVO {
-  code: string;
-  data: AlarmStatisticalVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<AlarmStatisticalVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 监测设备统计明细VO */
 export interface MonitorStatisticalDetail {
   /** 监测场所 */
-  objType: string;
+  objType?: string;
   /**
    * 设备总数
    * @format int64
    */
-  deviceCnt: number;
+  deviceCnt?: number;
   /**
    * 设备种类数
    * @format int64
    */
-  monitorIndexCnt: number;
+  monitorIndexCnt?: number;
   /**
    * 监测设备在线数
    * @format float
    */
-  onlineRate: number;
+  onlineRate?: number;
 }
 
 /** 监测设备统计VO */
@@ -3849,30 +3849,30 @@ export interface MonitorStatisticalVO {
    * 监测设备总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 监测设备在线数
    * @format float
    */
-  onlineRate: number;
+  onlineRate?: number;
   /** 监测设备统计明细 */
-  detail: MonitorStatisticalDetail[];
+  detail?: Array<MonitorStatisticalDetail>;
 }
 
 export interface ResultMonitorStatisticalVO {
-  code: string;
+  code?: string;
   /** 监测设备统计VO */
-  data: MonitorStatisticalVO;
-  message: string;
-  success: boolean;
+  data?: MonitorStatisticalVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultScreenEmresCountVO {
-  code: string;
+  code?: string;
   /** 基础数据-应急资源VO */
-  data: ScreenEmresCountVO;
-  message: string;
-  success: boolean;
+  data?: ScreenEmresCountVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 基础数据-应急资源VO */
@@ -3881,123 +3881,123 @@ export interface ScreenEmresCountVO {
    * 救援人员
    * @format int64
    */
-  retManCnt: number;
+  retManCnt?: number;
   /**
    * 应急专家
    * @format int64
    */
-  expertCnt: number;
+  expertCnt?: number;
   /**
    * 救援队伍
    * @format int64
    */
-  reteamCnt: number;
+  reteamCnt?: number;
   /**
    * 应急避难场所
    * @format int64
    */
-  shelteCnt: number;
+  shelteCnt?: number;
   /**
    * 应急车辆
    * @format int64
    */
-  carCnt: number;
+  carCnt?: number;
   /**
    * 应急物资储备库
    * @format int64
    */
-  whoseCnt: number;
+  whoseCnt?: number;
 }
 
 /** 系统首页大屏-企业经营VO */
 export interface HomePageEnterpriseVO {
   /** 统计类型：企业资质证照、从员资质证书、安全人员配比、应急预案、应急演练 */
-  summaryType: string;
+  summaryType?: string;
   /**
    * 总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 正常、已上报、完成
    * @format int64
    */
-  normal: number;
+  normal?: number;
   /**
    * 过期、不足、未完成
    * @format int64
    */
-  errorCnt: number;
+  errorCnt?: number;
   /**
    * 缺失
    * @format int64
    */
-  deletion: number;
+  deletion?: number;
 }
 
 export interface ResultListHomePageEnterpriseVO {
-  code: string;
-  data: HomePageEnterpriseVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<HomePageEnterpriseVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 基础数据-应急资源VO */
 export interface InstallAlarmVO {
   /** 用户类型：居民、工商业 */
-  useType: string;
+  useType?: string;
   /**
    * 报警器安装总个数
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 报警器接入总个数
    * @format int64
    */
-  accessTotal: number;
+  accessTotal?: number;
   /**
    * 用户总数
    * @format int64
    */
-  useTotal: number;
+  useTotal?: number;
   /**
    * 加装户数
    * @format int64
    */
-  addUser: number;
+  addUser?: number;
   /**
    * 加装覆盖率
    * @format float
    */
-  addRate: number;
+  addRate?: number;
   /**
    * 特殊户数（孤寡老人、餐饮企业）
    * @format int64
    */
-  otherUserTotal: number;
+  otherUserTotal?: number;
   /**
    * 特殊户增加设备数
    * @format int64
    */
-  addOtherUserTotal: number;
+  addOtherUserTotal?: number;
   /**
    * 特殊户覆盖率
    * @format float
    */
-  addOtherRate: number;
+  addOtherRate?: number;
   /**
    * 接入报警器在线率
    * @format float
    */
-  onlineRate: number;
+  onlineRate?: number;
 }
 
 export interface ResultListInstallAlarmVO {
-  code: string;
-  data: InstallAlarmVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<InstallAlarmVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 终端用户综合监管-报警安装汇总VO */
@@ -4006,20 +4006,20 @@ export interface InstallAlarmCountVO {
    * 报警器安装总个数
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 报警器接入总个数
    * @format int64
    */
-  accessTotal: number;
+  accessTotal?: number;
 }
 
 export interface ResultInstallAlarmCountVO {
-  code: string;
+  code?: string;
   /** 终端用户综合监管-报警安装汇总VO */
-  data: InstallAlarmCountVO;
-  message: string;
-  success: boolean;
+  data?: InstallAlarmCountVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 终端用户综合监管-重点清单-确认燃气泄漏汇总VO */
@@ -4028,205 +4028,205 @@ export interface PcAlarmSummaryVO {
    * 报警总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 已处置
    * @format int64
    */
-  yczTotal: number;
+  yczTotal?: number;
   /**
    * 处置中
    * @format int64
    */
-  czzTotal: number;
+  czzTotal?: number;
   /**
    * 未处置
    * @format int64
    */
-  wczTotal: number;
+  wczTotal?: number;
   /**
    * 确认燃气泄漏
    * @format int64
    */
-  realTotal: number;
+  realTotal?: number;
 }
 
 export interface ResultPcAlarmSummaryVO {
-  code: string;
+  code?: string;
   /** 终端用户综合监管-重点清单-确认燃气泄漏汇总VO */
-  data: PcAlarmSummaryVO;
-  message: string;
-  success: boolean;
+  data?: PcAlarmSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 监管报警信息分页查询VO */
 export interface AlarmPageVO {
   /** ID */
-  uid: string;
+  uid?: string;
   /** 报警编号 */
-  alarmId: string;
+  alarmId?: string;
   /** 设备编号 */
-  eqptId: string;
+  eqptId?: string;
   /** 设备名称 */
-  eqptName: string;
+  eqptName?: string;
   /** 监测场所类型 */
-  objType: AlarmPageVoObjType;
+  objType?: AlarmPageVoObjType;
   /** 监测编号 */
-  objId: string;
+  objId?: string;
   /** 监测对象名称 */
-  objName: string;
+  objName?: string;
   /** 报警类型 */
-  alarmType: string;
+  alarmType?: string;
   /** 监测指标 */
-  monitorIndex: string;
+  monitorIndex?: string;
   /** 最新报警值 */
-  latestValue: number;
+  latestValue?: number;
   /**
    * 最新报警时间
    * @format date-time
    */
-  latestTime: string;
+  latestTime?: string;
   /** 最新报警级别 */
-  latestLevel: string;
+  latestLevel?: string;
   /**
    * 初次报警时间
    * @format date-time
    */
-  firstTime: string;
+  firstTime?: string;
   /** 初次报警值 */
-  firstValue: number;
+  firstValue?: number;
   /** 初次报警级别 */
-  firstLevel: string;
+  firstLevel?: string;
   /** 度量单位 */
-  measurement: string;
+  measurement?: string;
   /** 报警状态 */
-  alarmState: AlarmPageVoAlarmState;
+  alarmState?: AlarmPageVoAlarmState;
   /** 报警时长 */
-  duration: string;
+  duration?: string;
   /** 数据来源 */
-  alarmSource: AlarmPageVoAlarmSource;
+  alarmSource?: AlarmPageVoAlarmSource;
   /**
    * 报警解除时间
    * @format date-time
    */
-  relieveTime: string;
+  relieveTime?: string;
   /** 行政区划 */
-  districtId: string;
+  districtId?: string;
   /** 组织机构 */
-  orgId: string;
+  orgId?: string;
   /** 详细地址 */
-  address: string;
+  address?: string;
   /** 报警排查结果 */
-  alarmResult: string;
+  alarmResult?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /** 监测场所类型枚举中文描述 */
-  _objType: string;
+  _objType?: string;
   /** 报警状态枚举中文描述 */
-  _alarmState: string;
+  _alarmState?: string;
   /** 数据来源枚举中文描述 */
-  _alarmSource: string;
+  _alarmSource?: string;
   /** 行政区划枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 组织机构枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 export interface ResultListAlarmPageVO {
-  code: string;
-  data: AlarmPageVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<AlarmPageVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 实时监测设备汇总VO */
 export interface DeviceStateSummaryVO {
   /** 数据类型：数据来源、监测指标、监测场所... */
-  dataType: string;
+  dataType?: string;
   /**
    * 设备总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 在线设备总数
    * @format int64
    */
-  onlineCount: number;
+  onlineCount?: number;
   /**
    * 离线设备总数
    * @format int64
    */
-  offlineCount: number;
+  offlineCount?: number;
   /**
    * 在线率
    * @format float
    */
-  rate: number;
+  rate?: number;
 }
 
 export interface ResultListDeviceStateSummaryVO {
-  code: string;
-  data: DeviceStateSummaryVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<DeviceStateSummaryVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 实时监测设备汇总VO */
 export interface MonitorDeviceSumVO {
   /** 监测场所 */
-  objType: string;
+  objType?: string;
   /**
    * 设备总数
    * @format int64
    */
-  allCount: number;
+  allCount?: number;
 }
 
 export interface ResultListMonitorDeviceSumVO {
-  code: string;
-  data: MonitorDeviceSumVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<MonitorDeviceSumVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 企业监测设备在线率排名VO */
 export interface OrgDeviceRateVO {
   /** 组织机构ID */
-  orgId: string;
+  orgId?: string;
   /** 部门名称 */
-  fullName: string;
+  fullName?: string;
   /**
    * 设备总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 在线设备总数
    * @format int64
    */
-  onlineCount: number;
+  onlineCount?: number;
   /**
    * 离线设备总数
    * @format int64
    */
-  offlineCount: number;
+  offlineCount?: number;
   /**
    * 在线率
    * @format float
    */
-  rate: number;
+  rate?: number;
   /** 组织机构ID枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 export interface ResultListOrgDeviceRateVO {
-  code: string;
-  data: OrgDeviceRateVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<OrgDeviceRateVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 设备总数在线率VO */
@@ -4235,25 +4235,25 @@ export interface AllOnlineRateVO {
    * 设备总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 在线设备总数
    * @format int64
    */
-  onlineCount: number;
+  onlineCount?: number;
   /**
    * 在线率
    * @format float
    */
-  rate: number;
+  rate?: number;
 }
 
 export interface ResultAllOnlineRateVO {
-  code: string;
+  code?: string;
   /** 设备总数在线率VO */
-  data: AllOnlineRateVO;
-  message: string;
-  success: boolean;
+  data?: AllOnlineRateVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 系统首页大屏-监测预警VO */
@@ -4262,34 +4262,34 @@ export interface HomePageWarnSummaryVO {
    * 安装设备总数
    * @format int64
    */
-  installDeviceCnt: number;
+  installDeviceCnt?: number;
   /**
    * 接入设备总数
    * @format int64
    */
-  accessDeviceCnt: number;
+  accessDeviceCnt?: number;
   /**
    * 当前报警总数
    * @format int64
    */
-  alarmCnt: number;
+  alarmCnt?: number;
   /**
    * 预警总数
    * @format int64
    */
-  warnCnt: number;
+  warnCnt?: number;
   /** 预警来源汇总 */
-  warnSourceDetail: WarnTotalVO[];
+  warnSourceDetail?: Array<WarnTotalVO>;
   /** 预警类型汇总 */
-  warnTypeDetail: WarnTotalVO[];
+  warnTypeDetail?: Array<WarnTotalVO>;
 }
 
 export interface ResultHomePageWarnSummaryVO {
-  code: string;
+  code?: string;
   /** 系统首页大屏-监测预警VO */
-  data: HomePageWarnSummaryVO;
-  message: string;
-  success: boolean;
+  data?: HomePageWarnSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 系统首页大屏-数据接入VO */
@@ -4298,21 +4298,21 @@ export interface HomePageDataAccessVO {
    * 接入系统个数、类型数
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 设备数
    * @format int64
    */
-  deviceCnt: number;
+  deviceCnt?: number;
   /** 接入数据明细 */
-  dataAccessDetail: DeviceStateSummaryVO[];
+  dataAccessDetail?: Array<DeviceStateSummaryVO>;
 }
 
 export interface ResultListHomePageDataAccessVO {
-  code: string;
-  data: HomePageDataAccessVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<HomePageDataAccessVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 报警数量统计VO */
@@ -4321,103 +4321,103 @@ export interface AlarmObjTypeSummaryVO {
    * 报警总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /** 数据类型：数据来源、监测指标、监测场所... */
-  dataType: string;
+  dataType?: string;
   /**
    * 报警中
    * @format int64
    */
-  alarmCount: number;
+  alarmCount?: number;
   /**
    * 报警处置
    * @format int64
    */
-  disposeCount: number;
+  disposeCount?: number;
   /**
    * 报警解除
    * @format int64
    */
-  relieveCount: number;
+  relieveCount?: number;
 }
 
 export interface ResultListAlarmObjTypeSummaryVO {
-  code: string;
-  data: AlarmObjTypeSummaryVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<AlarmObjTypeSummaryVO>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultListAlarmSumVO {
-  code: string;
-  data: AlarmSumVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<AlarmSumVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 监测报警管理-报警分析报表VO */
 export interface AlarmAnalysisVO {
   /** 所属区域 */
-  districtId: string;
+  districtId?: string;
   /** 未处置、处置中、已解除、小计 */
-  dataType: string;
+  dataType?: string;
   /**
    * 合计
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 1级报警
    * @format int64
    */
-  oneCnt: number;
+  oneCnt?: number;
   /**
    * 2级报警
    * @format int64
    */
-  twoCnt: number;
+  twoCnt?: number;
   /**
    * 3级报警
    * @format int64
    */
-  threeCnt: number;
+  threeCnt?: number;
   /**
    * 居民
    * @format int64
    */
-  jmyhCnt: number;
+  jmyhCnt?: number;
   /**
    * 工商业
    * @format int64
    */
-  gsyhCnt: number;
+  gsyhCnt?: number;
   /**
    * 天然气
    * @format int64
    */
-  gasCnt: number;
+  gasCnt?: number;
   /**
    * 液化气
    * @format int64
    */
-  liquefiedGasCnt: number;
+  liquefiedGasCnt?: number;
   /** 所属区域枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface ResultListAlarmAnalysisVO {
-  code: string;
-  data: AlarmAnalysisVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<AlarmAnalysisVO>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultScreenWarnSummaryVO {
-  code: string;
+  code?: string;
   /** 大屏-监测预警接口-监测预警-累计分析VO */
-  data: ScreenWarnSummaryVO;
-  message: string;
-  success: boolean;
+  data?: ScreenWarnSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 大屏-监测预警接口-监测预警-累计分析VO */
@@ -4426,34 +4426,34 @@ export interface ScreenWarnSummaryVO {
    * 预警总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 处置中
    * @format int64
    */
-  dispose: number;
+  dispose?: number;
   /**
    * 已处置
    * @format int64
    */
-  relieve: number;
+  relieve?: number;
   /**
    * 完成率
    * @format float
    */
-  rate: number;
+  rate?: number;
   /** 预警类型占比 */
-  warnTypeSummary: WarnTotalVO[];
+  warnTypeSummary?: Array<WarnTotalVO>;
   /** 燃气企业预警处置排名 */
-  warnOrgSort: WarnTotalVO[];
+  warnOrgSort?: Array<WarnTotalVO>;
 }
 
 export interface ResultScreenWarnHistoryVO {
-  code: string;
+  code?: string;
   /** 大屏-监测预警接口-监测预警-历史预警VO */
-  data: ScreenWarnHistoryVO;
-  message: string;
-  success: boolean;
+  data?: ScreenWarnHistoryVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 大屏-监测预警接口-监测预警-历史预警VO */
@@ -4462,30 +4462,30 @@ export interface ScreenWarnHistoryVO {
    * 已处置
    * @format int64
    */
-  relieve: number;
+  relieve?: number;
   /**
    * 响应时效
    * @format float
    */
-  responseTime: number;
+  responseTime?: number;
   /**
    * 控险时效
    * @format float
    */
-  controlTime: number;
+  controlTime?: number;
   /**
    * 处置及时率
    * @format float
    */
-  handlingRate: number;
+  handlingRate?: number;
 }
 
 export interface ResultScreenWarnCurrentVO {
-  code: string;
+  code?: string;
   /** 大屏-监测预警接口-监测预警-当前预警VO */
-  data: ScreenWarnCurrentVO;
-  message: string;
-  success: boolean;
+  data?: ScreenWarnCurrentVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 大屏-监测预警接口-监测预警-当前预警VO */
@@ -4494,60 +4494,60 @@ export interface ScreenWarnCurrentVO {
    * 处置中
    * @format int64
    */
-  dispose: number;
+  dispose?: number;
   /**
    * 待接收
    * @format int64
    */
-  toBeReceived: number;
+  toBeReceived?: number;
   /**
    * 待复核
    * @format int64
    */
-  toBeReviewed: number;
+  toBeReviewed?: number;
   /**
    * 待解除
    * @format int64
    */
-  toBeRelieve: number;
+  toBeRelieve?: number;
 }
 
 export interface ResultMapStringListScreenGasDataMapVO {
-  code: string;
-  data: Record<string, any>;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Record<string, any>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 大屏-燃气底数-地图VO */
 export interface ScreenGasDataMapVO {
   /** 行政区划 */
-  districtId: string;
+  districtId?: string;
   /** 组织机构id */
-  orgId: string;
+  orgId?: string;
   /** 类型：燃气管网、液化气瓶、用气用户、危险源与防护目标 */
-  objType: string;
+  objType?: string;
   /**
    * 数量
    * @format float
    */
-  total: number;
+  total?: number;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /** 行政区划枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 组织机构id枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 export interface ResultScreenDeviceOnlineSummaryVO {
-  code: string;
+  code?: string;
   /** 大屏-监测预警接口-监测运行-设备在线率VO */
-  data: ScreenDeviceOnlineSummaryVO;
-  message: string;
-  success: boolean;
+  data?: ScreenDeviceOnlineSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 大屏-监测预警接口-监测运行-设备在线率VO */
@@ -4556,237 +4556,237 @@ export interface ScreenDeviceOnlineSummaryVO {
    * 生命线设备在线率 | 第三方设备在线率
    * @format float
    */
-  totalRate: number;
+  totalRate?: number;
   /**
    * 燃气管网及地下相邻空间设备在线率
    * @format float
    */
-  lineRate: number;
+  lineRate?: number;
   /**
    * 工商业用户-天然气用户设备在线率
    * @format float
    */
-  gsGasRate: number;
+  gsGasRate?: number;
   /**
    * 工商业用户-液化气用户设备在线率
    * @format float
    */
-  gsLiRate: number;
+  gsLiRate?: number;
   /**
    * 居民用户-天然气用户设备在线率
    * @format float
    */
-  jmGasRate: number;
+  jmGasRate?: number;
   /**
    * 居民用户-液化气用户设备在线率
    * @format float
    */
-  jmLiRate: number;
+  jmLiRate?: number;
   /**
    * 燃气场站-天然气场站设备在线率
    * @format float
    */
-  czGasRate: number;
+  czGasRate?: number;
   /**
    * 燃气场站-液化气场站设备在线率
    * @format float
    */
-  czLiRate: number;
+  czLiRate?: number;
   /**
    * 液化气-气瓶定位在线率
    * @format double
    */
-  lngBotRate: number;
+  lngBotRate?: number;
   /**
    * 液化气-车辆定位在线率
    * @format double
    */
-  lngVehicleRate: number;
+  lngVehicleRate?: number;
   /**
    * 液化气-智能联锁在线率
    * @format double
    */
-  lngScaleRate: number;
+  lngScaleRate?: number;
   /**
    * 液化气-灌装站设备在线率
    * @format double
    */
-  lngStoDevRate: number;
+  lngStoDevRate?: number;
   /**
    * 液化气-供应站设备在线率
    * @format double
    */
-  lngSupDevRate: number;
+  lngSupDevRate?: number;
 }
 
 export interface ResultListScreenGasDataMapVO {
-  code: string;
-  data: ScreenGasDataMapVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<ScreenGasDataMapVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 大屏-监测预警接口-监测场所设备覆盖率VO */
 export interface ObjTypeCoverage {
   /** 监测场所类型 */
-  objType: ObjTypeCoverageObjType;
+  objType?: ObjTypeCoverageObjType;
   /**
    * 天然气覆盖率
    * @format float
    */
-  gasRate: number;
+  gasRate?: number;
   /**
    * 液化气覆盖率
    * @format float
    */
-  liquefiedGasRate: number;
+  liquefiedGasRate?: number;
   /**
    * 设备联网率
    * @format float
    */
-  deviceNetworkRate: number;
+  deviceNetworkRate?: number;
   /** 监测场所类型枚举中文描述 */
-  _objType: string;
+  _objType?: string;
 }
 
 export interface ResultScreenMonitorCoverageVO {
-  code: string;
+  code?: string;
   /** 大屏-监测预警接口-监测覆盖VO */
-  data: ScreenMonitorCoverageVO;
-  message: string;
-  success: boolean;
+  data?: ScreenMonitorCoverageVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 风险覆盖率 */
 export interface RiskLevelCoverageVO {
-  riskLevel: string;
-  coverage: number;
+  riskLevel?: string;
+  coverage?: number;
 }
 
 /** 大屏-监测预警接口-监测覆盖VO */
 export interface ScreenMonitorCoverageVO {
   /** 风险覆盖率 */
-  riskCoverage: RiskLevelCoverageVO[];
+  riskCoverage?: Array<RiskLevelCoverageVO>;
   /** 监测场所设备覆盖率 */
-  objTypeCoverage: ObjTypeCoverage[];
+  objTypeCoverage?: Array<ObjTypeCoverage>;
 }
 
 export interface LngBotDevStat {
   /** @format int32 */
-  botCnt: number;
+  botCnt?: number;
   /** @format int32 */
-  botQrCnt: number;
-  botQrProportion: string;
+  botQrCnt?: number;
+  botQrProportion?: string;
   /** @format int32 */
-  heavyCnt: number;
+  heavyCnt?: number;
   /** @format int32 */
-  heavyGpsCnt: number;
+  heavyGpsCnt?: number;
   /** @format int32 */
-  heavyGpsOnlineCnt: number;
-  heavyGpsProportion: string;
+  heavyGpsOnlineCnt?: number;
+  heavyGpsProportion?: string;
   /** @format double */
-  heavyGpsOnlineRate: number;
+  heavyGpsOnlineRate?: number;
 }
 
 export interface LngDeviceStatDTO {
   /** @format int32 */
-  devCnt: number;
-  botStat: LngBotDevStat;
-  vehicleStat: LngVehicleDevStat;
-  stationStat: LngStationDevStat;
-  scaleStat: LngScaleDevStat;
+  devCnt?: number;
+  botStat?: LngBotDevStat;
+  vehicleStat?: LngVehicleDevStat;
+  stationStat?: LngStationDevStat;
+  scaleStat?: LngScaleDevStat;
 }
 
 export interface LngScaleDevStat {
   /** @format int32 */
-  scaleCnt: number;
+  scaleCnt?: number;
   /** @format int32 */
-  lockScaleCnt: number;
+  lockScaleCnt?: number;
   /** @format int32 */
-  lockScaleOnlineCnt: number;
+  lockScaleOnlineCnt?: number;
   /** @format double */
-  lockScaleOnlineRate: number;
-  lockScaleProportion: string;
+  lockScaleOnlineRate?: number;
+  lockScaleProportion?: string;
 }
 
 export interface LngStationDevStat {
   /** @format int32 */
-  supplyStnCnt: number;
+  supplyStnCnt?: number;
   /** @format int32 */
-  supplyStnMoniCnt: number;
+  supplyStnMoniCnt?: number;
   /** @format int32 */
-  supplyStnGasDevCnt: number;
+  supplyStnGasDevCnt?: number;
   /** @format int32 */
-  supplyStnGasDevOnlineCnt: number;
+  supplyStnGasDevOnlineCnt?: number;
   /** @format double */
-  supplyStnGasDevOnlineRate: number;
+  supplyStnGasDevOnlineRate?: number;
   /** @format int32 */
-  supplyStnVideoDevCnt: number;
-  supplyStnProportion: string;
+  supplyStnVideoDevCnt?: number;
+  supplyStnProportion?: string;
   /** @format int32 */
-  storageStnCnt: number;
+  storageStnCnt?: number;
   /** @format int32 */
-  storageStnMoniCnt: number;
+  storageStnMoniCnt?: number;
   /** @format int32 */
-  storageStnGasDevCnt: number;
+  storageStnGasDevCnt?: number;
   /** @format int32 */
-  storageStnGasDevOnlineCnt: number;
+  storageStnGasDevOnlineCnt?: number;
   /** @format double */
-  storageStnGasDevOnlineRate: number;
+  storageStnGasDevOnlineRate?: number;
   /** @format int32 */
-  storageStnVideoDevCnt: number;
-  storageStnProportion: string;
+  storageStnVideoDevCnt?: number;
+  storageStnProportion?: string;
 }
 
 export interface LngVehicleDevStat {
   /** @format int32 */
-  dangerVehicleCnt: number;
+  dangerVehicleCnt?: number;
   /** @format int32 */
-  dangerVehicleGpsCnt: number;
+  dangerVehicleGpsCnt?: number;
   /** @format int32 */
-  dangerVehicleGpsOnlineCnt: number;
+  dangerVehicleGpsOnlineCnt?: number;
   /** @format double */
-  dangerVehicleGpsOnlineRate: number;
-  dangerVehicleGpsProportion: string;
+  dangerVehicleGpsOnlineRate?: number;
+  dangerVehicleGpsProportion?: string;
   /** @format int32 */
-  deliveryVehicleCnt: number;
+  deliveryVehicleCnt?: number;
   /** @format int32 */
-  deliveryVehicleGpsCnt: number;
+  deliveryVehicleGpsCnt?: number;
   /** @format int32 */
-  deliveryVehicleGpsOnlineCnt: number;
+  deliveryVehicleGpsOnlineCnt?: number;
   /** @format double */
-  deliveryVehicleGpsOnlineRate: number;
-  deliveryVehicleGpsProportion: string;
+  deliveryVehicleGpsOnlineRate?: number;
+  deliveryVehicleGpsProportion?: string;
   /** @format double */
-  vehicleGpsOnlineRate: number;
+  vehicleGpsOnlineRate?: number;
 }
 
 export interface ResultLngDeviceStatDTO {
-  code: string;
-  data: LngDeviceStatDTO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: LngDeviceStatDTO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultScreenDeviceSummaryVO {
-  code: string;
+  code?: string;
   /** 大屏-监测预警接口-监测运行-监测概览VO */
-  data: ScreenDeviceSummaryVO;
-  message: string;
-  success: boolean;
+  data?: ScreenDeviceSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 大屏-监测预警接口-监测运行-监测概览设备指标VO */
 export interface ScreenDeviceSourceSummary {
   /** 数据来源 */
-  sourceType: string;
+  sourceType?: string;
   /**
    * 设备数量
    * @format int64
    */
-  sourceCnt: number;
+  sourceCnt?: number;
   /** 设备数量 */
-  deviceCnt: Record<string, any>;
+  deviceCnt?: Record<string, any>;
 }
 
 /** 大屏-监测预警接口-监测运行-监测概览VO */
@@ -4795,132 +4795,132 @@ export interface ScreenDeviceSummaryVO {
    * 监测设备总数
    * @format int64
    */
-  deviceCnt: number;
+  deviceCnt?: number;
   /**
    * 生命线设备数
    * @format int64
    */
-  lifelineCnt: number;
+  lifelineCnt?: number;
   /**
    * 第三方设备数
    * @format int64
    */
-  thirdCnt: number;
+  thirdCnt?: number;
   /**
    * 管网设备总数
    * @format int64
    */
-  lineCnt: number;
+  lineCnt?: number;
   /** 管网监测类型详情 */
-  lineDetail: ScreenDeviceSourceSummary[];
+  lineDetail?: Array<ScreenDeviceSourceSummary>;
   /**
    * 燃气场站设备总数
    * @format int64
    */
-  stationCnt: number;
+  stationCnt?: number;
   /** 燃气场站统计详情 */
-  stationDetail: ScreenDeviceSourceSummary[];
+  stationDetail?: Array<ScreenDeviceSourceSummary>;
   /** 工商业、居民统计 */
-  deviceClient: ScreenDeviceTypeVO[];
+  deviceClient?: Array<ScreenDeviceTypeVO>;
   /**
    * 液化气相关设备总数
    * @format int64
    */
-  lngCnt: number;
+  lngCnt?: number;
   /** 液化气监测类型详情 */
-  lngDetail: ScreenDeviceSourceSummary[];
+  lngDetail?: Array<ScreenDeviceSourceSummary>;
 }
 
 /** 大屏-监测预警接口-监测运行-设备类型汇总 */
 export interface ScreenDeviceTypeVO {
   /** 监测场所类型 */
-  objType: ScreenDeviceTypeVoObjType;
+  objType?: ScreenDeviceTypeVoObjType;
   /**
    * 设备总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 天然气总数
    * @format int64
    */
-  gasCnt: number;
+  gasCnt?: number;
   /**
    * 生命线燃气总数
    * @format int64
    */
-  lifelineGasCnt: number;
+  lifelineGasCnt?: number;
   /**
    * 第三方燃气总数
    * @format int64
    */
-  thirdGasCnt: number;
+  thirdGasCnt?: number;
   /**
    * 液化气设备总数
    * @format int64
    */
-  liCnt: number;
+  liCnt?: number;
   /**
    * 生命线液化气设备数
    * @format int64
    */
-  lifelineLiCnt: number;
+  lifelineLiCnt?: number;
   /**
    * 第三方液化气设备数
    * @format int64
    */
-  thirdLiCnt: number;
+  thirdLiCnt?: number;
   /** 监测场所类型枚举中文描述 */
-  _objType: string;
+  _objType?: string;
 }
 
 export interface ResultListYearSupplyVO {
-  code: string;
-  data: YearSupplyVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<YearSupplyVO>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface YearSupplyVO {
-  year: string;
+  year?: string;
   /** @format int64 */
-  gas: number;
+  gas?: number;
   /** @format int64 */
-  jmGas: number;
+  jmGas?: number;
   /** @format int64 */
-  gsGas: number;
+  gsGas?: number;
   /** @format int64 */
-  liquefiedGas: number;
+  liquefiedGas?: number;
   /** @format int64 */
-  jmLiGas: number;
+  jmLiGas?: number;
   /** @format int64 */
-  gsLiGas: number;
+  gsLiGas?: number;
 }
 
 /** 燃气底数-燃气企业-燃气底数总览VO */
 export interface DataOverviewVO {
   /** 主类型 */
-  mainType: string;
+  mainType?: string;
   /**
    * 统计值
    * @format float
    */
-  sumValue: number;
+  sumValue?: number;
 }
 
 export interface ResultListDataOverviewVO {
-  code: string;
-  data: DataOverviewVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<DataOverviewVO>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultVehicleDataVO {
-  code: string;
+  code?: string;
   /** 运输车辆VO */
-  data: VehicleDataVO;
-  message: string;
-  success: boolean;
+  data?: VehicleDataVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 运输车辆VO */
@@ -4929,53 +4929,53 @@ export interface VehicleDataVO {
    * 底数
    * @format float
    */
-  dataTotal: number;
+  dataTotal?: number;
   /**
    * 接入数
    * @format float
    */
-  accessTotal: number;
+  accessTotal?: number;
   /**
    * 接入率
    * @format float
    */
-  rate: number;
+  rate?: number;
   /**
    * 总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 配送车辆
    * @format int64
    */
-  deliveryVehicleCnt: number;
+  deliveryVehicleCnt?: number;
   /**
    * 危运车
    * @format int64
    */
-  dangerVehicleCnt: number;
+  dangerVehicleCnt?: number;
   /**
    * 其他
    * @format int64
    */
-  otherVehicleCnt: number;
+  otherVehicleCnt?: number;
 }
 
 /** 底数总览明细VO */
 export interface AccessDataDetailVO {
   /** 数据类型 */
-  dataType: string;
+  dataType?: string;
   /**
    * 数量、长度
    * @format float
    */
-  total: number;
+  total?: number;
   /**
    * 比率
    * @format float
    */
-  rate: number;
+  rate?: number;
 }
 
 /** 底数总览VO */
@@ -4984,33 +4984,33 @@ export interface AccessDataVO {
    * 底数
    * @format float
    */
-  dataTotal: number;
+  dataTotal?: number;
   /**
    * 接入数
    * @format float
    */
-  accessTotal: number;
+  accessTotal?: number;
   /**
    * 接入率
    * @format float
    */
-  rate: number;
+  rate?: number;
   /** 天然气场站明细 */
-  gasStationDetails: AccessDataDetailVO[];
+  gasStationDetails?: Array<AccessDataDetailVO>;
   /** 液化气场站明细 */
-  liqDataDetails: AccessDataDetailVO[];
+  liqDataDetails?: Array<AccessDataDetailVO>;
   /** 管网材质明细 */
-  pipeMaterialDetails: AccessDataDetailVO[];
+  pipeMaterialDetails?: Array<AccessDataDetailVO>;
   /** 管网年限统计VO */
-  pipeAgeDetails: PipelineAgeVO;
+  pipeAgeDetails?: PipelineAgeVO;
   /** 液化气瓶规格 */
-  bottleStandardDetail: AccessDataDetailVO[];
+  bottleStandardDetail?: Array<AccessDataDetailVO>;
   /** 液化气瓶组织机构 */
-  bottleOrgDetail: AccessDataDetailVO[];
+  bottleOrgDetail?: Array<AccessDataDetailVO>;
   /** 天然气从业人员 */
-  gasPersonDetail: AccessDataDetailVO[];
+  gasPersonDetail?: Array<AccessDataDetailVO>;
   /** 液化气从业人员 */
-  liqPersonDetail: AccessDataDetailVO[];
+  liqPersonDetail?: Array<AccessDataDetailVO>;
 }
 
 /** 管网年限统计VO */
@@ -5019,40 +5019,40 @@ export interface PipelineAgeVO {
    * 总数
    * @format float
    */
-  total: number;
+  total?: number;
   /**
    * 20年以上
    * @format float
    */
-  ta: number;
+  ta?: number;
   /**
    * 15-20年
    * @format float
    */
-  tb: number;
+  tb?: number;
   /**
    * 10-15年
    * @format float
    */
-  tc: number;
+  tc?: number;
   /**
    * 5-10年
    * @format float
    */
-  td: number;
+  td?: number;
   /**
    * 0-5年
    * @format float
    */
-  te: number;
+  te?: number;
 }
 
 export interface ResultAccessDataVO {
-  code: string;
+  code?: string;
   /** 底数总览VO */
-  data: AccessDataVO;
-  message: string;
-  success: boolean;
+  data?: AccessDataVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 企业人员资质证照信息汇总 */
@@ -5061,127 +5061,127 @@ export interface GasUserCountVO {
    * 底数
    * @format float
    */
-  dataTotal: number;
+  dataTotal?: number;
   /**
    * 接入数
    * @format float
    */
-  accessTotal: number;
+  accessTotal?: number;
   /**
    * 接入率
    * @format float
    */
-  rate: number;
+  rate?: number;
   /**
    * 用气用户总数
    * @format float
    */
-  userTotal: number;
+  userTotal?: number;
   /**
    * 天然气用户
    * @format float
    */
-  trqCnt: number;
+  trqCnt?: number;
   /**
    * 液化气用户
    * @format float
    */
-  yhqCnt: number;
+  yhqCnt?: number;
   /**
    * 居民天然气用户
    * @format float
    */
-  jmtrqCnt: number;
+  jmtrqCnt?: number;
   /**
    * 居民液化气用户
    * @format float
    */
-  jmyhqCnt: number;
+  jmyhqCnt?: number;
   /**
    * 工业天然气用户
    * @format float
    */
-  gytrqCnt: number;
+  gytrqCnt?: number;
   /**
    * 工业液化气用户
    * @format float
    */
-  gyyhqCnt: number;
+  gyyhqCnt?: number;
   /**
    * 商业天然气用户
    * @format float
    */
-  sytrqCnt: number;
+  sytrqCnt?: number;
   /**
    * 商业液化气用户
    * @format float
    */
-  syyhqCnt: number;
+  syyhqCnt?: number;
   /**
    * 居民天然气孤寡老人数量
    * @format float
    */
-  jmtrqlrCnt: number;
+  jmtrqlrCnt?: number;
   /**
    * 居民液化气孤寡老人数量
    * @format float
    */
-  jmyhqlrCnt: number;
+  jmyhqlrCnt?: number;
   /**
    * 工商业餐饮场所数量
    * @format float
    */
-  gsyyhqcyCnt: number;
+  gsyyhqcyCnt?: number;
   /**
    * 工商业天然气餐饮场所数量
    * @format float
    */
-  gsytrqcyCnt: number;
+  gsytrqcyCnt?: number;
 }
 
 export interface ResultGasUserCountVO {
-  code: string;
+  code?: string;
   /** 企业人员资质证照信息汇总 */
-  data: GasUserCountVO;
-  message: string;
-  success: boolean;
+  data?: GasUserCountVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultMapStringLong {
-  code: string;
-  data: Record<string, any>;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Record<string, any>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultScreenAlarmSummaryVO {
-  code: string;
+  code?: string;
   /** 大屏-监测预警接口-运行监测-累计报警VO */
-  data: ScreenAlarmSummaryVO;
-  message: string;
-  success: boolean;
+  data?: ScreenAlarmSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 大屏-监测预警接口-监测运行-累计报警折线图VO */
 export interface ScreenAlarmSummaryLineChartVO {
   /** 监测场所类型 */
-  objType: ScreenAlarmSummaryLineChartVoObjType;
+  objType?: ScreenAlarmSummaryLineChartVoObjType;
   /** 监测指标 */
-  alarmIndex: string;
+  alarmIndex?: string;
   /**
    * 报警数量
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 结束时间
    * @format date-time
    */
-  endTime: string;
+  endTime?: string;
   /** 点位格式化 */
-  timeStr: string;
+  timeStr?: string;
   /** 监测场所类型枚举中文描述 */
-  _objType: string;
+  _objType?: string;
 }
 
 /** 大屏-监测预警接口-运行监测-累计报警VO */
@@ -5190,200 +5190,200 @@ export interface ScreenAlarmSummaryVO {
    * 累计报警总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 今日报警总数
    * @format int64
    */
-  todayTotal: number;
+  todayTotal?: number;
   /**
    * 近一个月报警总数
    * @format int64
    */
-  monthTotal: number;
+  monthTotal?: number;
   /**
    * 近一年报警总数
    * @format int64
    */
-  yearTotal: number;
+  yearTotal?: number;
   /** 累计报警折线图 */
-  summaryDetail: Record<string, any>;
+  summaryDetail?: Record<string, any>;
 }
 
 /** 监测查询分页请求 */
 export interface MonitorRequest {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 组织机构列表 */
-  orgIds: string[];
+  orgIds?: Array<string> | string;
   /** 监测场所 */
-  objType: MonitorRequestObjType[];
+  objType?: Array<MonitorRequestObjType>;
   /** 监测指标 */
-  monitorIndex: string[];
+  monitorIndex?: Array<string> | string;
   /** 监测状态 */
-  eqptState: MonitorRequestEqptState[];
+  eqptState?: Array<MonitorRequestEqptState>;
   /** 数据来源 */
-  dataSource: MonitorRequestDataSource[];
+  dataSource?: Array<MonitorRequestDataSource>;
   /** 查询过滤 */
-  queryFilter: MonitorRequestQueryFilter;
+  queryFilter?: MonitorRequestQueryFilter;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 查询过滤枚举中文描述 */
-  _queryFilter: string;
+  _queryFilter?: string;
 }
 
 /** 实时监测分页信息VO */
 export interface MonitorPageVO {
   /** ID */
-  uid: string;
+  uid?: string;
   /** 设备编号 */
-  eqptId: string;
+  eqptId?: string;
   /** 设备名称 */
-  eqptName: string;
+  eqptName?: string;
   /** 监测对象 */
-  objId: string;
+  objId?: string;
   /** 监测场所类型 */
-  objType: MonitorPageVoObjType;
+  objType?: MonitorPageVoObjType;
   /** 监测对象名称，如燃气井、排水井等 */
-  objName: string;
+  objName?: string;
   /** 监测指标 */
-  monitorIndex: string;
+  monitorIndex?: string;
   /**
    * 设备最新值时间
    * @format date-time
    */
-  latestTime: string;
+  latestTime?: string;
   /** 设备最新值 */
-  latestValue: number;
+  latestValue?: number;
   /** 度量单位 */
-  measurement: string;
+  measurement?: string;
   /** 行政区划id */
-  districtId: string;
+  districtId?: string;
   /** 组织机构id */
-  orgId: string;
+  orgId?: string;
   /** 详细地址 */
-  address: string;
+  address?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /** 监测状态 */
-  eqptState: MonitorPageVoEqptState;
+  eqptState?: MonitorPageVoEqptState;
   /** 数据来源 */
-  dataSource: MonitorPageVoDataSource;
+  dataSource?: MonitorPageVoDataSource;
   /**
    * 更新时间
    * @format date-time
    */
-  updateTime: string;
+  updateTime?: string;
   /** 报警ID */
-  alarmId: string;
+  alarmId?: string;
   /** 报警类型 */
-  alarmType: string;
+  alarmType?: string;
   /**
    * 最新报警时间
    * @format date-time
    */
-  alarmLatestTime: string;
+  alarmLatestTime?: string;
   /** 最新报警级别 */
-  alarmLatestLevel: string;
+  alarmLatestLevel?: string;
   /** 最新报警值 */
-  alarmLatestValue: number;
+  alarmLatestValue?: number;
   /**
    * 初次报警时间
    * @format date-time
    */
-  alarmFirstTime: string;
+  alarmFirstTime?: string;
   /** 初次报警级别 */
-  alarmFirstLevel: string;
+  alarmFirstLevel?: string;
   /** 初次报警值 */
-  alarmFirstValue: number;
+  alarmFirstValue?: number;
   /** 报警状态 */
-  alarmState: MonitorPageVoAlarmState;
+  alarmState?: MonitorPageVoAlarmState;
   /** 数据来源 */
-  alarmSource: MonitorPageVoAlarmSource;
+  alarmSource?: MonitorPageVoAlarmSource;
   /**
    * 报警解除时间
    * @format date-time
    */
-  relieveTime: string;
+  relieveTime?: string;
   /** 报警排查结果 */
-  alarmResult: string;
+  alarmResult?: string;
   /** 监测场所类型枚举中文描述 */
-  _objType: string;
+  _objType?: string;
   /** 行政区划id枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 组织机构id枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 监测状态枚举中文描述 */
-  _eqptState: string;
+  _eqptState?: string;
   /** 数据来源枚举中文描述 */
-  _dataSource: string;
+  _dataSource?: string;
   /** 报警状态枚举中文描述 */
-  _alarmState: string;
+  _alarmState?: string;
   /** 数据来源枚举中文描述 */
-  _alarmSource: string;
+  _alarmSource?: string;
 }
 
 export interface PageResultListMonitorPageVO {
-  code: string;
-  data: MonitorPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<MonitorPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 /** 实时监测汇总VO */
 export interface MonitorSummaryVO {
   /** 监测场所 */
-  objType: string;
+  objType?: string;
   /**
    * 设备总数
    * @format int64
    */
-  allCount: number;
+  allCount?: number;
   /**
    * 报警中设备数
    * @format int64
    */
-  alarmCount: number;
+  alarmCount?: number;
   /**
    * 离线设备数
    * @format int64
    */
-  offlineCount: number;
+  offlineCount?: number;
   /**
    * 正常设备数
    * @format int64
    */
-  normalCount: number;
+  normalCount?: number;
 }
 
 export interface ResultListMonitorSummaryVO {
-  code: string;
-  data: MonitorSummaryVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<MonitorSummaryVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 搜索周边地理信息请求 */
@@ -5392,19 +5392,19 @@ export interface PerimeterSearchRequest {
    * 经度
    * @format double
    */
-  longitude: number;
+  longitude?: number;
   /**
    * 纬度
    * @format double
    */
-  latitude: number;
+  latitude?: number;
   /**
    * 半径距离
    * @format float
    */
-  distance: number;
+  distance?: number;
   /** 点位对象 */
-  geom: string;
+  geom?: string;
 }
 
 /** 危险源VO */
@@ -5413,58 +5413,58 @@ export interface DangerJudgeVO {
    * id
    * @format int64
    */
-  cmKid: number;
+  cmKid?: number;
   /** 危险源编号 */
-  dangerCode: string;
+  dangerCode?: string;
   /**  危险源类型 */
-  type: DangerJudgeVoType;
+  type?: DangerJudgeVoType;
   /**  危险源名称 */
-  name: string;
+  name?: string;
   /** 是否重大危险源 */
-  flgMajor: string;
+  flgMajor?: string;
   /** 详细地址 */
-  address: string;
+  address?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /**  纬度 */
-  latitude: number;
+  latitude?: number;
   /** 距离 */
-  distance: string;
+  distance?: string;
   /**  危险源类型枚举中文描述 */
-  _type: string;
+  _type?: string;
 }
 
 /** 测点VO */
 export interface MonitorJudgeVO {
   /** 设备编号 */
-  eqptId: string;
+  eqptId?: string;
   /** 设备名称 */
-  eqptName: string;
+  eqptName?: string;
   /** 监测对象 */
-  objId: string;
+  objId?: string;
   /** 监测指标 */
-  monitorIndex: string;
+  monitorIndex?: string;
   /**
    * 设备最新值时间
    * @format date-time
    */
-  latestTime: string;
+  latestTime?: string;
   /** 设备最新值 */
-  latestValue: number;
+  latestValue?: number;
   /** 最新报警级别 */
-  latestLevel: string;
+  latestLevel?: string;
   /** 度量单位 */
-  measurement: string;
+  measurement?: string;
   /** 监测对象名称，如燃气井、排水井等 */
-  objName: string;
+  objName?: string;
   /** 详细地址 */
-  address: string;
+  address?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /** 距离 */
-  distance: string;
+  distance?: string;
 }
 
 /** 搜索周边地理信息返回 */
@@ -5473,28 +5473,28 @@ export interface PerimeterSearchVO {
    * 搜索半径
    * @format float
    */
-  distance: number;
+  distance?: number;
   /**
    * 防护目标总数
    * @format int32
    */
-  protagCount: number;
+  protagCount?: number;
   /**
    * 危险源总数
    * @format int32
    */
-  dangerCount: number;
+  dangerCount?: number;
   /**
    * 监测设备总数
    * @format int32
    */
-  deviceCount: number;
+  deviceCount?: number;
   /** 防护目标列表 */
-  protagList: ProtagJudgeVO[];
+  protagList?: Array<ProtagJudgeVO>;
   /** 危险源列表 */
-  dangerList: DangerJudgeVO[];
+  dangerList?: Array<DangerJudgeVO>;
   /** 监测设备 */
-  deviceList: MonitorJudgeVO[];
+  deviceList?: Array<MonitorJudgeVO>;
 }
 
 /** 防护目标VO */
@@ -5503,166 +5503,166 @@ export interface ProtagJudgeVO {
    * id
    * @format int64
    */
-  cmKid: number;
+  cmKid?: number;
   /** 防护目标编号 */
-  portectid: string;
+  portectid?: string;
   /** 防护目标类型 */
-  type: ProtagJudgeVoType;
+  type?: ProtagJudgeVoType;
   /** 防护目标名称 */
-  name: string;
+  name?: string;
   /** 是否重点防护目标 */
-  flgMajor: string;
+  flgMajor?: string;
   /** 详细地址 */
-  address: string;
+  address?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /** 距离 */
-  distance: string;
+  distance?: string;
   /** 防护目标类型枚举中文描述 */
-  _type: string;
+  _type?: string;
 }
 
 export interface ResultPerimeterSearchVO {
-  code: string;
+  code?: string;
   /** 搜索周边地理信息返回 */
-  data: PerimeterSearchVO;
-  message: string;
-  success: boolean;
+  data?: PerimeterSearchVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 实时监测列表GIS撒点请求 */
 export interface DeviceMapRequest {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 组织机构列表 */
-  orgIds: string[];
+  orgIds?: Array<string> | string;
   /** 撒点行政区划ID */
-  byDistrictId: string;
+  byDistrictId?: string;
   /** 监测场所 */
-  objType: DeviceMapRequestObjType[];
+  objType?: Array<DeviceMapRequestObjType>;
   /** 监测状态 */
-  eqptState: DeviceMapRequestEqptState[];
+  eqptState?: Array<DeviceMapRequestEqptState>;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 /** 设备GIS一张图点位聚合数据 */
 export interface DeviceMapVO {
   /** 聚合范围，如340104 */
-  scope: string;
+  scope?: string;
   /** 聚合范围，如蜀山区 */
-  scopeName: string;
+  scopeName?: string;
   /** 聚合展示点经度 */
-  longitude: number;
+  longitude?: number;
   /** 聚合展示点纬度 */
-  latitude: number;
+  latitude?: number;
   /** 监测场所类型 */
-  objType: DeviceMapVoObjType;
+  objType?: DeviceMapVoObjType;
   /**
    * 聚合总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 地下管网设备总数
    * @format int64
    */
-  dxTotal: number;
+  dxTotal?: number;
   /**
    * 工商业设备总数
    * @format int64
    */
-  gsTotal: number;
+  gsTotal?: number;
   /**
    * 居民用户设备总数
    * @format int64
    */
-  jmTotal: number;
+  jmTotal?: number;
   /**
    * 场站设备总数
    * @format int64
    */
-  czTotal: number;
+  czTotal?: number;
   /**
    * 管线设备总数
    * @format int64
    */
-  lineTotal: number;
+  lineTotal?: number;
   /** 设备子区域撒点 */
-  subDeviceMap: DeviceMapVO[];
+  subDeviceMap?: Array<DeviceMapVO>;
   /** 监测场所类型枚举中文描述 */
-  _objType: string;
+  _objType?: string;
 }
 
 export interface ResultDeviceMapVO {
-  code: string;
+  code?: string;
   /** 设备GIS一张图点位聚合数据 */
-  data: DeviceMapVO;
-  message: string;
-  success: boolean;
+  data?: DeviceMapVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 页面详情VO */
 export interface ObjDetail {
   /** 标题 */
-  title: string;
+  title?: string;
   /** 明细 */
-  details: Record<string, any>;
+  details?: Record<string, any>;
 }
 
 export interface ResultSuperviseObjDetailVO {
-  code: string;
+  code?: string;
   /** 监管对象详情信息VO */
-  data: SuperviseObjDetailVO;
-  message: string;
-  success: boolean;
+  data?: SuperviseObjDetailVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 监管对象详情信息VO */
 export interface SuperviseObjDetailVO {
   /** 设备编号 */
-  eqptId: string;
+  eqptId?: string;
   /** 点位编号 */
-  pointId: string;
+  pointId?: string;
   /** 页面详情 */
-  page: ObjDetail[];
+  page?: Array<ObjDetail>;
 }
 
 /** 设备监测曲线 */
 export interface MonitorCurveQuery {
   /** 设备编码 */
-  eqptId: string;
+  eqptId?: string;
   /**
    * 开始时间
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  startTime: string;
+  startTime?: string;
   /**
    * 结束时间
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  endTime: string;
+  endTime?: string;
 }
 
 /** 最大值与最小值对象VO */
@@ -5671,152 +5671,152 @@ export interface Difference {
    * Y坐标轴数据值
    * @format float
    */
-  val: number;
-  xdata: string;
+  val?: number;
+  xdata?: string;
 }
 
 /** 监测曲线返回VO */
 export interface MonitorCurveVO {
   /** 设备编号 */
-  eqptId: string;
+  eqptId?: string;
   /** 点位编号 */
-  pointId: string;
+  pointId?: string;
   /** 实时值 */
-  realTimeValue: string;
+  realTimeValue?: string;
   /** 度量单位，如：%vol.. */
-  measure: string[];
+  measure?: Array<string> | string;
   /** 最大值 */
-  max: Difference[];
+  max?: Array<Difference>;
   /** 最小值 */
-  min: Difference[];
-  xdata: string[];
-  ydata: Record<string, any>;
+  min?: Array<Difference>;
+  xdata?: Array<string> | string;
+  ydata?: Record<string, any>;
 }
 
 export interface ResultMonitorCurveVO {
-  code: string;
+  code?: string;
   /** 监测曲线返回VO */
-  data: MonitorCurveVO;
-  message: string;
-  success: boolean;
+  data?: MonitorCurveVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 监测设备查询请求 */
 export interface DeviceRequest {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 详细地址 */
-  address: string;
+  address?: string;
   /** 气源类型 */
-  gasType: DeviceRequestGasType[];
+  gasType?: Array<DeviceRequestGasType>;
   /** 用户类型 */
-  userType: DeviceRequestUserType[];
+  userType?: Array<DeviceRequestUserType>;
   /** 设备状态 */
-  eqptState: DeviceRequestEqptState[];
+  eqptState?: Array<DeviceRequestEqptState>;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 /** 监测设备分页信息 */
 export interface DevicePageVO {
   /** ID */
-  uid: string;
+  uid?: string;
   /** 设备编号 */
-  eqptId: string;
+  eqptId?: string;
   /** 设备名称 */
-  eqptName: string;
+  eqptName?: string;
   /** 气源类型 */
-  gasType: DevicePageVoGasType;
+  gasType?: DevicePageVoGasType;
   /** 所属街道/乡镇 */
-  towns: string;
+  towns?: string;
   /** 所属社区/村 */
-  community: string;
+  community?: string;
   /** 所属小区/村组 */
-  village: string;
+  village?: string;
   /** 监测状态 */
-  eqptState: DevicePageVoEqptState;
+  eqptState?: DevicePageVoEqptState;
   /** 行政区划id */
-  districtId: string;
+  districtId?: string;
   /** 组织机构id */
-  orgId: string;
+  orgId?: string;
   /** 详细地址 */
-  address: string;
+  address?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /**
    * 创建时间
    * @format date-time
    */
-  createTime: string;
+  createTime?: string;
   /**
    * 更新时间
    * @format date-time
    */
-  updateTime: string;
+  updateTime?: string;
   /** 数据来源系统 */
-  dataSource: DevicePageVoDataSource;
+  dataSource?: DevicePageVoDataSource;
   /** 是否启用 */
-  enabled: boolean;
+  enabled?: boolean;
   /** 系统标识 */
-  systemId: string;
+  systemId?: string;
   /** 监测场所类型 */
-  userType: DevicePageVoUserType;
+  userType?: DevicePageVoUserType;
   /** 所属用户 */
-  userName: string;
+  userName?: string;
   /** 设备品牌 */
-  eqptBrand: string;
+  eqptBrand?: string;
   /** 设备型号 */
-  eqptModel: string;
+  eqptModel?: string;
   /** 是否有阀门 */
-  isValve: boolean;
+  isValve?: boolean;
   /**
    * 安装日期
    * @format date-time
    */
-  installTime: string;
-  valve: string;
+  installTime?: string;
+  valve?: string;
   /** 气源类型枚举中文描述 */
-  _gasType: string;
+  _gasType?: string;
   /** 监测状态枚举中文描述 */
-  _eqptState: string;
+  _eqptState?: string;
   /** 行政区划id枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 组织机构id枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 数据来源系统枚举中文描述 */
-  _dataSource: string;
+  _dataSource?: string;
   /** 监测场所类型枚举中文描述 */
-  _userType: string;
+  _userType?: string;
 }
 
 export interface PageResultListDevicePageVO {
-  code: string;
-  data: DevicePageVO[];
-  message: string;
+  code?: string;
+  data?: Array<DevicePageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 /** 监测设备统计 */
@@ -5825,99 +5825,99 @@ export interface DeviceSummaryVO {
    * 安装设备总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 天然气居民总数
    * @format int64
    */
-  gasJmCnt: number;
+  gasJmCnt?: number;
   /**
    * 天然气工商业总数
    * @format int64
    */
-  gasGsCnt: number;
+  gasGsCnt?: number;
   /**
    * 液化气居民总数
    * @format int64
    */
-  liGasJmCnt: number;
+  liGasJmCnt?: number;
   /**
    * 液化气工商业总数
    * @format int64
    */
-  liGasGsCnt: number;
+  liGasGsCnt?: number;
 }
 
 export interface ResultDeviceSummaryVO {
-  code: string;
+  code?: string;
   /** 监测设备统计 */
-  data: DeviceSummaryVO;
-  message: string;
-  success: boolean;
+  data?: DeviceSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 监管报警信息分页查询请求 */
 export interface AlarmPageRequest {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 组织机构列表 */
-  orgIds: string[];
+  orgIds?: Array<string> | string;
   /** 查询过滤 */
-  queryFilter: AlarmPageRequestQueryFilter;
+  queryFilter?: AlarmPageRequestQueryFilter;
   /** 监测类型 */
-  objType: AlarmPageRequestObjType[];
+  objType?: Array<AlarmPageRequestObjType>;
   /** 报警类型 */
-  alarmType: string[];
+  alarmType?: Array<string> | string;
   /** 报警指标类型 */
-  alarmIndex: string[];
+  alarmIndex?: Array<string> | string;
   /** 报警状态 */
-  alarmState: AlarmPageRequestAlarmState[];
+  alarmState?: Array<AlarmPageRequestAlarmState>;
   /** 报警来源 */
-  alarmSource: AlarmPageRequestAlarmSource[];
+  alarmSource?: Array<AlarmPageRequestAlarmSource>;
   /**
    * 报警时间查询开始
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  startTime: string;
+  startTime?: string;
   /**
    * 报警时间查询结束
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  endTime: string;
+  endTime?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 查询过滤枚举中文描述 */
-  _queryFilter: string;
+  _queryFilter?: string;
 }
 
 export interface PageResultListAlarmPageVO {
-  code: string;
-  data: AlarmPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<AlarmPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 /** 报警汇总VO */
@@ -5926,91 +5926,91 @@ export interface AlarmSummaryVO {
    * 报警总数
    * @format int64
    */
-  allCount: number;
+  allCount?: number;
   /**
    * 管网监测报警
    * @format int64
    */
-  pipelineCount: number;
+  pipelineCount?: number;
   /**
    * 工商用户监测报警
    * @format int64
    */
-  industryCount: number;
+  industryCount?: number;
   /**
    * 居民用户监测报警
    * @format int64
    */
-  indoorCount: number;
+  indoorCount?: number;
   /**
    * 场站监测报警
    * @format int64
    */
-  stationCount: number;
+  stationCount?: number;
 }
 
 export interface ResultAlarmSummaryVO {
-  code: string;
+  code?: string;
   /** 报警汇总VO */
-  data: AlarmSummaryVO;
-  message: string;
-  success: boolean;
+  data?: AlarmSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 历史报警记录VO */
 export interface HistoryAlarmVO {
   /** 监测场所类型 */
-  objType: HistoryAlarmVoObjType;
+  objType?: HistoryAlarmVoObjType;
   /** 复核结果 */
-  warnResult: string;
+  warnResult?: string;
   /** 报警类型 */
-  alarmType: string;
+  alarmType?: string;
   /**
    * 预警数量
    * @format int32
    */
-  count: number;
+  count?: number;
   /** 历史详情 */
-  historyDetails: ObjDetail[];
+  historyDetails?: Array<ObjDetail>;
   /** 监测场所类型枚举中文描述 */
-  _objType: string;
+  _objType?: string;
 }
 
 export interface ResultListHistoryAlarmVO {
-  code: string;
-  data: HistoryAlarmVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<HistoryAlarmVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 报警、预警处置流程VO */
 export interface DisposeTraceVO {
   /** 报警编号 */
-  alarmId: string;
+  alarmId?: string;
   /** 预警编号 */
-  warnId: string;
+  warnId?: string;
   /**
    * 操作处置时间
    * @format date-time
    */
-  timestamp: string;
+  timestamp?: string;
   /** 操作处置详细内容json */
-  traceData: string;
-  files: string[];
+  traceData?: string;
+  files?: Array<string> | string;
 }
 
 export interface ResultListDisposeTraceVO {
-  code: string;
-  data: DisposeTraceVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<DisposeTraceVO>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultRiskDangerStatisticsOfWordVO {
-  code: string;
-  data: RiskDangerStatisticsOfWordVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: RiskDangerStatisticsOfWordVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface RiskDangerStatisticsOfWordVO {
@@ -6018,397 +6018,397 @@ export interface RiskDangerStatisticsOfWordVO {
    * 隐患总数
    * @format int64
    */
-  risk_total: number;
+  risk_total?: number;
   /**
    * 上期遗留隐患
    * @format int64
    */
-  last_risk_total: number;
+  last_risk_total?: number;
   /**
    * 本期新增隐患
    * @format int64
    */
-  add_risk_total: number;
+  add_risk_total?: number;
   /**
    * 本期治理隐患
    * @format int64
    */
-  deal_risk_total: number;
+  deal_risk_total?: number;
   /**
    * 重大隐患
    * @format int64
    */
-  major_risk_total: number;
+  major_risk_total?: number;
   /**
    * 较大隐患
    * @format int64
    */
-  more_risk_total: number;
+  more_risk_total?: number;
   /**
    * 一般隐患
    * @format int64
    */
-  commonly_risk_total: number;
+  commonly_risk_total?: number;
   /** 高风险管道公里 */
-  read_level_total: string;
+  read_level_total?: string;
   /** 高风险管道公里占比 */
-  read_level_total_per: string;
+  read_level_total_per?: string;
 }
 
 export interface ResultListRiskExportVO {
-  code: string;
-  data: RiskExportVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<RiskExportVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 隐患数据导出 */
 export interface RiskExportVO {
   /** 隐患主键 */
-  uid: string;
+  uid?: string;
   /** 隐患编号 */
-  dangerId: string;
+  dangerId?: string;
   /** 风险要素主体 */
-  subjectType: string;
+  subjectType?: string;
   /** 风险要素类型 */
-  dangerType: string;
+  dangerType?: string;
   /** 风险要素子类型 */
-  dangerSubtype: string;
+  dangerSubtype?: string;
   /** 隐患主体编号 */
-  subjectId: string;
+  subjectId?: string;
   /** 权属单位 */
-  orgId: string;
+  orgId?: string;
   /** 所属区域 */
-  districtId: string;
+  districtId?: string;
   /** 具体位置 */
-  address: string;
+  address?: string;
   /** 风险要素等级 */
-  level: RiskExportVoLevel;
+  level?: RiskExportVoLevel;
   /** 排查人员 */
-  checkBy: string;
+  checkBy?: string;
   /** 排查人员联系电话 */
-  checkPhone: string;
+  checkPhone?: string;
   /**
    * 排查时间
    * @format date
    */
-  checkDate: string;
+  checkDate?: string;
   /**
    * 整改期限
    * @format date
    */
-  deadline: string;
+  deadline?: string;
   /** 风险要素状态 */
-  state: RiskExportVoState;
+  state?: RiskExportVoState;
   /** 隐患来源 */
-  dangerSource: RiskExportVoDangerSource;
+  dangerSource?: RiskExportVoDangerSource;
   /** 整改责任人 */
-  director: string;
+  director?: string;
   /** 整改责任人电话 */
-  directorPhone: string;
+  directorPhone?: string;
   /** 整改措施 */
-  measure: string;
+  measure?: string;
   /**
    * 计划整改时间
    * @format date
    * @pattern yyyy-MM-dd
    */
-  planTime: string;
+  planTime?: string;
   /** 排查单位 */
-  checkDept: string;
+  checkDept?: string;
   /** 描述 */
-  remark: string;
+  remark?: string;
   /** 是否密集场所 */
-  isDense: boolean;
+  isDense?: boolean;
   /** 推送人 */
-  pushBy: string;
+  pushBy?: string;
   /**
    * 推送时间
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  pushTime: string;
+  pushTime?: string;
   /**
    * 更新时间
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  updateTime: string;
+  updateTime?: string;
   /** @format double */
-  longitude: number;
+  longitude?: number;
   /** @format double */
-  latitude: number;
+  latitude?: number;
   /** 权属单位枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 所属区域枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 风险要素等级枚举中文描述 */
-  _level: string;
+  _level?: string;
   /** 风险要素状态枚举中文描述 */
-  _state: string;
+  _state?: string;
   /** 隐患来源枚举中文描述 */
-  _dangerSource: string;
+  _dangerSource?: string;
 }
 
 /** 防护目标详情信息 */
 export interface ProtagDetailVO {
   /** 主键 */
-  cmKid: string;
+  cmKid?: string;
   /** 防护目标编号 */
-  portectid: string;
+  portectid?: string;
   /** 防护目标名称 */
-  name: string;
+  name?: string;
   /** 防护目标分类 */
-  type: string;
+  type?: string;
   /** 是否重点防护目标 */
-  flgMajor: string;
+  flgMajor?: string;
   /** 所属区域 */
-  cmRegflag: string;
+  cmRegflag?: string;
   /** 所属组织 */
-  cmOrgflag: string;
+  cmOrgflag?: string;
   /** 详细地址 */
-  address: string;
+  address?: string;
   /** 满负荷人数 */
-  fullCapacity: string;
+  fullCapacity?: string;
   /** 投影面积 */
-  area: number;
+  area?: number;
   /** 建筑结构形式 */
-  buildingStruct: string;
+  buildingStruct?: string;
   /** 建筑层数 */
-  highestLayer: string;
+  highestLayer?: string;
   /** 建筑年份 */
-  builtIn: string;
+  builtIn?: string;
   /** 使用年限 */
-  serviceYears: string;
+  serviceYears?: string;
   /** 预警责任单位 */
-  warnUnit: string;
+  warnUnit?: string;
   /** 预警责任人姓名 */
-  warnPerson: string;
+  warnPerson?: string;
   /** 预警责任职务 */
-  warnPersonJob: string;
+  warnPersonJob?: string;
   /** 预警责任人电话 */
-  warnPersonPhone: string;
+  warnPersonPhone?: string;
   /** 管理单位名称 */
-  manaUnit: string;
+  manaUnit?: string;
   /** 管理单位名称负责人 */
-  person: string;
+  person?: string;
   /** 负责人职务 */
-  personJob: string;
+  personJob?: string;
   /** 负责人电话 */
-  personPhone: string;
+  personPhone?: string;
   /** 填表人 */
-  filledPerson: string;
+  filledPerson?: string;
   /** 填表人电话 */
-  filledPhone: string;
+  filledPhone?: string;
   /**
    * 填表日期
    * @format date-time
    */
-  filledDate: string;
+  filledDate?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /** 坐标系 */
-  coordinate: string;
+  coordinate?: string;
   /** 备注 */
-  remake: string;
+  remake?: string;
   /**
    * 修改时间
    * @format date-time
    */
-  cmUptime: string;
+  cmUptime?: string;
   /**
    * 创建时间
    * @format date-time
    */
-  cmAddtime: string;
+  cmAddtime?: string;
 }
 
 export interface ResultProtagDetailVO {
-  code: string;
+  code?: string;
   /** 防护目标详情信息 */
-  data: ProtagDetailVO;
-  message: string;
-  success: boolean;
+  data?: ProtagDetailVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 企业人员资质证照分页查询 */
 export interface PerCertificatePageQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 组织机构列表 */
-  orgIds: string[];
+  orgIds?: Array<string> | string;
   /** 查询过滤 */
-  queryFilter: PerCertificatePageQueryQueryFilter;
+  queryFilter?: PerCertificatePageQueryQueryFilter;
   /** 性别 */
-  gender: PerCertificatePageQueryGender;
+  gender?: PerCertificatePageQueryGender;
   /**
    * 截止有效日期开始
    * @format date
    * @pattern yyyy-MM-dd
    */
-  startTime: string;
+  startTime?: string;
   /**
    * 截止有效日期结束
    * @format date
    * @pattern yyyy-MM-dd
    */
-  endTime: string;
+  endTime?: string;
   /** 所属企业 */
-  enterpriseId: number[];
+  enterpriseId?: Array<number> | number;
   /** 是否过期 */
-  isExpiration: PerCertificatePageQueryIsExpiration;
+  isExpiration?: PerCertificatePageQueryIsExpiration;
   /** 当前岗位 */
-  currentPosition: PerCertificatePageQueryCurrentPosition;
+  currentPosition?: PerCertificatePageQueryCurrentPosition;
   /** 人员编号 */
-  code: string;
+  code?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 查询过滤枚举中文描述 */
-  _queryFilter: string;
+  _queryFilter?: string;
   /** 性别枚举中文描述 */
-  _gender: string;
+  _gender?: string;
   /** 是否过期枚举中文描述 */
-  _isExpiration: string;
+  _isExpiration?: string;
   /** 当前岗位枚举中文描述 */
-  _currentPosition: string;
+  _currentPosition?: string;
 }
 
 export interface PageResultListPerCertificatePageVO {
-  code: string;
-  data: PerCertificatePageVO[];
-  message: string;
+  code?: string;
+  data?: Array<PerCertificatePageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 /** 企业人员资质证照分页查询 */
 export interface PerCertificatePageVO {
   /** 企业人员岗位信息ID */
-  uid: string;
+  uid?: string;
   /** 人员名称 */
-  name: string;
+  name?: string;
   /** 人员编号 */
-  code: string;
+  code?: string;
   /** 所属企业 */
-  enterpriseId: string;
+  enterpriseId?: string;
   /** 所属企业 */
-  enterpriseName: string;
+  enterpriseName?: string;
   /** 经营范围(类别) */
-  businessScope: PerCertificatePageVoBusinessScope[];
+  businessScope?: Array<PerCertificatePageVoBusinessScope>;
   /** 身份证号码 */
-  idNo: string;
+  idNo?: string;
   /** 性别 */
-  gender: PerCertificatePageVoGender;
+  gender?: PerCertificatePageVoGender;
   /**
    * 出生年月
    * @format date
    */
-  birthday: string;
+  birthday?: string;
   /** 当前岗位 */
-  currentPosition: PerCertificatePageVoCurrentPosition;
+  currentPosition?: PerCertificatePageVoCurrentPosition;
   /** 是否在岗 */
-  isWorking: PerCertificatePageVoIsWorking;
+  isWorking?: PerCertificatePageVoIsWorking;
   /** 从业资格证编号 */
-  proQuaNo: string;
+  proQuaNo?: string;
   /** 联系方式 */
-  contactInfo: string;
+  contactInfo?: string;
   /** 是否过期 */
-  isExpiration: PerCertificatePageVoIsExpiration;
+  isExpiration?: PerCertificatePageVoIsExpiration;
   /** 过期时间 */
-  expirationDate: string;
+  expirationDate?: string;
   /** 通过年份 */
-  effectiveDate: string;
+  effectiveDate?: string;
   /** 性别枚举中文描述 */
-  _gender: string;
+  _gender?: string;
   /** 当前岗位枚举中文描述 */
-  _currentPosition: string;
+  _currentPosition?: string;
   /** 是否在岗枚举中文描述 */
-  _isWorking: string;
+  _isWorking?: string;
   /** 是否过期枚举中文描述 */
-  _isExpiration: string;
+  _isExpiration?: string;
 }
 
 /** 企业人员资质证照信息详情 */
 export interface PerCertificateDetailVO {
   /** 企业人员岗位信息ID */
-  uid: string;
+  uid?: string;
   /** 人员名称 */
-  name: string;
+  name?: string;
   /** 人员编号 */
-  code: string;
+  code?: string;
   /** 所属企业 */
-  enterpriseId: string;
+  enterpriseId?: string;
   /** 所属企业 */
-  enterpriseName: string;
+  enterpriseName?: string;
   /** 经营范围(类别) */
-  businessScope: PerCertificateDetailVoBusinessScope[];
+  businessScope?: Array<PerCertificateDetailVoBusinessScope>;
   /** 身份证号码 */
-  idNo: string;
+  idNo?: string;
   /** 性别 */
-  gender: PerCertificateDetailVoGender;
+  gender?: PerCertificateDetailVoGender;
   /**
    * 出生年月
    * @format date
    */
-  birthday: string;
+  birthday?: string;
   /** 当前岗位 */
-  currentPosition: PerCertificateDetailVoCurrentPosition;
+  currentPosition?: PerCertificateDetailVoCurrentPosition;
   /** 是否在岗 */
-  isWorking: PerCertificateDetailVoIsWorking;
+  isWorking?: PerCertificateDetailVoIsWorking;
   /** 从业资格证编号 */
-  proQuaNo: string;
+  proQuaNo?: string;
   /** 联系方式 */
-  contactInfo: string;
+  contactInfo?: string;
   /** 是否过期 */
-  isExpiration: PerCertificateDetailVoIsExpiration;
+  isExpiration?: PerCertificateDetailVoIsExpiration;
   /** 过期时间 */
-  expirationDate: string;
+  expirationDate?: string;
   /** 通过年份 */
-  effectiveDate: string;
+  effectiveDate?: string;
   /** 附件 */
-  files: FileObj[];
+  files?: Array<FileObj>;
   /** 人员岗位信息列表 */
-  positionQuery: PerPositionQuery[];
+  positionQuery?: Array<PerPositionQuery>;
   /** 人员资格证信息列表 */
-  certificateQuery: PerCertificateQuery[];
+  certificateQuery?: Array<PerCertificateQuery>;
   /** 性别枚举中文描述 */
-  _gender: string;
+  _gender?: string;
   /** 当前岗位枚举中文描述 */
-  _currentPosition: string;
+  _currentPosition?: string;
   /** 是否在岗枚举中文描述 */
-  _isWorking: string;
+  _isWorking?: string;
   /** 是否过期枚举中文描述 */
-  _isExpiration: string;
+  _isExpiration?: string;
 }
 
 export interface ResultPerCertificateDetailVO {
-  code: string;
+  code?: string;
   /** 企业人员资质证照信息详情 */
-  data: PerCertificateDetailVO;
-  message: string;
-  success: boolean;
+  data?: PerCertificateDetailVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 企业人员资质证照信息汇总 */
@@ -6417,231 +6417,231 @@ export interface PerCertificateCountVO {
    * 企业员工总数
    * @format int64
    */
-  perTotal: number;
+  perTotal?: number;
   /**
    * 企业负责人
    * @format int64
    */
-  qyfzrCnt: number;
+  qyfzrCnt?: number;
   /**
    * 安全管理人员
    * @format int64
    */
-  aqglryCnt: number;
+  aqglryCnt?: number;
   /**
    * 燃气输配场站工
    * @format int64
    */
-  rqspczgCnt: number;
+  rqspczgCnt?: number;
   /**
    * 液化石油气库站工
    * @format int64
    */
-  yhsyqkzgCnt: number;
+  yhsyqkzgCnt?: number;
   /**
    * 压缩天然气场站工
    * @format int64
    */
-  ystrqzgCnt: number;
+  ystrqzgCnt?: number;
   /**
    * 液化天然气储运工
    * @format int64
    */
-  yhtrqcygCnt: number;
+  yhtrqcygCnt?: number;
   /**
    * 汽车加气站操作工
    * @format int64
    */
-  qcjqzczgCnt: number;
+  qcjqzczgCnt?: number;
   /**
    * 燃气管网工
    * @format int64
    */
-  rqgwgCnt: number;
+  rqgwgCnt?: number;
   /**
    * 燃气用户安装检修工
    * @format int64
    */
-  rqyhazjxgCnt: number;
+  rqyhazjxgCnt?: number;
   /**
    * 瓶装燃气送气工
    * @format int64
    */
-  pzrqsqgCnt: number;
+  pzrqsqgCnt?: number;
   /**
    * 在岗人员
    * @format int64
    */
-  onDutyCnt: number;
+  onDutyCnt?: number;
   /**
    * 离职人员
    * @format int64
    */
-  departCnt: number;
+  departCnt?: number;
 }
 
 export interface ResultPerCertificateCountVO {
-  code: string;
+  code?: string;
   /** 企业人员资质证照信息汇总 */
-  data: PerCertificateCountVO;
-  message: string;
-  success: boolean;
+  data?: PerCertificateCountVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultListTreeVo {
-  code: string;
-  data: TreeVo[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<TreeVo>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface TreeVo {
-  id: string;
-  label: string;
-  children: TreeVo[];
+  id?: string;
+  label?: string;
+  children?: Array<TreeVo>;
 }
 
 /** 老旧管网改造列表查询请求 */
 export interface PageOldPipeBuildQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** @uniqueItems true */
-  districtIds: string[];
+  districtIds?: Array<string> | string;
   /** 改造类型 */
-  buildType: PageOldPipeBuildQueryBuildType[];
+  buildType?: Array<PageOldPipeBuildQueryBuildType>;
   /** 改造状态 */
-  buildState: PageOldPipeBuildQueryBuildState[];
+  buildState?: Array<PageOldPipeBuildQueryBuildState>;
   /** 压力级别 */
-  volclassLevel: PageOldPipeBuildQueryVolclassLevel[];
+  volclassLevel?: Array<PageOldPipeBuildQueryVolclassLevel>;
   /** 管网材质类型 */
-  pmaterialType: PageOldPipeBuildQueryPmaterialType[];
+  pmaterialType?: Array<PageOldPipeBuildQueryPmaterialType>;
   /** 是否挂牌督办 */
-  isSupervision: boolean;
+  isSupervision?: boolean;
   /** 是否同步至首平台 */
-  isUpload: boolean;
+  isUpload?: boolean;
   /**
    * 开始时间，格式：yyyy-MM-dd
    * @format date
    */
-  startTime: string;
+  startTime?: string;
   /**
    * 结束时间，格式：yyyy-MM-dd
    * @format date
    */
-  endTime: string;
+  endTime?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 /** 老旧管网返回列表 */
 export interface OldPipeBuildVO {
   /** ID */
-  uid: string;
+  uid?: string;
   /** 项目编号 */
-  buildNo: string;
+  buildNo?: string;
   /** 项目名称 */
-  buildName: string;
+  buildName?: string;
   /** 第三方施工状态 */
-  buildState: OldPipeBuildVoBuildState;
+  buildState?: OldPipeBuildVoBuildState;
   /** 管道、管线编号 */
-  pipeId: string;
+  pipeId?: string;
   /** 行政区划id */
-  districtId: string;
+  districtId?: string;
   /** 组织机构id */
-  orgId: string;
+  orgId?: string;
   /** 事故事件地址 */
-  address: string;
+  address?: string;
   /**
    * 施工开始时间
    * @format date
    */
-  buildStart: string;
+  buildStart?: string;
   /**
    * 施工结束时间
    * @format date
    */
-  buildEnd: string;
+  buildEnd?: string;
   /** 改造类型：道路及庭院管、立管、场站和设施 */
-  buildType: OldPipeBuildVoBuildType;
+  buildType?: OldPipeBuildVoBuildType;
   /** 管网材质类型 */
-  pmaterialType: OldPipeBuildVoPmaterialType;
+  pmaterialType?: OldPipeBuildVoPmaterialType;
   /** 压力级别 */
-  volclassLevel: OldPipeBuildVoVolclassLevel;
+  volclassLevel?: OldPipeBuildVoVolclassLevel;
   /** 改造公里数 */
-  buildKilometer: number;
+  buildKilometer?: number;
   /**
    * 创建时间
    * @format date-time
    */
-  createTime: string;
+  createTime?: string;
   /**
    * 更新时间
    * @format date-time
    */
-  updateTime: string;
+  updateTime?: string;
   /** 改造施工方案 */
-  fileIds: string;
+  fileIds?: string;
   /** 创建人 */
-  createBy: string;
+  createBy?: string;
   /** 更新人 */
-  updateBy: string;
+  updateBy?: string;
   /** 改造进度（%） */
-  buildSpeed: number;
+  buildSpeed?: number;
   /** 建设单位 */
-  buildUnit: string;
+  buildUnit?: string;
   /** 建设单位联系人 */
-  buildContactsMan: string;
+  buildContactsMan?: string;
   /** 建设单位联系电话 */
-  buildContactsPhone: string;
+  buildContactsPhone?: string;
   /** 监理单位 */
-  supervisionUnit: string;
+  supervisionUnit?: string;
   /** 监理单位联系人 */
-  supervisionContactsNam: string;
+  supervisionContactsNam?: string;
   /** 监理单位联系人电话 */
-  supervisionContactsPhone: string;
+  supervisionContactsPhone?: string;
   /** 是否挂牌督办 */
-  isSupervision: boolean;
-  supervision: string;
+  isSupervision?: boolean;
+  supervision?: string;
   /** 第三方施工状态枚举中文描述 */
-  _buildState: string;
+  _buildState?: string;
   /** 行政区划id枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 组织机构id枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 改造类型：道路及庭院管、立管、场站和设施枚举中文描述 */
-  _buildType: string;
+  _buildType?: string;
   /** 管网材质类型枚举中文描述 */
-  _pmaterialType: string;
+  _pmaterialType?: string;
   /** 压力级别枚举中文描述 */
-  _volclassLevel: string;
+  _volclassLevel?: string;
 }
 
 export interface PageResultListOldPipeBuildVO {
-  code: string;
-  data: OldPipeBuildVO[];
-  message: string;
+  code?: string;
+  data?: Array<OldPipeBuildVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 /** 老旧管网改造汇总 */
@@ -6650,179 +6650,179 @@ export interface OldPipeBuildSummaryVO {
    * 老旧管网公里数
    * @format float
    */
-  total: number;
+  total?: number;
   /**
    * 改造中
    * @format float
    */
-  buildingCnt: number;
+  buildingCnt?: number;
   /**
    * 未开始
    * @format float
    */
-  noStartCnt: number;
+  noStartCnt?: number;
 }
 
 export interface ResultOldPipeBuildSummaryVO {
-  code: string;
+  code?: string;
   /** 老旧管网改造汇总 */
-  data: OldPipeBuildSummaryVO;
-  message: string;
-  success: boolean;
+  data?: OldPipeBuildSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 老旧管网改造统计 */
 export interface OldPipeBuildStatVO {
   /** 老旧管网台账总长度 */
-  total: number;
+  total?: number;
   /** 计划改造公里数 */
-  totalPlaned: number;
+  totalPlaned?: number;
   /** 改造完成公里数 */
-  totalDone: number;
+  totalDone?: number;
   /** 剩余改造公里数 */
-  totalTodo: number;
+  totalTodo?: number;
 }
 
 export interface ResultOldPipeBuildStatVO {
-  code: string;
+  code?: string;
   /** 老旧管网改造统计 */
-  data: OldPipeBuildStatVO;
-  message: string;
-  success: boolean;
+  data?: OldPipeBuildStatVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultOldPipeBuildVO {
-  code: string;
+  code?: string;
   /** 老旧管网返回列表 */
-  data: OldPipeBuildVO;
-  message: string;
-  success: boolean;
+  data?: OldPipeBuildVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface MessageContent {
   /** @format int64 */
-  id: number;
-  bizId: string;
-  title: string;
+  id?: number;
+  bizId?: string;
+  title?: string;
   /** @format date-time */
-  timestamp: string;
-  type: string;
-  content: Record<string, any>;
-  properties: Record<string, any>;
-  read: boolean;
+  timestamp?: string;
+  type?: string;
+  content?: Record<string, any>;
+  properties?: Record<string, any>;
+  read?: boolean;
 }
 
 export interface PageResultListMessageContent {
-  code: string;
-  data: MessageContent[];
-  message: string;
+  code?: string;
+  data?: Array<MessageContent>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 export interface ResultMapStringListMessageContent {
-  code: string;
-  data: Record<string, any>;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Record<string, any>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 应急演练分页查询请求 */
 export interface EmresDrillRequest {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 演练状态 */
-  drillState: EmresDrillRequestDrillState[];
+  drillState?: Array<EmresDrillRequestDrillState>;
   /**
    * 计划开展时间开始
    * @format date
    * @pattern yyyy-MM-dd
    */
-  startTime: string;
+  startTime?: string;
   /**
    * 计划开展时间结束
    * @format date
    * @pattern yyyy-MM-dd
    */
-  endTime: string;
+  endTime?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 /** 应急演练VO */
 export interface EmresDrillVO {
   /** ID */
-  uid: string;
+  uid?: string;
   /** 应急演练编号 */
-  drillCode: string;
+  drillCode?: string;
   /** 应急演练名称 */
-  drillName: string;
+  drillName?: string;
   /** 演练类型 */
-  drillType: EmresDrillVoDrillType;
+  drillType?: EmresDrillVoDrillType;
   /** 行政区划id */
-  districtId: string;
+  districtId?: string;
   /** 组织机构id */
-  orgId: string;
+  orgId?: string;
   /** 创建人 */
-  createBy: string;
+  createBy?: string;
   /**
    * 创建时间
    * @format date-time
    */
-  createTime: string;
+  createTime?: string;
   /** 更新人 */
-  updateBy: string;
+  updateBy?: string;
   /**
    * 更新时间
    * @format date-time
    */
-  updateTime: string;
+  updateTime?: string;
   /** 文件id集合 */
-  fileIds: string;
+  fileIds?: string;
   /**
    * 演练时间
    * @format date
    */
-  drillTime: string;
+  drillTime?: string;
   /** 演练状态 */
-  drillState: EmresDrillVoDrillState;
+  drillState?: EmresDrillVoDrillState;
   /** 演练类型枚举中文描述 */
-  _drillType: string;
+  _drillType?: string;
   /** 行政区划id枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 组织机构id枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 演练状态枚举中文描述 */
-  _drillState: string;
+  _drillState?: string;
 }
 
 export interface PageResultListEmresDrillVO {
-  code: string;
-  data: EmresDrillVO[];
-  message: string;
+  code?: string;
+  data?: Array<EmresDrillVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 /** 应急演练汇总VO */
@@ -6831,38 +6831,38 @@ export interface EmresDrillSummaryVO {
    * 应急演练计划总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 未开始演练计划
    * @format int64
    */
-  notStartedCnt: number;
+  notStartedCnt?: number;
   /**
    * 已完成演练计划
    * @format int64
    */
-  completedCnt: number;
+  completedCnt?: number;
   /**
    * 逾期未开展演练计划
    * @format int64
    */
-  beOverdueCnt: number;
+  beOverdueCnt?: number;
 }
 
 export interface ResultEmresDrillSummaryVO {
-  code: string;
+  code?: string;
   /** 应急演练汇总VO */
-  data: EmresDrillSummaryVO;
-  message: string;
-  success: boolean;
+  data?: EmresDrillSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultEmresDrillVO {
-  code: string;
+  code?: string;
   /** 应急演练VO */
-  data: EmresDrillVO;
-  message: string;
-  success: boolean;
+  data?: EmresDrillVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 液化气流转信息统计 */
@@ -6871,80 +6871,80 @@ export interface LngFlowStatVO {
    * 灌装站充装总数
    * @format int32
    */
-  fillingCnt: number;
+  fillingCnt?: number;
   /**
    * 实瓶运输总数
    * @format int32
    */
-  fullTransCnt: number;
+  fullTransCnt?: number;
   /**
    * 实瓶运输车辆总数
    * @format int32
    */
-  fullTransVehicleCnt: number;
+  fullTransVehicleCnt?: number;
   /**
    * 供应站实瓶存放总数
    * @format int32
    */
-  fullSupplyCnt: number;
+  fullSupplyCnt?: number;
   /**
    * 实瓶供应站总数
    * @format int32
    */
-  fullSupplyStnCnt: number;
+  fullSupplyStnCnt?: number;
   /**
    * 实瓶配送总数
    * @format int32
    */
-  deliveryCnt: number;
+  deliveryCnt?: number;
   /**
    * 实瓶配送工总数
    * @format int32
    */
-  deliveryStaffCnt: number;
+  deliveryStaffCnt?: number;
   /**
    * 交付气瓶总数
    * @format int32
    */
-  usageCnt: number;
+  usageCnt?: number;
   /**
    * 空瓶回收总数
    * @format int32
    */
-  recycleCnt: number;
+  recycleCnt?: number;
   /**
    * 空瓶回收配送工总数
    * @format int32
    */
-  recycleStaffCnt: number;
+  recycleStaffCnt?: number;
   /**
    * 供应站空瓶存放总数
    * @format int32
    */
-  emptySupplyCnt: number;
+  emptySupplyCnt?: number;
   /**
    * 空瓶供应站总数
    * @format int32
    */
-  emptySupplyStnCnt: number;
+  emptySupplyStnCnt?: number;
   /**
    * 空瓶运输总数
    * @format int32
    */
-  emptyTransCnt: number;
+  emptyTransCnt?: number;
   /**
    * 空瓶运输车辆总数
    * @format int32
    */
-  emptyTransVehicleCnt: number;
+  emptyTransVehicleCnt?: number;
 }
 
 export interface ResultLngFlowStatVO {
-  code: string;
+  code?: string;
   /** 液化气流转信息统计 */
-  data: LngFlowStatVO;
-  message: string;
-  success: boolean;
+  data?: LngFlowStatVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 液化气流转异常统计 */
@@ -6953,35 +6953,35 @@ export interface LngFlowAlarmStatVO {
    * 充装异常个数
    * @format int32
    */
-  fillingCnt: number;
+  fillingCnt?: number;
   /**
    * 运输异常个数
    * @format int32
    */
-  transportCnt: number;
+  transportCnt?: number;
   /**
    * 供应异常个数
    * @format int32
    */
-  supplyCnt: number;
+  supplyCnt?: number;
   /**
    * 配送异常个数
    * @format int32
    */
-  deliveryCnt: number;
+  deliveryCnt?: number;
   /**
    * 使用异常个数
    * @format int32
    */
-  usageCnt: number;
+  usageCnt?: number;
 }
 
 export interface ResultLngFlowAlarmStatVO {
-  code: string;
+  code?: string;
   /** 液化气流转异常统计 */
-  data: LngFlowAlarmStatVO;
-  message: string;
-  success: boolean;
+  data?: LngFlowAlarmStatVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 气瓶流转异常,5 */
@@ -6990,109 +6990,109 @@ export interface LngAlarmStatItemVO {
    * 异常总个数
    * @format int32
    */
-  total: number;
+  total?: number;
   /**
    * 已处理个数
    * @format int32
    */
-  doneCnt: number;
+  doneCnt?: number;
   /**
    * 未处理个数
    * @format int32
    */
-  todoCnt: number;
+  todoCnt?: number;
 }
 
 /** 液化气异常统计 */
 export interface LngAlarmStatVO {
   /** @format int32 */
-  total: number;
+  total?: number;
   /** 气瓶流转异常,5 */
-  checkTimeout: LngAlarmStatItemVO;
+  checkTimeout?: LngAlarmStatItemVO;
   /** 气瓶流转异常,5 */
-  useAlarm: LngAlarmStatItemVO;
+  useAlarm?: LngAlarmStatItemVO;
   /** 气瓶流转异常,5 */
-  certTimeout: LngAlarmStatItemVO;
+  certTimeout?: LngAlarmStatItemVO;
   /** 气瓶流转异常,5 */
-  muchStorage: LngAlarmStatItemVO;
+  muchStorage?: LngAlarmStatItemVO;
   /** 气瓶流转异常,5 */
-  flowAlarm: LngAlarmStatItemVO;
+  flowAlarm?: LngAlarmStatItemVO;
 }
 
 export interface ResultLngAlarmStatVO {
-  code: string;
+  code?: string;
   /** 液化气异常统计 */
-  data: LngAlarmStatVO;
-  message: string;
-  success: boolean;
+  data?: LngAlarmStatVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface OverallItemVO {
-  label: string;
-  summary: number;
+  label?: string;
+  summary?: number;
   /** @format int32 */
-  count: number;
-  proportion: string;
+  count?: number;
+  proportion?: string;
 }
 
 export interface ResultListOverallItemVO {
-  code: string;
-  data: OverallItemVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<OverallItemVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 气瓶异常趋势 */
 export interface LngAlarmTrendVO {
   /** 时间 */
-  time: string;
+  time?: string;
   /**
    * 新增异常总数
    * @format int32
    */
-  total: number;
+  total?: number;
 }
 
 export interface ResultListLngAlarmTrendVO {
-  code: string;
-  data: LngAlarmTrendVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<LngAlarmTrendVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 企业气瓶异常统计 */
 export interface LngEntAlarmStatVO {
   /** 燃气企业 */
-  enterprise: string;
+  enterprise?: string;
   /**
    * 异常总个数
    * @format int32
    */
-  total: number;
+  total?: number;
   /**
    * 已处理个数
    * @format int32
    */
-  doneCnt: number;
+  doneCnt?: number;
   /**
    * 未处理个数
    * @format int32
    */
-  todoCnt: number;
+  todoCnt?: number;
 }
 
 export interface ResultListLngEntAlarmStatVO {
-  code: string;
-  data: LngEntAlarmStatVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<LngEntAlarmStatVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 液化气异常列表 */
 export interface LngAlarmPageSumVO {
   /** 气瓶流转异常,5 */
-  sum: LngAlarmStatItemVO;
-  records: LngAlarmPageVO[];
+  sum?: LngAlarmStatItemVO;
+  records?: Array<LngAlarmPageVO>;
 }
 
 /** 液化气异常列表 */
@@ -7101,128 +7101,128 @@ export interface LngAlarmPageVO {
    * 异常时间
    * @format date-time
    */
-  alarmTime: string;
+  alarmTime?: string;
   /** 异常类型 */
-  alarmType: string;
+  alarmType?: string;
   /** 异常级别 */
-  alarmLevel: string;
+  alarmLevel?: string;
   /** 违规者 */
-  violatorName: string;
+  violatorName?: string;
   /** 行政区划 */
-  districtId: string;
+  districtId?: string;
   /** 燃气企业 */
-  orgId: string;
+  orgId?: string;
   /** 处理状态,0未处理,1已处理 */
-  processState: string;
+  processState?: string;
   /** 报警id */
-  alarmId: string;
+  alarmId?: string;
   /** 行政区划枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 燃气企业枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 export interface ResultLngAlarmPageSumVO {
-  code: string;
+  code?: string;
   /** 液化气异常列表 */
-  data: LngAlarmPageSumVO;
-  message: string;
-  success: boolean;
+  data?: LngAlarmPageSumVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface HidangerUrgeHisVO {
   /** @format date-time */
-  sendTime: string;
-  sender: string;
-  deptName: string;
-  role: string;
-  name: string;
-  phone: string;
-  smsContent: string;
+  sendTime?: string;
+  sender?: string;
+  deptName?: string;
+  role?: string;
+  name?: string;
+  phone?: string;
+  smsContent?: string;
 }
 
 export interface ResultListHidangerUrgeHisVO {
-  code: string;
-  data: HidangerUrgeHisVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<HidangerUrgeHisVO>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface DictionaryItem {
-  pid: string;
-  id: string;
-  label: string;
-  value: string;
+  pid?: string;
+  id?: string;
+  label?: string;
+  value?: string;
   /** @format int32 */
-  order: number;
-  desc: string;
-  hasChildren: boolean;
-  notes1: string;
-  notes2: string;
-  systemFlag: string;
-  text: string;
+  order?: number;
+  desc?: string;
+  hasChildren?: boolean;
+  notes1?: string;
+  notes2?: string;
+  systemFlag?: string;
+  text?: string;
 }
 
 export interface ResultListDictionaryItem {
-  code: string;
-  data: DictionaryItem[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<DictionaryItem>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 隐患统计视图请求 */
 export interface RiskStatisticsQuery {
   /** 是否根据所属企业汇总 */
-  isGroupByOrg: boolean;
+  isGroupByOrg?: boolean;
   /** 隐患第一级类型 */
-  subjectType: string[];
+  subjectType?: Array<string> | string;
   /** 隐患级别 */
-  level: string[];
+  level?: Array<string> | string;
   /** 日期类型 */
-  dateType: string;
+  dateType?: string;
   /** 日期详情 */
-  dateDetail: string;
+  dateDetail?: string;
   /** 所属组织机构id */
-  orgId: string[];
+  orgId?: Array<string> | string;
   /** 行政区划id */
-  districtId: string[];
+  districtId?: Array<string> | string;
   /** 所属组织机构id枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 行政区划id枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface ResultListRiskStatisticsVO {
-  code: string;
-  data: RiskStatisticsVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<RiskStatisticsVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 隐患统计视图返回 */
 export interface RiskStatisticsVO {
   /** 隐患第一级类型 */
-  subjectType: string;
+  subjectType?: string;
   /** 所属组织机构 */
-  orgId: string;
+  orgId?: string;
   /** 风险要素等级 */
-  level: RiskStatisticsVoLevel;
+  level?: RiskStatisticsVoLevel;
   /** 风险要素状态 */
-  state: RiskStatisticsVoState;
+  state?: RiskStatisticsVoState;
   /** 隐患来源 */
-  dangerSource: RiskStatisticsVoDangerSource;
+  dangerSource?: RiskStatisticsVoDangerSource;
   /** 日期详情 */
-  dateDetail: string;
+  dateDetail?: string;
   /** @format int64 */
-  ctotal: number;
+  ctotal?: number;
   /** 所属组织机构枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 风险要素等级枚举中文描述 */
-  _level: string;
+  _level?: string;
   /** 风险要素状态枚举中文描述 */
-  _state: string;
+  _state?: string;
   /** 隐患来源枚举中文描述 */
-  _dangerSource: string;
+  _dangerSource?: string;
 }
 
 /** 组织机构各维度隐患统计 */
@@ -7231,599 +7231,599 @@ export interface OrgHidangerTypeSummaryDTO {
    * 总数
    * @format int32
    */
-  total: number;
+  total?: number;
   /**
    * 待整改
    * @format int32
    */
-  waitHandle: number;
+  waitHandle?: number;
   /**
    * 待消除
    * @format int32
    */
-  waitAudit: number;
+  waitAudit?: number;
   /**
    * 重大隐患个数
    * @format int32
    */
-  zd: number;
+  zd?: number;
   /**
    * 督办个数
    * @format int32
    */
-  db: number;
+  db?: number;
   /**
    * 企业上报个数
    * @format int32
    */
-  org: number;
+  org?: number;
   /**
    * 政府检查个数
    * @format int32
    */
-  gov: number;
+  gov?: number;
   /**
    * 系统辨识个数
    * @format int32
    */
-  sys: number;
+  sys?: number;
   /** 企业上报个数枚举中文描述 */
-  _org: string;
+  _org?: string;
 }
 
 export interface ResultOrgHidangerTypeSummaryDTO {
-  code: string;
+  code?: string;
   /** 组织机构各维度隐患统计 */
-  data: OrgHidangerTypeSummaryDTO;
-  message: string;
-  success: boolean;
+  data?: OrgHidangerTypeSummaryDTO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface HidangerOrgPageQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 检查计划编号.小程序创建隐患整改单时专用.其他请勿使用 */
-  planCode: string;
+  planCode?: string;
   /** 小程序创建隐患整改单时专用.其他请勿使用 */
-  canSendHandleOrder: boolean;
+  canSendHandleOrder?: boolean;
   /** 隐患主体 */
-  subjectType: string[];
+  subjectType?: Array<string> | string;
   /** 风险要素类别 */
-  dangerType: string[];
+  dangerType?: Array<string> | string;
   /** 风险要素子类别 */
-  dangerSubType: string[];
+  dangerSubType?: Array<string> | string;
   /** 隐患级别 */
-  level: HidangerOrgPageQueryLevel[];
+  level?: Array<HidangerOrgPageQueryLevel>;
   /** 隐患状态 */
-  state: HidangerOrgPageQueryState[];
+  state?: Array<HidangerOrgPageQueryState>;
   /** 隐患来源 */
-  dangerSource: HidangerOrgPageQueryDangerSource[];
+  dangerSource?: Array<HidangerOrgPageQueryDangerSource>;
   /** 是否督办 */
-  superviseState: boolean;
+  superviseState?: boolean;
   /** 是否同步至省平台 */
-  reportState: boolean;
+  reportState?: boolean;
   /**
    * 隐患检查日期-开始
    * @format date
    */
-  startTime: string;
+  startTime?: string;
   /**
    * 隐患检查日期-结束
    * @format date
    */
-  endTime: string;
-  queryOrder: string;
+  endTime?: string;
+  queryOrder?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 /** 企业隐患管理-分页 */
 export interface HidangerOrgPageVO {
   /** 数据主键 */
-  uid: string;
+  uid?: string;
   /** 隐患主体类型 */
-  subjectType: HidangerOrgPageVoSubjectType;
+  subjectType?: HidangerOrgPageVoSubjectType;
   /** 隐患类别 */
-  dangerType: string;
+  dangerType?: string;
   /** 风险要素子类型 */
-  dangerSubtype: string;
+  dangerSubtype?: string;
   /** 风险要素等级 */
-  level: HidangerOrgPageVoLevel;
+  level?: HidangerOrgPageVoLevel;
   /** 隐患描述 */
-  remark: string;
+  remark?: string;
   /** 风险要素状态 */
-  state: HidangerOrgPageVoState;
+  state?: HidangerOrgPageVoState;
   /** 隐患来源 */
-  dangerSource: HidangerOrgPageVoDangerSource;
+  dangerSource?: HidangerOrgPageVoDangerSource;
   /**
    * 排查日期
    * @format date
    */
-  checkDate: string;
+  checkDate?: string;
   /**
    * 整改完成日期
    * @format date
    */
-  completionDate: string;
+  completionDate?: string;
   /** 隐患督办状态 */
-  superviseState: string;
+  superviseState?: string;
   /** 省平台同步状态 */
-  reportState: string;
+  reportState?: string;
   /** 排查人 */
-  checkBy: string;
+  checkBy?: string;
   /**
    * 隐患推送时间
    * @format date-time
    */
-  pushTime: string;
+  pushTime?: string;
   /**
    * 隐患整改期限
    * @format date
    */
-  deadline: string;
+  deadline?: string;
   /** 行政区划 */
-  districtId: string;
+  districtId?: string;
   /** 组织机构 */
-  orgId: string;
+  orgId?: string;
   /** 地址 */
-  address: string;
+  address?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /** 隐患时长 */
-  dangerDuration: string;
+  dangerDuration?: string;
   /** 检查计划编号 */
-  planCode: string;
+  planCode?: string;
   /** 整改单编号 */
-  orderCode: string;
-  ago: string;
+  orderCode?: string;
+  ago?: string;
   /** 隐患主体类型枚举中文描述 */
-  _subjectType: string;
+  _subjectType?: string;
   /** 风险要素等级枚举中文描述 */
-  _level: string;
+  _level?: string;
   /** 风险要素状态枚举中文描述 */
-  _state: string;
+  _state?: string;
   /** 隐患来源枚举中文描述 */
-  _dangerSource: string;
+  _dangerSource?: string;
   /** 行政区划枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 组织机构枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 export interface PageResultListHidangerOrgPageVO {
-  code: string;
-  data: HidangerOrgPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<HidangerOrgPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 export interface BsHidangerPageQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 隐患第一类 */
-  l1: string;
+  l1?: string;
   /** 隐患第二类 */
-  l2: string;
+  l2?: string;
   /** 隐患第三类 */
-  l3: string;
+  l3?: string;
   /** 隐患第四类 */
-  l4: string;
+  l4?: string;
   /** 隐患目标名称 */
-  targetName: string;
+  targetName?: string;
   /** 隐患目标类型 */
-  targetType: string;
+  targetType?: string;
   /** 隐患状态 */
-  dangerState: string;
+  dangerState?: string;
   /** 隐患级别 */
-  dangerLevel: string;
+  dangerLevel?: string;
   /** 隐患来源 */
-  dangerSource: string[];
+  dangerSource?: Array<string> | string;
   /** 隐患地址 */
-  address: string;
+  address?: string;
   /** @format date-time */
-  startTime: string;
+  startTime?: string;
   /** @format date-time */
-  endTime: string;
+  endTime?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface BsHidangerPageVO {
   /** 隐患uid */
-  uid: string;
+  uid?: string;
   /** 隐患id */
-  dangerId: string;
+  dangerId?: string;
   /** 行政区划id */
-  districtId: string;
+  districtId?: string;
   /** 隐患一级分类 */
-  l1: string;
+  l1?: string;
   /** 隐患二级分类 */
-  l2: string;
+  l2?: string;
   /** 隐患三级分类 */
-  l3: string;
+  l3?: string;
   /** 隐患四级分类 */
-  l4: string;
+  l4?: string;
   /** 隐患描述 */
-  description: string;
+  description?: string;
   /** 风险要素等级 */
-  dangerLevel: BsHidangerPageVoDangerLevel;
+  dangerLevel?: BsHidangerPageVoDangerLevel;
   /** 隐患地址 */
-  address: string;
+  address?: string;
   /** 风险要素状态 */
-  dangerState: BsHidangerPageVoDangerState;
+  dangerState?: BsHidangerPageVoDangerState;
   /** 隐患来源 */
-  dangerSource: BsHidangerPageVoDangerSource;
+  dangerSource?: BsHidangerPageVoDangerSource;
   /** 相关企业名称 */
-  targetName: string;
+  targetName?: string;
   /** 相关企业类型 */
-  targetType: string;
+  targetType?: string;
   /**
    * 隐患排查时间
    * @format date-time
    */
-  checkTime: string;
+  checkTime?: string;
   /**
    * 隐患催办次数
    * @format int32
    */
-  urgeCount: number;
+  urgeCount?: number;
   /** @format double */
-  longitude: number;
+  longitude?: number;
   /** @format double */
-  latitude: number;
+  latitude?: number;
   /** 行政区划id枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 风险要素等级枚举中文描述 */
-  _dangerLevel: string;
+  _dangerLevel?: string;
   /** 风险要素状态枚举中文描述 */
-  _dangerState: string;
+  _dangerState?: string;
   /** 隐患来源枚举中文描述 */
-  _dangerSource: string;
+  _dangerSource?: string;
 }
 
 export interface PageResultListBsHidangerPageVO {
-  code: string;
-  data: BsHidangerPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<BsHidangerPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 /** 企业隐患管理-分页 */
 export interface CheckPlanRelDangerVO {
   /** 数据主键 */
-  uid: string;
+  uid?: string;
   /** 隐患主体类型 */
-  subjectType: string;
+  subjectType?: string;
   /** 隐患类别 */
-  dangerType: string;
+  dangerType?: string;
   /** 风险要素子类型 */
-  dangerSubtype: string;
+  dangerSubtype?: string;
   /** 风险要素等级 */
-  level: CheckPlanRelDangerVoLevel;
+  level?: CheckPlanRelDangerVoLevel;
   /** 隐患描述 */
-  remark: string;
+  remark?: string;
   /** 风险要素状态 */
-  state: CheckPlanRelDangerVoState;
+  state?: CheckPlanRelDangerVoState;
   /** 隐患来源 */
-  dangerSource: CheckPlanRelDangerVoDangerSource;
+  dangerSource?: CheckPlanRelDangerVoDangerSource;
   /**
    * 排查日期
    * @format date
    */
-  checkDate: string;
+  checkDate?: string;
   /** 排查人 */
-  checkBy: string;
+  checkBy?: string;
   /** 地址 */
-  address: string;
+  address?: string;
   /**
    * 经度
    * @format double
    */
-  longitude: number;
+  longitude?: number;
   /**
    * 纬度
    * @format double
    */
-  latitude: number;
+  latitude?: number;
   /** 行政区划 */
-  districtId: string;
+  districtId?: string;
   /** 组织机构 */
-  orgId: string;
+  orgId?: string;
   /** 风险要素等级枚举中文描述 */
-  _level: string;
+  _level?: string;
   /** 风险要素状态枚举中文描述 */
-  _state: string;
+  _state?: string;
   /** 隐患来源枚举中文描述 */
-  _dangerSource: string;
+  _dangerSource?: string;
   /** 行政区划枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 组织机构枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 export interface ResultListCheckPlanRelDangerVO {
-  code: string;
-  data: CheckPlanRelDangerVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<CheckPlanRelDangerVO>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface HidangerCheckPlanDetailVO {
   /** 安全检查计划UID */
-  uid: string;
+  uid?: string;
   /** 安全检查计划类型 */
-  type: HidangerCheckPlanDetailVoType;
+  type?: HidangerCheckPlanDetailVoType;
   /** 安全检查形式 */
-  mode: HidangerCheckPlanDetailVoMode;
+  mode?: HidangerCheckPlanDetailVoMode;
   /** 标题 */
-  title: string;
+  title?: string;
   /** 安全检查编号 */
-  code: string;
+  code?: string;
   /**
    * 计划时间开始
    * @format date
    */
-  startDate: string;
+  startDate?: string;
   /**
    * 计划时间结束
    * @format date
    */
-  endDate: string;
+  endDate?: string;
   /** 目标检查企业 */
-  targetOrgId: string;
+  targetOrgId?: string;
   /** 目标检查企业负责人 */
-  targetOrgOwner: string;
+  targetOrgOwner?: string;
   /** 目标检查企业联系方式 */
-  targetOrgPhone: string;
+  targetOrgPhone?: string;
   /** 目标检查企业地址 */
-  targetOrgAddr: string;
+  targetOrgAddr?: string;
   /** 主管部门 */
-  masterOrgId: string;
+  masterOrgId?: string;
   /** 检查人员 */
-  checkers: string;
+  checkers?: string;
   /** 安全检查计划状态 */
-  handleState: HidangerCheckPlanDetailVoHandleState;
+  handleState?: HidangerCheckPlanDetailVoHandleState;
   /** 整改单列表 */
-  handleOrders: HidangerHandleOrderDTO[];
+  handleOrders?: Array<HidangerHandleOrderDTO>;
   /** 安全检查计划类型枚举中文描述 */
-  _type: string;
+  _type?: string;
   /** 安全检查形式枚举中文描述 */
-  _mode: string;
+  _mode?: string;
   /** 安全检查计划状态枚举中文描述 */
-  _handleState: string;
+  _handleState?: string;
 }
 
 /** 整改单列表 */
 export interface HidangerHandleOrderDTO {
   /** 主键 */
-  uid: string;
+  uid?: string;
   /** 安全检查计划编号 */
-  planCode: string;
+  planCode?: string;
   /** 整改单编号 */
-  orderCode: string;
+  orderCode?: string;
   /**
    * 整改单日期
    * @format date
    */
-  orderDate: string;
+  orderDate?: string;
   /**
    * 整改单完成期限
    * @format date
    */
-  deadline: string;
+  deadline?: string;
   /** 主管单位 */
-  masterOrgId: string;
+  masterOrgId?: string;
   /** 目标企业 */
-  targetOrgId: string;
+  targetOrgId?: string;
   /** 目标检查企业负责人 */
-  targetOrgOwner: string;
+  targetOrgOwner?: string;
   /** 目标检查企业联系方式 */
-  targetOrgPhone: string;
+  targetOrgPhone?: string;
   /** 目标检查企业地址 */
-  targetOrgAddr: string;
+  targetOrgAddr?: string;
   /** 专家意见 */
-  expertOpinion: string;
+  expertOpinion?: string;
   /** 企业负责人签名 */
-  targetOrgMasterSign: string[];
+  targetOrgMasterSign?: Array<string> | string;
   /** 专家签名 */
-  expertSign: string[];
+  expertSign?: Array<string> | string;
 }
 
 export interface ResultHidangerCheckPlanDetailVO {
-  code: string;
-  data: HidangerCheckPlanDetailVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: HidangerCheckPlanDetailVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface HiDangerCheckPlanSummaryVO {
-  list: HiDangerPlanSummaryItemDTO[];
+  list?: Array<HiDangerPlanSummaryItemDTO>;
 }
 
 export interface HiDangerPlanSummaryItemDTO {
-  type: string;
+  type?: string;
   /** @format int32 */
-  count: number;
+  count?: number;
 }
 
 export interface ResultHiDangerCheckPlanSummaryVO {
-  code: string;
-  data: HiDangerCheckPlanSummaryVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: HiDangerCheckPlanSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface HiDangerCheckPlanSelectionsDTO {
   /** 安全检查计划编号 */
-  value: string;
+  value?: string;
   /** 安全检查计划ID */
-  label: string;
+  label?: string;
 }
 
 export interface ResultListHiDangerCheckPlanSelectionsDTO {
-  code: string;
-  data: HiDangerCheckPlanSelectionsDTO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<HiDangerCheckPlanSelectionsDTO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 安全检查分页查询 */
 export interface HiDangerCheckPageQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 终端用户监管 */
-  endUser: boolean;
+  endUser?: boolean;
   /** 管道气监管 */
-  pipeline: boolean;
+  pipeline?: boolean;
   /** 安全检查计划类型 */
-  type: string[];
+  type?: Array<string> | string;
   /** 安全检查形式 */
-  mode: HiDangerCheckPageQueryMode;
+  mode?: HiDangerCheckPageQueryMode;
   /** 正文 */
-  title: string;
+  title?: string;
   /**
    * 开始日期
    * @format date
    */
-  startTime: string;
+  startTime?: string;
   /**
    * 结束日期
    * @format date
    */
-  endTime: string;
-  queryOrder: string;
+  endTime?: string;
+  queryOrder?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 安全检查形式枚举中文描述 */
-  _mode: string;
+  _mode?: string;
 }
 
 /** 安全检查-分页VO */
 export interface HiDangerCheckPageVO {
   /** 数据主键 */
-  uid: string;
+  uid?: string;
   /** 安全检查计划类型 */
-  type: HiDangerCheckPageVoType;
+  type?: HiDangerCheckPageVoType;
   /** 安全检查形式 */
-  mode: HiDangerCheckPageVoMode;
+  mode?: HiDangerCheckPageVoMode;
   /** 检查编号 */
-  planCode: string;
+  planCode?: string;
   /** 检查标题 */
-  title: string;
+  title?: string;
   /**
    * 开始日期
    * @format date
    */
-  startDate: string;
+  startDate?: string;
   /**
    * 结束日期
    * @format date
    */
-  endDate: string;
+  endDate?: string;
   /** 抽查企业 */
-  masterOrgId: string;
+  masterOrgId?: string;
   /** 安全检查计划状态 */
-  handleState: HiDangerCheckPageVoHandleState;
+  handleState?: HiDangerCheckPageVoHandleState;
   /** 检查小组 */
-  checkers: string;
+  checkers?: string;
   /** 计划创建人 */
-  planCreator: string;
+  planCreator?: string;
   /** 安全检查计划类型枚举中文描述 */
-  _type: string;
+  _type?: string;
   /** 安全检查形式枚举中文描述 */
-  _mode: string;
+  _mode?: string;
   /** 安全检查计划状态枚举中文描述 */
-  _handleState: string;
+  _handleState?: string;
 }
 
 export interface PageResultListHiDangerCheckPageVO {
-  code: string;
-  data: HiDangerCheckPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<HiDangerCheckPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 export interface CheckPlanInfoVO {
   /** 目标检查企业id */
-  targetOrgId: string;
+  targetOrgId?: string;
   /** 目标检查企业负责人 */
-  targetOrgOwner: string;
+  targetOrgOwner?: string;
   /** 目标检查企业联系方式 */
-  targetOrgPhone: string;
+  targetOrgPhone?: string;
   /** 目标检查企业地址 */
-  targetOrgAddr: string;
+  targetOrgAddr?: string;
 }
 
 export interface ResultCheckPlanInfoVO {
-  code: string;
-  data: CheckPlanInfoVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: CheckPlanInfoVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface CheckPlanEndUserSummaryVO {
@@ -7831,129 +7831,129 @@ export interface CheckPlanEndUserSummaryVO {
    * 户内天然气计划数量
    * @format int32
    */
-  indoorNgCount: number;
+  indoorNgCount?: number;
   /**
    * 配送及使用计划数量
    * @format int32
    */
-  lgTransportCount: number;
+  lgTransportCount?: number;
   /**
    * 关联隐患数量
    * @format int32
    */
-  dangerCount: number;
+  dangerCount?: number;
 }
 
 export interface ResultCheckPlanEndUserSummaryVO {
-  code: string;
-  data: CheckPlanEndUserSummaryVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: CheckPlanEndUserSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface HidangerGisVO {
   /** 数据主键 */
-  uid: string;
+  uid?: string;
   /** 隐患主体类型 */
-  subjectType: string;
+  subjectType?: string;
   /** 隐患类别 */
-  dangerType: string;
+  dangerType?: string;
   /** 风险要素子类型 */
-  dangerSubtype: string;
+  dangerSubtype?: string;
   /** 风险要素等级 */
-  level: HidangerGisVoLevel;
+  level?: HidangerGisVoLevel;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /** 风险要素等级枚举中文描述 */
-  _level: string;
+  _level?: string;
 }
 
 export interface ResultListHidangerGisVO {
-  code: string;
-  data: HidangerGisVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<HidangerGisVO>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface HidangerFlowDTO {
   /** 标题 */
-  title: string;
+  title?: string;
   /** 处置流程阶段 */
-  stage: HidangerFlowDtoStage;
+  stage?: HidangerFlowDtoStage;
   /** 阶段主键 */
-  stageId: string;
+  stageId?: string;
   /**
    * 阶段时间
    * @format date-time
    */
-  stageTime: string;
+  stageTime?: string;
   /** 操作人 */
-  operator: string;
+  operator?: string;
   /** 操作人所属组织id */
-  operatorOrgId: string;
+  operatorOrgId?: string;
   /** 操作人所属组织名称 */
-  operatorOrgName: string;
+  operatorOrgName?: string;
   /** 图片id列表 */
-  picIds: FileObj[];
+  picIds?: Array<FileObj>;
   /** 附件id列表 */
-  fileIds: FileObj[];
+  fileIds?: Array<FileObj>;
   /** 评论列表 */
-  commentList: LeaderCommentDTO[];
-  content: object;
+  commentList?: Array<LeaderCommentDTO>;
+  content?: any;
   /** 处置流程阶段枚举中文描述 */
-  _stage: string;
+  _stage?: string;
 }
 
 export interface HidnagerFlowVO {
-  dangerId: string;
+  dangerId?: string;
   /** 隐患来源 */
-  dangerSource: HidnagerFlowVoDangerSource;
+  dangerSource?: HidnagerFlowVoDangerSource;
   /** 风险要素等级 */
-  level: HidnagerFlowVoLevel;
+  level?: HidnagerFlowVoLevel;
   /** 风险要素状态 */
-  state: HidnagerFlowVoState;
-  flow: HidangerFlowDTO[];
+  state?: HidnagerFlowVoState;
+  flow?: Array<HidangerFlowDTO>;
   /** 隐患来源枚举中文描述 */
-  _dangerSource: string;
+  _dangerSource?: string;
   /** 风险要素等级枚举中文描述 */
-  _level: string;
+  _level?: string;
   /** 风险要素状态枚举中文描述 */
-  _state: string;
+  _state?: string;
 }
 
 /** 评论列表 */
 export interface LeaderCommentDTO {
-  uid: string;
-  fid: string;
+  uid?: string;
+  fid?: string;
   /** @format date-time */
-  commentTime: string;
-  leaderName: string;
-  leaderOrgName: string;
-  leaderComment: string;
-  children: LeaderCommentDTO[];
+  commentTime?: string;
+  leaderName?: string;
+  leaderOrgName?: string;
+  leaderComment?: string;
+  children?: Array<LeaderCommentDTO>;
 }
 
 export interface ResultHidnagerFlowVO {
-  code: string;
-  data: HidnagerFlowVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: HidnagerFlowVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 风险要素-汇总vo */
 export interface HidangerFactorsSummaryVO {
   /** 汇总统计列表 */
-  list: SummaryItem[];
+  list?: Array<SummaryItem>;
 }
 
 export interface ResultHidangerFactorsSummaryVO {
-  code: string;
+  code?: string;
   /** 风险要素-汇总vo */
-  data: HidangerFactorsSummaryVO;
-  message: string;
-  success: boolean;
+  data?: HidangerFactorsSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 汇总统计列表 */
@@ -7962,204 +7962,204 @@ export interface SummaryItem {
    * 数量
    * @format int32
    */
-  count: number;
+  count?: number;
   /** 长度,单位KM */
-  length: number;
+  length?: number;
   /** 类型 */
-  type: string;
+  type?: string;
   /** 类型编码 */
-  code: string;
-  params: Record<string, any>;
+  code?: string;
+  params?: Record<string, any>;
 }
 
 export interface HidangerFactorsSummaryPageQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 燃气管网风险要素类型 */
-  dangerType: HidangerFactorsSummaryPageQueryDangerType;
+  dangerType?: HidangerFactorsSummaryPageQueryDangerType;
   /** 风险要素子类型 */
-  dangerSubType: HidangerFactorsSummaryPageQueryDangerSubType;
+  dangerSubType?: HidangerFactorsSummaryPageQueryDangerSubType;
   /** 管道材质 */
-  material: HidangerFactorsSummaryPageQueryMaterial;
+  material?: HidangerFactorsSummaryPageQueryMaterial;
   /**
    * 管道服役年限,左闭右开
    * @uniqueItems true
    * @example "0-10,10-15,15-20,20-25,25-30,30-999"
    */
-  years: string[];
+  years?: Array<string> | string;
   /** 压力级别 */
-  pressureLevels: HidangerFactorsSummaryPageQueryPressureLevels[];
-  dangerTypeStr: string;
-  materialStr: string;
-  pressureLevelCodes: string[];
-  dangerSubTypeStr: string;
+  pressureLevels?: Array<HidangerFactorsSummaryPageQueryPressureLevels>;
+  dangerTypeStr?: string;
+  materialStr?: string;
+  pressureLevelCodes?: Array<string> | string;
+  dangerSubTypeStr?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 燃气管网风险要素类型枚举中文描述 */
-  _dangerType: string;
+  _dangerType?: string;
   /** 风险要素子类型枚举中文描述 */
-  _dangerSubType: string;
+  _dangerSubType?: string;
   /** 管道材质枚举中文描述 */
-  _material: string;
+  _material?: string;
 }
 
 /** 风险要素-分页 */
 export interface HidangerFactorsPageVO {
   /** 数据主键 */
-  uid: string;
+  uid?: string;
   /** 管道id */
-  pipelineId: string;
+  pipelineId?: string;
   /** 行政区划 */
-  districtId: string;
+  districtId?: string;
   /** 组织机构 */
-  orgId: string;
+  orgId?: string;
   /** 地址 */
-  address: string;
+  address?: string;
   /** 风险要素等级 */
-  level: HidangerFactorsPageVoLevel;
+  level?: HidangerFactorsPageVoLevel;
   /** 燃气管网风险要素类型 */
-  dangerType: HidangerFactorsPageVoDangerType;
+  dangerType?: HidangerFactorsPageVoDangerType;
   /** 风险要素子类型 */
-  dangerSubtype: HidangerFactorsPageVoDangerSubtype;
+  dangerSubtype?: HidangerFactorsPageVoDangerSubtype;
   /** 管道材质 */
-  material: HidangerFactorsPageVoMaterial;
+  material?: HidangerFactorsPageVoMaterial;
   /**
    * 管道服役年限
    * @format int32
    */
-  years: number;
+  years?: number;
   /** 压力级别 */
-  pressureLevel: HidangerFactorsPageVoPressureLevel;
+  pressureLevel?: HidangerFactorsPageVoPressureLevel;
   /**
    * 管道长度
    * @format double
    */
-  length: number;
+  length?: number;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /** 实际值 */
-  realValue: string;
+  realValue?: string;
   /** 标准值 */
-  standardValue: string;
+  standardValue?: string;
   /** 行政区划枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 组织机构枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 风险要素等级枚举中文描述 */
-  _level: string;
+  _level?: string;
   /** 燃气管网风险要素类型枚举中文描述 */
-  _dangerType: string;
+  _dangerType?: string;
   /** 风险要素子类型枚举中文描述 */
-  _dangerSubtype: string;
+  _dangerSubtype?: string;
   /** 管道材质枚举中文描述 */
-  _material: string;
+  _material?: string;
   /** 压力级别枚举中文描述 */
-  _pressureLevel: string;
+  _pressureLevel?: string;
 }
 
 export interface PageResultListHidangerFactorsPageVO {
-  code: string;
-  data: HidangerFactorsPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<HidangerFactorsPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 /** 风险要素-汇总分页vo */
 export interface HidangerFactorsSummaryPageVO {
-  uid: string;
+  uid?: string;
   /** 管道id */
-  pipelineId: string;
+  pipelineId?: string;
   /** 行政区划 */
-  districtId: string;
+  districtId?: string;
   /** 组织机构 */
-  orgId: string;
+  orgId?: string;
   /** 地址 */
-  address: string;
+  address?: string;
   /** 管道材质 */
-  material: HidangerFactorsSummaryPageVoMaterial;
+  material?: HidangerFactorsSummaryPageVoMaterial;
   /**
    * 管道服役年限
    * @format int32
    */
-  years: number;
+  years?: number;
   /** 压力级别 */
-  pressureLevel: HidangerFactorsSummaryPageVoPressureLevel;
+  pressureLevel?: HidangerFactorsSummaryPageVoPressureLevel;
   /**
    * 管道长度
    * @format double
    */
-  length: number;
+  length?: number;
   /**
    * 管网老化数量
    * @format int32
    */
-  gwlh: number;
+  gwlh?: number;
   /**
    * 间距不足数量
    * @format int32
    */
-  jjbz: number;
+  jjbz?: number;
   /**
    * 埋深不足数量
    * @format int32
    */
-  msbz: number;
+  msbz?: number;
   /**
    * 管道穿越数量
    * @format int32
    */
-  jccy: number;
-  riskTypesStr: string;
-  riskTypes: PairRiskDangerTypeInteger[];
+  jccy?: number;
+  riskTypesStr?: string;
+  riskTypes?: Array<PairRiskDangerTypeInteger>;
   /** 行政区划枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 组织机构枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 管道材质枚举中文描述 */
-  _material: string;
+  _material?: string;
   /** 压力级别枚举中文描述 */
-  _pressureLevel: string;
+  _pressureLevel?: string;
 }
 
 export interface PageResultListHidangerFactorsSummaryPageVO {
-  code: string;
-  data: HidangerFactorsSummaryPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<HidangerFactorsSummaryPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 export interface PairRiskDangerTypeInteger {
   /** 燃气管网风险要素类型 */
-  key: PairRiskDangerTypeIntegerKey;
+  key?: PairRiskDangerTypeIntegerKey;
   /** @format int32 */
-  value: number;
+  value?: number;
   /** 燃气管网风险要素类型枚举中文描述 */
-  _key: string;
+  _key?: string;
 }
 
 /** 维度描述 */
@@ -8168,568 +8168,568 @@ export interface DimensionDetail {
    * 维度得分
    * @format int32
    */
-  score: number;
+  score?: number;
   /** 维度描述 */
-  desc: string;
+  desc?: string;
   /** 维度级别 */
-  level: string;
+  level?: string;
 }
 
 /** 关联的管线 */
 export interface GisRelPipInfo {
   /** 关联管线ID */
-  pipeId: string;
+  pipeId?: string;
   /** 关联管线GEOM */
-  geom: string;
-  label: string;
-  value: string;
+  geom?: string;
+  label?: string;
+  value?: string;
 }
 
 /** 指标项 */
 export interface HazardNormsDTO {
   /** 指标编码 */
-  code: string;
+  code?: string;
   /** 指标名称 */
-  name: string;
+  name?: string;
   /** 指标分类 */
-  category: string;
+  category?: string;
   /** GIS异常指标弹窗描述 */
-  gisException: string;
+  gisException?: string;
   /** 规范要求 */
-  requirements: string;
+  requirements?: string;
   /**
    * 影响纬度
    * @uniqueItems true
    */
-  dimension: string[];
+  dimension?: Array<string> | string;
   /** 评估依据 */
-  specifications: Specifications[];
+  specifications?: Array<Specifications>;
   /**
    * 管控措施编码列表
    * @uniqueItems true
    */
-  measures: string[];
+  measures?: Array<string> | string;
   /** 实际数据 */
-  readData: string;
+  readData?: string;
   /** 关联的管线 */
-  relPipes: GisRelPipInfo[];
+  relPipes?: Array<GisRelPipInfo>;
   /**
    * 指标得分
    * @format int32
    */
-  score: number;
+  score?: number;
   /** 评估结论 */
-  evalResult: string;
+  evalResult?: string;
 }
 
 /** 危险源列表 */
 export interface ObjectExtDto {
-  id: string;
-  name: string;
-  geom: string;
-  address: string;
-  code: string;
+  id?: string;
+  name?: string;
+  geom?: string;
+  address?: string;
+  code?: string;
   /** @format double */
-  distance: number;
+  distance?: number;
   /** @format double */
-  pathLen: number;
+  pathLen?: number;
 }
 
 /** 关联管线详情 */
 export interface PipelineInfo {
   /** 管线权属单位 */
-  orgId: string;
+  orgId?: string;
   /** 管线编码 */
-  pipelineId: string;
+  pipelineId?: string;
   /** 管线类型 */
-  pipelineType: string;
+  pipelineType?: string;
   /** 数据来源 */
-  dataSource: string;
+  dataSource?: string;
   /** 材质 */
-  pmaterial: PipelineInfoPmaterial;
+  pmaterial?: PipelineInfoPmaterial;
   /** 管段所在位置 */
-  address: string;
+  address?: string;
   /** 管道压力 */
-  volclass: PipelineInfoVolclass;
+  volclass?: PipelineInfoVolclass;
   /** 管径 */
-  outDS: string;
+  outDS?: string;
   /** 管道长度 */
-  pipelen: number;
+  pipelen?: number;
   /** 建设年代 */
-  mdate: string;
+  mdate?: string;
   /**
    * 物探时间
    * @format date
    */
-  sdate: string;
-  geom: string;
-  sdepth: number;
-  edepth: number;
+  sdate?: string;
+  geom?: string;
+  sdepth?: number;
+  edepth?: number;
   /** @format date */
-  ddate: string;
+  ddate?: string;
   /** 管线权属单位枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 材质枚举中文描述 */
-  _pmaterial: string;
+  _pmaterial?: string;
   /** 管道压力枚举中文描述 */
-  _volclass: string;
+  _volclass?: string;
 }
 
 export interface ResultRiskFactorDetailVO {
-  code: string;
+  code?: string;
   /** 风险隐患详情 */
-  data: RiskFactorDetailVO;
-  message: string;
-  success: boolean;
+  data?: RiskFactorDetailVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 隐患基础信息 */
 export interface RiskDetailInfo {
   /** 标题 */
-  title: string;
+  title?: string;
   /** 风险要素状态 */
-  state: RiskDetailInfoState;
+  state?: RiskDetailInfoState;
   /** 是否挂牌督办 */
-  superviseState: string;
+  superviseState?: string;
   /** 风险隐患uid */
-  uid: string;
+  uid?: string;
   /** 风险要素等级 */
-  level: RiskDetailInfoLevel;
+  level?: RiskDetailInfoLevel;
   /** 风险要素子类型 */
-  subType: RiskDetailInfoSubType;
+  subType?: RiskDetailInfoSubType;
   /**
    * 辨识时间
    * @format date
    */
-  checkDate: string;
+  checkDate?: string;
   /** 组织机构 */
-  orgId: string;
+  orgId?: string;
   /** 风险隐患地址 */
-  address: string;
+  address?: string;
   /** 动态字段 */
-  dynamicInfo: Record<string, any>;
+  dynamicInfo?: Record<string, any>;
   /** 风险要素状态枚举中文描述 */
-  _state: string;
+  _state?: string;
   /** 风险要素等级枚举中文描述 */
-  _level: string;
+  _level?: string;
   /** 风险要素子类型枚举中文描述 */
-  _subType: string;
+  _subType?: string;
   /** 组织机构枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 /** 风险隐患详情 */
 export interface RiskFactorDetailVO {
   /** 隐患基础信息 */
-  riskInfo: RiskDetailInfo;
+  riskInfo?: RiskDetailInfo;
   /** 关联管线详情 */
-  pipeInfo: PipelineInfo;
+  pipeInfo?: PipelineInfo;
   /** 关联管线详情 */
-  otherPipeInfo: PipelineInfo;
+  otherPipeInfo?: PipelineInfo;
   /** 评估依据 */
-  specifications: Specifications[];
+  specifications?: Array<Specifications>;
   /** 风险评估矩阵 */
-  riskTable: number[][];
+  riskTable?: Array<Array<number> | number>;
   /** 维度描述 */
-  leak: DimensionDetail;
+  leak?: DimensionDetail;
   /** 维度描述 */
-  severity: DimensionDetail;
+  severity?: DimensionDetail;
   /** 维度描述 */
-  risk: DimensionDetail;
+  risk?: DimensionDetail;
   /** 后果影响因素 */
-  norms: Record<string, any>;
+  norms?: Record<string, any>;
   /** 当前管控措施 */
-  currentMeasures: string;
+  currentMeasures?: string;
   /** 管线关联的设备编号 */
-  relDeviceCodes: string[];
+  relDeviceCodes?: Array<string> | string;
   /** 管控建议列表 */
-  measures: Record<string, any>;
+  measures?: Record<string, any>;
   /** 周边环境(200米) */
-  aroundEnv: VicinalinfoDto;
+  aroundEnv?: VicinalinfoDto;
   /** 处置流程 */
-  flow: HidangerFlowDTO[];
+  flow?: Array<HidangerFlowDTO>;
 }
 
 /** 评估依据详情 */
 export interface Specifications {
   /** 文件名称 */
-  title: string;
+  title?: string;
   /** 文件id */
-  fileId: string;
+  fileId?: string;
   /** 引用章节内容 */
-  text: string;
+  text?: string;
   /** 引用图片 */
-  img: string;
+  img?: string;
 }
 
 /** 周边环境(200米) */
 export interface VicinalinfoDto {
   /** 防护目标列表 */
-  protagList: ObjectExtDto[];
+  protagList?: Array<ObjectExtDto>;
   /** 危险源列表 */
-  dangerList: ObjectExtDto[];
+  dangerList?: Array<ObjectExtDto>;
   /** 缓冲面 */
-  geom: string;
+  geom?: string;
 }
 
 export interface HidangerDictionaryVO {
   /** 隐患编码 */
-  code: string;
+  code?: string;
   /** 问题大类 */
-  category: string;
+  category?: string;
   /** 一级分类 */
-  l1: string;
+  l1?: string;
   /** 二级分类 */
-  l2: string;
+  l2?: string;
   /** 三级分类 */
-  l3: string;
+  l3?: string;
   /** 四级分类 */
-  l4: string;
+  l4?: string;
   /** 检查对象类型 */
-  targetType: string;
+  targetType?: string;
   /** 主体单位 */
-  masterDepts: string[];
+  masterDepts?: Array<string> | string;
   /** 协同单位 */
-  helperDepts: string[];
+  helperDepts?: Array<string> | string;
   /** 风险要素等级 */
-  dangerLevel: HidangerDictionaryVoDangerLevel;
+  dangerLevel?: HidangerDictionaryVoDangerLevel;
   /** 风险要素等级枚举中文描述 */
-  _dangerLevel: string;
+  _dangerLevel?: string;
 }
 
 export interface ResultListHidangerDictionaryVO {
-  code: string;
-  data: HidangerDictionaryVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<HidangerDictionaryVO>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultObject {
-  code: string;
-  data: object;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: object;
+  message?: string;
+  success?: boolean;
 }
 
 export interface KnowledgePageQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** @uniqueItems true */
-  districtIds: string[];
+  districtIds?: Array<string> | string;
   /** 知识库名称 */
-  knowledgeName: string;
+  knowledgeName?: string;
   /** 知识库名称类型：法律法规、技术标准、国家政策 */
-  knowledgeType: string;
+  knowledgeType?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface AnalysBaseMnKnowledgePageVO {
   /** 主键id */
-  uid: string;
+  uid?: string;
   /** 知识库编号 */
-  knowledgeId: string;
+  knowledgeId?: string;
   /** 知识库名称 */
-  knowledgeName: string;
+  knowledgeName?: string;
   /** 知识库名称枚举类型（KNOWLEDGETYPE）：法律法规、技术标准、国家政策 */
-  knowledgeType: AnalysBaseMnKnowledgePageVoKnowledgeType;
+  knowledgeType?: AnalysBaseMnKnowledgePageVoKnowledgeType;
   /**  发布单位 */
-  publishCompany: string;
+  publishCompany?: string;
   /**
    * 发布日期
    * @format date
    */
-  publishDate: string;
+  publishDate?: string;
   /**
    * 实施日期
    * @format date
    */
-  practiceDate: string;
+  practiceDate?: string;
   /** 附件id */
-  fileId: string;
+  fileId?: string;
   /** 类型: -1:系统（默认）0：政府 1：企业  2：监测中心 */
-  type: string;
+  type?: string;
   /** 知识库名称枚举类型（KNOWLEDGETYPE）：法律法规、技术标准、国家政策枚举中文描述 */
-  _knowledgeType: string;
+  _knowledgeType?: string;
 }
 
 export interface PageResultListAnalysBaseMnKnowledgePageVO {
-  code: string;
-  data: AnalysBaseMnKnowledgePageVO[];
-  message: string;
+  code?: string;
+  data?: Array<AnalysBaseMnKnowledgePageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 export interface AnalysBaseMnKnowledgeDetailVO {
   /** 主键id */
-  uid: string;
+  uid?: string;
   /** 知识库编号 */
-  knowledgeId: string;
+  knowledgeId?: string;
   /** 知识库名称 */
-  knowledgeName: string;
+  knowledgeName?: string;
   /** 知识库名称类型：法律法规、技术标准、国家政策 */
-  knowledgeType: AnalysBaseMnKnowledgeDetailVoKnowledgeType;
+  knowledgeType?: AnalysBaseMnKnowledgeDetailVoKnowledgeType;
   /**  发布单位 */
-  publishCompany: string;
+  publishCompany?: string;
   /**
    * 发布日期
    * @format date
    */
-  publishDate: string;
+  publishDate?: string;
   /**
    * 实施日期
    * @format date
    */
-  practiceDate: string;
+  practiceDate?: string;
   /** 附件id */
-  fileId: string;
+  fileId?: string;
   /** 知识库名称类型：法律法规、技术标准、国家政策枚举中文描述 */
-  _knowledgeType: string;
+  _knowledgeType?: string;
 }
 
 export interface ResultAnalysBaseMnKnowledgeDetailVO {
-  code: string;
-  data: AnalysBaseMnKnowledgeDetailVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: AnalysBaseMnKnowledgeDetailVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface CasePageQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
   /** 所属区域 */
-  districtId: string;
-  keyword: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 事故名称 */
-  accidentName: string;
+  accidentName?: string;
   /** 事故等级枚举（ACCIDENTLEVEL）:特别重大、重大、较大、一般 */
-  accidentLevel: string;
+  accidentLevel?: string;
   /** 事故地址 */
-  address: string;
+  address?: string;
   /**
    * 事故时间查询开始
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  startTime: string;
+  startTime?: string;
   /**
    * 事故时间查询结束
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  endTime: string;
+  endTime?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 所属区域枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface AnalysBaseMnCasePageVO {
   /** 案例库编号 */
-  uid: string;
+  uid?: string;
   /** 案例编号 */
-  caseId: string;
+  caseId?: string;
   /** 事故名称 */
-  accidentName: string;
+  accidentName?: string;
   /** 事故类型：燃气管网事故、管道燃气用户事故、液化气用户事故 */
-  accidentType: AnalysBaseMnCasePageVoAccidentType;
+  accidentType?: AnalysBaseMnCasePageVoAccidentType;
   /** 事故等级:特别重大、重大、较大、一般 */
-  accidentLevel: AnalysBaseMnCasePageVoAccidentLevel;
+  accidentLevel?: AnalysBaseMnCasePageVoAccidentLevel;
   /**
    * 事故时间
    * @format date-time
    */
-  accidentTime: string;
+  accidentTime?: string;
   /** 所属区域 */
-  districtId: string;
+  districtId?: string;
   /** 事故地址 */
-  address: string;
+  address?: string;
   /**
    * 死亡人数
    * @format int32
    */
-  death: number;
+  death?: number;
   /**
    * 受伤人数
    * @format int32
    */
-  fatal: number;
+  fatal?: number;
   /** 经济损失（万元） */
-  economicLosses: number;
+  economicLosses?: number;
   /** 涉事企业 */
-  involveCompany: string;
+  involveCompany?: string;
   /** 事故直接原因 */
-  reason: string;
+  reason?: string;
   /** 附件id */
-  fileId: string;
+  fileId?: string;
   /** 类型: -1:系统（默认）0：政府 1：企业  2：监测中心 */
-  type: string;
+  type?: string;
   /** 事故类型：燃气管网事故、管道燃气用户事故、液化气用户事故枚举中文描述 */
-  _accidentType: string;
+  _accidentType?: string;
   /** 事故等级:特别重大、重大、较大、一般枚举中文描述 */
-  _accidentLevel: string;
+  _accidentLevel?: string;
   /** 所属区域枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface PageResultListAnalysBaseMnCasePageVO {
-  code: string;
-  data: AnalysBaseMnCasePageVO[];
-  message: string;
+  code?: string;
+  data?: Array<AnalysBaseMnCasePageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 export interface AnalysBaseMnCaseDetailVO {
   /** 案例库编号 */
-  uid: string;
+  uid?: string;
   /** 案例编号 */
-  caseId: string;
+  caseId?: string;
   /** 事故名称 */
-  accidentName: string;
+  accidentName?: string;
   /** 事故类型：燃气管网事故、管道燃气用户事故、液化气用户事故 */
-  accidentType: AnalysBaseMnCaseDetailVoAccidentType;
+  accidentType?: AnalysBaseMnCaseDetailVoAccidentType;
   /** 事故等级:特别重大、重大、较大、一般 */
-  accidentLevel: AnalysBaseMnCaseDetailVoAccidentLevel;
+  accidentLevel?: AnalysBaseMnCaseDetailVoAccidentLevel;
   /**
    * 事故时间
    * @format date-time
    */
-  accidentTime: string;
+  accidentTime?: string;
   /** 所属区域 */
-  districtId: string;
+  districtId?: string;
   /** 事故地址 */
-  address: string;
+  address?: string;
   /**
    * 死亡人数
    * @format int32
    */
-  death: number;
+  death?: number;
   /**
    * 受伤人数
    * @format int32
    */
-  fatal: number;
+  fatal?: number;
   /** 经济损失（万元） */
-  economicLosses: number;
+  economicLosses?: number;
   /** 涉事企业 */
-  involveCompany: string;
+  involveCompany?: string;
   /** 事故直接原因 */
-  reason: string;
+  reason?: string;
   /** 事故描述 */
-  description: string;
+  description?: string;
   /** 附件id */
-  fileId: string;
+  fileId?: string;
   /** 事故类型：燃气管网事故、管道燃气用户事故、液化气用户事故枚举中文描述 */
-  _accidentType: string;
+  _accidentType?: string;
   /** 事故等级:特别重大、重大、较大、一般枚举中文描述 */
-  _accidentLevel: string;
+  _accidentLevel?: string;
   /** 所属区域枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface ResultAnalysBaseMnCaseDetailVO {
-  code: string;
-  data: AnalysBaseMnCaseDetailVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: AnalysBaseMnCaseDetailVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface AnalysBaseMnCaseBaseVO {
   /** 案例编号 */
-  caseId: string;
+  caseId?: string;
   /** 案例名称 */
-  accidentName: string;
+  accidentName?: string;
   /** 案例类别 */
-  accidentType: AnalysBaseMnCaseBaseVoAccidentType;
+  accidentType?: AnalysBaseMnCaseBaseVoAccidentType;
   /** 案例等级 */
-  accidentLevel: AnalysBaseMnCaseBaseVoAccidentLevel;
+  accidentLevel?: AnalysBaseMnCaseBaseVoAccidentLevel;
   /**
    * 案例时间
    * @format date-time
    */
-  accidentTime: string;
+  accidentTime?: string;
   /** 所属区域 */
-  districtId: string;
+  districtId?: string;
   /** 具体位置 */
-  address: string;
+  address?: string;
   /**
    * 死亡人数
    * @format int32
    */
-  death: number;
+  death?: number;
   /**
    * 受伤人数
    * @format int32
    */
-  fatal: number;
+  fatal?: number;
   /** 经济损失（万元） */
-  economicLosses: number;
+  economicLosses?: number;
   /** 涉事企业 */
-  involveCompany: string;
+  involveCompany?: string;
   /** 发生原因 */
-  reason: string;
+  reason?: string;
   /** 详细描述 */
-  description: string;
+  description?: string;
   /** 附件id */
-  fileId: string;
+  fileId?: string;
   /** 案例类别枚举中文描述 */
-  _accidentType: string;
+  _accidentType?: string;
   /** 案例等级枚举中文描述 */
-  _accidentLevel: string;
+  _accidentLevel?: string;
   /** 所属区域枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface ResultAnalysBaseMnCaseBaseVO {
-  code: string;
-  data: AnalysBaseMnCaseBaseVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: AnalysBaseMnCaseBaseVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultSuperviseActivitiesPageVO {
-  code: string;
-  data: SuperviseActivitiesPageVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: SuperviseActivitiesPageVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface SuperviseActivitiesPageVO {
@@ -8737,267 +8737,267 @@ export interface SuperviseActivitiesPageVO {
    * 活动id
    * @format int64
    */
-  uid: number;
+  uid?: number;
   /** 活动标题 */
-  title: string;
+  title?: string;
   /** 活动地址 */
-  address: string;
+  address?: string;
   /** 活动组织者 */
-  organizer: string;
+  organizer?: string;
   /**
    * 活动参与人数
    * @format int32
    */
-  participantsCount: number;
+  participantsCount?: number;
   /**
    * 活动时间
    * @format date
    */
-  eventDate: string;
+  eventDate?: string;
   /** 活动图片id */
-  imgIds: FileObj[];
+  imgIds?: Array<FileObj>;
 }
 
 export interface ActivitiesPageQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** @format date */
-  startTime: string;
+  startTime?: string;
   /**
    * 隐患检查日期-结束
    * @format date
    */
-  endTime: string;
+  endTime?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface PageResultListSuperviseActivitiesPageVO {
-  code: string;
-  data: SuperviseActivitiesPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<SuperviseActivitiesPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 export interface SuperviseDeptUserPageQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 用户姓名 */
-  name: string;
+  name?: string;
   /** 手机号 */
-  phone: string;
+  phone?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface GovDeptUserPageVO {
   /** 用户id */
-  uid: string;
+  uid?: string;
   /** 姓名 */
-  name: string;
+  name?: string;
   /** 所属部门 */
-  deptName: string;
+  deptName?: string;
   /** 部门名称 */
-  deptAlias: string;
+  deptAlias?: string;
   /** 手机号 */
-  phone: string;
+  phone?: string;
   /** 职务 */
-  jobTitle: string;
+  jobTitle?: string;
   /** 是否接收短信 */
-  smsFlag: boolean;
+  smsFlag?: boolean;
 }
 
 export interface PageResultListGovDeptUserPageVO {
-  code: string;
-  data: GovDeptUserPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<GovDeptUserPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 export interface GovDeptPageVO {
   /** 部门id */
-  uid: string;
+  uid?: string;
   /** 部门编码 */
-  code: string;
+  code?: string;
   /** 部门名称 */
-  name: string;
+  name?: string;
   /** 是否可以删除 */
-  deletable: boolean;
+  deletable?: boolean;
 }
 
 export interface PageResultListGovDeptPageVO {
-  code: string;
-  data: GovDeptPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<GovDeptPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 /** 用气用户分页查询 */
 export interface PageGasUserQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 组织机构列表 */
-  orgIds: string[];
+  orgIds?: Array<string> | string;
   /** 查询过滤 */
-  queryFilter: PageGasUserQueryQueryFilter;
+  queryFilter?: PageGasUserQueryQueryFilter;
   /** 用户类型 */
-  userType: PageGasUserQueryUserType[];
+  userType?: Array<PageGasUserQueryUserType>;
   /** 用气类型 */
-  useType: PageGasUserQueryUseType[];
+  useType?: Array<PageGasUserQueryUseType>;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 查询过滤枚举中文描述 */
-  _queryFilter: string;
+  _queryFilter?: string;
 }
 
 /** 修改用气用户信息 */
 export interface DetailGasUserVO {
   /** 用户名称 */
-  name: string;
+  name?: string;
   /** 行政区划id */
-  districtId: string;
+  districtId?: string;
   /** 所属燃气公司 */
-  orgId: string;
+  orgId?: string;
   /** 用户类型 */
-  userType: DetailGasUserVoUserType;
+  userType?: DetailGasUserVoUserType;
   /** 用户标签 */
-  userTag: DetailGasUserVoUserTag;
+  userTag?: DetailGasUserVoUserTag;
   /** 用气类型 */
-  useType: DetailGasUserVoUseType;
+  useType?: DetailGasUserVoUseType;
   /** 天然气户号 */
-  gasUserNo: string;
+  gasUserNo?: string;
   /** 地址 */
-  address: string;
+  address?: string;
   /**
    * 所在小区/工商业名称
    * @minLength 0
    * @maxLength 255
    */
-  location: string;
+  location?: string;
   /**
    * 楼栋
    * @minLength 0
    * @maxLength 10
    */
-  buildingNo: string;
+  buildingNo?: string;
   /**
    * 楼层
    * @minLength 0
    * @maxLength 10
    */
-  floor: string;
+  floor?: string;
   /**
    * 房号
    * @minLength 0
    * @maxLength 10
    */
-  houseNo: string;
+  houseNo?: string;
   /**
    * 常用联系方式
    * @minLength 11
    * @maxLength 11
    */
-  comContactInfo: string;
+  comContactInfo?: string;
   /** 紧急联系方式 */
-  emContactInfo: string;
+  emContactInfo?: string;
   /** 社区/物业名称 */
-  communityName: string;
+  communityName?: string;
   /** 社区/物业联系方式 */
-  communityContactInfo: string;
+  communityContactInfo?: string;
   /** 用户ID */
-  uid: string;
+  uid?: string;
   /** 用户编号 */
-  code: string;
+  code?: string;
   /** 行政区划id枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 所属燃气公司枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 用户类型枚举中文描述 */
-  _userType: string;
+  _userType?: string;
   /** 用户标签枚举中文描述 */
-  _userTag: string;
+  _userTag?: string;
   /** 用气类型枚举中文描述 */
-  _useType: string;
+  _useType?: string;
 }
 
 export interface PageResultListDetailGasUserVO {
-  code: string;
-  data: DetailGasUserVO[];
-  message: string;
+  code?: string;
+  data?: Array<DetailGasUserVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 export interface ResultDetailGasUserVO {
-  code: string;
+  code?: string;
   /** 修改用气用户信息 */
-  data: DetailGasUserVO;
-  message: string;
-  success: boolean;
+  data?: DetailGasUserVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 基础数据大屏-用气用户VO */
@@ -9006,35 +9006,35 @@ export interface BasicScreenUserCountVO {
    * 用气用户总数
    * @format float
    */
-  userTotal: number;
+  userTotal?: number;
   /**
    * 居民天然气用户
    * @format float
    */
-  jmTrqCnt: number;
+  jmTrqCnt?: number;
   /**
    * 非居民天然气用户
    * @format float
    */
-  otherTrqCnt: number;
+  otherTrqCnt?: number;
   /**
    * 居民液化气用户
    * @format float
    */
-  jmYhqCnt: number;
+  jmYhqCnt?: number;
   /**
    * 非居民液化气气用户
    * @format float
    */
-  otherYhqCnt: number;
+  otherYhqCnt?: number;
 }
 
 export interface ResultBasicScreenUserCountVO {
-  code: string;
+  code?: string;
   /** 基础数据大屏-用气用户VO */
-  data: BasicScreenUserCountVO;
-  message: string;
-  success: boolean;
+  data?: BasicScreenUserCountVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface GasSupplySumVO {
@@ -9042,161 +9042,161 @@ export interface GasSupplySumVO {
    * 昨日供气总量(万立方米)
    * @format double
    */
-  sumYda: number;
+  sumYda?: number;
   /**
    * 昨日压减气量(万立方米)
    * @format double
    */
-  decrSumYda: number;
+  decrSumYda?: number;
   /**
    * 昨日停供用户数(户)
    * @format int32
    */
-  stopSumYda: number;
+  stopSumYda?: number;
   /**
    * 昨日限供用户数(户)
    * @format int32
    */
-  limitSumYda: number;
+  limitSumYda?: number;
   /**
    * 本年累计供气总量(万立方米)
    * @format double
    */
-  sumYear: number;
+  sumYear?: number;
 }
 
 export interface ResultGasSupplySumVO {
-  code: string;
-  data: GasSupplySumVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: GasSupplySumVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface GasSupplyQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /**
    * 用气供气日期开始
    * @format date
    * @pattern yyyy-MM-dd
    */
-  startTime: string;
+  startTime?: string;
   /**
    * 用气供气日期结束
    * @format date
    * @pattern yyyy-MM-dd
    */
-  endTime: string;
+  endTime?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface GasSupplyPageVO {
-  uid: string;
+  uid?: string;
   /**
    * 供气用气日期
    * @format date
    */
-  supplyDate: string;
+  supplyDate?: string;
   /** 所属燃气公司 */
-  orgId: string;
+  orgId?: string;
   /**
    * 门站日合同量（万立方米）
    * @format double
    */
-  planSum: number;
+  planSum?: number;
   /**
    * 门站合同落实量（万立方米）
    * @format double
    */
-  actualSum: number;
+  actualSum?: number;
   /**
    * 日供气总量（万立方米）
    * @format double
    */
-  supplySum: number;
+  supplySum?: number;
   /**
    * 日压减气量（万立方米）
    * @format double
    */
-  decrSum: number;
+  decrSum?: number;
   /**
    * 日停供用户数量（户）
    * @format int32
    */
-  stopSupplyCnt: number;
+  stopSupplyCnt?: number;
   /**
    * 日限供用户数量（户）
    * @format int32
    */
-  limitSupplyCnt: number;
+  limitSupplyCnt?: number;
   /** 上报人 */
-  reportBy: string;
+  reportBy?: string;
   /**
    * 上报时间
    * @format date-time
    */
-  reportTime: string;
+  reportTime?: string;
   /** 所属燃气公司枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 export interface PageResultListGasSupplyPageVO {
-  code: string;
-  data: GasSupplyPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<GasSupplyPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 export interface GasStationQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
-  stationType: string;
-  gasType: GasStationQueryGasType;
+  selectIds?: Array<object>;
+  paging?: boolean;
+  stationType?: string;
+  gasType?: GasStationQueryGasType;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** undefined枚举中文描述 */
-  _gasType: string;
+  _gasType?: string;
 }
 
 export interface GasStationSumVO {
@@ -9204,351 +9204,351 @@ export interface GasStationSumVO {
    * 场站总数
    * @format int32
    */
-  total: number;
+  total?: number;
   /**
    * 门站个数
    * @format int32
    */
-  gateStnCnt: number;
+  gateStnCnt?: number;
   /**
    * 储配站个数
    * @format int32
    */
-  storageStnCnt: number;
+  storageStnCnt?: number;
   /**
    * 调压站个数
    * @format int32
    */
-  regulatorStnCnt: number;
+  regulatorStnCnt?: number;
   /**
    * 汽车加气站个数
    * @format int32
    */
-  carStnCnt: number;
+  carStnCnt?: number;
 }
 
 export interface ResultGasStationSumVO {
-  code: string;
-  data: GasStationSumVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: GasStationSumVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface GasStationPageVO {
-  uid: string;
+  uid?: string;
   /** 场站编号 */
-  stationId: string;
+  stationId?: string;
   /** 所属燃气公司 */
-  orgId: string;
+  orgId?: string;
   /** 场站名称 */
-  stationName: string;
+  stationName?: string;
   /** 场站类型 */
-  stationType: GasStationPageVoStationType;
+  stationType?: GasStationPageVoStationType;
   /** 所属区域 */
-  districtId: string;
+  districtId?: string;
   /** 场站地址 */
-  address: string;
+  address?: string;
   /** 日最大供气量（万立方） */
-  gasSupplyMax: string;
+  gasSupplyMax?: string;
   /** 经度 */
-  longitude: string;
+  longitude?: string;
   /** 纬度 */
-  latitude: string;
+  latitude?: string;
   /** 设计储气能力（万立方） */
-  gasCapacityDesign: string;
+  gasCapacityDesign?: string;
   /** 所属燃气公司枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 场站类型枚举中文描述 */
-  _stationType: string;
+  _stationType?: string;
   /** 所属区域枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface PageResultListGasStationPageVO {
-  code: string;
-  data: GasStationPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<GasStationPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 export interface ResultVehicleInfoVO {
-  code: string;
+  code?: string;
   /** 车辆信息 */
-  data: VehicleInfoVO;
-  message: string;
-  success: boolean;
+  data?: VehicleInfoVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 车辆信息 */
 export interface VehicleInfoVO {
-  vehicleId: string;
-  vehicleNo: string;
-  dangerCertNo: string;
-  vehicleState: string;
-  orgId: string;
-  districtId: string;
-  manufacturer: string;
-  vehicleCatalog: string;
-  vehicleType: string;
+  vehicleId?: string;
+  vehicleNo?: string;
+  dangerCertNo?: string;
+  vehicleState?: string;
+  orgId?: string;
+  districtId?: string;
+  manufacturer?: string;
+  vehicleCatalog?: string;
+  vehicleType?: string;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface ResultListVehicleMapInfoVO {
-  code: string;
-  data: VehicleMapInfoVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<VehicleMapInfoVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 车辆GIS撒点信息 */
 export interface VehicleMapInfoVO {
-  vehicleId: string;
-  vehicleNo: string;
-  vehicleCatalog: string;
-  longitude: string;
-  latitude: string;
+  vehicleId?: string;
+  vehicleNo?: string;
+  vehicleCatalog?: string;
+  longitude?: string;
+  latitude?: string;
 }
 
 export interface ResultListMapStringString {
-  code: string;
-  data: Record<string, any>[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<Record<string, any>>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultListMapObjectObject {
-  code: string;
-  data: Record<string, any>[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<Record<string, any>>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 场站资质证照信息 */
 export interface LicenseInfoDTO {
   /** 证照编号 */
-  licenseNo: string;
+  licenseNo?: string;
   /** 证照类型 */
-  licenseType: string;
+  licenseType?: string;
   /**
    * 签发日期
    * @format date
    */
-  signedDate: string;
+  signedDate?: string;
   /**
    * 过期日期
    * @format date
    */
-  expiredDate: string;
+  expiredDate?: string;
   /** 证照照片 */
-  licensePic: string;
+  licensePic?: string;
 }
 
 export interface ResultStationInfoDTO {
-  code: string;
+  code?: string;
   /** 场站信息 */
-  data: StationInfoDTO;
-  message: string;
-  success: boolean;
+  data?: StationInfoDTO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 场站基础信息 */
 export interface StationBaseInfo {
   /** 场站编号 */
-  stationId: string;
+  stationId?: string;
   /** 场站名称 */
-  stationName: string;
+  stationName?: string;
   /** 所属燃气公司 */
-  orgId: string;
+  orgId?: string;
   /** 行政区划 */
-  districtId: string;
+  districtId?: string;
   /** 场站地址 */
-  address: string;
+  address?: string;
   /** 场站分类 */
-  stationCatalog: string;
+  stationCatalog?: string;
   /** 场站类型 */
-  stationType: string;
+  stationType?: string;
   /** 负责人 */
-  leaderName: string;
+  leaderName?: string;
   /** 营运状态 */
-  serviceState: string;
+  serviceState?: string;
   /** 营业执照编号 */
-  licenseNo: string;
+  licenseNo?: string;
   /**
    * 营业执照签发日期
    * @format date
    */
-  licenseSignedDate: string;
+  licenseSignedDate?: string;
   /**
    * 营业执照过期日期
    * @format date
    */
-  licenseExpiredDate: string;
+  licenseExpiredDate?: string;
   /** 燃气经营许可证编号 */
-  gasLicenseNo: string;
+  gasLicenseNo?: string;
   /**
    * 燃气经营许可证签发日期
    * @format date
    */
-  gasLicenseSignedDate: string;
+  gasLicenseSignedDate?: string;
   /**
    * 燃气经营许可证过期日期
    * @format date
    */
-  gasLicenseExpiredDate: string;
+  gasLicenseExpiredDate?: string;
   /** 充装许可证编号 */
-  fillingLicenseNo: string;
+  fillingLicenseNo?: string;
   /**
    * 充装许可证签发日期
    * @format date
    */
-  fillingLicenseSignedDate: string;
+  fillingLicenseSignedDate?: string;
   /**
    * 充装许可证过期日期
    * @format date
    */
-  fillingLicenseExpiredDate: string;
+  fillingLicenseExpiredDate?: string;
   /** 营业执照照片地址 */
-  licensePic: string;
+  licensePic?: string;
   /** 燃气经营许可证照片地址 */
-  gasLicensePic: string;
+  gasLicensePic?: string;
   /** 充装许可证照片地址 */
-  fillingLicensePic: string;
+  fillingLicensePic?: string;
   /** 危化品经营许可证照片地址 */
-  dangerLicensePic: string;
+  dangerLicensePic?: string;
   /** 经度 */
-  longitude: string;
+  longitude?: string;
   /** 纬度 */
-  latitude: string;
+  latitude?: string;
   /** 所属燃气公司枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 行政区划枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 /** 场站信息 */
 export interface StationInfoDTO {
   /** 场站基础信息 */
-  baseInfo: StationBaseInfo;
+  baseInfo?: StationBaseInfo;
   /** 资质证照信息 */
-  licenseInfo: LicenseInfoDTO[];
+  licenseInfo?: Array<LicenseInfoDTO>;
   /** 视频监控信息 */
-  videoInfo: StationVideoInfo[];
+  videoInfo?: Array<StationVideoInfo>;
 }
 
 /** 场站监控点位信息 */
 export interface StationVideoInfo {
   /** 视频点名称 */
-  videoName: string;
+  videoName?: string;
   /** 视频点编号 */
-  videoCode: string;
+  videoCode?: string;
   /** 视频在线状态 */
-  onlineState: string;
+  onlineState?: string;
   /** 视频监控播放地址 */
-  videoUrl: string;
+  videoUrl?: string;
   /** 视频点地址 */
-  videoAddr: string;
+  videoAddr?: string;
 }
 
 export interface ResultListStationMapInfoVO {
-  code: string;
-  data: StationMapInfoVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<StationMapInfoVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 场站GIS撒点信息 */
 export interface StationMapInfoVO {
-  stationId: string;
-  stationName: string;
-  stationCatalog: string;
-  stationType: string;
-  longitude: string;
-  latitude: string;
+  stationId?: string;
+  stationName?: string;
+  stationCatalog?: string;
+  stationType?: string;
+  longitude?: string;
+  latitude?: string;
 }
 
 /** 各维度最高分 */
 export interface EnterpriseScoreInfoDTO {
   /** 企业id */
-  orgId: string;
+  orgId?: string;
   /** 企业类型 */
-  enterpriseType: string;
+  enterpriseType?: string;
   /** 分类 */
-  category: string;
+  category?: string;
   /**
    * 分数
    * @format int32
    */
-  score: number;
+  score?: number;
   /** 企业id枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 /** 各企业评分列表 */
 export interface EnterpriseScoringValueDTO {
-  orgId: string;
+  orgId?: string;
   /** 行业类型 */
-  enterpriseType: string;
+  enterpriseType?: string;
   /**
    * 总得分
    * @format int32
    */
-  totalScore: number;
+  totalScore?: number;
   /**
    * 级别
    * @example "优,良,差,未评价"
    */
-  scoringLevel: string;
+  scoringLevel?: string;
   /** 分类评分 */
-  categories: PairStringInteger[];
+  categories?: Array<PairStringInteger>;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 export interface EnterpriseScoringViewVO {
   /** 行业平均分 */
-  avgScore: Record<string, any>;
+  avgScore?: Record<string, any>;
   /** 各维度最高分 */
-  maxScore: Record<string, any>;
+  maxScore?: Record<string, any>;
   /** 各企业评分列表 */
-  rankList: EnterpriseScoringValueDTO[];
+  rankList?: Array<EnterpriseScoringValueDTO>;
 }
 
 /** 分类评分 */
 export interface PairStringInteger {
-  key: string;
+  key?: string;
   /** @format int32 */
-  value: number;
+  value?: number;
 }
 
 export interface ResultEnterpriseScoringViewVO {
-  code: string;
-  data: EnterpriseScoringViewVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: EnterpriseScoringViewVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultListEnterpriseScoringItemDTO {
-  code: string;
-  data: EnterpriseScoringItemDTO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<EnterpriseScoringItemDTO>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface Coordinate {
-  lng: string;
-  lat: string;
+  lng?: string;
+  lat?: string;
 }
 
 export interface ResultListCoordinate {
-  code: string;
-  data: Coordinate[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<Coordinate>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface LinePatrolSumVO {
@@ -9556,194 +9556,194 @@ export interface LinePatrolSumVO {
    * 巡线计划总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 已完成巡线计划数
    * @format int64
    */
-  completeCnt: number;
+  completeCnt?: number;
   /**
    * 超期未完成巡线计划数
    * @format int64
    */
-  timeoutCnt: number;
+  timeoutCnt?: number;
   /**
    * 未完成巡线计划数
    * @format int64
    */
-  unCompleteCnt: number;
+  unCompleteCnt?: number;
 }
 
 export interface ResultLinePatrolSumVO {
-  code: string;
-  data: LinePatrolSumVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: LinePatrolSumVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface LinePatrolQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 巡线计划名称 */
-  planName: string;
+  planName?: string;
   /**
    * 巡线计划开始日期
    * @format date
    */
-  planDate: string;
+  planDate?: string;
   /** 巡线类型 */
-  patrolType: string;
+  patrolType?: string;
   /** 管道压力 */
-  linePressure: string;
+  linePressure?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface LinePatrolPageVO {
-  id: string;
+  id?: string;
   /** 巡线计划名称 */
-  planName: string;
+  planName?: string;
   /**
    * 巡线计划开始日期
    * @format date
    */
-  startDate: string;
+  startDate?: string;
   /**
    * 巡线计划结束日期
    * @format date
    */
-  endDate: string;
+  endDate?: string;
   /** 所属区域 */
-  districtId: string;
+  districtId?: string;
   /** 所属燃气公司 */
-  orgId: string;
+  orgId?: string;
   /** 巡线类型 */
-  patrolType: string;
+  patrolType?: string;
   /** 管道压力 */
-  linePressure: string;
+  linePressure?: string;
   /**
    * 计划巡线公里数
    * @format int32
    */
-  lineKm: number;
+  lineKm?: number;
   /** 巡检频次 */
-  patrolFreq: string;
+  patrolFreq?: string;
   /**
    * 巡线完成率
    * @format double
    */
-  completeRate: number;
+  completeRate?: number;
   /** 巡线记录附件 */
-  fileId: string;
+  fileId?: string;
   /**
    * 巡线计划更新时间
    * @format date-time
    */
-  updateTime: string;
+  updateTime?: string;
   /** 催办状态 */
-  superviseState: boolean;
+  superviseState?: boolean;
   /** 所属区域枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 所属燃气公司枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 export interface PageResultListLinePatrolPageVO {
-  code: string;
-  data: LinePatrolPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<LinePatrolPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 export interface EnterpriseDetailVO {
   /** 企业名称 */
-  name: string;
+  name?: string;
   /** 所属区域 */
-  belongArea: string;
+  belongArea?: string;
   /** 经营区域 */
-  businessArea: string[];
+  businessArea?: Array<string> | string;
   /** 企业地址 */
-  address: string;
+  address?: string;
   /** 经营范围(类别) */
-  businessScope: EnterpriseDetailVoBusinessScope[];
+  businessScope?: Array<EnterpriseDetailVoBusinessScope>;
   /** 企业负责人姓名 */
-  masterName: string;
+  masterName?: string;
   /** 企业负责人手机号 */
-  masterPhone: string;
+  masterPhone?: string;
   /** 营业执照编号 */
-  licenseNumber: string;
+  licenseNumber?: string;
   /**
    * 营业执照有效期
    * @format date
    */
-  licenseExpiryDate: string;
+  licenseExpiryDate?: string;
   /** 营业执照照片 */
-  licenseImgs: FileObj[];
+  licenseImgs?: Array<FileObj>;
   /** 经营许可证编号 */
-  permitsNumber: string;
+  permitsNumber?: string;
   /**
    * 经营许可证有效期
    * @format date
    */
-  permitsExpiryDate: string;
+  permitsExpiryDate?: string;
   /** 经营许可证照片 */
-  permitsImgs: FileObj[];
+  permitsImgs?: Array<FileObj>;
   /**
    * 员工数量
    * @format int32
    */
-  employeeCount: number;
+  employeeCount?: number;
   /**
    * 拥有的窨井数量
    * @format int32
    */
-  wellsCount: number;
+  wellsCount?: number;
   /**
    * 拥有的场站数量
    * @format int32
    */
-  stationCount: number;
+  stationCount?: number;
   /**
    * 拥有的液化气瓶数量
    * @format int32
    */
-  gasBottleCount: number;
+  gasBottleCount?: number;
   /** 拥有的管线长度,km */
-  pipelineLengthKm: number;
+  pipelineLengthKm?: number;
   /** 特种设备列表 */
-  specialEquips: SpecialEquipDTO[];
+  specialEquips?: Array<SpecialEquipDTO>;
   /** 企业安全负责人列表 */
-  csos: EnterpriseCsoDTO[];
+  csos?: Array<EnterpriseCsoDTO>;
   /** 资质证照信息 */
-  licenseInfo: LicenseInfoDTO[];
+  licenseInfo?: Array<LicenseInfoDTO>;
 }
 
 export interface ResultEnterpriseDetailVO {
-  code: string;
-  data: EnterpriseDetailVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: EnterpriseDetailVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface EnterpriseSummaryVO {
@@ -9751,210 +9751,210 @@ export interface EnterpriseSummaryVO {
    * 企业总数
    * @format int32
    */
-  total: number;
+  total?: number;
   /**
    * 管道气经营企业数量
    * @format int32
    */
-  pipelineGas: number;
+  pipelineGas?: number;
   /**
    * 液化气经营企业数量
    * @format int32
    */
-  liquefiedGas: number;
+  liquefiedGas?: number;
   /**
    * 汽车加气站企业数量
    * @format int32
    */
-  carGas: number;
+  carGas?: number;
 }
 
 export interface ResultEnterpriseSummaryVO {
-  code: string;
-  data: EnterpriseSummaryVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: EnterpriseSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface EnterpriseInfoPageQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 经营区域 */
-  businessArea: string[];
+  businessArea?: Array<string> | string;
   /** 经营类别 */
-  businessScope: EnterpriseInfoPageQueryBusinessScope[];
+  businessScope?: Array<EnterpriseInfoPageQueryBusinessScope>;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface EnterpriseInfoPageVO {
   /** 主键 */
-  uid: string;
+  uid?: string;
   /** 企业名称 */
-  name: string;
+  name?: string;
   /** 所属区域 */
-  belongArea: string;
+  belongArea?: string;
   /** 经营区域 */
-  businessArea: string[];
+  businessArea?: Array<string> | string;
   /** 地址 */
-  address: string;
+  address?: string;
   /** 经营范围 */
-  businessScope: EnterpriseInfoPageVoBusinessScope[];
+  businessScope?: Array<EnterpriseInfoPageVoBusinessScope>;
   /** 企业负责人姓名 */
-  masterName: string;
+  masterName?: string;
   /** 企业负责人手机号 */
-  masterPhone: string;
+  masterPhone?: string;
   /** 营业执照编号 */
-  licenseNumber: string;
+  licenseNumber?: string;
   /**
    * 营业执照有效期
    * @format date
    */
-  licenseExpiryDate: string;
+  licenseExpiryDate?: string;
   /** 经营许可证编号 */
-  permitsNumber: string;
+  permitsNumber?: string;
   /**
    * 经营许可证有效期
    * @format date
    */
-  permitsExpiryDate: string;
+  permitsExpiryDate?: string;
   /** 所属区域 */
-  districtId: string;
+  districtId?: string;
   /**
    * 员工数量
    * @format int32
    */
-  employeeCount: number;
+  employeeCount?: number;
   /**
    * 特种设备数量
    * @format int32
    */
-  specialEquipmentCount: number;
-  longitude: string;
-  latitude: string;
+  specialEquipmentCount?: number;
+  longitude?: string;
+  latitude?: string;
   /** 所属区域枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface PageResultListEnterpriseInfoPageVO {
-  code: string;
-  data: EnterpriseInfoPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<EnterpriseInfoPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 /** 企业GIS撒点信息 */
 export interface EnterpriseMapInfoVO {
   /** 企业编号 */
-  id: string;
+  id?: string;
   /** 企业名称 */
-  name: string;
+  name?: string;
   /** 经营类别 */
-  type: EnterpriseMapInfoVoType;
-  longitude: string;
-  latitude: string;
+  type?: EnterpriseMapInfoVoType;
+  longitude?: string;
+  latitude?: string;
   /** 经营类别枚举中文描述 */
-  _type: string;
+  _type?: string;
 }
 
 export interface ResultListEnterpriseMapInfoVO {
-  code: string;
-  data: EnterpriseMapInfoVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<EnterpriseMapInfoVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 企业相关的设施和应急资源统计 */
 export interface EnterpriseDevResInfoVO {
   /** 企业编号 */
-  id: string;
+  id?: string;
   /** 企业名称 */
-  name: string;
+  name?: string;
   /** 经营类别 */
-  type: EnterpriseDevResInfoVoType;
+  type?: EnterpriseDevResInfoVoType;
   /**
    * 燃气管网公里数
    * @format double
    */
-  gasPipeLen: number;
+  gasPipeLen?: number;
   /**
    * 燃气场站数量
    * @format int32
    */
-  gasStationCnt: number;
+  gasStationCnt?: number;
   /**
    * 液化气瓶数量
    * @format int32
    */
-  bottleCnt: number;
+  bottleCnt?: number;
   /**
    * 配送车辆数量
    * @format int32
    */
-  deliveryVehicleCnt: number;
+  deliveryVehicleCnt?: number;
   /**
    * 液化气场站数量
    * @format int32
    */
-  lngStationCnt: number;
+  lngStationCnt?: number;
   /**
    * 危险品运输车辆数量
    * @format int32
    */
-  dangerVehicleCnt: number;
+  dangerVehicleCnt?: number;
   /**
    * 转运车辆数量
    * @format int32
    */
-  transferVehicleCnt: number;
+  transferVehicleCnt?: number;
   /**
    * 应急资源数量
    * @format int32
    */
-  emerResCnt: number;
+  emerResCnt?: number;
   /**
    * 应急队伍数量
    * @format int32
    */
-  emerTeamCnt: number;
+  emerTeamCnt?: number;
   /** 经营类别枚举中文描述 */
-  _type: string;
+  _type?: string;
 }
 
 export interface ResultEnterpriseDevResInfoVO {
-  code: string;
+  code?: string;
   /** 企业相关的设施和应急资源统计 */
-  data: EnterpriseDevResInfoVO;
-  message: string;
-  success: boolean;
+  data?: EnterpriseDevResInfoVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultSecurityCheckSumVO {
-  code: string;
-  data: SecurityCheckSumVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: SecurityCheckSumVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface SecurityCheckSumVO {
@@ -9962,467 +9962,467 @@ export interface SecurityCheckSumVO {
    * 安检年度
    * @format int32
    */
-  planYear: number;
+  planYear?: number;
   /** 安检批次 */
-  planBatch: string;
+  planBatch?: string;
   /** 所属燃气公司 */
-  orgId: string;
+  orgId?: string;
   /**
    * 三年未安检用户数
    * @format int64
    */
-  unCheckUserCnt3Year: number;
+  unCheckUserCnt3Year?: number;
   /**
    * 应安检用户数
    * @format int64
    */
-  userCnt: number;
+  userCnt?: number;
   /**
    * 未安检用户数
    * @format int64
    */
-  unCheckUserCnt: number;
+  unCheckUserCnt?: number;
   /**
    * 已安检用户数
    * @format int64
    */
-  checkedUserCnt: number;
+  checkedUserCnt?: number;
   /** 所属燃气公司枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 export interface SecurityCheckRecQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /**
    * 关联企业安检计划id
    * @format int64
    */
-  checkPlanId: number;
+  checkPlanId?: number;
   /** 用户类型 */
-  userType: SecurityCheckRecQueryUserType;
+  userType?: SecurityCheckRecQueryUserType;
   /**
    * 安检结果
    * @format int32
    */
-  checkState: number;
+  checkState?: number;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 用户类型枚举中文描述 */
-  _userType: string;
+  _userType?: string;
 }
 
 export interface PageResultListSecurityCheckRecPageVO {
-  code: string;
-  data: SecurityCheckRecPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<SecurityCheckRecPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 export interface SecurityCheckRecPageVO {
   /** 用户id */
-  id: string;
+  id?: string;
   /**
    * 安检年度
    * @format int32
    */
-  planYear: number;
+  planYear?: number;
   /** 安检批次 */
-  planBatch: string;
+  planBatch?: string;
   /**
    * 安检计划开始日期
    * @format date
    */
-  startDate: string;
+  startDate?: string;
   /**
    * 安检计划结束日期
    * @format date
    */
-  endDate: string;
+  endDate?: string;
   /** 所属燃气公司 */
-  orgId: string;
+  orgId?: string;
   /** 行政区划 */
-  districtId: string;
+  districtId?: string;
   /** 用户号 */
-  gasUserNo: string;
+  gasUserNo?: string;
   /** 用户类型 */
-  userType: SecurityCheckRecPageVoUserType;
+  userType?: SecurityCheckRecPageVoUserType;
   /** 用户地址 */
-  address: string;
+  address?: string;
   /** 所在小区/工商业名称 */
-  location: string;
+  location?: string;
   /**
    * 入户安检时间
    * @format date
    */
-  checkDate: string;
+  checkDate?: string;
   /** 排查结果 */
-  checkResult: SecurityCheckRecPageVoCheckResult;
+  checkResult?: SecurityCheckRecPageVoCheckResult;
   /**
    * 最后一次安检时间
    * @format date
    */
-  lastCheckDate: string;
+  lastCheckDate?: string;
   /** 所属燃气公司枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 行政区划枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 用户类型枚举中文描述 */
-  _userType: string;
+  _userType?: string;
   /** 排查结果枚举中文描述 */
-  _checkResult: string;
+  _checkResult?: string;
 }
 
 export interface SecurityCheckQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /**
    * 安检年度
    * @format int32
    */
-  planYear: number;
+  planYear?: number;
   /** 安检批次 */
-  planBatch: string;
+  planBatch?: string;
   /** 安全监测类型 */
-  planType: SecurityCheckQueryPlanType;
-  planTypeStr: string;
+  planType?: SecurityCheckQueryPlanType;
+  planTypeStr?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 安全监测类型枚举中文描述 */
-  _planType: string;
+  _planType?: string;
 }
 
 export interface PageResultListSecurityCheckPageVO {
-  code: string;
-  data: SecurityCheckPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<SecurityCheckPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 export interface SecurityCheckPageVO {
-  id: string;
+  id?: string;
   /**
    * 安检年度
    * @format int32
    */
-  planYear: number;
+  planYear?: number;
   /** 安检批次 */
-  planBatch: string;
+  planBatch?: string;
   /**
    * 安检计划开始日期
    * @format date
    */
-  startDate: string;
+  startDate?: string;
   /**
    * 安检计划结束日期
    * @format date
    */
-  endDate: string;
+  endDate?: string;
   /** 所属燃气公司 */
-  orgId: string;
+  orgId?: string;
   /**
    * 安检进度
    * @format double
    */
-  completeRate: number;
+  completeRate?: number;
   /**
    * 计划安检用户数
    * @format int64
    */
-  userCnt: number;
+  userCnt?: number;
   /**
    * 居民用户计划安检数
    * @format int64
    */
-  residentCnt: number;
+  residentCnt?: number;
   /**
    * 工商用户计划安检数
    * @format int64
    */
-  businessCnt: number;
+  businessCnt?: number;
   /**
    * 居民用户已完成安检数
    * @format int64
    */
-  residentCheckedCnt: number;
+  residentCheckedCnt?: number;
   /**
    * 工商用户已完成安检数
    * @format int64
    */
-  businessCheckedCnt: number;
+  businessCheckedCnt?: number;
   /** 所属燃气公司枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 export interface ResultSecCheckSummaryVO {
-  code: string;
-  data: SecCheckSummaryVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: SecCheckSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface SecCheckSummaryVO {
   /** 入户安检总体完成率 */
-  rate: string;
+  rate?: string;
   /**
    * 三年未入户安检的用户数量
    * @format int32
    */
-  threeUnCheckedUserCnt: number;
+  threeUnCheckedUserCnt?: number;
   /**
    * 计划安检户数
    * @format int32
    */
-  userCnt: number;
+  userCnt?: number;
   /**
    * 已完成安检户数
    * @format int32
    */
-  checkedCnt: number;
+  checkedCnt?: number;
   /**
    * 未完成安检户数
    * @format int32
    */
-  unCheckCnt: number;
+  unCheckCnt?: number;
   /**
    * 未完成安检户数中的 拒绝安检户数
    * @format int32
    */
-  rejectCnt: number;
+  rejectCnt?: number;
   /**
    * 未完成安检户数中的 到访不遇安检户数
    * @format int32
    */
-  missCnt: number;
+  missCnt?: number;
   /**
    * 未完成安检户数中的 未覆盖户数(即无检查记录的)
    * @format int32
    */
-  unDo: number;
+  unDo?: number;
 }
 
 export interface EndUserSecCheckSummaryDTO {
   /** 关联企业 */
-  orgId: string;
+  orgId?: string;
   /** 安检批次 */
-  planBatch: string;
+  planBatch?: string;
   /**
    * 居民用户-计划安检用户数
    * @format int32
    */
-  residentCnt: number;
+  residentCnt?: number;
   /**
    * 居民用户-已完成安检数
    * @format int32
    */
-  residentCheckedCnt: number;
+  residentCheckedCnt?: number;
   /** 居民用户-安检完成率 */
-  residentCompleteRate: string;
+  residentCompleteRate?: string;
   /**
    * 居民用户-未安检数
    * @format int32
    */
-  residentUndoCnt: number;
+  residentUndoCnt?: number;
   /**
    * 居民用户-到访不遇数
    * @format int32
    */
-  residentMissCnt: number;
+  residentMissCnt?: number;
   /**
    * 居民用户-拒绝安检数
    * @format int32
    */
-  residentRejectCnt: number;
+  residentRejectCnt?: number;
   /**
    * 居民用户-三年未检数
    * @format int32
    */
-  residentThreeNotCheckCnt: number;
+  residentThreeNotCheckCnt?: number;
   /**
    * 工商业用户-计划安检用户数
    * @format int32
    */
-  businessCnt: number;
+  businessCnt?: number;
   /**
    * 工商业用户-已完成安检数
    * @format int32
    */
-  busCheckedCnt: number;
+  busCheckedCnt?: number;
   /** 工商业用户-安检完成率 */
-  busCompleteRate: string;
+  busCompleteRate?: string;
   /**
    * 工商业用户-未检用户数
    * @format int32
    */
-  busUndoCnt: number;
+  busUndoCnt?: number;
   /**
    * 工商业用户-到访不遇数
    * @format int32
    */
-  busMissCnt: number;
+  busMissCnt?: number;
   /**
    * 工商业用户-拒绝安检数
    * @format int32
    */
-  busRejectCnt: number;
+  busRejectCnt?: number;
   /**
    * 工商业用户-三年未检数
    * @format int32
    */
-  busThreeNotCheckCnt: number;
+  busThreeNotCheckCnt?: number;
   /** 关联企业枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 export interface EndUserSecCheckSummaryVO {
-  summary: EndUserSecCheckSummaryDTO;
-  list: EndUserSecCheckSummaryDTO[];
+  summary?: EndUserSecCheckSummaryDTO;
+  list?: Array<EndUserSecCheckSummaryDTO>;
 }
 
 export interface ResultEndUserSecCheckSummaryVO {
-  code: string;
-  data: EndUserSecCheckSummaryVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: EndUserSecCheckSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface PageResultListSecCheckThreeYearsUnCheckPageDTO {
-  code: string;
-  data: SecCheckThreeYearsUnCheckPageDTO[];
-  message: string;
+  code?: string;
+  data?: Array<SecCheckThreeYearsUnCheckPageDTO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 export interface SecCheckThreeYearsUnCheckPageDTO {
   /** 户号 */
-  gasUserNo: string;
+  gasUserNo?: string;
   /** 用户地址 */
-  address: string;
+  address?: string;
   /** 所属社区 */
-  communityName: string;
+  communityName?: string;
   /** 所属燃气企业 */
-  orgId: string;
+  orgId?: string;
   /**
    * 最近一次入户安检日期
    * @format date
    */
-  checkDate: string;
+  checkDate?: string;
   /** 所属燃气企业枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 /** 气瓶信息 */
 export interface BottleInfoVO {
   /** 气瓶编号 */
-  bottleId: string;
+  bottleId?: string;
   /** 气瓶条码 */
-  labelNo: string;
+  labelNo?: string;
   /** 二维码地址 */
-  qrCode: string;
+  qrCode?: string;
   /** 自有编码 */
-  ownCode: string;
+  ownCode?: string;
   /**
    * 规格
    * @format int32
    */
-  standard: number;
+  standard?: number;
   /** 出厂编码 */
-  factoryCode: string;
+  factoryCode?: string;
   /**
    * 出厂日期
    * @format date
    */
-  productDate: string;
+  productDate?: string;
   /** 制造单位 */
-  manufacturer: string;
+  manufacturer?: string;
   /** 制造年月 */
-  manufacturingDate: string;
+  manufacturingDate?: string;
   /**
    * 建档日期
    * @format date
    */
-  recordDate: string;
+  recordDate?: string;
   /** 末检年月 */
-  lastTestDate: string;
+  lastTestDate?: string;
   /** 下检年月 */
-  nextTestDate: string;
+  nextTestDate?: string;
   /**
    * 报废日期
    * @format date
    */
-  scrapDate: string;
+  scrapDate?: string;
   /** 使用状态 */
-  useState: string;
+  useState?: string;
   /** 是否在用重瓶 */
-  inHeavyBottle: boolean;
+  inHeavyBottle?: boolean;
   /** 是否流转正常 */
-  circulationNormal: boolean;
+  circulationNormal?: boolean;
 }
 
 export interface ResultBottleInfoVO {
-  code: string;
+  code?: string;
   /** 气瓶信息 */
-  data: BottleInfoVO;
-  message: string;
-  success: boolean;
+  data?: BottleInfoVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 气瓶GIS撒点信息 */
 export interface BottleMapInfoVO {
-  bottleId: string;
-  longitude: string;
-  latitude: string;
+  bottleId?: string;
+  longitude?: string;
+  latitude?: string;
 }
 
 export interface ResultListBottleMapInfoVO {
-  code: string;
-  data: BottleMapInfoVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<BottleMapInfoVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 燃气企业底数请求 */
@@ -10431,149 +10431,149 @@ export interface BaseDataRequest {
    * 企业ID
    * @format int64
    */
-  enterpriseId: number;
+  enterpriseId?: number;
   /** 主类型 */
-  mainType: string;
+  mainType?: string;
   /** 子类型 */
-  subType: string;
+  subType?: string;
   /** 子类型值 */
-  subValue: string;
+  subValue?: string;
   /**
    * 序号
    * @format int32
    */
-  sort: number;
+  sort?: number;
 }
 
 export interface EnterpriseBaseDataDO {
   /** @format int64 */
-  uid: number;
+  uid?: number;
   /** @format int64 */
-  enterpriseId: number;
-  mainType: string;
-  subType: string;
-  subValue: string;
+  enterpriseId?: number;
+  mainType?: string;
+  subType?: string;
+  subValue?: string;
   /** @format int32 */
-  sort: number;
+  sort?: number;
   /** @format date-time */
-  createTime: string;
+  createTime?: string;
   /** @format date-time */
-  updateTime: string;
-  id: string;
+  updateTime?: string;
+  id?: string;
 }
 
 export interface ResultListEnterpriseBaseDataDO {
-  code: string;
-  data: EnterpriseBaseDataDO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<EnterpriseBaseDataDO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 应急预案分页查询请求 */
 export interface EmresPlanRequest {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 预案类型 */
-  planType: EmresPlanRequestPlanType[];
+  planType?: Array<EmresPlanRequestPlanType>;
   /**
    * 预案上传时间开始
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  startTime: string;
+  startTime?: string;
   /**
    * 预案上传时间结束
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  endTime: string;
+  endTime?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 /** 应急预案VO */
 export interface EmresPlanVO {
   /** ID */
-  uid: string;
+  uid?: string;
   /** 应急预案编号 */
-  planCode: string;
+  planCode?: string;
   /** 应急预案名称 */
-  planName: string;
+  planName?: string;
   /** 预案类型 */
-  planType: EmresPlanVoPlanType;
+  planType?: EmresPlanVoPlanType;
   /** 行政区划 */
-  districtId: string;
+  districtId?: string;
   /** 组织机构 */
-  orgId: string;
+  orgId?: string;
   /** 创建人 */
-  createBy: string;
+  createBy?: string;
   /**
    * 创建时间
    * @format date-time
    */
-  createTime: string;
+  createTime?: string;
   /** 更新人 */
-  updateBy: string;
+  updateBy?: string;
   /**
    * 更新时间
    * @format date-time
    */
-  updateTime: string;
+  updateTime?: string;
   /** 文件id集合，多个以逗号分隔 */
-  fileIds: string;
+  fileIds?: string;
   /** 应急预案历史变更记录 */
-  historyDetail: PlanHistory[];
+  historyDetail?: Array<PlanHistory>;
   /** 预案类型枚举中文描述 */
-  _planType: string;
+  _planType?: string;
   /** 行政区划枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 组织机构枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 export interface PageResultListEmresPlanVO {
-  code: string;
-  data: EmresPlanVO[];
-  message: string;
+  code?: string;
+  data?: Array<EmresPlanVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 /** 应急预案历史变更记录VO */
 export interface PlanHistory {
   /** 应急预案编号 */
-  planCode: string;
+  planCode?: string;
   /** 更新原因 */
-  updateReason: string;
+  updateReason?: string;
   /** 更新人 */
-  createBy: string;
+  createBy?: string;
   /**
    * 更新时间
    * @format date-time
    */
-  createTime: string;
+  createTime?: string;
   /** 文件id集合，多个以逗号分隔 */
-  fileIds: string;
+  fileIds?: string;
 }
 
 /** 实时监测分页信息VO */
@@ -10582,144 +10582,144 @@ export interface EmresPlanSummaryVO {
    * 应急预案总数
    * @format int64
    */
-  total: number;
+  total?: number;
   /**
    * 综合应急预案数
    * @format int64
    */
-  zhCnt: number;
+  zhCnt?: number;
   /**
    * 专项应急预案数
    * @format int64
    */
-  zxCnt: number;
+  zxCnt?: number;
   /**
    * 现场处置应急预案数
    * @format int64
    */
-  xcczCnt: number;
+  xcczCnt?: number;
   /**
    * 其他类应急预案数
    * @format int64
    */
-  otherCnt: number;
+  otherCnt?: number;
 }
 
 export interface ResultEmresPlanSummaryVO {
-  code: string;
+  code?: string;
   /** 实时监测分页信息VO */
-  data: EmresPlanSummaryVO;
-  message: string;
-  success: boolean;
+  data?: EmresPlanSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultEmresPlanVO {
-  code: string;
+  code?: string;
   /** 应急预案VO */
-  data: EmresPlanVO;
-  message: string;
-  success: boolean;
+  data?: EmresPlanVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultListDistrictVO {
-  code: string;
-  data: DistrictVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<DistrictVO>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultMapStringListDictionaryItem {
-  code: string;
-  data: Record<string, any>;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Record<string, any>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 燃气危险源详情信息 */
 export interface DangerDetailVO {
   /** 主键 */
-  cmKid: string;
+  cmKid?: string;
   /** 危险源编号 */
-  dangerCode: string;
+  dangerCode?: string;
   /**  危险源名称 */
-  name: string;
+  name?: string;
   /**  危险源分类 */
-  type: string;
+  type?: string;
   /** 特征简述 */
-  hazardFeature: string;
+  hazardFeature?: string;
   /** 是否重大危险源 */
-  flgMajor: string;
+  flgMajor?: string;
   /** 是否重大危险源 */
-  flgChemical: string;
+  flgChemical?: string;
   /** 化学工艺 */
-  flgChemiTech: string;
+  flgChemiTech?: string;
   /** 所属区域 */
-  cmRegflag: string;
+  cmRegflag?: string;
   /** 详细地址 */
-  address: string;
+  address?: string;
   /** 风险等级 */
-  riskLevel: string;
+  riskLevel?: string;
   /** 风险行业 */
-  riskIndustry: string;
+  riskIndustry?: string;
   /** 风险描述 */
-  riskDesc: string;
+  riskDesc?: string;
   /** 影响范围 */
-  influenceScope: string;
+  influenceScope?: string;
   /** 影响人员 */
-  influencePersons: string;
+  influencePersons?: string;
   /** 社会影响 */
-  influenceSociety: string;
+  influenceSociety?: string;
   /** 影响环境 */
-  influenceEnv: string;
+  influenceEnv?: string;
   /** 财产损失 */
-  influenceProperty: string;
+  influenceProperty?: string;
   /** 所属单位 */
-  belongUnit: string;
+  belongUnit?: string;
   /** 负责人 */
-  director: string;
+  director?: string;
   /** 负责人电话 */
-  directorPhone: string;
+  directorPhone?: string;
   /** 监督单位 */
-  superviseUnit: string;
+  superviseUnit?: string;
   /** 填表负责人 */
-  filledPerson: string;
+  filledPerson?: string;
   /** 填表负责人 */
-  filledPhone: string;
+  filledPhone?: string;
   /**
    * 填表日期
    * @format date
    */
-  filledDate: string;
+  filledDate?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /**  纬度 */
-  latitude: number;
+  latitude?: number;
   /**
    * 创建时间
    * @format date-time
    */
-  cmAddtime: string;
+  cmAddtime?: string;
   /**
    * 修改时间
    * @format date-time
    */
-  cmUptime: string;
+  cmUptime?: string;
   /** 创建人 */
-  cmCreator: string;
+  cmCreator?: string;
   /** 修改人 */
-  cmModifier: string;
+  cmModifier?: string;
   /** 备注 */
-  remake: string;
+  remake?: string;
   /** 地理坐标  有地理坐标的数据增加 其他的删除 */
-  cmGeom: string;
+  cmGeom?: string;
 }
 
 export interface ResultDangerDetailVO {
-  code: string;
+  code?: string;
   /** 燃气危险源详情信息 */
-  data: DangerDetailVO;
-  message: string;
-  success: boolean;
+  data?: DangerDetailVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 隐患清单 */
@@ -10728,28 +10728,28 @@ export interface BsEnterpriseHidangerHandleDTO {
    * 隐患总数
    * @format int32
    */
-  total: number;
+  total?: number;
   /**
    * 已整改个数
    * @format int32
    */
-  handledCnt: number;
+  handledCnt?: number;
   /**
    * 整改中个数
    * @format int32
    */
-  handlingCnt: number;
+  handlingCnt?: number;
   /**
    * 未整改个数
    * @format int32
    */
-  unHandledCnt: number;
+  unHandledCnt?: number;
   /** 整改率,百分比,前端拼接个百分号就行 */
-  handleRate: string;
+  handleRate?: string;
   /** 所属企业 */
-  orgId: string;
+  orgId?: string;
   /** 所属企业枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 export interface BsPipeGasHidangerSummaryVO {
@@ -10757,26 +10757,26 @@ export interface BsPipeGasHidangerSummaryVO {
    * 隐患总数
    * @format int32
    */
-  total: number;
+  total?: number;
   /**
    * 已整改数量
    * @format int32
    */
-  handled: number;
+  handled?: number;
   /**
    * 未整改数量
    * @format int32
    */
-  unHandled: number;
+  unHandled?: number;
   /** 隐患清单 */
-  rankList: BsEnterpriseHidangerHandleDTO[];
+  rankList?: Array<BsEnterpriseHidangerHandleDTO>;
 }
 
 export interface ResultBsPipeGasHidangerSummaryVO {
-  code: string;
-  data: BsPipeGasHidangerSummaryVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: BsPipeGasHidangerSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 企业安检 */
@@ -10785,59 +10785,59 @@ export interface ComSupPipeGasDTO {
    * 检查计划数量
    * @format int32
    */
-  planCnt: number;
+  planCnt?: number;
   /**
    * 检查对象/企业数量
    * @format int32
    */
-  objectCnt: number;
+  objectCnt?: number;
   /**
    * 隐患数量
    * @format int32
    */
-  dangerCnt: number;
+  dangerCnt?: number;
 }
 
 /** 管道气综合监管-安全检查 */
 export interface ComSupSafeCheckVO {
   /** 企业安检 */
-  govCheck: ComSupPipeGasDTO;
+  govCheck?: ComSupPipeGasDTO;
   /** 企业安检 */
-  enterpriseCheck: ComSupPipeGasDTO;
+  enterpriseCheck?: ComSupPipeGasDTO;
   /**
    * 三方检测评估,管网公里
    * @format int32
    */
-  thirdPipeKm: number;
+  thirdPipeKm?: number;
   /**
    * 三方检测评估,场站评估
    * @format int32
    */
-  thirdStationCnt: number;
+  thirdStationCnt?: number;
 }
 
 export interface ResultComSupSafeCheckVO {
-  code: string;
+  code?: string;
   /** 管道气综合监管-安全检查 */
-  data: ComSupSafeCheckVO;
-  message: string;
-  success: boolean;
+  data?: ComSupSafeCheckVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultListBsEnterpriseHidangerHandleDTO {
-  code: string;
-  data: BsEnterpriseHidangerHandleDTO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<BsEnterpriseHidangerHandleDTO>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ComSupLgEnterpriseDTO {
   /** 所属企业 */
-  orgId: string;
+  orgId?: string;
   /** 隐患类型统计 */
-  items: Item[];
+  items?: Array<Item>;
   /** 所属企业枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 export interface ComSupLgEnterpriseVO {
@@ -10845,107 +10845,107 @@ export interface ComSupLgEnterpriseVO {
    * 总数
    * @format int32
    */
-  total: number;
+  total?: number;
   /**
    * 未整改数量
    * @format int32
    */
-  unHandledCnt: number;
+  unHandledCnt?: number;
   /**
    * 整改中数量
    * @format int32
    */
-  handlingCnt: number;
+  handlingCnt?: number;
   /**
    * 已整改数量
    * @format int32
    */
-  handledCnt: number;
-  handledItem: ComSupLgEnterpriseDTO[];
-  unHandledItem: ComSupLgEnterpriseDTO[];
-  handedRate: string;
-  unHandledRate: string;
+  handledCnt?: number;
+  handledItem?: Array<ComSupLgEnterpriseDTO>;
+  unHandledItem?: Array<ComSupLgEnterpriseDTO>;
+  handedRate?: string;
+  unHandledRate?: string;
 }
 
 /** 隐患类型统计 */
 export interface Item {
   /** 隐患主体类型 */
-  subjectType: string;
+  subjectType?: string;
   /**
    * 数量
    * @format int32
    */
-  count: number;
+  count?: number;
 }
 
 export interface ResultComSupLgEnterpriseVO {
-  code: string;
-  data: ComSupLgEnterpriseVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: ComSupLgEnterpriseVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultListComSupLgEnterpriseDTO {
-  code: string;
-  data: ComSupLgEnterpriseDTO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<ComSupLgEnterpriseDTO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 液化气综合监管-隐患排查 */
 export interface ComSupLGTypeLevelCountDTO {
   /** 隐患主体 */
-  subjectType: string;
+  subjectType?: string;
   /**
    * 隐患总数
    * @format int32
    */
-  total: number;
+  total?: number;
   /**
    * 重大隐患数
    * @format int32
    */
-  zdCnt: number;
+  zdCnt?: number;
   /**
    * 较大隐患数
    * @format int32
    */
-  jdCnt: number;
+  jdCnt?: number;
   /**
    * 一般隐患数
    * @format int32
    */
-  ybCnt: number;
+  ybCnt?: number;
 }
 
 export interface ComSupSubjectTypeVO {
   /** @format int32 */
-  total: number;
-  items: ComSupLGTypeLevelCountDTO[];
+  total?: number;
+  items?: Array<ComSupLGTypeLevelCountDTO>;
 }
 
 export interface ResultComSupSubjectTypeVO {
-  code: string;
-  data: ComSupSubjectTypeVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: ComSupSubjectTypeVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultListObject {
-  code: string;
-  data: object[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<object>;
+  message?: string;
+  success?: boolean;
 }
 
 /** pc-终端用户-隐患统计 */
 export interface EndUserHidangerSummary {
   /** 按隐患状态统计 */
-  stateCnt: HidangerStateDTO;
+  stateCnt?: HidangerStateDTO;
   /** 按隐患趋势统计 */
-  trendCnt: HidangerTrendDTO[];
+  trendCnt?: Array<HidangerTrendDTO>;
   /** 按隐患类型统计 */
-  typeCnt: HidangerTypeDTO[];
+  typeCnt?: Array<HidangerTypeDTO>;
 }
 
 /** 按隐患状态统计 */
@@ -10954,154 +10954,154 @@ export interface HidangerStateDTO {
    * 终端用户-隐患总数
    * @format int32
    */
-  totalCnt: number;
+  totalCnt?: number;
   /**
    * 终端用户-未整改隐患数量
    * @format int32
    */
-  unHandledCnt: number;
+  unHandledCnt?: number;
   /**
    * 终端用户-整改中隐患数量
    * @format int32
    */
-  handlingCnt: number;
+  handlingCnt?: number;
   /**
    * 终端用户-已整改隐患数量
    * @format int32
    */
-  handledCnt: number;
+  handledCnt?: number;
   /**
    * 终端用户-超期未整改隐患数量
    * @format int32
    */
-  overDueCount: number;
+  overDueCount?: number;
   /** 终端用户 隐患整改率 */
-  handleRate: string;
+  handleRate?: string;
 }
 
 /** 按隐患趋势统计 */
 export interface HidangerTrendDTO {
-  date: string;
+  date?: string;
   /** @format int32 */
-  orgCnt: number;
+  orgCnt?: number;
   /** @format int32 */
-  govCnt: number;
+  govCnt?: number;
 }
 
 /** 按隐患类型统计 */
 export interface HidangerTypeDTO {
   /** 终端用户隐患类型 */
-  type: string;
+  type?: string;
   /**
    * 终端用户隐患数量
    * @format int32
    */
-  cnt: number;
+  cnt?: number;
 }
 
 export interface ResultEndUserHidangerSummary {
-  code: string;
+  code?: string;
   /** pc-终端用户-隐患统计 */
-  data: EndUserHidangerSummary;
-  message: string;
-  success: boolean;
+  data?: EndUserHidangerSummary;
+  message?: string;
+  success?: boolean;
 }
 
 /** 公告信息查询 */
 export interface BulletinQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** @uniqueItems true */
-  districtIds: string[];
+  districtIds?: Array<string> | string;
   /** 公告标题 */
-  bulletinTitle: string;
+  bulletinTitle?: string;
   /** 公告类型 */
-  bulletinType: BulletinQueryBulletinType[];
+  bulletinType?: Array<BulletinQueryBulletinType>;
   /**
    * 发布时间开始
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  startTime: string;
+  startTime?: string;
   /**
    * 发布时间结束
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  endTime: string;
+  endTime?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 /** 公告信息VO */
 export interface BulletinVO {
   /** id */
-  uid: string;
+  uid?: string;
   /** 公告类型 */
-  bulletinType: BulletinVoBulletinType;
+  bulletinType?: BulletinVoBulletinType;
   /** 公告标题 */
-  bulletinTitle: string;
+  bulletinTitle?: string;
   /** 公告正文 */
-  bulletinText: string;
+  bulletinText?: string;
   /**
    * 发布时间
    * @format date-time
    */
-  publishTime: string;
+  publishTime?: string;
   /**
    * 创建时间
    * @format date-time
    */
-  createTime: string;
+  createTime?: string;
   /** 创建人 */
-  createBy: string;
+  createBy?: string;
   /**
    * 最后更新时间
    * @format date-time
    */
-  lastUpdateTime: string;
+  lastUpdateTime?: string;
   /** 更新人 */
-  lastUpdateBy: string;
+  lastUpdateBy?: string;
   /**
    * 通知日期
    * @format date
    */
-  noticeTime: string;
+  noticeTime?: string;
   /** 主管单位 */
-  managerBy: string;
+  managerBy?: string;
   /** 通知公司 */
-  noticeCompany: string;
-  fileId: string;
+  noticeCompany?: string;
+  fileId?: string;
   /** 公告类型枚举中文描述 */
-  _bulletinType: string;
+  _bulletinType?: string;
 }
 
 export interface PageResultListBulletinVO {
-  code: string;
-  data: BulletinVO[];
-  message: string;
+  code?: string;
+  data?: Array<BulletinVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 /** 公告信息VO */
@@ -11110,90 +11110,90 @@ export interface BulletinDetailVO {
    * id
    * @format int64
    */
-  uid: number;
+  uid?: number;
   /** 公告类型 */
-  bulletinType: BulletinDetailVoBulletinType;
+  bulletinType?: BulletinDetailVoBulletinType;
   /** 公告标题 */
-  bulletinTitle: string;
+  bulletinTitle?: string;
   /** 公告正文 */
-  bulletinText: string;
+  bulletinText?: string;
   /**
    * 发布时间
    * @format date-time
    */
-  publishTime: string;
+  publishTime?: string;
   /**
    * 创建时间
    * @format date-time
    */
-  createTime: string;
+  createTime?: string;
   /** 创建人 */
-  createBy: string;
+  createBy?: string;
   /**
    * 最后更新时间
    * @format date-time
    */
-  lastUpdateTime: string;
+  lastUpdateTime?: string;
   /** 更新人 */
-  lastUpdateBy: string;
+  lastUpdateBy?: string;
   /** 主管单位 */
-  managerBy: string;
-  fileId: string;
+  managerBy?: string;
+  fileId?: string;
   /** 消息推送记录 */
-  urgeMsgVOList: BulletinMsgHisDTO[];
+  urgeMsgVOList?: Array<BulletinMsgHisDTO>;
   /** 公告类型枚举中文描述 */
-  _bulletinType: string;
+  _bulletinType?: string;
 }
 
 /** 消息推送查询VO */
 export interface BulletinMsgHisDTO {
   /** 催办消息记录id */
-  uid: string;
+  uid?: string;
   /** 消息标识：隐患编号 或 报警编号等关键标识 */
-  msgFlag: string;
+  msgFlag?: string;
   /** 消息标题 */
-  title: string;
+  title?: string;
   /** 消息内容 */
-  content: string;
+  content?: string;
   /**
    * 创建时间
    * @format date-time
    */
-  createTime: string;
+  createTime?: string;
   /** 创建人 */
-  createBy: string;
+  createBy?: string;
   /**
    * 最后更新时间
    * @format date-time
    */
-  lastUpdateTime: string;
+  lastUpdateTime?: string;
   /** 消息接收人 */
-  recipient: string;
+  recipient?: string;
   /** 消息接收人名称 */
-  recipientName: string;
+  recipientName?: string;
   /** 消息接收人电话 */
-  recipientPhone: string;
+  recipientPhone?: string;
   /** 通知状态，未接通/已送达等 */
-  sendStatus: BulletinMsgHisDtoSendStatus;
+  sendStatus?: BulletinMsgHisDtoSendStatus;
   /**
    * 推送状态变更时间
    * @format date-time
    */
-  sendTime: string;
+  sendTime?: string;
   /** 消息接收人单位 */
-  recipientUnit: string;
+  recipientUnit?: string;
   /** 主管单位 */
-  masterUnit: string;
+  masterUnit?: string;
   /** 通知状态，未接通/已送达等枚举中文描述 */
-  _sendStatus: string;
+  _sendStatus?: string;
 }
 
 export interface ResultBulletinDetailVO {
-  code: string;
+  code?: string;
   /** 公告信息VO */
-  data: BulletinDetailVO;
-  message: string;
-  success: boolean;
+  data?: BulletinDetailVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 公告信息统计 */
@@ -11202,30 +11202,30 @@ export interface BulletinCountVO {
    * 公告总数
    * @format int32
    */
-  total: number;
+  total?: number;
   /**
    * 法律法规
    * @format int32
    */
-  lrCnt: number;
+  lrCnt?: number;
   /**
    * 政策文件
    * @format int32
    */
-  pdCnt: number;
+  pdCnt?: number;
   /**
    * 通知公告
    * @format int32
    */
-  naCnt: number;
+  naCnt?: number;
 }
 
 export interface ResultBulletinCountVO {
-  code: string;
+  code?: string;
   /** 公告信息统计 */
-  data: BulletinCountVO;
-  message: string;
-  success: boolean;
+  data?: BulletinCountVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 基础统计概览 */
@@ -11234,31 +11234,31 @@ export interface BaseOverallVO {
    * 燃气企业总数(家)
    * @format int32
    */
-  entCnt: number;
+  entCnt?: number;
   /** 燃气管网总长度(公里) */
-  pipeLen: number;
+  pipeLen?: number;
   /** 液化气瓶总数(万个) */
-  botCnt: number;
+  botCnt?: number;
   /**
    * 场站总数(个)
    * @format int32
    */
-  stnCnt: number;
+  stnCnt?: number;
   /** 用气用户总数(万户) */
-  userCnt: number;
+  userCnt?: number;
   /**
    * 从业人员总数(人)
    * @format int32
    */
-  staffCnt: number;
+  staffCnt?: number;
 }
 
 export interface ResultBaseOverallVO {
-  code: string;
+  code?: string;
   /** 基础统计概览 */
-  data: BaseOverallVO;
-  message: string;
-  success: boolean;
+  data?: BaseOverallVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 管道气基础统计概览 */
@@ -11267,29 +11267,29 @@ export interface BaseNgOverallVO {
    * 管道气企业总数(家)
    * @format int32
    */
-  entCnt: number;
+  entCnt?: number;
   /** 燃气管网总长度(公里) */
-  pipeLen: number;
+  pipeLen?: number;
   /**
    * 天然气场站总数(个)
    * @format int32
    */
-  stnCnt: number;
+  stnCnt?: number;
   /** 用气用户总数(万户) */
-  userCnt: number;
+  userCnt?: number;
   /**
    * 从业人员总数(人)
    * @format int32
    */
-  staffCnt: number;
+  staffCnt?: number;
 }
 
 export interface ResultBaseNgOverallVO {
-  code: string;
+  code?: string;
   /** 管道气基础统计概览 */
-  data: BaseNgOverallVO;
-  message: string;
-  success: boolean;
+  data?: BaseNgOverallVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 燃气供气信息统计 */
@@ -11298,25 +11298,25 @@ export interface BaseGasSupplyVO {
    * 全年累计销量(天然气-万立方米/液化气-吨)
    * @format int32
    */
-  total: number;
+  total?: number;
   /**
    * 今日采购量(万立方)/今日充装(吨)
    * @format int32
    */
-  todaySupply: number;
+  todaySupply?: number;
   /**
    * 今日使用量(万立方)/今日交付(吨)
    * @format int32
    */
-  todayUsed: number;
+  todayUsed?: number;
 }
 
 export interface ResultBaseGasSupplyVO {
-  code: string;
+  code?: string;
   /** 燃气供气信息统计 */
-  data: BaseGasSupplyVO;
-  message: string;
-  success: boolean;
+  data?: BaseGasSupplyVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 场站统计概览 */
@@ -11325,37 +11325,37 @@ export interface BaseStnOverallVO {
    * 场站总数(个)
    * @format int32
    */
-  stnCnt: number;
+  stnCnt?: number;
   /** 场站分类统计(座) */
-  categories: OverallItemVO[];
+  categories?: Array<OverallItemVO>;
 }
 
 export interface ResultBaseStnOverallVO {
-  code: string;
+  code?: string;
   /** 场站统计概览 */
-  data: BaseStnOverallVO;
-  message: string;
-  success: boolean;
+  data?: BaseStnOverallVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 燃气管网统计概览 */
 export interface BasePipeOverallVO {
   /** 燃气管网总长度(公里) */
-  pipeLen: number;
+  pipeLen?: number;
   /** 燃气管网材质统计(公里) */
-  materials: OverallItemVO[];
+  materials?: Array<OverallItemVO>;
   /** 燃气管网管龄统计(公里) */
-  ages: OverallItemVO[];
+  ages?: Array<OverallItemVO>;
   /** 材质对应管网年限 */
-  materialAge: Record<string, any>;
+  materialAge?: Record<string, any>;
 }
 
 export interface ResultBasePipeOverallVO {
-  code: string;
+  code?: string;
   /** 燃气管网统计概览 */
-  data: BasePipeOverallVO;
-  message: string;
-  success: boolean;
+  data?: BasePipeOverallVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 管道气经营企业基础统计概览 */
@@ -11364,35 +11364,35 @@ export interface BaseEntOverallVO {
    * 企业总数(家)
    * @format int32
    */
-  entCnt: number;
+  entCnt?: number;
   /**
    * 管道天然气企业总数(家)
    * @format int32
    */
-  ngEntCnt: number;
+  ngEntCnt?: number;
   /**
    * 汽车加气企业总数(家)
    * @format int32
    */
-  lpgEntCnt: number;
+  lpgEntCnt?: number;
   /**
    * 液化气企业总数(家)
    * @format int32
    */
-  lngEntCnt: number;
+  lngEntCnt?: number;
   /**
    * 从业人员总数(人)
    * @format int32
    */
-  staffCnt: number;
+  staffCnt?: number;
 }
 
 export interface ResultBaseEntOverallVO {
-  code: string;
+  code?: string;
   /** 管道气经营企业基础统计概览 */
-  data: BaseEntOverallVO;
-  message: string;
-  success: boolean;
+  data?: BaseEntOverallVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 特种设备统计概览 */
@@ -11401,17 +11401,17 @@ export interface BaseSpecDevVO {
    * 特种设备总数(个)
    * @format int32
    */
-  devCnt: number;
+  devCnt?: number;
   /** 特种设备分类统计(个) */
-  categories: OverallItemVO[];
+  categories?: Array<OverallItemVO>;
 }
 
 export interface ResultBaseSpecDevVO {
-  code: string;
+  code?: string;
   /** 特种设备统计概览 */
-  data: BaseSpecDevVO;
-  message: string;
-  success: boolean;
+  data?: BaseSpecDevVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 液化气基础统计概览 */
@@ -11420,153 +11420,153 @@ export interface BaseLngOverallVO {
    * 液化气企业总数(家)
    * @format int32
    */
-  entCnt: number;
+  entCnt?: number;
   /**
    * 罐装站总数(个)
    * @format int32
    */
-  gzStnCnt: number;
+  gzStnCnt?: number;
   /**
    * 供应站总数(个)
    * @format int32
    */
-  gyStnCnt: number;
+  gyStnCnt?: number;
   /**
    * 危运车辆总数(辆)
    * @format int32
    */
-  dangerVehicleCnt: number;
+  dangerVehicleCnt?: number;
   /**
    * 配送车辆总数(辆)
    * @format int32
    */
-  deliveryVehicleCnt: number;
+  deliveryVehicleCnt?: number;
   /** 用气用户总数(户) */
-  userCnt: number;
+  userCnt?: number;
   /**
    * 送气工总数(人)
    * @format int32
    */
-  deliveryStaffCnt: number;
+  deliveryStaffCnt?: number;
   /**
    * 充装工总数(人)
    * @format int32
    */
-  fillStaffCnt: number;
+  fillStaffCnt?: number;
   /**
    * 其他工种总数(人)
    * @format int32
    */
-  otherStaffCnt: number;
+  otherStaffCnt?: number;
 }
 
 export interface ResultBaseLngOverallVO {
-  code: string;
+  code?: string;
   /** 液化气基础统计概览 */
-  data: BaseLngOverallVO;
-  message: string;
-  success: boolean;
+  data?: BaseLngOverallVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 液化气钢瓶统计概览 */
 export interface BaseBotOverallVO {
   /** 钢瓶总数(万个) */
-  botCnt: number;
+  botCnt?: number;
   /** 企业钢瓶统计(万个) */
-  enterprises: OverallItemVO[];
+  enterprises?: Array<OverallItemVO>;
   /** 钢瓶重量规格统计(万个) */
-  standards: OverallItemVO[];
+  standards?: Array<OverallItemVO>;
 }
 
 export interface ResultBaseBotOverallVO {
-  code: string;
+  code?: string;
   /** 液化气钢瓶统计概览 */
-  data: BaseBotOverallVO;
-  message: string;
-  success: boolean;
+  data?: BaseBotOverallVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface BsHidangerDTO {
-  uid: string;
+  uid?: string;
   /** 检查对象名称 */
-  targetName: string;
+  targetName?: string;
   /** 检查对象类型 */
-  targetType: string;
+  targetType?: string;
   /** 检查对象地址 */
-  address: string;
+  address?: string;
   /** 具体问题 */
-  content: string;
+  content?: string;
   /** 隐患第一类 */
-  l1: string;
+  l1?: string;
   /** 隐患第二类 */
-  l2: string;
+  l2?: string;
   /** 隐患第四类 */
-  l4: string;
+  l4?: string;
   /**
    * 检查时间
    * @format date-time
    */
-  checkTime: string;
+  checkTime?: string;
   /** 隐患状态 */
-  dangerState: string;
+  dangerState?: string;
   /** 隐患来源 */
-  dangerSource: BsHidangerDtoDangerSource;
+  dangerSource?: BsHidangerDtoDangerSource;
   /**
    * 催办次数
    * @format int32
    */
-  urgeCount: number;
+  urgeCount?: number;
   /**
    * 经度
    * @format double
    */
-  longitude: number;
+  longitude?: number;
   /**
    * 纬度
    * @format double
    */
-  latitude: number;
+  latitude?: number;
   /** 管网长度,米 */
-  length: string;
+  length?: string;
   /** 管龄,年 */
-  years: string;
+  years?: string;
   /** 管网材质 */
-  material: BsHidangerDtoMaterial;
+  material?: BsHidangerDtoMaterial;
   /** 隐患来源枚举中文描述 */
-  _dangerSource: string;
+  _dangerSource?: string;
   /** 管网材质枚举中文描述 */
-  _material: string;
+  _material?: string;
 }
 
 export interface PageResultListBsHidangerDTO {
-  code: string;
-  data: BsHidangerDTO[];
-  message: string;
+  code?: string;
+  data?: Array<BsHidangerDTO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 export interface BsOldPipeConfigDTO {
-  items: YearlyItem[];
+  items?: Array<YearlyItem>;
 }
 
 /** 各企业计划改造详情 */
 export interface OrgItem {
   /** 企业名称 */
-  orgName: string;
+  orgName?: string;
   /**
    * 计划改造公里数
    * @format double
    */
-  lengthKm: number;
+  lengthKm?: number;
 }
 
 export interface ResultBsOldPipeConfigDTO {
-  code: string;
-  data: BsOldPipeConfigDTO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: BsOldPipeConfigDTO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface YearlyItem {
@@ -11574,58 +11574,58 @@ export interface YearlyItem {
    * 年度
    * @format int32
    */
-  yearly: number;
+  yearly?: number;
   /**
    * 老旧管网总公里数
    * @format double
    */
-  totalKm: number;
+  totalKm?: number;
   /** 各企业计划改造详情 */
-  items: OrgItem[];
+  items?: Array<OrgItem>;
 }
 
 export interface BsHidangerCountItemDTO {
   /** 分类 */
-  category: string;
+  category?: string;
   /**
    * 隐患总数
    * @format int32
    */
-  total: number;
+  total?: number;
   /**
    * 未整改数量
    * @format int32
    */
-  waitHandle: number;
+  waitHandle?: number;
   /**
    * 已整改数量
    * @format int32
    */
-  handled: number;
+  handled?: number;
   /** 整改率 */
-  rate: string;
+  rate?: string;
 }
 
 export interface ResultListBsHidangerCountItemDTO {
-  code: string;
-  data: BsHidangerCountItemDTO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<BsHidangerCountItemDTO>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface BsHidangerHandleItemDTO {
-  category: string;
-  title: string;
-  subTitle: string;
+  category?: string;
+  title?: string;
+  subTitle?: string;
   /** @format int32 */
-  count: number;
+  count?: number;
 }
 
 export interface ResultListBsHidangerHandleItemDTO {
-  code: string;
-  data: BsHidangerHandleItemDTO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<BsHidangerHandleItemDTO>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface BsHidangerHandleSummaryVO {
@@ -11633,80 +11633,80 @@ export interface BsHidangerHandleSummaryVO {
    * 隐患总数
    * @format int32
    */
-  total: number;
+  total?: number;
   /**
    * 已整改数量
    * @format int32
    */
-  handled: number;
+  handled?: number;
   /**
    * 未整改数量
    * @format int32
    */
-  waitHandle: number;
+  waitHandle?: number;
   /** 整改率 */
-  rate: string;
-  list: BsHidangerCountItemDTO[];
+  rate?: string;
+  list?: Array<BsHidangerCountItemDTO>;
 }
 
 export interface ResultBsHidangerHandleSummaryVO {
-  code: string;
-  data: BsHidangerHandleSummaryVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: BsHidangerHandleSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface BsHidangerCountDTO {
   /** 问题大类 */
-  l1: string;
+  l1?: string;
   /** 二级分类 */
-  l2: string;
+  l2?: string;
   /** 三级分类 */
-  l3: string;
+  l3?: string;
   /**
    * 隐患数量
    * @format int32
    */
-  count: number;
+  count?: number;
   /** 扩展字段 */
-  ext1: string;
+  ext1?: string;
 }
 
 export interface ResultListBsHidangerCountDTO {
-  code: string;
-  data: BsHidangerCountDTO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<BsHidangerCountDTO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 入户安检 */
 export interface BsPipeGasCheckSummaryDTO {
   /** 总体完成率 */
-  rate: string;
+  rate?: string;
   /**
    * 数据总量
    * @format int32
    */
-  total: number;
+  total?: number;
   /**
    * 已完成数据量
    * @format int32
    */
-  done: number;
+  done?: number;
 }
 
 export interface BsPipeGasCheckSummaryVO {
   /** 入户安检 */
-  inspection: BsPipeGasCheckSummaryDTO;
+  inspection?: BsPipeGasCheckSummaryDTO;
   /** 入户安检 */
-  indoor: BsPipeGasCheckSummaryDTO;
+  indoor?: BsPipeGasCheckSummaryDTO;
 }
 
 export interface ResultBsPipeGasCheckSummaryVO {
-  code: string;
-  data: BsPipeGasCheckSummaryVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: BsPipeGasCheckSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 大屏首页-安全检查统计 */
@@ -11715,90 +11715,90 @@ export interface BsSafeCheckVO {
    * 全部隐患总数
    * @format int32
    */
-  total: number;
+  total?: number;
   /**
    * 已整改数量
    * @format int32
    */
-  handledCnt: number;
+  handledCnt?: number;
   /**
    * 未整改数量
    * @format int32
    */
-  unHandledCnt: number;
+  unHandledCnt?: number;
   /**
    * 整改中数量
    * @format int32
    */
-  handlingCnt: number;
+  handlingCnt?: number;
   /**
    * 日常检查总数
    * @format int32
    */
-  dailyCnt: number;
+  dailyCnt?: number;
   /**
    * 日常检查-已整改数量
    * @format int32
    */
-  dailyHandledCnt: number;
+  dailyHandledCnt?: number;
   /**
    * 日常检查-未整改数量
    * @format int32
    */
-  dailyUnHandledCnt: number;
+  dailyUnHandledCnt?: number;
   /**
    * 日常检查-整改中数量
    * @format int32
    */
-  dailyHandlingCnt: number;
+  dailyHandlingCnt?: number;
   /**
    * 专项检查总数量
    * @format int32
    */
-  speCnt: number;
+  speCnt?: number;
   /**
    * 专项检查-已整改数量
    * @format int32
    */
-  speHandledCnt: number;
+  speHandledCnt?: number;
   /**
    * 专项检查-未整改数量
    * @format int32
    */
-  speUnhandledCnt: number;
+  speUnhandledCnt?: number;
   /**
    * 专项检查-整改中数量
    * @format int32
    */
-  speHandlingCnt: number;
+  speHandlingCnt?: number;
   /**
    * 三方评估总数
    * @format int32
    */
-  thirdCnt: number;
+  thirdCnt?: number;
   /**
    * 三方评估-已整改数量
    * @format int32
    */
-  thirdHandledCnt: number;
+  thirdHandledCnt?: number;
   /**
    * 三方评估-未整改数量
    * @format int32
    */
-  thirdUnHandledCnt: number;
+  thirdUnHandledCnt?: number;
   /**
    * 三方评估-整改中数量
    * @format int32
    */
-  thirdHandlingCnt: number;
+  thirdHandlingCnt?: number;
 }
 
 export interface ResultBsSafeCheckVO {
-  code: string;
+  code?: string;
   /** 大屏首页-安全检查统计 */
-  data: BsSafeCheckVO;
-  message: string;
-  success: boolean;
+  data?: BsSafeCheckVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 大屏首页-管网隐患排查整改 */
@@ -11807,23 +11807,23 @@ export interface BsPipelineDangerTypesDTO {
    * 管网隐患总数
    * @format int32
    */
-  total: number;
+  total?: number;
   /**
    * 管网隐患-已整改数量
    * @format int32
    */
-  handled: number;
+  handled?: number;
   /** 管网隐患-整改率-百分比 */
-  rate: string;
+  rate?: string;
   /** 管网隐患-隐患类型 */
-  dangerType: string;
+  dangerType?: string;
 }
 
 export interface ResultListBsPipelineDangerTypesDTO {
-  code: string;
-  data: BsPipelineDangerTypesDTO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<BsPipelineDangerTypesDTO>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface BsThirdCheckSummaryVO {
@@ -11831,117 +11831,117 @@ export interface BsThirdCheckSummaryVO {
    * 检查管网-公里
    * @format int32
    */
-  pipeKm: number;
+  pipeKm?: number;
   /**
    * 管网隐患数量
    * @format int32
    */
-  pipeDangerCnt: number;
+  pipeDangerCnt?: number;
   /**
    * 管网隐患已整改数量
    * @format int32
    */
-  pipeHandledDangerCnt: number;
+  pipeHandledDangerCnt?: number;
   /**
    * 管网隐患未整改数量
    * @format int32
    */
-  pipeUnHandledDangerCnt: number;
+  pipeUnHandledDangerCnt?: number;
   /**
    * 管网隐患整改中数量
    * @format int32
    */
-  pipeHandlingDangerCnt: number;
+  pipeHandlingDangerCnt?: number;
   /**
    * 检查场站数量
    * @format int32
    */
-  stationCnt: number;
+  stationCnt?: number;
   /**
    * 场站隐患数量
    * @format int32
    */
-  stationDangerCnt: number;
+  stationDangerCnt?: number;
   /**
    * 场站隐患已整改数量
    * @format int32
    */
-  stationHandledDangerCnt: number;
+  stationHandledDangerCnt?: number;
   /**
    * 场站隐患未整改数量
    * @format int32
    */
-  stationUnHandledDangerCnt: number;
+  stationUnHandledDangerCnt?: number;
   /**
    * 场站隐患整改中数量
    * @format int32
    */
-  stationHandlingDangerCnt: number;
+  stationHandlingDangerCnt?: number;
 }
 
 export interface ResultBsThirdCheckSummaryVO {
-  code: string;
-  data: BsThirdCheckSummaryVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: BsThirdCheckSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface BsHidangerSubjectSummaryVO {
   /** 终端用户 */
-  endUser: BsHidangerTypeCountDTO[];
+  endUser?: Array<BsHidangerTypeCountDTO>;
   /** 管网隐患 */
-  pipeline: BsHidangerTypeCountDTO[];
+  pipeline?: Array<BsHidangerTypeCountDTO>;
   /** 场站隐患 */
-  station: BsHidangerTypeCountDTO[];
+  station?: Array<BsHidangerTypeCountDTO>;
 }
 
 /** 场站隐患 */
 export interface BsHidangerTypeCountDTO {
   /** 隐患类型 */
-  dangerType: string;
+  dangerType?: string;
   /**
    * 隐患数量
    * @format int32
    */
-  count: number;
+  count?: number;
 }
 
 export interface ResultBsHidangerSubjectSummaryVO {
-  code: string;
-  data: BsHidangerSubjectSummaryVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: BsHidangerSubjectSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface BsGovCheckPlanDTO {
   /** 标题 */
-  title: string;
+  title?: string;
   /** 检查企业 */
-  targetOrgId: string;
+  targetOrgId?: string;
   /** 安全检查形式 */
-  mode: BsGovCheckPlanDtoMode;
+  mode?: BsGovCheckPlanDtoMode;
   /**
    * 检查时间开始
    * @format date
    */
-  startDate: string;
+  startDate?: string;
   /**
    * 检查时间结束
    * @format date
    */
-  endDate: string;
+  endDate?: string;
   /**
    * 检查隐患总数
    * @format int32
    */
-  dangerCnt: number;
+  dangerCnt?: number;
   /**
    * 隐患整改单数
    * @format int32
    */
-  orderCnt: number;
+  orderCnt?: number;
   /** 安全检查形式枚举中文描述 */
-  _mode: string;
+  _mode?: string;
 }
 
 export interface BsGovCheckPlanSummaryVO {
@@ -11949,42 +11949,42 @@ export interface BsGovCheckPlanSummaryVO {
    * 日常检查计划数量
    * @format int32
    */
-  dailyCnt: number;
+  dailyCnt?: number;
   /**
    * 专项检查计划数量
    * @format int32
    */
-  speCnt: number;
+  speCnt?: number;
   /**
    * 整改单数量
    * @format int32
    */
-  orderCnt: number;
+  orderCnt?: number;
   /**
    * 隐患数量
    * @format int32
    */
-  dangerCnt: number;
-  planList: BsGovCheckPlanDTO[];
+  dangerCnt?: number;
+  planList?: Array<BsGovCheckPlanDTO>;
 }
 
 export interface ResultBsGovCheckPlanSummaryVO {
-  code: string;
-  data: BsGovCheckPlanSummaryVO;
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: BsGovCheckPlanSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 隐患排查-企业安全检查 */
 export interface BsEnterpriseSafeCheckVO {
   /** 管网巡线覆盖率 */
-  pipeCoverageRate: string;
+  pipeCoverageRate?: string;
   /** 入户安检 */
-  pipeCount: BsHidangerStateCountDTO;
+  pipeCount?: BsHidangerStateCountDTO;
   /** 入户安检完成率 */
-  indoorCoverageRate: string;
+  indoorCoverageRate?: string;
   /** 入户安检 */
-  indoorCount: BsHidangerStateCountDTO;
+  indoorCount?: BsHidangerStateCountDTO;
 }
 
 /** 入户安检 */
@@ -11993,628 +11993,628 @@ export interface BsHidangerStateCountDTO {
    * 隐患总数
    * @format int32
    */
-  total: number;
+  total?: number;
   /**
    * 已整改数量
    * @format int32
    */
-  handledCnt: number;
+  handledCnt?: number;
   /**
    * 整改中数量
    * @format int32
    */
-  handlingCnt: number;
+  handlingCnt?: number;
   /**
    * 未整改数量
    * @format int32
    */
-  unHandledCnt: number;
+  unHandledCnt?: number;
 }
 
 export interface ResultBsEnterpriseSafeCheckVO {
-  code: string;
+  code?: string;
   /** 隐患排查-企业安全检查 */
-  data: BsEnterpriseSafeCheckVO;
-  message: string;
-  success: boolean;
+  data?: BsEnterpriseSafeCheckVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface HidangerStateQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /**
    * 统计口径: 3-本年,4-累计;默认本年
    * @format int32
    */
-  cycle: number;
+  cycle?: number;
   /**
    * 统计类型: 0-超期未整改,1-待整改,2-待消除,3-已消除,4-隐患总数
    * @format int32
    */
-  type: number;
+  type?: number;
   /** @format date */
-  startDate: string;
+  startDate?: string;
   /** @format date */
-  endDate: string;
+  endDate?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface HidangerStatePageDTO {
-  uid: string;
+  uid?: string;
   /** 隐患id */
-  dangerId: string;
+  dangerId?: string;
   /** 隐患类型 */
-  dangerType: string;
+  dangerType?: string;
   /** 风险要素等级 */
-  level: HidangerStatePageDtoLevel;
+  level?: HidangerStatePageDtoLevel;
   /** 隐患描述 */
-  remark: string;
+  remark?: string;
   /** 隐患地址 */
-  address: string;
+  address?: string;
   /**
    * 排查时间
    * @format date
    */
-  checkDate: string;
+  checkDate?: string;
   /**
    * 整改期限
    * @format date
    */
-  deadline: string;
+  deadline?: string;
   /** 所属企业 */
-  orgId: string;
+  orgId?: string;
   /** 整改状态 */
-  state: string;
-  get_state: string;
+  state?: string;
+  get_state?: string;
   /** 风险要素等级枚举中文描述 */
-  _level: string;
+  _level?: string;
   /** 所属企业枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
 }
 
 export interface PageResultListHidangerStatePageDTO {
-  code: string;
-  data: HidangerStatePageDTO[];
-  message: string;
+  code?: string;
+  data?: Array<HidangerStatePageDTO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 export interface ResultHidangerStateDTO {
-  code: string;
+  code?: string;
   /** 按隐患状态统计 */
-  data: HidangerStateDTO;
-  message: string;
-  success: boolean;
+  data?: HidangerStateDTO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 救援人员分页查询条件 */
 export interface EmresMnRetmanPageQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 队伍编号 */
-  orgid: string;
+  orgid?: string;
   /** 队伍名称 */
-  orgName: string;
+  orgName?: string;
   /** 级别 */
-  levelCode: string;
+  levelCode?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 /** 救援人员EmresMnRetmanPageVO */
 export interface EmresMnRetmanPageVO {
   /** 救援队编号 */
-  orgid: string;
+  orgid?: string;
   /** 救援队名称 */
-  orgName: string;
+  orgName?: string;
   /** 人员编号 */
-  persoNum: string;
+  persoNum?: string;
   /** 人员名称 */
-  persoName: string;
+  persoName?: string;
   /** 联系电话 */
-  personTel: string;
+  personTel?: string;
   /** 职务 */
-  persotitle: string;
+  persotitle?: string;
   /** 专长或特长 */
-  speciality: string;
+  speciality?: string;
   /** 填报人 */
-  cmCreator: string;
+  cmCreator?: string;
   /** 填报人电话 */
-  cmTel: string;
+  cmTel?: string;
   /**
    * 填报时间
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  cmAddtime: string;
+  cmAddtime?: string;
   /**
    * 更新时间
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  cmUptime: string;
+  cmUptime?: string;
   /** 主键 */
-  cmKid: string;
+  cmKid?: string;
 }
 
 export interface PageResultListEmresMnRetmanPageVO {
-  code: string;
-  data: EmresMnRetmanPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<EmresMnRetmanPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 /** 救援人员ExportVO */
 export interface EmresMnRetmanExportVO {
   /** 救援队编号 */
-  orgid: string;
+  orgid?: string;
   /** 救援队名称 */
-  orgName: string;
+  orgName?: string;
   /** 人员编号 */
-  persoNum: string;
+  persoNum?: string;
   /** 人员名称 */
-  persoName: string;
+  persoName?: string;
   /** 联系电话 */
-  personTel: string;
+  personTel?: string;
   /** 职务 */
-  persotitle: string;
+  persotitle?: string;
   /** 专长或特长 */
-  speciality: string;
+  speciality?: string;
   /** 填报人 */
-  cmCreator: string;
+  cmCreator?: string;
   /** 填报人电话 */
-  cmTel: string;
+  cmTel?: string;
   /**
    * 填报时间
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  cmAddtime: string;
+  cmAddtime?: string;
   /**
    * 更新时间
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  cmUptime: string;
+  cmUptime?: string;
 }
 
 export interface ResultListEmresMnRetmanExportVO {
-  code: string;
-  data: EmresMnRetmanExportVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<EmresMnRetmanExportVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 救援人员DetailVO */
 export interface EmresMnRetmanDetailVO {
   /** 救援队编号 */
-  orgid: string;
+  orgid?: string;
   /** 救援队名称 */
-  orgName: string;
+  orgName?: string;
   /** 人员编号 */
-  persoNum: string;
+  persoNum?: string;
   /** 人员名称 */
-  persoName: string;
+  persoName?: string;
   /** 联系电话 */
-  personTel: string;
+  personTel?: string;
   /** 职务 */
-  persotitle: string;
+  persotitle?: string;
   /** 专长或特长 */
-  speciality: string;
+  speciality?: string;
   /** 填报人 */
-  cmCreator: string;
+  cmCreator?: string;
   /** 填报人电话 */
-  cmTel: string;
+  cmTel?: string;
   /**
    * 填报时间
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  cmAddtime: string;
+  cmAddtime?: string;
   /**
    * 更新时间
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  cmUptime: string;
+  cmUptime?: string;
   /** 主键 */
-  cmKid: string;
+  cmKid?: string;
   /** 数据来源单位 */
-  datasource: string;
+  datasource?: string;
 }
 
 export interface ResultEmresMnRetmanDetailVO {
-  code: string;
+  code?: string;
   /** 救援人员DetailVO */
-  data: EmresMnRetmanDetailVO;
-  message: string;
-  success: boolean;
+  data?: EmresMnRetmanDetailVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 救援队伍分页查询条件 */
 export interface EmresMnReteamPageQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 队伍编号 */
-  orgid: string;
+  orgid?: string;
   /** 队伍名称 */
-  name: string;
+  name?: string;
   /** 级别 */
-  levelCode: string;
+  levelCode?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 /** 救援队伍VO */
 export interface EmresMnReteamPageVO {
   /** 队伍编号 */
-  orgid: string;
+  orgid?: string;
   /** 队伍名称 */
-  name: string;
+  name?: string;
   /** 级别 */
-  levelCode: string;
+  levelCode?: string;
   /** 隶属单位 */
-  cmOrgflag: string;
+  cmOrgflag?: string;
   /** 负责人 */
-  director: string;
+  director?: string;
   /** 联系电话 */
-  dutyTel: string;
+  dutyTel?: string;
   /**
    * 队伍规模
    * @format int32
    */
-  personnum: number;
+  personnum?: number;
   /** 主键 */
-  cmKid: string;
+  cmKid?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
 }
 
 export interface PageResultListEmresMnReteamPageVO {
-  code: string;
-  data: EmresMnReteamPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<EmresMnReteamPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 /** 附近救援队伍 */
 export interface EmresMnReteamNearQuery {
   /** 经度 */
-  longitude: string;
+  longitude?: string;
   /** 纬度 */
-  latitude: string;
+  latitude?: string;
 }
 
 /** 最近救援队伍 */
 export interface EmresMnReteamNearVO {
   /** 队伍编号 */
-  orgid: string;
+  orgid?: string;
   /** 队伍名称 */
-  name: string;
+  name?: string;
   /** 级别 */
-  levelCode: string;
+  levelCode?: string;
   /** 隶属单位 */
-  cmOrgflag: string;
+  cmOrgflag?: string;
   /** 负责人 */
-  director: string;
+  director?: string;
   /** 联系电话 */
-  dutyTel: string;
+  dutyTel?: string;
   /**
    * 队伍规模
    * @format int32
    */
-  personnum: number;
+  personnum?: number;
   /**
    * 主键
    * @format int64
    */
-  cmKid: number;
+  cmKid?: number;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /** 距离 */
-  distance: string;
+  distance?: string;
 }
 
 export interface ResultListEmresMnReteamNearVO {
-  code: string;
-  data: EmresMnReteamNearVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<EmresMnReteamNearVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 救援队伍ExportVO */
 export interface EmresMnReteamExportVO {
   /** 队伍编号 */
-  orgid: string;
+  orgid?: string;
   /** 队伍名称 */
-  name: string;
+  name?: string;
   /** 级别 */
-  levelCode: string;
+  levelCode?: string;
   /** 隶属单位 */
-  cmOrgflag: string;
+  cmOrgflag?: string;
   /** 负责人 */
-  director: string;
+  director?: string;
   /** 联系电话 */
-  dutyTel: string;
+  dutyTel?: string;
   /**
    * 队伍规模
    * @format int32
    */
-  personnum: number;
+  personnum?: number;
 }
 
 export interface ResultListEmresMnReteamExportVO {
-  code: string;
-  data: EmresMnReteamExportVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<EmresMnReteamExportVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 所在队伍下拉VO */
 export interface EmresMnReteamDownVO {
   /** 队伍编号 */
-  orgid: string;
+  orgid?: string;
   /** 队伍名称 */
-  name: string;
+  name?: string;
 }
 
 export interface ResultListEmresMnReteamDownVO {
-  code: string;
-  data: EmresMnReteamDownVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<EmresMnReteamDownVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 救援队伍VO */
 export interface EmresMnReteamDetailVO {
   /** 队伍编号 */
-  orgid: string;
+  orgid?: string;
   /** 队伍名称 */
-  name: string;
+  name?: string;
   /** 级别 */
-  levelCode: string;
+  levelCode?: string;
   /** 隶属单位 */
-  cmOrgflag: string;
+  cmOrgflag?: string;
   /** 负责人 */
-  director: string;
+  director?: string;
   /** 联系电话 */
-  dutyTel: string;
+  dutyTel?: string;
   /**
    * 队伍规模
    * @format int32
    */
-  personnum: number;
+  personnum?: number;
   /** 主键 */
-  cmKid: string;
+  cmKid?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /** 地址 */
-  address: string;
+  address?: string;
   /** 填报人 */
-  fillPerson: string;
+  fillPerson?: string;
   /** 填报人电话 */
-  fillPhone: string;
+  fillPhone?: string;
   /**
    * 填报时间
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  fillTime: string;
+  fillTime?: string;
   /** 数据来源 */
-  datasource: string;
+  datasource?: string;
 }
 
 export interface ResultEmresMnReteamDetailVO {
-  code: string;
+  code?: string;
   /** 救援队伍VO */
-  data: EmresMnReteamDetailVO;
-  message: string;
-  success: boolean;
+  data?: EmresMnReteamDetailVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 队伍人员信息列表VO */
 export interface EmresMnRetmanBaseVO {
   /** 人员编号 */
-  persoNum: string;
+  persoNum?: string;
   /** 成员姓名 */
-  persoName: string;
+  persoName?: string;
   /** 联系电话 */
-  personTel: string;
+  personTel?: string;
   /** 职务 */
-  persotitle: string;
+  persotitle?: string;
   /** 专业特长 */
-  speciality: string;
+  speciality?: string;
 }
 
 export interface ResultListEmresMnRetmanBaseVO {
-  code: string;
-  data: EmresMnRetmanBaseVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<EmresMnRetmanBaseVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 救援物资分页信息 */
 export interface EmresMnMateriBaseVO {
   /** 编号 */
-  materCode: string;
+  materCode?: string;
   /** 装备名称 */
-  name: string;
+  name?: string;
   /** 装备种类 */
-  materType: string;
+  materType?: string;
   /** 装备型号 */
-  specification: string;
+  specification?: string;
   /** 装备数量 */
-  matNum: number;
+  matNum?: number;
   /** 计量单位 */
-  measureunit: string;
+  measureunit?: string;
   /** 所在队伍编号 */
-  orgid: string;
+  orgid?: string;
   /** 所在位置 */
-  location: string;
+  location?: string;
 }
 
 export interface ResultListEmresMnMateriBaseVO {
-  code: string;
-  data: EmresMnMateriBaseVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<EmresMnMateriBaseVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 队伍基本信息VO */
 export interface EmresMnReteamBaseVO {
   /** 队伍名称 */
-  name: string;
+  name?: string;
   /** 级别 */
-  levelCode: string;
+  levelCode?: string;
   /**
    * 规模
    * @format int32
    */
-  personnum: number;
+  personnum?: number;
   /** 只要负责人 */
-  director: string;
+  director?: string;
   /** 联系电话 */
-  dutyTel: string;
+  dutyTel?: string;
   /** 物资明细 */
-  materiDetails: MateriDetail[];
+  materiDetails?: Array<MateriDetail>;
 }
 
 /** 队伍对应物资信息VO */
 export interface MateriDetail {
   /** 物资装备种类 */
-  materType: string;
+  materType?: string;
   /**
    * 物资装备数量
    * @format int64
    */
-  num: number;
+  num?: number;
 }
 
 export interface ResultEmresMnReteamBaseVO {
-  code: string;
+  code?: string;
   /** 队伍基本信息VO */
-  data: EmresMnReteamBaseVO;
-  message: string;
-  success: boolean;
+  data?: EmresMnReteamBaseVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 管网维修记录列表分页查询条件 */
 export interface CifrsGasChPipeRepairPageQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
   /** 所属机构 */
-  orgId: string;
+  orgId?: string;
   /** 所属区域 */
-  districtId: string;
-  keyword: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 工单编号 */
-  orderNo: string;
+  orderNo?: string;
   /** 服务所 */
-  belongOrg: string;
+  belongOrg?: string;
   /** 管材，支持排序 */
-  material: string;
+  material?: string;
   /** 管网压力 */
-  pressureClass: string;
+  pressureClass?: string;
   /**
    * 抢修完成时间-开始
    * @format date-time
    */
-  reportTimeStar: string;
+  reportTimeStar?: string;
   /**
    * 抢修完成时间-结束
    * @format date
    */
-  reportTimeEnd: string;
+  reportTimeEnd?: string;
   /** 维修地址 */
-  repairAddr: string;
+  repairAddr?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** 所属机构枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 所属区域枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 /** 维修记录分页信息 */
@@ -12623,318 +12623,318 @@ export interface CifrsGasChPipeRepairPageVO {
    * 主键
    * @format int64
    */
-  cmKid: number;
+  cmKid?: number;
   /** 工单编号 */
-  orderNo: string;
+  orderNo?: string;
   /** 关联管线 */
-  pipelineId: string;
+  pipelineId?: string;
   /** 行政区划 */
-  cmRegflag: string;
+  cmRegflag?: string;
   /** 所属机构 */
-  cmOrgflag: string;
+  cmOrgflag?: string;
   /** 管材 */
-  material: CifrsGasChPipeRepairPageVoMaterial;
+  material?: CifrsGasChPipeRepairPageVoMaterial;
   /** 维修位置 */
-  repairPosition: string;
+  repairPosition?: string;
   /** 维修地址 */
-  repairAddr: string;
+  repairAddr?: string;
   /**
    * 报修时间
    * @format date-time
    */
-  reportTime: string;
+  reportTime?: string;
   /**
    * 抢修完成时间
    * @format date-time
    */
-  repairedTime: string;
+  repairedTime?: string;
   /** 管网压力 */
-  pressureClass: CifrsGasChPipeRepairPageVoPressureClass;
+  pressureClass?: CifrsGasChPipeRepairPageVoPressureClass;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /** （维修原因）维修故障类型 */
-  repairType: string;
+  repairType?: string;
   /**
    * 维修时长
    * @format int64
    */
-  repairHour: number;
+  repairHour?: number;
   /** 地址坐标 */
-  cmGeom: string;
+  cmGeom?: string;
   /** 管材枚举中文描述 */
-  _material: string;
+  _material?: string;
   /** 管网压力枚举中文描述 */
-  _pressureClass: string;
+  _pressureClass?: string;
 }
 
 export interface PageResultListCifrsGasChPipeRepairPageVO {
-  code: string;
-  data: CifrsGasChPipeRepairPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<CifrsGasChPipeRepairPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 /** 维修记录详情 */
 export interface CifrsGasChPipeRepairDetailVO {
   /** 工单编号 */
-  orderNo: string;
+  orderNo?: string;
   /** 所属区域 */
-  cmRegflag: string;
+  cmRegflag?: string;
   /** 所属组织 */
-  cmOrgflag: string;
+  cmOrgflag?: string;
   /**  维修地址 */
-  repairAddr: string;
+  repairAddr?: string;
   /**
    * 报修时间
    * @format date-time
    */
-  reportTime: string;
+  reportTime?: string;
   /**
    *  维修完成时间
    * @format date-time
    */
-  repairedTime: string;
+  repairedTime?: string;
   /** 关联管线 */
-  pipelineId: string;
+  pipelineId?: string;
   /** 关联管点 */
-  pipepointId: string;
+  pipepointId?: string;
   /** 维修位置 */
-  repairPosition: string;
+  repairPosition?: string;
   /** 管线压力级别 */
-  pressureClass: CifrsGasChPipeRepairDetailVoPressureClass;
+  pressureClass?: CifrsGasChPipeRepairDetailVoPressureClass;
   /** 维修性质 */
-  repairProp: string;
+  repairProp?: string;
   /** （维修原因）维修故障类型 */
-  repairType: string;
+  repairType?: string;
   /** 管线材质 */
-  material: CifrsGasChPipeRepairDetailVoMaterial;
+  material?: CifrsGasChPipeRepairDetailVoMaterial;
   /** 抢修内容及结果 */
-  repairContent: string;
+  repairContent?: string;
   /**  抢修单位 */
-  repairUnit: string;
+  repairUnit?: string;
   /** 抢修责任人 */
-  repairPerson: string;
+  repairPerson?: string;
   /** 抢修联系方式 */
-  repairPhone: string;
+  repairPhone?: string;
   /** 验收单位 */
-  checkUnit: string;
+  checkUnit?: string;
   /**
    * 验收时间
    * @format date
    */
-  checkTime: string;
+  checkTime?: string;
   /** 数据来源 */
-  dataSource: string;
+  dataSource?: string;
   /** 备注 */
-  remark: string;
+  remark?: string;
   /**
    * 维修时长
    * @format int64
    */
-  repairHour: number;
+  repairHour?: number;
   /** 管线压力级别枚举中文描述 */
-  _pressureClass: string;
+  _pressureClass?: string;
   /** 管线材质枚举中文描述 */
-  _material: string;
+  _material?: string;
 }
 
 export interface ResultCifrsGasChPipeRepairDetailVO {
-  code: string;
+  code?: string;
   /** 维修记录详情 */
-  data: CifrsGasChPipeRepairDetailVO;
-  message: string;
-  success: boolean;
+  data?: CifrsGasChPipeRepairDetailVO;
+  message?: string;
+  success?: boolean;
 }
 
 /**  管线点、线编码DTO */
 export interface CifrsPipeMnPipecodeDTO {
   /** 管线、点代码Id */
-  value: string;
+  value?: string;
   /**  名称 */
-  label: string;
+  label?: string;
 }
 
 export interface ResultListCifrsPipeMnPipecodeDTO {
-  code: string;
-  data: CifrsPipeMnPipecodeDTO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<CifrsPipeMnPipecodeDTO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 管点信息列表分页查询条件 */
 export interface CifrsPipeMnPipepointPageQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
   /** 所属机构 */
-  orgId: string;
+  orgId?: string;
   /** 所属区域 */
-  districtId: string;
-  keyword: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 管点类型 */
-  code: string;
+  code?: string;
   /** 所在道路 */
-  roadName: string;
+  roadName?: string;
   /**  管点编码 */
-  guid: string;
+  guid?: string;
   /** 附属物 */
-  subSid: string;
+  subSid?: string;
   /** 特征点 */
-  feature: string;
+  feature?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** 所属机构枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 所属区域枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 export interface PageResultListCifrsPipeMnPipepointPageVO {
-  code: string;
-  data: CifrsPipeMnPipepointPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<CifrsPipeMnPipepointPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 /** 管点详情 */
 export interface CifrsPipeMnPipepointDetailVO {
   /**  管点编码 */
-  guid: string;
+  guid?: string;
   /** 管点类别 */
-  code: string;
+  code?: string;
   /** 所在道路 */
-  roadId: string;
+  roadId?: string;
   /** 长度 */
-  pipelen: number;
+  pipelen?: number;
   /** 埋深 */
-  deep: number;
+  deep?: number;
   /** 所属区域 */
-  cmRegflag: string;
+  cmRegflag?: string;
   /** 所属组织 */
-  cmOrgflag: string;
+  cmOrgflag?: string;
   /** 特征点 */
-  feature: string;
+  feature?: string;
   /**
    * 建设年代（安装日期）
    * @format date-time
    */
-  installdat: string;
+  installdat?: string;
   /** 附属物 */
-  subSid: string;
-  scode: string;
+  subSid?: string;
+  scode?: string;
 }
 
 export interface ResultCifrsPipeMnPipepointDetailVO {
-  code: string;
+  code?: string;
   /** 管点详情 */
-  data: CifrsPipeMnPipepointDetailVO;
-  message: string;
-  success: boolean;
+  data?: CifrsPipeMnPipepointDetailVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 管网统计 */
 export interface CifrsPipeStatisticsVO {
   /** 行政区管网公里数统计 */
-  regionStatistics: RegionStatisticsDTO[];
+  regionStatistics?: Array<RegionStatisticsDTO>;
   /** 压力级别统计 */
-  volclassStatistics: VolclassStatisticsDTO[];
+  volclassStatistics?: Array<VolclassStatisticsDTO>;
   /** 管网材质统计 */
-  pmaterialStatistics: PmaterialStatisticsDTO[];
+  pmaterialStatistics?: Array<PmaterialStatisticsDTO>;
 }
 
 /** 行政区域管网公里数统计DTO */
 export interface PmaterialStatisticsDTO {
   /** 名称 */
-  name: string;
+  name?: string;
   /** 公里数 */
-  kilometer: number;
+  kilometer?: number;
 }
 
 /** 行政区域管网公里数统计DTO */
 export interface RegionStatisticsDTO {
   /** 名称 */
-  name: string;
+  name?: string;
   /** 公里数 */
-  kilometer: number;
+  kilometer?: number;
 }
 
 export interface ResultCifrsPipeStatisticsVO {
-  code: string;
+  code?: string;
   /** 管网统计 */
-  data: CifrsPipeStatisticsVO;
-  message: string;
-  success: boolean;
+  data?: CifrsPipeStatisticsVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 行政区域管网公里数统计DTO */
 export interface VolclassStatisticsDTO {
   /** 名称 */
-  name: string;
+  name?: string;
   /** 公里数 */
-  kilometer: number;
+  kilometer?: number;
 }
 
 /** 管线信息列表分页查询条件 */
 export interface CifrsPipeMnPipelinePageQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
   /** 所属机构 */
-  orgId: string;
+  orgId?: string;
   /** 所属区域 */
-  districtId: string;
-  keyword: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 管线编码 */
-  guid: string;
+  guid?: string;
   /** 压力级别 */
-  volclass: string;
+  volclass?: string;
   /** 是否为监测对象 */
-  monitorno: string;
+  monitorno?: string;
   /** 管线材质 */
-  pmaterial: string;
+  pmaterial?: string;
   /** 所在道路 */
-  roadName: string;
+  roadName?: string;
   /** 建设年代 */
-  mdate: string;
+  mdate?: string;
   /**
    * 管龄
    * @format int32
    */
-  pipelineyear: number;
+  pipelineyear?: number;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** 所属机构枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 所属区域枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 /** 管线分页信息 */
@@ -12943,56 +12943,56 @@ export interface CifrsPipeMnPipelinePageVO {
    * 主键Id
    * @format int64
    */
-  cmKid: number;
+  cmKid?: number;
   /** 管线编码 */
-  guid: string;
+  guid?: string;
   /** 管线类型 */
-  code: string;
+  code?: string;
   /** 行政区划 */
-  cmRegflag: string;
+  cmRegflag?: string;
   /** 所属机构 */
-  cmOrgflag: string;
+  cmOrgflag?: string;
   /** 所在道路 */
-  roadName: string;
+  roadName?: string;
   /** 管线材质 */
-  pmaterial: CifrsPipeMnPipelinePageVoPmaterial;
+  pmaterial?: CifrsPipeMnPipelinePageVoPmaterial;
   /** 运行压力 */
-  operatPress: string;
+  operatPress?: string;
   /** 压力级别 */
-  volclass: CifrsPipeMnPipelinePageVoVolclass;
+  volclass?: CifrsPipeMnPipelinePageVoVolclass;
   /** 管壁厚度 */
-  pipeThink: string;
+  pipeThink?: string;
   /**  管线长度 */
-  pipelen: number;
+  pipelen?: number;
   /** 是否为监测对象 */
-  monitorno: string;
-  cmGeom: string;
+  monitorno?: string;
+  cmGeom?: string;
   /** 建设年代 */
-  mdate: string;
+  mdate?: string;
   /** 管道年限 */
-  pipedate: number;
+  pipedate?: number;
   /**
    * 管龄
    * @format int32
    */
-  pipelineyear: number;
+  pipelineyear?: number;
   /** 起点埋深 */
-  sDeep: number;
+  sDeep?: number;
   /** 终点埋深 */
-  eDeep: number;
+  eDeep?: number;
   /** 管线材质枚举中文描述 */
-  _pmaterial: string;
+  _pmaterial?: string;
   /** 压力级别枚举中文描述 */
-  _volclass: string;
+  _volclass?: string;
 }
 
 export interface PageResultListCifrsPipeMnPipelinePageVO {
-  code: string;
-  data: CifrsPipeMnPipelinePageVO[];
-  message: string;
+  code?: string;
+  data?: Array<CifrsPipeMnPipelinePageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 /** 管线详情 */
@@ -13001,721 +13001,721 @@ export interface CifrsPipeMnPipelineDetailVO {
    * 主键
    * @format int64
    */
-  cmKid: number;
+  cmKid?: number;
   /** 管编码号 */
-  guid: string;
+  guid?: string;
   /** 管线类别 */
-  code: string;
+  code?: string;
   /** 地市编码 */
-  pac: string;
+  pac?: string;
   /** 图幅号 */
-  mapNo: string;
+  mapNo?: string;
   /** 材质 */
-  pmaterial: CifrsPipeMnPipelineDetailVoPmaterial;
+  pmaterial?: CifrsPipeMnPipelineDetailVoPmaterial;
   /**  管径(外径)mm */
-  outDS: string;
+  outDS?: string;
   /** 内径mm */
-  inDS: string;
+  inDS?: string;
   /** 压力 */
-  voltage: string;
+  voltage?: string;
   /** 压力级别 */
-  volclass: CifrsPipeMnPipelineDetailVoVolclass;
+  volclass?: CifrsPipeMnPipelineDetailVoVolclass;
   /** 流向 */
-  flowD: string;
+  flowD?: string;
   /**
    * 总孔数
    * @format int32
    */
-  holeCount: number;
+  holeCount?: number;
   /**
    * 占用孔数
    * @format int32
    */
-  holeUsed: number;
+  holeUsed?: number;
   /**
    * 电缆条数
    * @format int32
    */
-  cabCount: number;
+  cabCount?: number;
   /** 保护材质 */
-  safemateri: string;
+  safemateri?: string;
   /** 管道年限 */
-  pipedate: number;
+  pipedate?: number;
   /** 套管形状 */
-  caseshape: string;
+  caseshape?: string;
   /** 套管材质 */
-  casemateri: string;
+  casemateri?: string;
   /** 套管尺寸 */
-  casesize: string;
+  casesize?: string;
   /** 线型 */
-  lineStyle: string;
+  lineStyle?: string;
   /** 管线分类编码 */
-  linecode: string;
+  linecode?: string;
   /** 管线通道权属单位 */
-  bunit: string;
+  bunit?: string;
   /** 所在道路 */
-  roadName: string;
+  roadName?: string;
   /** 建设年代 */
-  mdate: string;
+  mdate?: string;
   /** 探测单位 */
-  sunit: string;
+  sunit?: string;
   /**
    * 探测日期
    * @format date-time
    */
-  sdate: string;
+  sdate?: string;
   /** 当前状态 */
-  usedstate: string;
+  usedstate?: string;
   /** 数据获取方式 */
-  datasource: string;
+  datasource?: string;
   /** 管线长度 */
-  pipelen: number;
+  pipelen?: number;
   /** 断面形式 */
-  section: string;
+  section?: string;
   /** 供水性质 */
-  natureWater: string;
+  natureWater?: string;
   /** 系统编码 */
-  sysId: string;
+  sysId?: string;
   /** 原始编码 */
-  oldId: string;
+  oldId?: string;
   /** 数据状态 */
-  datastatus: string;
+  datastatus?: string;
   /**  管壁厚度 */
-  pipeThink: string;
+  pipeThink?: string;
   /**
    * 竣工日期
    * @format date-time
    */
-  compleDate: string;
+  compleDate?: string;
   /**
    * 通气日期
    * @format date-time
    */
-  ventiDate: string;
+  ventiDate?: string;
   /** 接口方式 */
-  interMode: string;
+  interMode?: string;
   /** 设计压力 */
-  designPress: string;
+  designPress?: string;
   /** 运行压力 */
-  operatPress: string;
+  operatPress?: string;
   /** 防腐材料 */
-  antiMaterial: CifrsPipeMnPipelineDetailVoAntiMaterial;
+  antiMaterial?: CifrsPipeMnPipelineDetailVoAntiMaterial;
   /** 防腐等级 */
-  antiLevl: CifrsPipeMnPipelineDetailVoAntiLevl;
+  antiLevl?: CifrsPipeMnPipelineDetailVoAntiLevl;
   /** 管理中心 */
-  mangerCenter: string;
+  mangerCenter?: string;
   /** wkt */
-  wkt: string;
+  wkt?: string;
   /** 是否监测 */
-  monitorno: string;
+  monitorno?: string;
   /** 备注 */
-  remark: string;
+  remark?: string;
   /**
    *  创建时间
    * @format date-time
    */
-  cmAddtime: string;
+  cmAddtime?: string;
   /**
    * 修改时间
    * @format date-time
    */
-  cmUptime: string;
+  cmUptime?: string;
   /** 创建人 */
-  cmCreator: string;
+  cmCreator?: string;
   /** 修改人 */
-  cmModifier: string;
+  cmModifier?: string;
   /**
    * 版本号
    * @format int32
    */
-  cmVersion: number;
+  cmVersion?: number;
   /**  所属区域 */
-  cmRegflag: string;
+  cmRegflag?: string;
   /**  所属组织 */
-  cmOrgflag: string;
+  cmOrgflag?: string;
   /** 业务扩展数据 */
-  cmBusext: string;
+  cmBusext?: string;
   /** 逻辑删除 */
-  cmUsable: boolean;
+  cmUsable?: boolean;
   /** 租户ID */
-  cmTenantid: string;
+  cmTenantid?: string;
   /** 地理坐标  有地理坐标的数据增加 其他的删除 */
-  cmGeom: string;
+  cmGeom?: string;
   /** 井体积 */
-  volume: number;
+  volume?: number;
   /** 窨井长度 */
-  len: number;
+  len?: number;
   /**  窨井宽度 */
-  width: number;
+  width?: number;
   /** @format date-time */
-  ddate: string;
-  sh: number;
-  dtype: string;
-  epoint: string;
-  edeep: number;
-  spoint: string;
-  sdeep: number;
-  eh: number;
+  ddate?: string;
+  sh?: number;
+  dtype?: string;
+  epoint?: string;
+  edeep?: number;
+  spoint?: string;
+  sdeep?: number;
+  eh?: number;
   /** 材质枚举中文描述 */
-  _pmaterial: string;
+  _pmaterial?: string;
   /** 压力级别枚举中文描述 */
-  _volclass: string;
+  _volclass?: string;
   /** 防腐材料枚举中文描述 */
-  _antiMaterial: string;
+  _antiMaterial?: string;
   /** 防腐等级枚举中文描述 */
-  _antiLevl: string;
+  _antiLevl?: string;
 }
 
 export interface ResultCifrsPipeMnPipelineDetailVO {
-  code: string;
+  code?: string;
   /** 管线详情 */
-  data: CifrsPipeMnPipelineDetailVO;
-  message: string;
-  success: boolean;
+  data?: CifrsPipeMnPipelineDetailVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 首页管网类统计DTO */
 export interface PipelineIndexStatisticsDTO {
   /** 管网所属机构统计DTO */
-  pipelineOrgStatistics: PipelineOrgStatisticsDTO[];
+  pipelineOrgStatistics?: Array<PipelineOrgStatisticsDTO>;
   /** 管网年限材质统计DTO */
-  pipelineYearPmaterialStatistics: PipelineYearPmaterialStatisticsDTO[];
+  pipelineYearPmaterialStatistics?: Array<PipelineYearPmaterialStatisticsDTO>;
 }
 
 /** 首页管网所属机构统计DTO */
 export interface PipelineOrgStatisticsDTO {
   /** 组织机构 */
-  cmOrgflag: string;
+  cmOrgflag?: string;
   /**
    * 数量
    * @format int32
    */
-  num: number;
+  num?: number;
 }
 
 /** 首页管网材质统计DTO */
 export interface PipelinePmaterialStatisticsDTO {
   /** 管网材质 */
-  pmaterial: string;
+  pmaterial?: string;
   /**
    * 公里数
    * @format int32
    */
-  num: number;
+  num?: number;
   /** 年限 */
-  year: string;
+  year?: string;
   /**
    * 排序值
    * @format int32
    */
-  sort: number;
+  sort?: number;
 }
 
 /** 首页管网年限材质统计DTO */
 export interface PipelineYearPmaterialStatisticsDTO {
   /** 管网年限 */
-  year: string;
+  year?: string;
   /**
    * 排序值
    * @format int32
    */
-  sort: number;
+  sort?: number;
   /** 管网材质统计DTO */
-  pipelinePmaterialStatistics: PipelinePmaterialStatisticsDTO[];
+  pipelinePmaterialStatistics?: Array<PipelinePmaterialStatisticsDTO>;
 }
 
 export interface ResultPipelineIndexStatisticsDTO {
-  code: string;
+  code?: string;
   /** 首页管网类统计DTO */
-  data: PipelineIndexStatisticsDTO;
-  message: string;
-  success: boolean;
+  data?: PipelineIndexStatisticsDTO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 救援物资分页查询条件 */
 export interface EmresMnMateriPageQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 物资装备编号 */
-  materCode: string;
+  materCode?: string;
   /** 物资装备名称 */
-  name: string;
+  name?: string;
   /** 所在队伍编号 */
-  orgid: string;
+  orgid?: string;
   /** 所在位置 */
-  location: string;
+  location?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 /** 救援物资分页信息 */
 export interface EmresMnMateriPageVO {
   /** 物资装备编码 */
-  materCode: string;
+  materCode?: string;
   /** 物资装备名称 */
-  name: string;
+  name?: string;
   /** 储备库编号 */
-  materhouseCode: string;
+  materhouseCode?: string;
   /** 物资装备种类 */
-  materType: string;
+  materType?: string;
   /** 物资装备型号 */
-  specification: string;
+  specification?: string;
   /** 物资装备数量 */
-  matNum: number;
+  matNum?: number;
   /** 计量单位 */
-  measureunit: string;
+  measureunit?: string;
   /** 主要功能 */
-  instruction: string;
+  instruction?: string;
   /** 所在队伍编号 */
-  orgid: string;
+  orgid?: string;
   /** 所在位置 */
-  location: string;
+  location?: string;
   /** 主键 */
-  cmKid: string;
+  cmKid?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /** 地理坐标 */
-  cmGeom: string;
+  cmGeom?: string;
 }
 
 export interface PageResultListEmresMnMateriPageVO {
-  code: string;
-  data: EmresMnMateriPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<EmresMnMateriPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 /** 救援物资分页信息 */
 export interface EmresMnMateriExportVO {
   /** 物资装备编码 */
-  materCode: string;
+  materCode?: string;
   /** 物资装备名称 */
-  name: string;
+  name?: string;
   /** 储备库编号 */
-  materhouseCode: string;
+  materhouseCode?: string;
   /** 物资装备种类 */
-  materType: string;
+  materType?: string;
   /** 物资装备型号 */
-  specification: string;
+  specification?: string;
   /** 物资装备数量 */
-  matNum: number;
+  matNum?: number;
   /** 计量单位 */
-  measureunit: string;
+  measureunit?: string;
   /** 主要功能 */
-  instruction: string;
+  instruction?: string;
   /** 所在队伍编号 */
-  orgid: string;
+  orgid?: string;
   /** 所在位置 */
-  location: string;
+  location?: string;
 }
 
 export interface ResultListEmresMnMateriExportVO {
-  code: string;
-  data: EmresMnMateriExportVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<EmresMnMateriExportVO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 救援物资详情信息 */
 export interface EmresMnMateriDetailVO {
   /** 物资装备编码 */
-  materCode: string;
+  materCode?: string;
   /** 物资装备名称 */
-  name: string;
+  name?: string;
   /** 储备库编号 */
-  materhouseCode: string;
+  materhouseCode?: string;
   /** 物资装备种类 */
-  materType: string;
+  materType?: string;
   /** 物资装备型号 */
-  specification: string;
+  specification?: string;
   /** 物资装备数量 */
-  matNum: number;
+  matNum?: number;
   /** 计量单位 */
-  measureunit: string;
+  measureunit?: string;
   /** 主要功能 */
-  instruction: string;
+  instruction?: string;
   /** 所在队伍编号 */
-  orgid: string;
+  orgid?: string;
   /** 所在位置 */
-  location: string;
+  location?: string;
   /** 主键 */
-  cmKid: string;
+  cmKid?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /** 地理坐标 */
-  cmGeom: string;
+  cmGeom?: string;
   /** 物资装备品牌 */
-  factory: string;
+  factory?: string;
   /** 填报人 */
-  fillPerson: string;
+  fillPerson?: string;
   /** 填报人电话 */
-  contacTel: string;
+  contacTel?: string;
   /**
    * 填报时间
    * @format date-time
    */
-  fillTime: string;
+  fillTime?: string;
   /** 数据来单位 */
-  datasource: string;
+  datasource?: string;
 }
 
 export interface ResultEmresMnMateriDetailVO {
-  code: string;
+  code?: string;
   /** 救援物资详情信息 */
-  data: EmresMnMateriDetailVO;
-  message: string;
-  success: boolean;
+  data?: EmresMnMateriDetailVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 专家信息分页查询条件 */
 export interface EmresMnExpertPageQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** 姓名 */
-  name: string;
+  name?: string;
   /** 专业技术特长 */
-  speciality: string;
+  speciality?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 /** 专家信息分页信息 */
 export interface EmresMnExpertPageVO {
   /** 主键 */
-  cmKid: string;
+  cmKid?: string;
   /** 姓名 */
-  name: string;
+  name?: string;
   /** 性别代码:男，女 */
-  sex: string;
+  sex?: string;
   /** 所属区域 */
-  cmRegflag: string;
+  cmRegflag?: string;
   /** 职称:1正高级、2副高级、3中级、4中级以下、5未评级 */
-  protitle: string;
+  protitle?: string;
   /** 职务 */
-  duty: string;
+  duty?: string;
   /** 专业类别 */
-  major: string;
+  major?: string;
   /** 专业技术特长 */
-  speciality: string;
+  speciality?: string;
   /** 联系电话 */
-  dutyTel: string;
+  dutyTel?: string;
   /**  所属单位 */
-  unitName: string;
+  unitName?: string;
   /**
    *  出生日期
    * @format date
    */
-  birthday: string;
+  birthday?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /** 邮箱地址 */
-  mail: string;
+  mail?: string;
   /**  附件存储位置 */
-  fileAdder: string;
+  fileAdder?: string;
 }
 
 export interface PageResultListEmresMnExpertPageVO {
-  code: string;
-  data: EmresMnExpertPageVO[];
-  message: string;
+  code?: string;
+  data?: Array<EmresMnExpertPageVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 /** 专家信息DTO */
 export interface EmresMnExpertDetailVO {
   /** 主键 */
-  cmKid: string;
+  cmKid?: string;
   /** 专家编号 */
-  expCode: string;
+  expCode?: string;
   /** 姓名 */
-  name: string;
+  name?: string;
   /** 性别 */
-  sex: string;
+  sex?: string;
   /** 专家类型 */
-  experType: string;
+  experType?: string;
   /** 民族代码 */
-  natioinCode: string;
+  natioinCode?: string;
   /** 手机 */
-  phone: string;
+  phone?: string;
   /** 办公电话 */
-  dutyTel: string;
+  dutyTel?: string;
   /**
    * 出生日期
    * @format date
    */
-  birthday: string;
+  birthday?: string;
   /** 所属区域 */
-  cmRegflag: string;
+  cmRegflag?: string;
   /**  所属单位 */
-  unitName: string;
+  unitName?: string;
   /** 单位地址 */
-  address: string;
+  address?: string;
   /** 身份证号 */
-  idCard: string;
+  idCard?: string;
   /** 学历 */
-  degreeCode: string;
+  degreeCode?: string;
   /** 职务 */
-  duty: string;
+  duty?: string;
   /** 专业 */
-  major: string;
+  major?: string;
   /** 工作部门 */
-  department: string;
+  department?: string;
   /** 职称 */
-  protitle: string;
+  protitle?: string;
   /**
    * 授予时间
    * @format date
    */
-  titleDate: string;
+  titleDate?: string;
   /** 专长描述 */
-  speciality: string;
+  speciality?: string;
   /** 毕业院校 */
-  university: string;
+  university?: string;
   /** 邮箱地址 */
-  mail: string;
+  mail?: string;
   /**  附件存储位置 */
-  fileAdder: string;
+  fileAdder?: string;
 }
 
 export interface ResultListEmresMnExpertDetailVO {
-  code: string;
-  data: EmresMnExpertDetailVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<EmresMnExpertDetailVO>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultEmresMnExpertDetailVO {
-  code: string;
+  code?: string;
   /** 专家信息DTO */
-  data: EmresMnExpertDetailVO;
-  message: string;
-  success: boolean;
+  data?: EmresMnExpertDetailVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 物资储备库下拉列表VO */
 export interface EmresMnWhouseDownVO {
   /** 储备库编号 */
-  materhouseCode: string;
+  materhouseCode?: string;
   /** 储备库名称 */
-  name: string;
+  name?: string;
 }
 
 export interface ResultListEmresMnWhouseDownVO {
-  code: string;
-  data: EmresMnWhouseDownVO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<EmresMnWhouseDownVO>;
+  message?: string;
+  success?: boolean;
 }
 
 export interface AroundRiskQuery {
   /** 隐患类型: PIPELINE,THIRD_BUILD */
-  riskType: string;
+  riskType?: string;
   /**
    * 经度
    * @format float
    */
-  longitude: number;
+  longitude?: number;
   /**
    * 纬度
    * @format float
    */
-  latitude: number;
+  latitude?: number;
   /**
    * 查询半径
    * @format float
    */
-  distance: number;
+  distance?: number;
 }
 
 export interface AroundRiskDTO {
   /** 标题-隐患类型 */
-  title: string;
+  title?: string;
   /** 地址 */
-  address: string;
+  address?: string;
   /**
    * 距离
    * @format int32
    */
-  distance: number;
+  distance?: number;
   /**
    * 纬度
    * @format float
    */
-  latitude: number;
+  latitude?: number;
   /**
    * 经度
    * @format float
    */
-  longitude: number;
+  longitude?: number;
 }
 
 export interface ResultListAroundRiskDTO {
-  code: string;
-  data: AroundRiskDTO[];
-  message: string;
-  success: boolean;
+  code?: string;
+  data?: Array<AroundRiskDTO>;
+  message?: string;
+  success?: boolean;
 }
 
 /** 事故事件查询 */
 export interface AccidentPageQuery {
   /** @format int32 */
-  page: number;
+  page?: number;
   /** @format int32 */
-  size: number;
-  order: string;
-  originalOrder: string;
-  orgId: string;
-  districtId: string;
-  keyword: string;
+  size?: number;
+  order?: string;
+  originalOrder?: string;
+  orgId?: string;
+  districtId?: string;
+  keyword?: string;
   /** @uniqueItems true */
-  selectIds: object[];
-  paging: boolean;
+  selectIds?: Array<object>;
+  paging?: boolean;
   /** accident_type */
-  accidentType: AccidentPageQueryAccidentType[];
+  accidentType?: Array<AccidentPageQueryAccidentType>;
   /** 事故场景 */
-  accidentScene: AccidentPageQueryAccidentScene[];
+  accidentScene?: Array<AccidentPageQueryAccidentScene>;
   /** 事故等级 */
-  accidentLevel: AccidentPageQueryAccidentLevel[];
+  accidentLevel?: Array<AccidentPageQueryAccidentLevel>;
   /** 是否挂牌督办 */
-  isSupervision: boolean;
+  isSupervision?: boolean;
   /**
    * 事故时间开始
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  startTime: string;
+  startTime?: string;
   /**
    * 事故时间结束
    * @format date-time
    * @pattern yyyy-MM-dd HH:mm:ss
    */
-  endTime: string;
+  endTime?: string;
   /** @uniqueItems true */
-  selectIdsAsString: string[];
-  districtIdAsList: string[];
+  selectIdsAsString?: Array<string> | string;
+  districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet: string[];
+  districtIdAsSet?: Array<string> | string;
   /** @uniqueItems true */
-  selectIdsAsLong: number[];
+  selectIdsAsLong?: Array<number> | number;
   /** undefined枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** undefined枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
 }
 
 /** 事故事件列表 */
 export interface AccidentVO {
   /** ID */
-  uid: string;
+  uid?: string;
   /** 事故事件编号 */
-  accidentId: string;
+  accidentId?: string;
   /** 行政区划id */
-  districtId: string;
+  districtId?: string;
   /** 组织机构id */
-  orgId: string;
+  orgId?: string;
   /** 事故事件地址 */
-  address: string;
+  address?: string;
   /** 经度 */
-  longitude: number;
+  longitude?: number;
   /** 纬度 */
-  latitude: number;
+  latitude?: number;
   /**
    * 事故事件发生时间
    * @format date-time
    */
-  accidentTime: string;
+  accidentTime?: string;
   /** 事故类型：火灾、爆炸、爆燃、机械伤害 */
-  accidentType: AccidentVoAccidentType;
+  accidentType?: AccidentVoAccidentType;
   /** 事故场景：户内、管网、场站 */
-  accidentScene: AccidentVoAccidentScene;
+  accidentScene?: AccidentVoAccidentScene;
   /** 事故等级：特别重大、重大、较大 */
-  accidentLevel: AccidentVoAccidentLevel;
+  accidentLevel?: AccidentVoAccidentLevel;
   /** 事故描述 */
-  describe: string;
+  describe?: string;
   /** 事故报告 */
-  fileIds: string;
+  fileIds?: string;
   /** 事故报告上传状态 */
-  upload: string;
+  upload?: string;
   /** 是否挂牌督办 */
-  isSupervision: boolean;
+  isSupervision?: boolean;
   /**
    * 死亡人数
    * @format int32
    */
-  deathCnt: number;
+  deathCnt?: number;
   /**
    * 受伤人数
    * @format int32
    */
-  injuredCnt: number;
-  supervision: string;
+  injuredCnt?: number;
+  supervision?: string;
   /** 行政区划id枚举中文描述 */
-  _districtId: string;
+  _districtId?: string;
   /** 组织机构id枚举中文描述 */
-  _orgId: string;
+  _orgId?: string;
   /** 事故类型：火灾、爆炸、爆燃、机械伤害枚举中文描述 */
-  _accidentType: string;
+  _accidentType?: string;
   /** 事故场景：户内、管网、场站枚举中文描述 */
-  _accidentScene: string;
+  _accidentScene?: string;
   /** 事故等级：特别重大、重大、较大枚举中文描述 */
-  _accidentLevel: string;
+  _accidentLevel?: string;
 }
 
 export interface PageResultListAccidentVO {
-  code: string;
-  data: AccidentVO[];
-  message: string;
+  code?: string;
+  data?: Array<AccidentVO>;
+  message?: string;
   /** @format int64 */
-  total: number;
-  success: boolean;
+  total?: number;
+  success?: boolean;
 }
 
 /** 事故事件汇总 */
@@ -13724,38 +13724,38 @@ export interface AccidentSummaryVO {
    * 事故事件总数
    * @format int32
    */
-  total: number;
+  total?: number;
   /**
    * 待上传事故报告数
    * @format int32
    */
-  noUploadCnt: number;
+  noUploadCnt?: number;
   /**
    * 特别重大事故数
    * @format int32
    */
-  majorCnt: number;
+  majorCnt?: number;
   /**
    * 挂牌督办数
    * @format int32
    */
-  supervisionCnt: number;
+  supervisionCnt?: number;
 }
 
 export interface ResultAccidentSummaryVO {
-  code: string;
+  code?: string;
   /** 事故事件汇总 */
-  data: AccidentSummaryVO;
-  message: string;
-  success: boolean;
+  data?: AccidentSummaryVO;
+  message?: string;
+  success?: boolean;
 }
 
 export interface ResultAccidentVO {
-  code: string;
+  code?: string;
   /** 事故事件列表 */
-  data: AccidentVO;
-  message: string;
-  success: boolean;
+  data?: AccidentVO;
+  message?: string;
+  success?: boolean;
 }
 
 /** 第三方施工状态 */

@@ -75,8 +75,6 @@
 </template>
 <script lang="ts" setup>
 import { reactive } from 'vue';
-import { detail,updateThirdBuildInfo } from '@/api/generated/ThirdBuild'
-import type { ThirdBuildInfoCreateDTO} from '@/api/generated/data-contracts'
 import { userStore } from "@/state";
 import { formatDate } from "@/utils";
 import { minDate } from "@/hooks";
@@ -85,15 +83,19 @@ import {useLoading} from '@/hooks/useLoading'
 import {EventType} from '@/enums/eventType'
 import WxValidate from '@/utils/validate/WxValidate'
 
+
+import { getThirdBuildById,putThirdBuildById} from '@/api/gen/GasSuperviseApi'
+import type {ThirdBuildUpdateDTO} from '@/api/gen/data-contracts'
+
 const store =  userStore();
 const isOrg = store.isOrgUser;
-let validator: WxValidateType<ThirdBuildInfoCreateDTO> | null = null;
+let validator: WxValidateType<ThirdBuildUpdateDTO> | null = null;
 
 const isShow = ref(false)
 const form = reactive({
   uid: '',
   isEdit: false,
-  info: <ThirdBuildInfoCreateDTO>{
+  info: <ThirdBuildUpdateDTO&{orgId?:string}>{
     planTimeStart: formatDate(minDate),
     planTimeEnd: formatDate(minDate),
     buildType: 'DLGZ',
@@ -113,9 +115,9 @@ onLoad(options => {
   // 拉一下详情
   if(form.isEdit) {
     form.uid = options!.uid;
-    detail(form.uid).then(res => {
+    getThirdBuildById(form.uid).then(res => {
       // 反显一下
-      form.info = res.data;
+      form.info = res.data!;
 
     })
   }
@@ -141,7 +143,7 @@ const save = () => {
       title: validator?.errorList[0].msg
     })
   } else {
-    const result = updateThirdBuildInfo(form.uid,form.info);
+    const result = putThirdBuildById(form.uid,form.info);
     useLoading(result, () => {
       uni.$emit(EventType.THIRD_BUILD_REFRESH)
       uni.navigateBack();
@@ -184,7 +186,7 @@ const openMapAndChooseLocation = async() => {
 
 
 
-const rules:Rules<ThirdBuildInfoCreateDTO> = {
+const rules:Rules<ThirdBuildUpdateDTO> = {
   constructionAddress: {
     required: true,
     maxlength: 64
@@ -220,7 +222,7 @@ const rules:Rules<ThirdBuildInfoCreateDTO> = {
     tel: true
   }
 } 
-const message:Messages<ThirdBuildInfoCreateDTO> = {
+const message:Messages<ThirdBuildUpdateDTO> = {
   constructionAddress: {
     required: '请选择施工地址',
     maxlength: '施工地址不能超过64个字符'

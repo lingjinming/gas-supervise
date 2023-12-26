@@ -34,7 +34,7 @@
 
         <view class="tab-detail-box">
           <text class="label">整改单位:</text>
-          <text>{{ order._targetOrgId }}</text>
+          <text>{{ (order as any)._targetOrgId }}</text>
         </view>
         <view class="tab-detail-box">
           <text class="label">联系电话:</text>
@@ -54,14 +54,14 @@
         </view>
         <view class="tab-detail-box">
           <text class="label">发布单位:</text>
-          <text>{{ order._masterOrgId }}</text>
+          <text>{{ (order as any)._masterOrgId }}</text>
         </view>
         <view class="tab-detail-box">
           <text class="label">企业负责人签字:</text>
           <view class="img-box">
             <region-img
               :disabledPreview="true"
-              v-if="order.targetOrgMasterSign.length"
+              v-if="order?.targetOrgMasterSign?.length"
               :id="order.targetOrgMasterSign[0]"
           /></view>
         </view>
@@ -70,12 +70,12 @@
           <view class="img-box">
             <region-img
               :disabledPreview="true"
-              v-if="order.expertSign.length"
+              v-if="order?.expertSign?.length"
               :id="order.expertSign[0]"
             />
             <region-img
               :disabledPreview="true"
-              v-if="order.expertSign.length"
+              v-if="order?.expertSign?.length"
               :id="order.expertSign[0]"
             />
           </view>
@@ -92,8 +92,9 @@
 </template>
 <script setup lang="ts">
 import { userStore } from "@/state";
-import { checkPlanDetail } from '@/api/generated/HidangerGov'
-import type {HidangerHandleOrderDTO} from '@/api/generated/data-contracts'
+// hidanger/gov/check-plan/${id}
+import { getHidangerGovCheckPlanById } from '@/api/gen/GasSuperviseApi'
+import type {HidangerHandleOrderDTO} from '@/api/gen/data-contracts'
 
 const store = userStore();
 const isGovUser = store.isGovUser;
@@ -171,14 +172,16 @@ let detail = reactive({
 
 const getDetail = async (id: string) => {
   try {
-    let {data} = await checkPlanDetail(id);
+    let { data } = await getHidangerGovCheckPlanById(id);
     Object.values(detail.check).forEach((value) => {
-      value.val = data[value.prop];
+    value.val = data&&data[value.prop];
     });
     Object.values(detail.order).forEach((value) => {
-      value.val = data[value.prop];
+      value.val = data&&data[value.prop];
     });
-    detail.handleOrders = data["handleOrders"];
+    if(data&&data.handleOrders) {
+      detail.handleOrders = data&&data.handleOrders;
+    }
   } finally {
   }
 };
@@ -189,7 +192,7 @@ const onChangeTab = ({ name }) => {
 
 const goCreateHandleOrder = () => {
   uni.navigateTo({
-    url:'/pages/handleOrder/index?planCode='+detail.planCode,
+    url:'/pages/check/pages/HandleOrderCreatePage?planCode='+detail.planCode,
   })
   
 }

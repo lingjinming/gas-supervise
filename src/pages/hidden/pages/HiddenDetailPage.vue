@@ -65,8 +65,8 @@
           <!-- 隐患推送 -->
           <template v-if="node.stage == 'PUSH'">
             <template v-if="data.detail.dangerSource === 'GOV'">
-              <view>关联整改单: {{ node.content.orderCode }}</view>
-              <view>关联检查计划: {{ node.content.planCode }}</view>
+              <view>关联整改单: {{ node?.content?.orderCode }}</view>
+              <view>关联检查计划: {{ node?.content?.planCode }}</view>
             </template>
             <view
               >隐患类型:
@@ -160,20 +160,17 @@
 import { ref, reactive } from "vue";
 import { userStore } from "@/state";
 import { EventType } from "@/enums/eventType";
-import { getHidangerFlow, createLeaderComment } from "../../api/hidden";
-import type {
-  Flow,
-  LeaderCommentCreate,
-  Stage,
-} from "@/api/model/HidangerFlow";
+
+
+import {getHidangerFlowByUid,postHidangerGovLeaderComment} from '@/api/gen/GasSuperviseApi'
+import type {HidnagerFlowVO,HidangerFlowDtoStage,LeaderCommentCreateDTO} from '@/api/gen/data-contracts'
 
 const store = userStore();
-
 const data = reactive({
-  uid: "",
-  detail: <Flow>{
-    dangerSource: "",
-    state: "",
+  uid: 0,
+  detail: <HidnagerFlowVO>{
+    dangerSource: undefined,
+    state: undefined,
     dangerId: undefined,
     level: undefined,
     _level: undefined,
@@ -181,7 +178,7 @@ const data = reactive({
   },
   loading: false,
   showComment: false,
-  commentBody: <LeaderCommentCreate | any>{
+  commentBody: <LeaderCommentCreateDTO | any>{
     comment: undefined,
   },
 });
@@ -212,7 +209,7 @@ const goToHandle = (isComplete: boolean) => {
   //@ts-ignore
   let checkDate = data.detail.flow[0].content.checkDate;
   uni.navigateTo({
-    url: `/pages/hiddenReform/index?uid=${data.uid}&isComplete=${isComplete}&checkDate=${checkDate}`,
+    url: `/pages/hidden/pages/HiddenReformPage?uid=${data.uid}&isComplete=${isComplete}&checkDate=${checkDate}`,
   });
 };
 
@@ -221,7 +218,7 @@ uni.$on(EventType.DANGER_DETAIL_REFRESH, () => {
 });
 
 // 点击展示领导批示
-const showLeaderComment = (stage: Stage, stageId: string) => {
+const showLeaderComment = (stage: HidangerFlowDtoStage|undefined, stageId: string|undefined) => {
   data.commentBody.stageId = stageId;
   data.commentBody.stage = stage;
   data.commentBody.dangerId = data.detail.dangerId!;
@@ -237,7 +234,7 @@ const submitLeaderComment = async () => {
   console.log(data.commentBody);
   try {
     loading.value = true;
-    await createLeaderComment(data.commentBody);
+    await postHidangerGovLeaderComment(data.commentBody);
     closeComment();
     // 重新拉取流程详情
     await getDetail(data.uid);
@@ -246,20 +243,22 @@ const submitLeaderComment = async () => {
   }
 };
 
-const getDetail = async (id: string) => {
+const getDetail = async (id: number) => {
   try {
     loading.value = true;
     data.uid = id;
-    console.log((await getHidangerFlow(id))["data"]);
-    const { level, _level, dangerId, flow, state, dangerSource } = (
-      await getHidangerFlow(id)
-    )["data"];
-    data.detail._level = _level;
-    data.detail.state = state;
-    data.detail.level = level;
-    data.detail.flow = flow;
-    data.detail.dangerId = dangerId;
-    data.detail.dangerSource = dangerSource;
+
+    const result = await getHidangerFlowByUid(id);
+    if(result.data) {
+      const { level, _level, dangerId, flow, state, dangerSource } = result.data ;
+      data.detail._level = _level;
+      data.detail.state = state;
+      data.detail.level = level;
+      data.detail.flow = flow;
+      data.detail.dangerId = dangerId;
+      data.detail.dangerSource = dangerSource;
+    }
+    
   } finally {
     loading.value = false;
   }
@@ -269,9 +268,9 @@ const getDetail = async (id: string) => {
  * 将 2023-07-25 16:58:26 去掉秒 转为 2023-07-25 16:58
  * @param time 2023-07-25 16:58:26
  */
-const formatTime = (time: string) => {
+const formatTime = (time: string|undefined) => {
   // 字符串截取,去掉最后三位
-  return time.slice(0, 16);
+  return time?time.slice(0, 16) : '';
 };
 </script>
 <style lang="scss" scoped>
@@ -383,8 +382,7 @@ const formatTime = (time: string) => {
     gap: 20rpx;
     margin: 20rpx 0;
 
-    button {
-    }
+   
   }
 
   .top {

@@ -73,9 +73,14 @@ const options = {
   codeGenConstructs: (constructs) => ({
     ...constructs,
     RecordType: (key, value) => `Record<string, any>`,
-    // 全部都是必填的
     TypeField: (data) => {
-      return data.key+":"+data.value;
+      return data.key+"?:"+data.value;
+    },
+    ArrayType: (data) => {
+      if('string,number'.includes(data)){
+        return `Array<${data}> | ${data}`
+      }
+      return `Array<${data}>`
     },
     EnumField: (key, value) => `${key} = ${value}`,
     EnumFieldsWrapper: (contents) =>
@@ -181,49 +186,11 @@ function append(key,item,prop) {
     description:prop.description+"枚举中文描述",
     name: '_'+key,
     value: 'string',
-    field:'_'+key+":string"
+    field:'_'+key+"?:string"
   })
 }
 
-/**
- * 取路径前两段作为接口文件名
- */
-function convertPathToCamelCase(path) {
-  if (!path) {
-    return 'CommonRequest';
-  }
-  // 行政区划
-  if(path.startsWith('/district')) {
-    return 'SysDictionary'
-  }
-  // 处理公共字典
-  if(path.startsWith('/dictionary')) {
-    return 'SysDictionary'
-  }
-  // 处理文件
-  if(path.startsWith('/file') || path.startsWith('/open')) {
-    return 'SysFile'
-  }
-  // 处理组织机构
-  if(path.startsWith('/org')) {
-    return 'SysOrganization'
-  }
-  // 处理用户
-  if(path.startsWith('/user')) {
-    return 'SysUser'
-  }
-  // 处理消息提醒
-  if(path.startsWith('/notice')) {
-    return 'SysNotice'
-  }
-  if(path.startsWith('/bulletin')) {
-    return 'Bulletin'
-  }
-  path = path.replace(/^\//, '');
-  const parts = path.split('/');
-  const camelCaseParts = parts.slice(0, 2).map(part => part.charAt(0).toUpperCase() + part.slice(1));
-  return camelCaseParts.join('');
-}
+
 
 generateApi(options)
 .then(({ files, configuration }) => {

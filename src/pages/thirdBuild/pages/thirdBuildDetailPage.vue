@@ -61,7 +61,7 @@
                 <view class="name">{{ item.guarderName }}</view>
               </view>
               <view class="time">
-                {{ item.guardTime.substring(0, 16) }}
+                {{ item.guardTime!.substring(0, 16) }}
               </view>
               <view class="content">
                 <view class="remark">
@@ -191,13 +191,9 @@
 </template>
 <script setup lang="ts">
 import { ref ,reactive} from 'vue';
-import { detail ,complete} from '@/api/generated/ThirdBuild';
-import type {ThirdBuildDetailVO} from '@/api/generated/data-contracts'
-import { userStore } from '@/state';
-import {EventType} from '@/enums/eventType'
-
-const store = userStore()
-const region = store.auth.activeServer?.region
+import { EventType } from '@/enums/eventType'
+import { getThirdBuildById ,putThirdBuildComplete} from '@/api/gen/GasSuperviseApi'
+import type {ThirdBuildDetailVO} from '@/api/gen/data-contracts'
 
 const state = reactive({
   uid: null,
@@ -222,8 +218,8 @@ const onChangeTab = ({ name }) => {
 };
 
 const getDetail = async (uid: string) => {
-  const { data } = await detail(uid);
-  state.info = data;
+  const { data } = await getThirdBuildById(uid);
+  state.info = data!;
 }
 // 跳转到编辑页面
 const goEdit = () => {
@@ -259,16 +255,16 @@ const goFinish = () => {
     content: '确定施工完成?',
     success: function (res) {
       if (res.confirm) {
-        complete({ids: [state.info.uid]}).then(() => {
-          getDetail(state.info.uid)
+        putThirdBuildComplete({ids: [state.info.uid!]}).then(() => {
+          getDetail(state.info.uid!)
         })
       } 
     }
   });
 
 }
-const isOk = (value: string) => {
-  return 'REPORTED,GUARDED,COMPLETED'.includes(value)
+const isOk = (value: string|undefined) => {
+  return value&&'REPORTED,GUARDED,COMPLETED'.includes(value)
 }
 
 </script>

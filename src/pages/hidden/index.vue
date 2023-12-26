@@ -20,7 +20,7 @@
     @refresherrefresh="onRefresh"
   >
     <template v-if="total">
-      <hidden v-for="(item, i) in list" :key="i" :info="item" ></hidden>
+      <HiddenPageItem v-for="(item, i) in list" :key="i" :info="item" ></HiddenPageItem>
     </template>
     <van-empty v-else description="暂无数据"></van-empty>
   </scroll-view>
@@ -82,12 +82,11 @@
 </template>
 
 <script setup lang="ts">
-import type {
-  HidangerPgaeVO,
-  HidangerOrgPageQuery,
-} from "@/api/model/HidangerPage";
 
-import { hidangerPage } from "@/api/hidden";
+import HiddenPageItem from './components/HiddenPageItem.vue'
+import { getHidangerOrgPage } from '@/api/gen/GasSuperviseApi'
+import type { HidangerOrgPageQuery,HidangerOrgPageVO } from '@/api/gen/data-contracts'
+
 import { reactive } from "vue";
 import { userStore } from "@/state";
 import { EventType } from "@/enums/eventType";
@@ -120,7 +119,7 @@ const {
   triggered,
   onRefreshPulling,
   onRefresh,
-} = useTable<HidangerPgaeVO>(state.query, hidangerPage, { showToast: true });
+} = useTable<HidangerOrgPageVO>(state.query, getHidangerOrgPage, { showToast: true });
 
 uni.$on(EventType.DANGER_PAGE_REFRESH, () => {
   search();

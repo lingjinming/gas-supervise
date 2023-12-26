@@ -3,7 +3,7 @@ import { reactive, shallowRef, triggerRef, watch } from "vue";
 
 
 
-type ApiType<T> = (params: any) => Promise<BasePageResponse<T> >;
+type ApiType<T> = (params: any) => Promise<BasePageResponse<T>>;
 
 type TableOptions = {
   minTime?: number;
@@ -119,7 +119,7 @@ export const useTable = <T>(
       loading.value = true;
 
       const { total: totalList, data } = await fun(params);
-      total.value = totalList;
+      total.value = totalList||0;
 
       noData.value = Boolean(!totalList);
       
@@ -166,17 +166,19 @@ export const useTable = <T>(
     }
     state.page.page += 1;
     const data = await fetchPage();
-    // app 直接追加
-    list.value = [...list.value, ...data];
-    // 强制触发刷新
-    //triggerRef(list);
+    if(data) {
+      // app 直接追加
+      list.value = [...list.value, ...data];
+      // 强制触发刷新
+      //triggerRef(list);
+    }
   };
 
   const search = async () => {
     // 重置页码
     state.page.page = 1;
     // 重置列表
-    list.value = await fetchPage();
+    list.value = await fetchPage()||[];
   };
 
   const margeParam = () => {

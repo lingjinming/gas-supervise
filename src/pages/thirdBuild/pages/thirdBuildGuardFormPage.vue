@@ -33,10 +33,11 @@
 </template>
 <script lang="ts" setup>
 import { reactive } from 'vue';
-import type { ThirdBuildGuardCreateDTO, ThirdBuildReportCreateDTO,ThirdBuildInfoCreateDTO} from '@/api/generated/data-contracts'
-import { checkThirdBuildInfo ,createThirdBuildGuard} from '@/api/generated/ThirdBuild'
 import {EventType} from '@/enums/eventType'
 import {useLoading} from '@/hooks/useLoading'
+
+import type { ThirdBuildGuardCreateDTO, ThirdBuildReportCreateDTO,ThirdBuildInfoCreateDTO} from '@/api/gen/data-contracts'
+import {postThirdBuild,postThirdBuildGuardByThirdBuildId} from '@/api/gen/GasSuperviseApi'
 
 const data = reactive({
   isInChain: false,
@@ -64,14 +65,14 @@ onLoad(options => {
 const save = async () => {
   // 创建三方施工记录
   if(data.isInChain) {
-    const createResult = checkThirdBuildInfo({info: data.thirdBuildInfo,report: data.reportInfo,guard: data.form});
+    const createResult = postThirdBuild({info: data.thirdBuildInfo,report: data.reportInfo,guard: data.form});
     useLoading(createResult, () => {
       uni.reLaunch({  url: '/pages/thirdBuild/index'  })
     })
   }
   // 创建看护记录 
   else {
-    const createResult = createThirdBuildGuard(data.thirdBuildUid,data.form);
+    const createResult = postThirdBuildGuardByThirdBuildId(data.thirdBuildUid,data.form);
     useLoading(createResult, () => {
       uni.$emit(EventType.THIRD_BUILD_REFRESH)
       uni.navigateBack();

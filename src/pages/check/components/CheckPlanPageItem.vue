@@ -38,37 +38,35 @@
       </view>
     </van-cell-group>
     <view slot="right" class="right">
-      <view class="done" @click="finishPlan(data.uid, $event)">标记已完成</view>
-      <view class="del" @click="deletePlan(data.uid, $event)">删除</view>
+      <view class="done" @click="finishPlan(data.uid)">标记已完成</view>
+      <view class="del" @click="deletePlan(data.uid)">删除</view>
     </view>
   </van-swipe-cell>
 </template>
 <script setup lang="ts">
-import { checkPlanDelById, checkPlanFinishById } from "@/api/checkPlan";
-import type { CheckPageVo } from "@/api/model/CheckPlan";
 import { showToast } from "@/hooks";
-import type { PropType } from "vue";
+
+import { deleteHidangerGovCheckPlanByIds ,postHidangerGovCheckPlanFinishById} from '@/api/gen/GasSuperviseApi'
 
 const props = defineProps({
   data: {
-    type: Object as PropType<CheckPageVo>,
+    type: Object,
     default: {},
   },
 });
 const navigateToDetail = (uid, planCode, e) => {
-  console.log(props.data);
   uni.navigateTo({
-    url: `/pages/checkDetail/index?uid=${uid}&planCode=${planCode}`,
+    url: `/pages/check/pages/CheckPlanDetailPage?uid=${uid}&planCode=${planCode}`,
   });
 };
 
-const deletePlan = async (uid) => {
-  let data = await checkPlanDelById({ uid });
+const deletePlan = async (uid: number) => {
+  let data = await deleteHidangerGovCheckPlanByIds(uid);
   showToast(data.success, data.message);
 };
 
 const finishPlan = async (uid) => {
-  let data = await checkPlanFinishById({ uid });
+  let data = await postHidangerGovCheckPlanFinishById(uid);
   showToast(data.success, data.message);
 };
 </script>

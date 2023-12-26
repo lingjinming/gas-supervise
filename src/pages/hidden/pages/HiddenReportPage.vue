@@ -76,13 +76,14 @@
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
-import { addHidden } from "../../api/hidden";
-import type { HidangerCreateReq } from "@/api/model/Hidanger";
 import { formatDate } from "@/utils";
 import { minDate, maxDate } from "@/hooks";
 import { userStore } from "@/state";
 import { useLoading } from "@/hooks/useLoading";
 import { useMap } from '@/hooks/useMap';
+
+import {postHidangerGov,postHidangerOrg} from '@/api/gen/GasSuperviseApi'
+import type {HidangerCreateDTO} from '@/api/gen/data-contracts'
 
 const store = userStore();
 
@@ -99,20 +100,20 @@ let reportForm = ref({
   remark: "",
   address: "",
   orgId: "",
-  level: "",
+  level: "YB",
   checkDate: formatDate(minDate),
   planCode: "",
   subjectType: "",
   dangerType: "",
   dangerSubtype:"",
   fileIds: [],
-  longitude: "",
-  latitude: "",
+  longitude: 0,
+  latitude: 0,
   districtId: "",
-} as HidangerCreateReq);
+} as HidangerCreateDTO);
 
 const submit = async () => {
-  const result  = addHidden(reportForm.value);
+  const result = Promise.resolve().then(() => isOrg ? postHidangerOrg(reportForm.value) : postHidangerGov(reportForm.value))
   useLoading(result,() => {
     uni.navigateBack();
   })

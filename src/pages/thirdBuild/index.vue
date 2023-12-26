@@ -95,11 +95,12 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
 import { userStore } from "@/state";
-import { pageQuery } from '@/api/generated/ThirdBuild';
 import { useTable } from '@/hooks/useTable';
-import type { ThirdBuildPageVO ,ThirdBuildPageQuery} from '@/api/generated/data-contracts'
 import ThirdBuildPageItem from './components/thirdBuildPageItem.vue'
 import { formatDate } from "@/utils";
+
+import { getThirdBuildPage } from '@/api/gen/GasSuperviseApi'
+import type { ThirdBuildPageVO ,ThirdBuildPageQuery} from '@/api/gen/data-contracts'
 
 const store = userStore();
 const isOrg: boolean = store.isOrgUser;
@@ -121,7 +122,7 @@ const {
   triggered,
   onRefreshPulling,
   onRefresh,
-} = useTable<ThirdBuildPageVO>(state.query,pageQuery);
+} = useTable<ThirdBuildPageVO>(state.query,getThirdBuildPage);
 onLoad(() => {
   search()
 })

@@ -48,12 +48,12 @@
     </view>
 </template>
 <script lang="ts" setup>
-import type {  ThirdBuildReportCreateDTO,ThirdBuildInfoCreateDTO} from '@/api/generated/data-contracts'
 import { reactive ,getCurrentInstance } from 'vue';
-import {createThirdBuildReport} from '@/api/generated/ThirdBuild'
 import { userStore } from "@/state";
 import {EventType} from '@/enums/eventType'
 import {useLoading} from '@/hooks/useLoading'
+import type {  ThirdBuildReportCreateDTO,ThirdBuildInfoCreateDTO} from '@/api/gen/data-contracts'
+import {postThirdBuildReportByThirdBuildId} from '@/api/gen/GasSuperviseApi'
 
 const store =  userStore()
 const isOrg = store.isOrgUser
@@ -105,7 +105,7 @@ const save = async() => {
     });
     return;
   }
-  const result = createThirdBuildReport(data.thirdBuildUid,data.form);
+  const result = postThirdBuildReportByThirdBuildId(data.thirdBuildUid,data.form);
   useLoading(result, () => {
     uni.$emit(EventType.THIRD_BUILD_REFRESH)
     uni.navigateBack();

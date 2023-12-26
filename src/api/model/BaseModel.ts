@@ -34,15 +34,11 @@ export interface BaseResponse<T> {
 /**
  * 分页请求响应基类
  */
-export interface BasePageResponse<T> extends BaseResponse<T[]>{
-  total: number;
-  data: T[]
+export interface BasePageResponse<T>{
+  code?: string;
+  success?: boolean;
+  message?: string;
+  total?: number;
+  data?: T[]
 }
 
-/**
- * 分页请求响应基类
- */
-export interface BasePageResponse<T> extends BaseResponse<T[]>{
-  total: number;
-  data: T[]
-}
