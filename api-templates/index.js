@@ -1,4 +1,5 @@
 const { generateApi, generateTemplates, GenerateApiParamsBase} = require('swagger-typescript-api');
+const {schemaParse} = require('./schemaParse');
 const path = require("path");
 const fs = require("fs");
 const _ = require("lodash");
@@ -73,9 +74,6 @@ const options = {
   codeGenConstructs: (constructs) => ({
     ...constructs,
     RecordType: (key, value) => `Record<string, any>`,
-    TypeField: (data) => {
-      return data.key+"?:"+data.value;
-    },
     ArrayType: (data) => {
       if('string,number'.includes(data)){
         return `Array<${data}> | ${data}`
@@ -138,18 +136,9 @@ const options = {
       return createCustomOperationId(method, route, moduleName);
 
     },
-    // 给枚举类型加上_
+   
     onParseSchema: (rawSchema,schema) => {
-     if(schema.type === 'object') {
-      for (const key in schema.properties) {
-        const prop = schema.properties[key];
-         if(prop.enum) {
-          append(key,schema,prop)
-        } else if('orgId,districtId'.includes(key)) {
-          append(key,schema,prop)
-        }
-      }
-     } 
+
     },
     
     onCreateRoute: (routeData) => {
@@ -174,30 +163,27 @@ const options = {
 }
 
 
-function append(key,item,prop) {
-  const typeDef = {
-    type: 'string',
-    description: prop.description+"枚举中文描述",
-    '$parsed': prop['$parsed']
-  };
-  item.properties['_'+key] = typeDef;
-  item.content.push({
-    type: 'string',
-    description:prop.description+"枚举中文描述",
-    name: '_'+key,
-    value: 'string',
-    field:'_'+key+"?:string"
+
+schemaParse(options.url).then(spec => {
+  options.spec = spec;
+  options.url = undefined;
+
+  generateApi(options)
+  .then(({ files, configuration }) => {
+    files.forEach(({ content, name }) => {
+      fs.writeFile(path, content);
+    });
   })
-}
 
-
-
-generateApi(options)
-.then(({ files, configuration }) => {
-  files.forEach(({ content, name }) => {
-    fs.writeFile(path, content);
-  });
 })
+
+
+// generateApi(options)
+// .then(({ files, configuration }) => {
+//   files.forEach(({ content, name }) => {
+//     fs.writeFile(path, content);
+//   });
+// })
 
 
   // generateTemplates({

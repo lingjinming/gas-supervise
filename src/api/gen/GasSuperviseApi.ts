@@ -35,9 +35,11 @@ import type {
   CifrsGasChPipeRepairPageQuery,
   CifrsPipeMnPipelinePageQuery,
   CifrsPipeMnPipepointPageQuery,
+  ConferenceCreateRequest,
   DataMessage,
   DeviceMapRequest,
   DeviceRequest,
+  EmerVehicleInfoDTO,
   EmresDrillRequest,
   EmresMnExpertDTO,
   EmresMnExpertPageQuery,
@@ -105,6 +107,7 @@ import type {
   PageResultListCifrsPipeMnPipepointPageVO,
   PageResultListDetailGasUserVO,
   PageResultListDevicePageVO,
+  PageResultListEmerVehicleInfoVO,
   PageResultListEmresDrillVO,
   PageResultListEmresMnExpertPageVO,
   PageResultListEmresMnMateriPageVO,
@@ -133,6 +136,7 @@ import type {
   PageResultListSuperviseNotifyRulePageVO,
   PageResultListSysNotifyTemplatePageVO,
   PageResultListThirdBuildPageVO,
+  PageResultListVehicleInfoVO,
   PageResultListWarnPageVO,
   ParamQuery,
   PerCertificatePageQuery,
@@ -141,12 +145,14 @@ import type {
   ResultAccessDataVO,
   ResultAccidentSummaryVO,
   ResultAccidentVO,
+  ResultAlarmCountTrendVO,
   ResultAlarmSummaryVO,
   ResultAllOnlineRateVO,
   ResultAnalysBaseMnCaseBaseVO,
   ResultAnalysBaseMnCaseDetailVO,
   ResultAnalysBaseMnKnowledgeDetailVO,
   ResultBaseBotOverallVO,
+  ResultBaseDataVO,
   ResultBaseEntOverallVO,
   ResultBaseGasSupplyVO,
   ResultBaseLngOverallVO,
@@ -175,14 +181,18 @@ import type {
   ResultCifrsPipeMnPipelineDetailVO,
   ResultCifrsPipeMnPipepointDetailVO,
   ResultCifrsPipeStatisticsVO,
+  ResultClientAlarmCountVO,
+  ResultClientDeviceRateVO,
   ResultComSupLgEnterpriseVO,
   ResultComSupSafeCheckVO,
   ResultComSupSubjectTypeVO,
+  ResultCreateConferenceDTO,
   ResultDangerDetailVO,
   ResultDetailGasUserVO,
   ResultDeviceMapVO,
   ResultDeviceSummaryVO,
   ResultDistrictVO,
+  ResultEmerVehicleInfoVO,
   ResultEmresDrillSummaryVO,
   ResultEmresDrillVO,
   ResultEmresMnExpertDetailVO,
@@ -248,7 +258,6 @@ import type {
   ResultListEmresMnRetmanBaseVO,
   ResultListEmresMnRetmanExportVO,
   ResultListEmresMnWhouseDownVO,
-  ResultListEnterpriseBaseDataDO,
   ResultListEnterpriseMapInfoVO,
   ResultListEnterpriseScoringItemDTO,
   ResultListHiDangerCheckPlanSelectionsDTO,
@@ -287,7 +296,9 @@ import type {
   ResultLngFlowAlarmStatVO,
   ResultLngFlowStatVO,
   ResultMapStringListDictionaryItem,
+  ResultMapStringListListMapStringString,
   ResultMapStringListMessageContent,
+  ResultMapStringListScreenAlarmSummaryLineChartVO,
   ResultMapStringListScreenGasDataMapVO,
   ResultMapStringLong,
   ResultMonitorCurveVO,
@@ -354,14 +365,120 @@ import type {
   ThirdBuildPageQuery,
   ThirdBuildReportCreateDTO,
   ThirdBuildUpdateDTO,
+  Type车辆信息,
   UpdateAccidentQuery,
   UpdateBulletinQuery,
   UpdateGasUserQuery,
   UpdateOldPipeBuildQuery,
   UpdatePerQualificationsQuery,
+  VehiclePageQuery,
   WarnPageRequest,
 } from "./data-contracts";
 
+/**
+ * vehicle-controller 查询运输车辆详情
+ *
+ * @tags vehicle-controller
+ * @name GetVehicleById
+ * @summary 查询运输车辆详情
+ * @request GET:/vehicle/{id}
+ * @response `200` `ResultVehicleInfoVO` OK
+ */
+export const getVehicleById = (id: number, params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultVehicleInfoVO>(
+    {
+      url: `gas-supervise/vehicle/${id}`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * vehicle-controller 修改运输车辆
+ *
+ * @tags vehicle-controller
+ * @name PutVehicleById
+ * @summary 修改运输车辆
+ * @request PUT:/vehicle/{id}
+ * @response `200` `ResultVoid` OK
+ */
+export const putVehicleById = (id: number, data: Type车辆信息, params: PerRequestOptions = {}) => {
+  return defHttp.put<ResultVoid>(
+    {
+      url: `gas-supervise/vehicle/${id}`,
+      data: data,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * vehicle-controller 删除运输车辆
+ *
+ * @tags vehicle-controller
+ * @name DeleteVehicleById
+ * @summary 删除运输车辆
+ * @request DELETE:/vehicle/{id}
+ * @response `200` `ResultVoid` OK
+ */
+export const deleteVehicleById = (id: number, params: PerRequestOptions = {}) => {
+  return defHttp.delete<ResultVoid>(
+    {
+      url: `gas-supervise/vehicle/${id}`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * vehicle-controller 查询应急车辆详情
+ *
+ * @tags vehicle-controller
+ * @name GetVehicleEmerById
+ * @summary 查询应急车辆详情
+ * @request GET:/vehicle/emer/{id}
+ * @response `200` `ResultEmerVehicleInfoVO` OK
+ */
+export const getVehicleEmerById = (id: number, params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultEmerVehicleInfoVO>(
+    {
+      url: `gas-supervise/vehicle/emer/${id}`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * vehicle-controller 修改应急车辆
+ *
+ * @tags vehicle-controller
+ * @name PutVehicleEmerById
+ * @summary 修改应急车辆
+ * @request PUT:/vehicle/emer/{id}
+ * @response `200` `ResultVoid` OK
+ */
+export const putVehicleEmerById = (id: number, data: EmerVehicleInfoDTO, params: PerRequestOptions = {}) => {
+  return defHttp.put<ResultVoid>(
+    {
+      url: `gas-supervise/vehicle/emer/${id}`,
+      data: data,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * vehicle-controller 删除应急车辆
+ *
+ * @tags vehicle-controller
+ * @name DeleteVehicleEmerById
+ * @summary 删除应急车辆
+ * @request DELETE:/vehicle/emer/{id}
+ * @response `200` `ResultVoid` OK
+ */
+export const deleteVehicleEmerById = (id: number, params: PerRequestOptions = {}) => {
+  return defHttp.delete<ResultVoid>(
+    {
+      url: `gas-supervise/vehicle/emer/${id}`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
 /**
  * 三方施工管理 详情
  *
@@ -813,6 +930,42 @@ export const putEnterpriseCheckById = (id: number, data: SecurityCheckDTO, param
   );
 };
 /**
+ * vehicle-controller 新增运输车辆
+ *
+ * @tags vehicle-controller
+ * @name PostVehicle
+ * @summary 新增运输车辆
+ * @request POST:/vehicle
+ * @response `200` `ResultVoid` OK
+ */
+export const postVehicle = (data: Type车辆信息, params: PerRequestOptions = {}) => {
+  return defHttp.post<ResultVoid>(
+    {
+      url: `gas-supervise/vehicle`,
+      data: data,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * vehicle-controller 新增应急车辆
+ *
+ * @tags vehicle-controller
+ * @name PostVehicleEmer
+ * @summary 新增应急车辆
+ * @request POST:/vehicle/emer
+ * @response `200` `ResultVoid` OK
+ */
+export const postVehicleEmer = (data: EmerVehicleInfoDTO, params: PerRequestOptions = {}) => {
+  return defHttp.post<ResultVoid>(
+    {
+      url: `gas-supervise/vehicle/emer`,
+      data: data,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
  * 三方施工管理 创建
  *
  * @tags 三方施工管理
@@ -906,6 +1059,24 @@ export const postThirdBuildImport = (data: ThirdBuildBatchImportDTO, params: Per
   return defHttp.post<ResultVoid>(
     {
       url: `gas-supervise/third/build/import`,
+      data: data,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 监管端预警管理接口 创建视频会议
+ *
+ * @tags 监管端预警管理接口, 创建视频会议
+ * @name PostSuperviseWarnCreateConference
+ * @summary 创建视频会议
+ * @request POST:/supervise/warn/create/conference
+ * @response `200` `ResultCreateConferenceDTO` OK
+ */
+export const postSuperviseWarnCreateConference = (data: ConferenceCreateRequest, params: PerRequestOptions = {}) => {
+  return defHttp.post<ResultCreateConferenceDTO>(
+    {
+      url: `gas-supervise/supervise/warn/create/conference`,
       data: data,
     },
     { ...params, isTransformResponse: false },
@@ -1139,7 +1310,7 @@ export const postHidangerUrgeDoUrge = (data: HidangerDoUrgeDTO, params: PerReque
 export const postHidangerPreImport = (
   query: {
     /** @format binary */
-    file?: FormData;
+    file: FormData;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -1396,7 +1567,7 @@ export const postHidangerFactorsCallbackParse = (data: RiskComputedCallbackDTO, 
 export const postGuideKnowledgeImport = (
   query: {
     /** @format binary */
-    file?: FormData;
+    file: FormData;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -1455,7 +1626,7 @@ export const postGuideKnowledgeCreate = (data: AnalysBaseMnKnowledgeDTO, params:
  */
 export const postGuideKnowledgeBatchDel = (
   query: {
-    ids?: string;
+    ids: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -1479,7 +1650,7 @@ export const postGuideKnowledgeBatchDel = (
 export const postGuideCaseImport = (
   query: {
     /** @format binary */
-    file?: FormData;
+    file: FormData;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -1538,7 +1709,7 @@ export const postGuideCaseCreate = (data: AnalysBaseMnCaseDTO, params: PerReques
  */
 export const postGuideCaseBatchDel = (
   query: {
-    ids?: string;
+    ids: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -1697,6 +1868,7 @@ export const postFileUpload = (
     {
       url: `gas-supervise/file/upload`,
       data: data,
+      header: { "Content-Type": "multipart/form-data" },
     },
     { ...params, isTransformResponse: false },
   );
@@ -1751,8 +1923,8 @@ export const postEnterprisePatrolProcessById = (
   id: number,
   query: {
     /** @format double */
-    rate?: number;
-    fileId?: string;
+    rate: number;
+    fileId: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -1775,7 +1947,7 @@ export const postEnterprisePatrolProcessById = (
  */
 export const postEnterprisePatrolSupervise = (
   query: {
-    ids?: Array<string> | string;
+    ids: Array<string> | string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -2109,7 +2281,7 @@ export const postBasicRetmanCreate = (data: EmresMnRetmanDTO, params: PerRequest
  */
 export const postBasicRetmanBatchDel = (
   query: {
-    cmKids?: string;
+    cmKids: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -2168,7 +2340,7 @@ export const postBasicReteamCreate = (data: EmresMnReteamDTO, params: PerRequest
  */
 export const postBasicReteamBatchDel = (
   query: {
-    cmKids?: string;
+    cmKids: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -2209,7 +2381,7 @@ export const postBasicPipePipepointList = (data: ParamQuery, params: PerRequestO
  */
 export const postBasicPipePipelineSection = (
   query: {
-    lineString?: string;
+    lineString: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -2250,8 +2422,8 @@ export const postBasicPipePipelineList = (data: ParamQuery, params: PerRequestOp
  */
 export const postBasicPipeBatchMonitorno = (
   query: {
-    cmKids?: string;
-    monitorno?: string;
+    cmKids: string;
+    monitorno: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -2275,7 +2447,7 @@ export const postBasicPipeBatchMonitorno = (
 export const postBasicPipeBatchExport = (
   query: {
     /** @format binary */
-    file?: FormData;
+    file: FormData;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -2334,7 +2506,7 @@ export const postBasicMateriCreate = (data: EmresMnMateriDTO, params: PerRequest
  */
 export const postBasicMateriBatchDel = (
   query: {
-    cmKids?: string;
+    cmKids: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -2393,7 +2565,7 @@ export const postBasicExpertCreate = (data: EmresMnExpertDTO, params: PerRequest
  */
 export const postBasicExpertBatchDel = (
   query: {
-    cmKids?: string;
+    cmKids: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -2453,6 +2625,52 @@ export const getWeatherReal = (params: PerRequestOptions = {}) => {
   return defHttp.get<ResultWeatherInfo>(
     {
       url: `gas-supervise/weather/real`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * vehicle-controller 查询运输车辆列表
+ *
+ * @tags vehicle-controller
+ * @name GetVehicleList
+ * @summary 查询运输车辆列表
+ * @request GET:/vehicle/list
+ * @response `200` `PageResultListVehicleInfoVO` OK
+ */
+export const getVehicleList = (
+  query: {
+    query: VehiclePageQuery;
+  },
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.get<PageResultListVehicleInfoVO>(
+    {
+      url: `gas-supervise/vehicle/list`,
+      data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * vehicle-controller 查询应急车辆列表
+ *
+ * @tags vehicle-controller
+ * @name GetVehicleEmerList
+ * @summary 查询应急车辆列表
+ * @request GET:/vehicle/emer/list
+ * @response `200` `PageResultListEmerVehicleInfoVO` OK
+ */
+export const getVehicleEmerList = (
+  query: {
+    query: VehiclePageQuery;
+  },
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.get<PageResultListEmerVehicleInfoVO>(
+    {
+      url: `gas-supervise/vehicle/emer/list`,
+      data: query,
     },
     { ...params, isTransformResponse: false },
   );
@@ -2570,7 +2788,7 @@ export const getUserMeDistrict = (params: PerRequestOptions = {}) => {
  */
 export const getUserBook = (
   query: {
-    code?: string;
+    code: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -2593,10 +2811,8 @@ export const getUserBook = (
  */
 export const getUserBookOrg = (
   query: {
-    code?: string;
-    orgId?: string;
-    /** undefined枚举中文描述 */
-    _orgId?: string;
+    code: string;
+    orgId: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -2670,7 +2886,7 @@ export const getThirdBuildSummary = (params: PerRequestOptions = {}) => {
  */
 export const getThirdBuildPage = (
   query: {
-    query?: ThirdBuildPageQuery;
+    query: ThirdBuildPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -2692,7 +2908,7 @@ export const getThirdBuildPage = (
  */
 export const getSysNotifyTemplatePage = (
   query: {
-    query?: SysNotifyTemplatePageQuery;
+    query: SysNotifyTemplatePageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -2714,7 +2930,7 @@ export const getSysNotifyTemplatePage = (
  */
 export const getSysNotifyRulePage = (
   query: {
-    query?: PageRequest;
+    query: PageRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -2738,7 +2954,7 @@ export const getSysNotifyRulePage = (
 export const getSuperviseWarn = (
   query: {
     /** 监管预警信息分页查询请求 */
-    request?: WarnPageRequest;
+    request: WarnPageRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -2762,7 +2978,7 @@ export const getSuperviseWarn = (
 export const getSuperviseWarnSummary = (
   query: {
     /** 监管预警信息分页查询请求 */
-    request?: WarnPageRequest;
+    request: WarnPageRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -2786,7 +3002,7 @@ export const getSuperviseWarnSummary = (
 export const getSuperviseWarnSummaryHistory = (
   query: {
     /** 监管预警信息分页查询请求 */
-    request?: WarnPageRequest;
+    request: WarnPageRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -2810,7 +3026,7 @@ export const getSuperviseWarnSummaryHistory = (
 export const getSuperviseWarnHistory = (
   query: {
     /** 监管预警信息分页查询请求 */
-    request?: WarnPageRequest;
+    request: WarnPageRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -2953,7 +3169,7 @@ export const getSuperviseStatisticalWarnDisposeSummary = (params: PerRequestOpti
 export const getSuperviseStatisticalScreenWarnSummary = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -2977,7 +3193,7 @@ export const getSuperviseStatisticalScreenWarnSummary = (
 export const getSuperviseStatisticalScreenWarnEvent = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3001,7 +3217,7 @@ export const getSuperviseStatisticalScreenWarnEvent = (
 export const getSuperviseStatisticalScreenQualificationsError = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3025,7 +3241,7 @@ export const getSuperviseStatisticalScreenQualificationsError = (
 export const getSuperviseStatisticalScreenPipelineWarn = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3049,7 +3265,7 @@ export const getSuperviseStatisticalScreenPipelineWarn = (
 export const getSuperviseStatisticalScreenPipelineOverview = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3073,7 +3289,7 @@ export const getSuperviseStatisticalScreenPipelineOverview = (
 export const getSuperviseStatisticalScreenPipelineInspectionPatrol = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3097,7 +3313,7 @@ export const getSuperviseStatisticalScreenPipelineInspectionPatrol = (
 export const getSuperviseStatisticalScreenPipelineDevice = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3121,7 +3337,7 @@ export const getSuperviseStatisticalScreenPipelineDevice = (
 export const getSuperviseStatisticalScreenMonitorOverview = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3145,7 +3361,7 @@ export const getSuperviseStatisticalScreenMonitorOverview = (
 export const getSuperviseStatisticalScreenEmresCount = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3169,7 +3385,7 @@ export const getSuperviseStatisticalScreenEmresCount = (
 export const getSuperviseStatisticalScreenAlarmOverview = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3193,7 +3409,7 @@ export const getSuperviseStatisticalScreenAlarmOverview = (
 export const getSuperviseStatisticalPcQualificationsError = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3217,7 +3433,7 @@ export const getSuperviseStatisticalPcQualificationsError = (
 export const getSuperviseStatisticalPcInstallAlarm = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3241,13 +3457,133 @@ export const getSuperviseStatisticalPcInstallAlarm = (
 export const getSuperviseStatisticalPcInstallAlarmCount = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
   return defHttp.get<ResultInstallAlarmCountVO>(
     {
       url: `gas-supervise/supervise/statistical/pc/install/alarm/count`,
+      data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 终端用户-监测报警-统计分析-报警分析 终端用户-监测报警-统计分析-报警分析
+ *
+ * @tags 终端用户-监测报警-统计分析-报警分析, 管道气、监测预警统计接口
+ * @name GetSuperviseStatisticalPcClientDeviceRate
+ * @summary 终端用户-监测报警-统计分析-报警分析
+ * @request GET:/supervise/statistical/pc/client/device/rate
+ * @response `200` `ResultClientDeviceRateVO` OK
+ */
+export const getSuperviseStatisticalPcClientDeviceRate = (
+  query: {
+    /** 监管统计请求 */
+    query: StatisticalRequest;
+  },
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.get<ResultClientDeviceRateVO>(
+    {
+      url: `gas-supervise/supervise/statistical/pc/client/device/rate`,
+      data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 终端用户-监测报警-统计分析-报警趋势 终端用户-监测报警-统计分析-报警趋势
+ *
+ * @tags 终端用户-监测报警-统计分析-报警趋势, 管道气、监测预警统计接口
+ * @name GetSuperviseStatisticalPcClientAlarmTrace
+ * @summary 终端用户-监测报警-统计分析-报警趋势
+ * @request GET:/supervise/statistical/pc/client/alarm/trace
+ * @response `200` `ResultMapStringListScreenAlarmSummaryLineChartVO` OK
+ */
+export const getSuperviseStatisticalPcClientAlarmTrace = (
+  query: {
+    /** 监管统计请求 */
+    query: StatisticalRequest;
+  },
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.get<ResultMapStringListScreenAlarmSummaryLineChartVO>(
+    {
+      url: `gas-supervise/supervise/statistical/pc/client/alarm/trace`,
+      data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 终端用户-监测报警-统计分析-报警级别排名 终端用户-监测报警-统计分析-报警级别排名
+ *
+ * @tags 终端用户-监测报警-统计分析-报警级别排名, 管道气、监测预警统计接口
+ * @name GetSuperviseStatisticalPcClientAlarmLevel
+ * @summary 终端用户-监测报警-统计分析-报警级别排名
+ * @request GET:/supervise/statistical/pc/client/alarm/level
+ * @response `200` `ResultListAlarmSumVO` OK
+ */
+export const getSuperviseStatisticalPcClientAlarmLevel = (
+  query: {
+    /** 监管统计请求 */
+    query: StatisticalRequest;
+  },
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.get<ResultListAlarmSumVO>(
+    {
+      url: `gas-supervise/supervise/statistical/pc/client/alarm/level`,
+      data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 终端用户-监测报警-统计分析-报警区域排名 终端用户-监测报警-统计分析-报警区域排名
+ *
+ * @tags 终端用户-监测报警-统计分析-报警区域排名, 管道气、监测预警统计接口
+ * @name GetSuperviseStatisticalPcClientAlarmDistrict
+ * @summary 终端用户-监测报警-统计分析-报警区域排名
+ * @request GET:/supervise/statistical/pc/client/alarm/district
+ * @response `200` `ResultListAlarmSumVO` OK
+ */
+export const getSuperviseStatisticalPcClientAlarmDistrict = (
+  query: {
+    /** 监管统计请求 */
+    query: StatisticalRequest;
+  },
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.get<ResultListAlarmSumVO>(
+    {
+      url: `gas-supervise/supervise/statistical/pc/client/alarm/district`,
+      data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 管道气、监测预警统计接口 终端用户-监测报警-统计分析-报警数量
+ *
+ * @tags 管道气、监测预警统计接口, 终端用户-监测报警-统计分析-报警数量
+ * @name GetSuperviseStatisticalPcClientAlarmCount
+ * @summary 终端用户-监测报警-统计分析-报警数量
+ * @request GET:/supervise/statistical/pc/client/alarm/count
+ * @response `200` `ResultClientAlarmCountVO` OK
+ */
+export const getSuperviseStatisticalPcClientAlarmCount = (
+  query: {
+    /** 监管统计请求 */
+    query: StatisticalRequest;
+  },
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.get<ResultClientAlarmCountVO>(
+    {
+      url: `gas-supervise/supervise/statistical/pc/client/alarm/count`,
       data: query,
     },
     { ...params, isTransformResponse: false },
@@ -3265,7 +3601,7 @@ export const getSuperviseStatisticalPcInstallAlarmCount = (
 export const getSuperviseStatisticalPcAlarmSummary = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3289,7 +3625,7 @@ export const getSuperviseStatisticalPcAlarmSummary = (
 export const getSuperviseStatisticalPcAlarmList = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3313,7 +3649,7 @@ export const getSuperviseStatisticalPcAlarmList = (
 export const getSuperviseStatisticalMonitorTypeOnlineRate = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3337,7 +3673,7 @@ export const getSuperviseStatisticalMonitorTypeOnlineRate = (
 export const getSuperviseStatisticalMonitorDeviceSummary = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3412,7 +3748,7 @@ export const getSuperviseStatisticalMonitorDeviceIndex = (params: PerRequestOpti
 export const getSuperviseStatisticalMonitorAllOnlineRate = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3436,7 +3772,7 @@ export const getSuperviseStatisticalMonitorAllOnlineRate = (
 export const getSuperviseStatisticalHomePageWarnSummary = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3460,7 +3796,7 @@ export const getSuperviseStatisticalHomePageWarnSummary = (
 export const getSuperviseStatisticalHomePageEnterprise = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3484,7 +3820,7 @@ export const getSuperviseStatisticalHomePageEnterprise = (
 export const getSuperviseStatisticalHomePageDataAccess = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3492,6 +3828,23 @@ export const getSuperviseStatisticalHomePageDataAccess = (
     {
       url: `gas-supervise/supervise/statistical/homePage/data/access`,
       data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * @description 近一年的监测成效，报警和预警数量统计以及按月份的趋势统计
+ *
+ * @tags 监管统计接口
+ * @name GetSuperviseStatisticalAlarmYear
+ * @summary 近一年的监测成效
+ * @request GET:/supervise/statistical/alarm/year
+ * @response `200` `ResultAlarmCountTrendVO` OK
+ */
+export const getSuperviseStatisticalAlarmYear = (params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultAlarmCountTrendVO>(
+    {
+      url: `gas-supervise/supervise/statistical/alarm/year`,
     },
     { ...params, isTransformResponse: false },
   );
@@ -3610,7 +3963,7 @@ export const getSuperviseStatisticalAlarmCureSummary = (params: PerRequestOption
 export const getSuperviseStatisticalAlarmAnalysisSummary = (
   query: {
     /** 监管统计请求 */
-    request?: StatisticalRequest;
+    request: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3634,7 +3987,7 @@ export const getSuperviseStatisticalAlarmAnalysisSummary = (
 export const getSuperviseScreenWarnSummary = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3658,7 +4011,7 @@ export const getSuperviseScreenWarnSummary = (
 export const getSuperviseScreenWarnHistory = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3682,7 +4035,7 @@ export const getSuperviseScreenWarnHistory = (
 export const getSuperviseScreenWarnCurrent = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3706,7 +4059,7 @@ export const getSuperviseScreenWarnCurrent = (
 export const getSuperviseScreenUserOrg = (
   query: {
     /** 监管统计请求 */
-    request?: StatisticalRequest;
+    request: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3730,7 +4083,7 @@ export const getSuperviseScreenUserOrg = (
 export const getSuperviseScreenThirdDeviceRate = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3754,7 +4107,7 @@ export const getSuperviseScreenThirdDeviceRate = (
 export const getSuperviseScreenStationOrg = (
   query: {
     /** 监管统计请求 */
-    request?: StatisticalRequest;
+    request: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3778,7 +4131,7 @@ export const getSuperviseScreenStationOrg = (
 export const getSuperviseScreenMonitorCoverage = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3836,7 +4189,7 @@ export const getSuperviseScreenLngDeviceSummary = (params: PerRequestOptions = {
 export const getSuperviseScreenLifelineDeviceRate = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3860,7 +4213,7 @@ export const getSuperviseScreenLifelineDeviceRate = (
 export const getSuperviseScreenGasLineOrg = (
   query: {
     /** 监管统计请求 */
-    request?: StatisticalRequest;
+    request: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3884,7 +4237,7 @@ export const getSuperviseScreenGasLineOrg = (
 export const getSuperviseScreenDeviceSummary = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3908,7 +4261,7 @@ export const getSuperviseScreenDeviceSummary = (
 export const getSuperviseScreenDataSupply = (
   query: {
     /** 监管统计请求 */
-    request?: StatisticalRequest;
+    request: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3932,7 +4285,7 @@ export const getSuperviseScreenDataSupply = (
 export const getSuperviseScreenDataOverview = (
   query: {
     /** 监管统计请求 */
-    request?: StatisticalRequest;
+    request: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3956,7 +4309,7 @@ export const getSuperviseScreenDataOverview = (
 export const getSuperviseScreenDataOverviewVehicle = (
   query: {
     /** 监管统计请求 */
-    request?: StatisticalRequest;
+    request: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -3980,7 +4333,7 @@ export const getSuperviseScreenDataOverviewVehicle = (
 export const getSuperviseScreenDataOverviewStation = (
   query: {
     /** 监管统计请求 */
-    request?: StatisticalRequest;
+    request: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4004,7 +4357,7 @@ export const getSuperviseScreenDataOverviewStation = (
 export const getSuperviseScreenDataOverviewPipeline = (
   query: {
     /** 监管统计请求 */
-    request?: StatisticalRequest;
+    request: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4028,7 +4381,7 @@ export const getSuperviseScreenDataOverviewPipeline = (
 export const getSuperviseScreenDataOverviewPerson = (
   query: {
     /** 监管统计请求 */
-    request?: StatisticalRequest;
+    request: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4052,7 +4405,7 @@ export const getSuperviseScreenDataOverviewPerson = (
 export const getSuperviseScreenDataOverviewGasUser = (
   query: {
     /** 监管统计请求 */
-    request?: StatisticalRequest;
+    request: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4065,18 +4418,42 @@ export const getSuperviseScreenDataOverviewGasUser = (
   );
 };
 /**
- * 大屏-燃气底数 燃气底数-底数总览-燃气管网
+ * 燃气底数-列表信息 燃气底数-列表信息
  *
- * @tags 大屏-燃气底数, 燃气底数-底数总览-燃气管网
+ * @tags 燃气底数-列表信息, 大屏-燃气底数
+ * @name GetSuperviseScreenDataOverviewDetail
+ * @summary 燃气底数-列表信息
+ * @request GET:/supervise/screen/data/overview/detail
+ * @response `200` `ResultBaseDataVO` OK
+ */
+export const getSuperviseScreenDataOverviewDetail = (
+  query: {
+    /** 监管统计请求 */
+    request: StatisticalRequest;
+  },
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.get<ResultBaseDataVO>(
+    {
+      url: `gas-supervise/supervise/screen/data/overview/detail`,
+      data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 燃气底数-底数总览-液化气瓶 燃气底数-底数总览-液化气瓶
+ *
+ * @tags 燃气底数-底数总览-液化气瓶, 大屏-燃气底数
  * @name GetSuperviseScreenDataOverviewBottle
- * @summary 燃气底数-底数总览-燃气管网
+ * @summary 燃气底数-底数总览-液化气瓶
  * @request GET:/supervise/screen/data/overview/bottle
  * @response `200` `ResultAccessDataVO` OK
  */
 export const getSuperviseScreenDataOverviewBottle = (
   query: {
     /** 监管统计请求 */
-    request?: StatisticalRequest;
+    request: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4100,7 +4477,7 @@ export const getSuperviseScreenDataOverviewBottle = (
 export const getSuperviseScreenDataDangerAndProtag = (
   query: {
     /** 监管统计请求 */
-    request?: StatisticalRequest;
+    request: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4124,7 +4501,7 @@ export const getSuperviseScreenDataDangerAndProtag = (
 export const getSuperviseScreenAlarmSummary = (
   query: {
     /** 监管统计请求 */
-    query?: StatisticalRequest;
+    query: StatisticalRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4148,7 +4525,7 @@ export const getSuperviseScreenAlarmSummary = (
 export const getSuperviseMonitor = (
   query: {
     /** 监测查询分页请求 */
-    request?: MonitorRequest;
+    request: MonitorRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4172,7 +4549,7 @@ export const getSuperviseMonitor = (
 export const getSuperviseMonitorSummary = (
   query: {
     /** 监测查询分页请求 */
-    request?: MonitorRequest;
+    request: MonitorRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4213,7 +4590,7 @@ export const getSuperviseMonitorStationByStationId = (stationId: string, params:
 export const getSuperviseMonitorPerimeter = (
   query: {
     /** 搜索周边地理信息请求 */
-    searchRequest?: PerimeterSearchRequest;
+    searchRequest: PerimeterSearchRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4237,7 +4614,7 @@ export const getSuperviseMonitorPerimeter = (
 export const getSuperviseMonitorMap = (
   query: {
     /** 实时监测列表GIS撒点请求 */
-    request?: DeviceMapRequest;
+    request: DeviceMapRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4312,7 +4689,7 @@ export const getSuperviseMonitorDeviceDetailByEqptId = (eqptId: string, params: 
 export const getSuperviseMonitorCurve = (
   query: {
     /** 设备监测曲线 */
-    query?: MonitorCurveQuery;
+    query: MonitorCurveQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4320,6 +4697,23 @@ export const getSuperviseMonitorCurve = (
     {
       url: `gas-supervise/supervise/monitor/curve`,
       data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 液化气系统接入接口 获取液化气系统token
+ *
+ * @tags 液化气系统接入接口, 获取液化气系统token
+ * @name GetSuperviseLiquefiedGasToken
+ * @summary 获取液化气系统token
+ * @request GET:/supervise/liquefied/gas/token
+ * @response `200` `ResultString` OK
+ */
+export const getSuperviseLiquefiedGasToken = (params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultString>(
+    {
+      url: `gas-supervise/supervise/liquefied/gas/token`,
     },
     { ...params, isTransformResponse: false },
   );
@@ -4336,7 +4730,7 @@ export const getSuperviseMonitorCurve = (
 export const getSuperviseDevice = (
   query: {
     /** 监测设备查询请求 */
-    query?: DeviceRequest;
+    query: DeviceRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4360,7 +4754,7 @@ export const getSuperviseDevice = (
 export const getSuperviseDeviceSummary = (
   query: {
     /** 监测设备查询请求 */
-    query?: DeviceRequest;
+    query: DeviceRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4384,7 +4778,7 @@ export const getSuperviseDeviceSummary = (
 export const getSuperviseAlarm = (
   query: {
     /** 监管报警信息分页查询请求 */
-    request?: AlarmPageRequest;
+    request: AlarmPageRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4408,7 +4802,7 @@ export const getSuperviseAlarm = (
 export const getSuperviseAlarmSummary = (
   query: {
     /** 监管报警信息分页查询请求 */
-    request?: AlarmPageRequest;
+    request: AlarmPageRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4432,7 +4826,7 @@ export const getSuperviseAlarmSummary = (
 export const getSuperviseAlarmSummaryHistory = (
   query: {
     /** 监管报警信息分页查询请求 */
-    request?: AlarmPageRequest;
+    request: AlarmPageRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4454,7 +4848,7 @@ export const getSuperviseAlarmSummaryHistory = (
  */
 export const getSuperviseAlarmInitAiotAlarm = (
   query: {
-    codes?: Array<string> | string;
+    codes: Array<string> | string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4478,7 +4872,7 @@ export const getSuperviseAlarmInitAiotAlarm = (
 export const getSuperviseAlarmHistory = (
   query: {
     /** 监管报警信息分页查询请求 */
-    request?: AlarmPageRequest;
+    request: AlarmPageRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4535,7 +4929,7 @@ export const getSuperviseAlarmDisposeByAlarmId = (alarmId: string, params: PerRe
  */
 export const getRiskReportWord = (
   query: {
-    reportMonth?: string;
+    reportMonth: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4558,7 +4952,7 @@ export const getRiskReportWord = (
  */
 export const getRiskListById = (
   query: {
-    dangerIds?: Array<string> | string;
+    dangerIds: Array<string> | string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4599,7 +4993,7 @@ export const getProtagByPortectid = (portectid: string, params: PerRequestOption
 export const getPerQualifications = (
   query: {
     /** 企业人员资质证照分页查询 */
-    request?: PerCertificatePageQuery;
+    request: PerCertificatePageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4640,7 +5034,7 @@ export const getPerQualificationsDetailByCode = (code: string, params: PerReques
 export const getPerQualificationsCount = (
   query: {
     /** 企业人员资质证照分页查询 */
-    request?: PerCertificatePageQuery;
+    request: PerCertificatePageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4748,7 +5142,7 @@ export const getOpenImageviewByFileId = (fileId: string, params: PerRequestOptio
 export const getOpenHidangerUrge = (
   query: {
     /** @format int64 */
-    tid?: number;
+    tid: number;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4789,9 +5183,9 @@ export const getOpenFileByFileId = (fileId: string, params: PerRequestOptions = 
 export const getOpenDownloadWithName = (
   query: {
     /** 文件编号 */
-    文件编号?: string;
+    文件编号: string;
     /** 文件名称 */
-    文件名称?: string;
+    文件名称: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4832,7 +5226,7 @@ export const getOpenDownloadByFileId = (fileId: string, params: PerRequestOption
 export const getOldPipe = (
   query: {
     /** 老旧管网改造列表查询请求 */
-    query?: PageOldPipeBuildQuery;
+    query: PageOldPipeBuildQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4890,7 +5284,7 @@ export const getOldPipeSummary = (params: PerRequestOptions = {}) => {
 export const getOldPipeStat = (
   query: {
     /** @format int32 */
-    year?: number;
+    year: number;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4930,10 +5324,10 @@ export const getOldPipeDetailById = (id: string, params: PerRequestOptions = {})
 export const getNoticeWsPage = (
   query: {
     /** @format int32 */
-    page?: number;
+    page: number;
     /** @format int32 */
-    size?: number;
-    type?: string;
+    size: number;
+    type: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -4971,7 +5365,7 @@ export const getNoticeUnreadList = (params: PerRequestOptions = {}) => {
  */
 export const getNoticeSmsList = (
   query: {
-    bizId?: string;
+    bizId: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5011,7 +5405,7 @@ export const getNoticeReadList = (params: PerRequestOptions = {}) => {
 export const getMeresDrill = (
   query: {
     /** 应急演练分页查询请求 */
-    query?: EmresDrillRequest;
+    query: EmresDrillRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5035,7 +5429,7 @@ export const getMeresDrill = (
 export const getMeresDrillSummary = (
   query: {
     /** 应急演练分页查询请求 */
-    query?: EmresDrillRequest;
+    query: EmresDrillRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5110,7 +5504,7 @@ export const getLngFlowAlarmStat = (params: PerRequestOptions = {}) => {
 export const getLngAlarmStat = (
   query: {
     /** @format int32 */
-    months?: number;
+    months: number;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5134,7 +5528,7 @@ export const getLngAlarmStat = (
 export const getLngAlarmStatType = (
   query: {
     /** @format int32 */
-    period?: number;
+    period: number;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5158,7 +5552,7 @@ export const getLngAlarmStatType = (
 export const getLngAlarmStatTrend = (
   query: {
     /** @format int32 */
-    period?: number;
+    period: number;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5182,7 +5576,7 @@ export const getLngAlarmStatTrend = (
 export const getLngAlarmStatEnt = (
   query: {
     /** @format int32 */
-    period?: number;
+    period: number;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5206,11 +5600,11 @@ export const getLngAlarmStatEnt = (
 export const getLngAlarmList = (
   query: {
     /** @format int32 */
-    type?: number;
+    type: number;
     /** @format int32 */
-    page?: number;
+    page: number;
     /** @format int32 */
-    size?: number;
+    size: number;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5285,7 +5679,7 @@ export const getHidangerTemplate = (params: PerRequestOptions = {}) => {
 export const getHidangerSummaryUpdate = (
   query: {
     /** 隐患统计视图请求 */
-    query?: RiskStatisticsQuery;
+    query: RiskStatisticsQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5309,7 +5703,7 @@ export const getHidangerSummaryUpdate = (
 export const getHidangerSummarySource = (
   query: {
     /** 隐患统计视图请求 */
-    query?: RiskStatisticsQuery;
+    query: RiskStatisticsQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5333,7 +5727,7 @@ export const getHidangerSummarySource = (
 export const getHidangerSummaryScreening = (
   query: {
     /** 隐患统计视图请求 */
-    query?: RiskStatisticsQuery;
+    query: RiskStatisticsQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5357,7 +5751,7 @@ export const getHidangerSummaryScreening = (
 export const getHidangerSummaryLevel = (
   query: {
     /** 隐患统计视图请求 */
-    query?: RiskStatisticsQuery;
+    query: RiskStatisticsQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5381,7 +5775,7 @@ export const getHidangerSummaryLevel = (
 export const getHidangerSummaryLevelTrend = (
   query: {
     /** 隐患统计视图请求 */
-    query?: RiskStatisticsQuery;
+    query: RiskStatisticsQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5407,8 +5801,6 @@ export const getHidangerOrgSummary = (
     endUser?: boolean;
     /** 风险要素等级 */
     level?: GetHidangerOrgSummaryParamsLevel;
-    /** 风险要素等级枚举中文描述 */
-    _level?: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5431,7 +5823,7 @@ export const getHidangerOrgSummary = (
  */
 export const getHidangerOrgPage = (
   query: {
-    query?: HidangerOrgPageQuery;
+    query: HidangerOrgPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5454,7 +5846,7 @@ export const getHidangerOrgPage = (
  */
 export const getHidangerNewPage = (
   query: {
-    query?: BsHidangerPageQuery;
+    query: BsHidangerPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5494,7 +5886,7 @@ export const getHidangerGovSummary = (params: PerRequestOptions = {}) => {
  */
 export const getHidangerGovPage = (
   query: {
-    query?: HidangerOrgPageQuery;
+    query: HidangerOrgPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5517,7 +5909,7 @@ export const getHidangerGovPage = (
  */
 export const getHidangerGovHandleOrderExport = (
   query: {
-    ids?: Array<number> | number;
+    ids: Array<number> | number;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5580,7 +5972,7 @@ export const getHidangerGovCheckPlanSummary = (
  */
 export const getHidangerGovCheckPlanSelections = (
   query: {
-    targetOrgId?: string;
+    targetOrgId: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5604,7 +5996,7 @@ export const getHidangerGovCheckPlanSelections = (
 export const getHidangerGovCheckPlanPage = (
   query: {
     /** 安全检查分页查询 */
-    query?: HiDangerCheckPageQuery;
+    query: HiDangerCheckPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5627,7 +6019,7 @@ export const getHidangerGovCheckPlanPage = (
  */
 export const getHidangerGovCheckPlanOrgInfo = (
   query: {
-    planCode?: string;
+    planCode: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5651,9 +6043,7 @@ export const getHidangerGovCheckPlanOrgInfo = (
 export const getHidangerGovCheckPlanEndUserSummary = (
   query: {
     /** 安全检查形式 */
-    mode?: GetHidangerGovCheckPlanEndUserSummaryParamsMode;
-    /** 安全检查形式枚举中文描述 */
-    _mode?: string;
+    mode: GetHidangerGovCheckPlanEndUserSummaryParamsMode;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5711,9 +6101,7 @@ export const getHidangerFlowByUid = (uid: number, params: PerRequestOptions = {}
 export const getHidangerFactorsSummary = (
   query: {
     /** 燃气管网风险要素类型 */
-    type?: GetHidangerFactorsSummaryParamsType;
-    /** 燃气管网风险要素类型枚举中文描述 */
-    _type?: string;
+    type: GetHidangerFactorsSummaryParamsType;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5737,10 +6125,8 @@ export const getHidangerFactorsSummary = (
 export const getHidangerFactorsPage = (
   query: {
     /** 燃气管网风险要素类型 */
-    type?: GetHidangerFactorsPageParamsType;
-    query?: HidangerFactorsSummaryPageQuery;
-    /** 燃气管网风险要素类型枚举中文描述 */
-    _type?: string;
+    type: GetHidangerFactorsPageParamsType;
+    query: HidangerFactorsSummaryPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5780,7 +6166,7 @@ export const getHidangerFactorsOverviewSummary = (params: PerRequestOptions = {}
  */
 export const getHidangerFactorsOverviewPage = (
   query: {
-    query?: HidangerFactorsSummaryPageQuery;
+    query: HidangerFactorsSummaryPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5843,7 +6229,7 @@ export const getHidangerFactorsDetailByUid = (uid: number, params: PerRequestOpt
  */
 export const getHidangerDictionaryList = (
   query: {
-    keyword?: string;
+    keyword: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5883,7 +6269,7 @@ export const getHidangerDetailByUid = (uid: number, params: PerRequestOptions = 
  */
 export const getGuideKnowledgePage = (
   query: {
-    query?: KnowledgePageQuery;
+    query: KnowledgePageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5923,7 +6309,7 @@ export const getGuideKnowledgeDetailById = (id: string, params: PerRequestOption
  */
 export const getGuideCasePage = (
   query: {
-    query?: CasePageQuery;
+    query: CasePageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -5997,7 +6383,7 @@ export const getGuideActivitiesByUid = (uid: number, params: PerRequestOptions =
  */
 export const getGuideActivitiesPage = (
   query: {
-    query?: ActivitiesPageQuery;
+    query: ActivitiesPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6020,7 +6406,7 @@ export const getGuideActivitiesPage = (
  */
 export const getGovDeptUserPage = (
   query: {
-    query?: SuperviseDeptUserPageQuery;
+    query: SuperviseDeptUserPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6043,7 +6429,7 @@ export const getGovDeptUserPage = (
  */
 export const getGovDeptPage = (
   query: {
-    query?: PageRequest;
+    query: PageRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6067,7 +6453,7 @@ export const getGovDeptPage = (
 export const getGasUsers = (
   query: {
     /** 用气用户分页查询 */
-    request?: PageGasUserQuery;
+    request: PageGasUserQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6108,7 +6494,7 @@ export const getGasUsersDetailByCode = (code: string, params: PerRequestOptions 
 export const getGasUsersCount = (
   query: {
     /** 用气用户分页查询 */
-    query?: PageGasUserQuery;
+    query: PageGasUserQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6165,7 +6551,7 @@ export const getGasSupplySum = (params: PerRequestOptions = {}) => {
  */
 export const getGasSupplyList = (
   query: {
-    query?: GasSupplyQuery;
+    query: GasSupplyQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6188,7 +6574,7 @@ export const getGasSupplyList = (
  */
 export const getGasStationSum = (
   query: {
-    query?: GasStationQuery;
+    query: GasStationQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6211,7 +6597,7 @@ export const getGasStationSum = (
  */
 export const getGasStationList = (
   query: {
-    query?: GasStationQuery;
+    query: GasStationQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6251,7 +6637,7 @@ export const getEnterpriseVehicleByVehicleId = (vehicleId: string, params: PerRe
  */
 export const getEnterpriseVehicleMap = (
   query: {
-    enterpriseId?: string;
+    enterpriseId: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6274,7 +6660,7 @@ export const getEnterpriseVehicleMap = (
  */
 export const getEnterpriseVehicleMapFalse = (
   query: {
-    enterpriseId?: string;
+    enterpriseId: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6297,7 +6683,7 @@ export const getEnterpriseVehicleMapFalse = (
  */
 export const getEnterpriseVehicleGps = (
   query: {
-    vehicleId?: string;
+    vehicleId: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6321,7 +6707,7 @@ export const getEnterpriseVehicleGps = (
  */
 export const getEnterpriseVehicleGpsFalse = (
   query: {
-    vehicleId?: string;
+    vehicleId: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6361,7 +6747,7 @@ export const getEnterpriseStationByStationId = (stationId: string, params: PerRe
  */
 export const getEnterpriseStationMap = (
   query: {
-    enterpriseId?: string;
+    enterpriseId: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6384,7 +6770,7 @@ export const getEnterpriseStationMap = (
  */
 export const getEnterpriseStationMapNg = (
   query: {
-    enterpriseId?: string;
+    enterpriseId: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6407,7 +6793,7 @@ export const getEnterpriseStationMapNg = (
  */
 export const getEnterpriseStationMapLng = (
   query: {
-    enterpriseId?: string;
+    enterpriseId: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6498,7 +6884,7 @@ export const getEnterprisePatrolSum = (params: PerRequestOptions = {}) => {
  */
 export const getEnterprisePatrolList = (
   query: {
-    query?: LinePatrolQuery;
+    query: LinePatrolQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6561,7 +6947,7 @@ export const getEnterpriseInfoRefresh = (params: PerRequestOptions = {}) => {
  */
 export const getEnterpriseInfoPage = (
   query: {
-    query?: EnterpriseInfoPageQuery;
+    query: EnterpriseInfoPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6584,9 +6970,7 @@ export const getEnterpriseInfoPage = (
  */
 export const getEnterpriseEnterpriseMap = (
   query: {
-    scope?: GetEnterpriseEnterpriseMapParamsScope;
-    /** undefined枚举中文描述 */
-    _scope?: string;
+    scope: GetEnterpriseEnterpriseMapParamsScope;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6609,7 +6993,7 @@ export const getEnterpriseEnterpriseMap = (
  */
 export const getEnterpriseDevRes = (
   query: {
-    enterpriseId?: string;
+    enterpriseId: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6686,7 +7070,7 @@ export const getEnterpriseCheckSumById = (id: number, params: PerRequestOptions 
  */
 export const getEnterpriseCheckRecList = (
   query: {
-    query?: SecurityCheckRecQuery;
+    query: SecurityCheckRecQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6709,7 +7093,7 @@ export const getEnterpriseCheckRecList = (
  */
 export const getEnterpriseCheckList = (
   query: {
-    query?: SecurityCheckQuery;
+    query: SecurityCheckQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6750,7 +7134,7 @@ export const getEnterpriseCheckEndUserSummary = (params: PerRequestOptions = {})
 export const getEnterpriseCheckEndUserStatisticalTable = (
   query: {
     /** @format int32 */
-    planYear?: number;
+    planYear: number;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6773,7 +7157,7 @@ export const getEnterpriseCheckEndUserStatisticalTable = (
  */
 export const getEnterpriseCheckEndUserPage = (
   query: {
-    request?: PageRequest;
+    request: PageRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6813,7 +7197,7 @@ export const getEnterpriseBottleByBottleId = (bottleId: string, params: PerReque
  */
 export const getEnterpriseBottleMap = (
   query: {
-    enterpriseId?: string;
+    enterpriseId: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6832,16 +7216,16 @@ export const getEnterpriseBottleMap = (
  * @name GetEnterpriseBaseData
  * @summary 企业基础底数查询
  * @request GET:/enterprise/base/data
- * @response `200` `ResultListEnterpriseBaseDataDO` OK
+ * @response `200` `ResultMapStringListListMapStringString` OK
  */
 export const getEnterpriseBaseData = (
   query: {
     /** 燃气企业底数请求 */
-    query?: BaseDataRequest;
+    query: BaseDataRequest;
   },
   params: PerRequestOptions = {},
 ) => {
-  return defHttp.get<ResultListEnterpriseBaseDataDO>(
+  return defHttp.get<ResultMapStringListListMapStringString>(
     {
       url: `gas-supervise/enterprise/base/data`,
       data: query,
@@ -6861,7 +7245,7 @@ export const getEnterpriseBaseData = (
 export const getEmresPlan = (
   query: {
     /** 应急预案分页查询请求 */
-    query?: EmresPlanRequest;
+    query: EmresPlanRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6885,7 +7269,7 @@ export const getEmresPlan = (
 export const getEmresPlanSummary = (
   query: {
     /** 应急预案分页查询请求 */
-    query?: EmresPlanRequest;
+    query: EmresPlanRequest;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6965,7 +7349,7 @@ export const getDistrictAll = (params: PerRequestOptions = {}) => {
  */
 export const getDictionary = (
   query: {
-    type?: string;
+    type: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -6988,7 +7372,7 @@ export const getDictionary = (
  */
 export const getDictionaryList = (
   query: {
-    types?: Array<string> | string;
+    types: Array<string> | string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -7093,7 +7477,7 @@ export const getComSuperviseHidangerPipeGasRank = (
  */
 export const getComSuperviseHidangerPipeGasPage = (
   query: {
-    query?: HidangerOrgPageQuery;
+    query: HidangerOrgPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -7179,7 +7563,7 @@ export const getComSuperviseHidangerEndUerTable = (
      */
     year?: number;
     /** 统计类型:ORG/DISTRICT */
-    type?: string;
+    type: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -7229,7 +7613,7 @@ export const getComSuperviseHidangerEndUerSummary = (
  */
 export const getComSuperviseHidangerEndUerPage = (
   query: {
-    query?: HidangerOrgPageQuery;
+    query: HidangerOrgPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -7253,7 +7637,7 @@ export const getComSuperviseHidangerEndUerPage = (
 export const getBulletin = (
   query: {
     /** 公告信息查询 */
-    bulletinQuery?: BulletinQuery;
+    bulletinQuery: BulletinQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -7359,10 +7743,17 @@ export const getBsStatNgSupl = (params: PerRequestOptions = {}) => {
  * @request GET:/bs/stat/ng/stn
  * @response `200` `ResultBaseStnOverallVO` OK
  */
-export const getBsStatNgStn = (params: PerRequestOptions = {}) => {
+export const getBsStatNgStn = (
+  query: {
+    /** 监管统计请求 */
+    request: StatisticalRequest;
+  },
+  params: PerRequestOptions = {},
+) => {
   return defHttp.get<ResultBaseStnOverallVO>(
     {
       url: `gas-supervise/bs/stat/ng/stn`,
+      data: query,
     },
     { ...params, isTransformResponse: false },
   );
@@ -7410,10 +7801,17 @@ export const getBsStatNgEnt = (params: PerRequestOptions = {}) => {
  * @request GET:/bs/stat/ng/dev
  * @response `200` `ResultBaseSpecDevVO` OK
  */
-export const getBsStatNgDev = (params: PerRequestOptions = {}) => {
+export const getBsStatNgDev = (
+  query: {
+    /** 监管统计请求 */
+    request: StatisticalRequest;
+  },
+  params: PerRequestOptions = {},
+) => {
   return defHttp.get<ResultBaseSpecDevVO>(
     {
       url: `gas-supervise/bs/stat/ng/dev`,
+      data: query,
     },
     { ...params, isTransformResponse: false },
   );
@@ -7461,10 +7859,17 @@ export const getBsStatLngSupl = (params: PerRequestOptions = {}) => {
  * @request GET:/bs/stat/lng/stn
  * @response `200` `ResultBaseStnOverallVO` OK
  */
-export const getBsStatLngStn = (params: PerRequestOptions = {}) => {
+export const getBsStatLngStn = (
+  query: {
+    /** 监管统计请求 */
+    request: StatisticalRequest;
+  },
+  params: PerRequestOptions = {},
+) => {
   return defHttp.get<ResultBaseStnOverallVO>(
     {
       url: `gas-supervise/bs/stat/lng/stn`,
+      data: query,
     },
     { ...params, isTransformResponse: false },
   );
@@ -7495,10 +7900,17 @@ export const getBsStatLngEnt = (params: PerRequestOptions = {}) => {
  * @request GET:/bs/stat/lng/bot
  * @response `200` `ResultBaseBotOverallVO` OK
  */
-export const getBsStatLngBot = (params: PerRequestOptions = {}) => {
+export const getBsStatLngBot = (
+  query: {
+    /** 监管统计请求 */
+    request: StatisticalRequest;
+  },
+  params: PerRequestOptions = {},
+) => {
   return defHttp.get<ResultBaseBotOverallVO>(
     {
       url: `gas-supervise/bs/stat/lng/bot`,
+      data: query,
     },
     { ...params, isTransformResponse: false },
   );
@@ -7514,7 +7926,7 @@ export const getBsStatLngBot = (params: PerRequestOptions = {}) => {
  */
 export const getBsHidangerPage = (
   query: {
-    query?: BsHidangerPageQuery;
+    query: BsHidangerPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -7606,9 +8018,7 @@ export const getBsHidangerHandleSummaryL1 = (params: PerRequestOptions = {}) => 
 export const getBsHidangerGroupSummary = (
   query: {
     /** 隐患来源 */
-    dangerSource?: GetBsHidangerGroupSummaryParamsDangerSource;
-    /** 隐患来源枚举中文描述 */
-    _dangerSource?: string;
+    dangerSource: GetBsHidangerGroupSummaryParamsDangerSource;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -7629,7 +8039,7 @@ export const getBsHidangerGroupSummary = (
  * @request GET:/bs/hidanger/detail/{uid}
  * @response `200` `ResultObject` OK
  */
-export const getBsHidangerDetailByUid = (uid: number, params: PerRequestOptions = {}) => {
+export const getBsHidangerDetailByUid = (uid: string, params: PerRequestOptions = {}) => {
   return defHttp.get<ResultObject>(
     {
       url: `gas-supervise/bs/hidanger/detail/${uid}`,
@@ -7850,7 +8260,7 @@ export const getBigScreenHidangerHidangerCheckEnterpriseCheck = (
  */
 export const getBigScreenHidangerHidangerCheckCheckPage = (
   query: {
-    query?: HidangerStateQuery;
+    query: HidangerStateQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -7898,7 +8308,7 @@ export const getBigScreenHidangerHidangerCheckCheckCount = (
 export const getBasicRetmanPage = (
   query: {
     /** 救援人员分页查询条件 */
-    query?: EmresMnRetmanPageQuery;
+    query: EmresMnRetmanPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -7922,7 +8332,7 @@ export const getBasicRetmanPage = (
 export const getBasicRetmanExport = (
   query: {
     /** 救援人员分页查询条件 */
-    query?: EmresMnRetmanPageQuery;
+    query: EmresMnRetmanPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -7963,7 +8373,7 @@ export const getBasicRetmanDetailByCmKid = (cmKid: number, params: PerRequestOpt
 export const getBasicReteamPage = (
   query: {
     /** 救援队伍分页查询条件 */
-    query?: EmresMnReteamPageQuery;
+    query: EmresMnReteamPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -7987,7 +8397,7 @@ export const getBasicReteamPage = (
 export const getBasicReteamNear = (
   query: {
     /** 附近救援队伍 */
-    query?: EmresMnReteamNearQuery;
+    query: EmresMnReteamNearQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -8011,7 +8421,7 @@ export const getBasicReteamNear = (
 export const getBasicReteamExport = (
   query: {
     /** 救援队伍分页查询条件 */
-    query?: EmresMnReteamPageQuery;
+    query: EmresMnReteamPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -8120,7 +8530,7 @@ export const getBasicReteamBaseDetailByCmKid = (cmKid: number, params: PerReques
 export const getBasicPipeRepairPage = (
   query: {
     /** 管网维修记录列表分页查询条件 */
-    query?: CifrsGasChPipeRepairPageQuery;
+    query: CifrsGasChPipeRepairPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -8178,7 +8588,7 @@ export const getBasicPipePipepointType = (params: PerRequestOptions = {}) => {
 export const getBasicPipePipepointPage = (
   query: {
     /** 管点信息列表分页查询条件 */
-    query?: CifrsPipeMnPipepointPageQuery;
+    query: CifrsPipeMnPipepointPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -8236,7 +8646,7 @@ export const getBasicPipePipelineStatistics = (params: PerRequestOptions = {}) =
 export const getBasicPipePipelinePage = (
   query: {
     /** 管线信息列表分页查询条件 */
-    query?: CifrsPipeMnPipelinePageQuery;
+    query: CifrsPipeMnPipelinePageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -8260,8 +8670,8 @@ export const getBasicPipePipelinePage = (
 export const getBasicPipePipelineDetail = (
   query: {
     /** @format int64 */
-    cmKid?: number;
-    guid?: string;
+    cmKid: number;
+    guid: string;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -8302,7 +8712,7 @@ export const getBasicPipeIndexStatistics = (params: PerRequestOptions = {}) => {
 export const getBasicMateriPage = (
   query: {
     /** 救援物资分页查询条件 */
-    query?: EmresMnMateriPageQuery;
+    query: EmresMnMateriPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -8326,7 +8736,7 @@ export const getBasicMateriPage = (
 export const getBasicMateriExport = (
   query: {
     /** 救援物资分页查询条件 */
-    query?: EmresMnMateriPageQuery;
+    query: EmresMnMateriPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -8384,7 +8794,7 @@ export const getBasicMateriBaseListByMaterhouseCode = (materhouseCode: string, p
 export const getBasicExpertPage = (
   query: {
     /** 专家信息分页查询条件 */
-    query?: EmresMnExpertPageQuery;
+    query: EmresMnExpertPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -8408,7 +8818,7 @@ export const getBasicExpertPage = (
 export const getBasicExpertExport = (
   query: {
     /** 专家信息分页查询条件 */
-    query?: EmresMnExpertPageQuery;
+    query: EmresMnExpertPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -8465,7 +8875,7 @@ export const getBasicEmresWhouseDownListByMaterhouseCode = (materhouseCode: stri
  */
 export const getAroundRisk = (
   query: {
-    query?: AroundRiskQuery;
+    query: AroundRiskQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -8489,7 +8899,7 @@ export const getAroundRisk = (
 export const getAccident = (
   query: {
     /** 事故事件查询 */
-    query?: AccidentPageQuery;
+    query: AccidentPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -8530,7 +8940,7 @@ export const getAccidentSupervisionById = (id: string, params: PerRequestOptions
 export const getAccidentSummary = (
   query: {
     /** 事故事件查询 */
-    query?: AccidentPageQuery;
+    query: AccidentPageQuery;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -8723,7 +9133,7 @@ export const deleteEnterpriseCommonDraftDelByType = (type: string, params: PerRe
  */
 export const deleteEnterpriseBaseDataDelete = (
   query: {
-    ids?: Array<string> | string;
+    ids: Array<string> | string;
   },
   params: PerRequestOptions = {},
 ) => {

@@ -93,6 +93,7 @@ const menus = [
   },
   {
     name: "事故事件管理",
+    url: "/pages/accident/index",
     image: "/static/img/icon_sgsjgl.png",
   },
 

@@ -8,11 +8,12 @@ const handleGetQueryParam = (param: any) => {
   if(param && typeof param === 'object') {
     for(let key in param) {
       let theValue = param[key];
+      // 对于数组参数,转换成逗号分隔的字符串
       if(Array.isArray(theValue)) {
         theValue = param[key] = theValue.join(',');
       } 
-      // 过滤掉空字符串和null
-      if(theValue === '' || theValue === null) {
+      // 过滤掉空字符串,null,undefined
+      if(theValue === '' || theValue === null || theValue === undefined) {
         delete param[key];
       }
     }
@@ -36,7 +37,7 @@ const transforms: RequestTransform = {
       header = Object.assign(header, options.header);
     }
     options.header = header;
-    // 处理一下get下的数组传参,用逗号拼接
+    // 处理一下get下的传参
     if(options.method === 'GET' && options.data) {
       handleGetQueryParam(options.data)
     }

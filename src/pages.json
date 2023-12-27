@@ -78,6 +78,21 @@
       "style": {
         "navigationBarTitleText": "第三方施工管理",
         "disableScroll": true
+        
+      }
+    },
+    {
+      "path": "pages/accident/index",
+      "style": {
+        "navigationBarTitleText": "事故事件管理",
+        "disableScroll": true
+      }
+    },
+    {
+      "path": "pages/accident/pages/AccidentDetailPage",
+      "style": {
+        "navigationBarTitleText": "事故事件详情",
+        "disableScroll": true
       }
     },
     {
