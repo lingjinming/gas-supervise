@@ -39,7 +39,7 @@ const props = defineProps({
 
 const goToDetail = () =>{
   uni.navigateTo({
-    url: `/pages/accident/pages/AccidentDetailPage?uid=${props.info.uid}`,
+    url: `/pages/accident/pages/AccidentDetailPage?uid=${props.info.accidentId}`,
   });
 
 }
