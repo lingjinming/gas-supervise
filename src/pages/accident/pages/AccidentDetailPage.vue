@@ -1,26 +1,22 @@
 <template>
-  <van-detail :record="detail" :fields="fields" >
-    <template #fileIds>
-      <view class="item-label">现场照片</view>
-      <view class="item-value">
-        <van-image
-          v-for="(item, index) in detail?.fileIds"
-          :key="index"
-          width="100px"
-          height="100px"
-          :src="item"
-          fit="contain"
-          lazy-load
-          @click="previewImage(index)"
-        />
-      </view>
-    </template>
-  </van-detail>
+  <van-detail :record="detail" :fields="fields" />
+  <view class="edit-btn">
+    <van-button 
+      custom-style="background-color:#006CFF;color:#fff;border-radius:10rpx"
+        color="#a7a7a7"
+        plain
+        size="large"
+        type="default"
+        @click="goEdit"
+        >编辑</van-button
+      >
+  </view>
 </template>
 <script setup lang="ts">
 import { getAccidentDetailByAccidentId } from '@/api/gen/GasSuperviseApi'
+import type {AccidentVO } from '@/api/gen/data-contracts'
 
-const detail = ref();
+const detail = ref<AccidentVO>();
 const fields = [{
   label: '事故时间',
   prop: 'accidentTime'
@@ -52,15 +48,23 @@ const fields = [{
   label: '事故描述',
   prop: 'describe'
 },{
-  label: '现场照片',
+  label: '事故报告',
+  isFile: true,
   prop: 'fileIds'
 }]
-
-const previewImage = (i) => {}
 
 onLoad((options) => {
   getDetail(options!.uid);
 });
+
+const goEdit = () => {
+  uni.navigateTo({
+    url: `/pages/accident/pages/AccidentEditPage?accidentId=${detail.value!.accidentId}`,
+    success: (res) => {
+      res.eventChannel.emit('editAccident', { formData: detail.value })
+    }
+  });
+}
 
 const getDetail = async (uid: string) => {
   const { data } = await getAccidentDetailByAccidentId(uid)
@@ -68,5 +72,10 @@ const getDetail = async (uid: string) => {
 }
 </script>
 <style lang="scss" scoped>
+
+.edit-btn {
+  height: 160rpx;
+  padding: 30rpx 20rpx;
+}
 
 </style>

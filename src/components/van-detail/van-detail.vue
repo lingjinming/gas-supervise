@@ -1,10 +1,20 @@
 <template>
   <view class="detail-container">
-    <view class="item" v-for="({label,value,prop}) in list" :key="label">
-      <slot :name="prop"></slot>
+    <view class="item" v-for="({label,value,prop,isFile}) in list" :key="label">
+      <slot :name="prop" class="item"></slot>
       <template v-if="!$slots[prop]">
-        <view class="item-label">{{ label }}</view>
-        <view class="item-value">{{ value }}</view>
+        <template>
+          <view class="item-label">{{ label }}</view>
+          <view class="item-value" v-if="isFile">
+            <region-img
+              v-for="img in (value as any)"
+              :key="img.id"
+              :fileId="img.id"
+              :fileName="img.name"
+            />
+          </view>
+          <view class="item-value" v-else>{{ value }}</view>
+        </template>
       </template>
     </view>
   </view>
@@ -14,18 +24,25 @@ import {computed} from 'vue'
 interface Field {
   label: string;
   prop: string;
-  defValue?: string;
+  getValue?: (record) => any;
+  isFile?: boolean;
 }
 const props = defineProps<{
   fields: Field[];
   record: any;
 }>()
 const list = computed(() => {
-  return props.record && props.fields.map(({label,prop,defValue}) => ({
-    prop,
-    label,
-    value: props.record[prop] || defValue
-  }))
+  let record = props.record || {};
+ 
+  return props.fields.map(({label,prop,getValue,isFile}) => {
+    let fieldItem = { prop, label ,isFile} as any
+    if(isFile) {
+      fieldItem['value'] = record[prop]
+    } else {
+      fieldItem['value'] = getValue ? getValue(record) : record[prop]
+    }
+    return fieldItem
+  })
 })
 
 
@@ -52,9 +69,13 @@ const list = computed(() => {
 
     .item-value {
       width: 70%;
+      // 超出换行,最多两行,超出显示省略号
       overflow: hidden;
       text-overflow: ellipsis;
-      white-space: nowrap;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      
     }
   }
 

@@ -96,7 +96,7 @@ onShow(() => {
     });
 });
 
-let reportForm = ref({
+let reportForm = ref<HidangerCreateDTO>({
   remark: "",
   address: "",
   orgId: "",
@@ -110,7 +110,8 @@ let reportForm = ref({
   longitude: 0,
   latitude: 0,
   districtId: "",
-} as HidangerCreateDTO);
+  state: 'DRAFT'
+});
 
 const submit = async () => {
   const result = Promise.resolve().then(() => isOrg ? postHidangerOrg(reportForm.value) : postHidangerGov(reportForm.value))

@@ -96,6 +96,20 @@
       }
     },
     {
+      "path": "pages/accident/pages/AccidentEditPage",
+      "style": {
+        "navigationBarTitleText": "事故事件上报",
+        "disableScroll": true
+      }
+    },
+    {
+      "path": "pages/accident/pages/AccidentUploadPage",
+      "style": {
+        "navigationBarTitleText": "上传报告",
+        "disableScroll": true
+      }
+    },
+    {
       "path": "pages/thirdBuild/pages/thirdBuildDetailPage",
       "style": {
         "navigationBarTitleText": "第三方施工详情",

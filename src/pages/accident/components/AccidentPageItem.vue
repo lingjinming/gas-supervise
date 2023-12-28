@@ -122,7 +122,7 @@ const goToDetail = () =>{
       color: #4B5B6C;
     }
     .address {
-      height: 60rpx;
+      height: 65rpx;
       width: 100%;
       font-size: 24rpx;
       font-family: Microsoft YaHei;

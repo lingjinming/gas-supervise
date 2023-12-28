@@ -169,12 +169,7 @@ const store = userStore();
 const data = reactive({
   uid: 0,
   detail: <HidnagerFlowVO>{
-    dangerSource: undefined,
-    state: undefined,
-    dangerId: undefined,
-    level: undefined,
-    _level: undefined,
-    flow: [],
+ 
   },
   loading: false,
   showComment: false,

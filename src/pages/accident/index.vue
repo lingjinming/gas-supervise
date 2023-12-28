@@ -36,7 +36,7 @@
     <check-group useAll type="sp_accident_type" v-model="state.query.accidentType" title="事故类型"/>
     <!-- 事故级别 -->
     <check-group useAll type="ACCIDENTLEVEL"  v-model="state.query.accidentLevel" title="事故级别"/>
-    <!-- 事故级别 -->
+    <!-- 事故场景 -->
     <check-group useAll type="sp_accident_scene" v-model="state.query.accidentScene" title="事故场景"  />
 
     <!-- 确定 -->

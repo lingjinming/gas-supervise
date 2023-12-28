@@ -86,6 +86,7 @@ const options = {
   }),
   primitiveTypeConstructs: (constructs) => ({
     ...constructs,
+    object: () => "any",
     file: () => "FormData",
     string: {
       'date-time': 'string',

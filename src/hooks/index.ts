@@ -30,8 +30,11 @@ export const uploadFile = (item, cb) => {
       Authorization: "Bearer " + token?.access_token,
     },
     success(res) {
+      const result = JSON.parse(res.data)
       item.status = "done";
-      cb(JSON.parse(res.data));
+      item.id = result.data.objectName;
+      // @ts-ignore
+      cb(result);
     },
     fail(err) {
       uni.showToast({

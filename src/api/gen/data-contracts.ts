@@ -8003,7 +8003,7 @@ export interface HidangerFlowDTO {
   fileIds?: Array<FileObj>;
   /** 评论列表 */
   commentList?: Array<LeaderCommentDTO>;
-  content?: object;
+  content?: any;
 }
 
 export interface HidnagerFlowVO {
