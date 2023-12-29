@@ -1,15 +1,19 @@
 export const minDate = new Date().getTime()
 export const tomorrowDate = new Date().getTime() + 24 * 60 * 60 * 1000
 export const maxDate = new Date(2099, 10, 1).getTime()
-export const formatDate = (value:number) : string => {
-  let date = new Date(value);
-  let y = date.getFullYear();
-  let m = date.getMonth() + 1;
-  m = m < 10 ? "0" + m : m;
-  let d = date.getDate();
-  d = d < 10 ? "0" + d : d;
-  return y + "-" + m + "-" + d;
+
+/**
+ * 时间戳转格式化日期字符串
+ * @param value yyyy-MM-dd 格式的字符串
+ */
+export const formatDate = (timestamp:number) : string => {
+  const date = new Date(timestamp);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 };
+
 
 /**
  * 时间戳 转 yyyy-MM-dd HH:mm:ss

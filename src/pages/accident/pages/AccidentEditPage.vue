@@ -6,9 +6,10 @@
   <van-picker-new required dicType="ACCIDENTLEVEL" label="事故等级" title="事故等级" :defaultValue="form.accidentLevel" v-model="form.accidentLevel" />
   <van-picker-new  required dicType="sp_accident_type" label="事故类型" title="事故类型" :defaultValue="form.accidentType"  v-model="form.accidentType" />
   <van-picker-new  required dicType="sp_accident_scene" label="事故场景" title="事故场景" :defaultValue="form.accidentScene"  v-model="form.accidentScene" />
-  <van-field required @click-input="showCalender" label="事故时间" placeholder="请选择" readonly  >
-    <input slot="input"  disabled style="width: 100%" :value="form.accidentTime" />
+  <van-field required @click-input="showcalendar" label="事故时间"  readonly  >
+    <input placeholder="请选择事故时间" slot="input"  disabled style="width: 100%" :value="form.accidentTime" />
   </van-field>
+  
 
   <van-field required label="死亡人数" >
     <input slot="input"  v-model="form.deathCnt" placeholder="请输入死亡人数"/>
@@ -16,10 +17,6 @@
   <van-field required label="受伤人数" >
     <input slot="input"  v-model="form.injuredCnt" placeholder="请输入受伤人数"/>
   </van-field>
-  <van-field required label="事故描述" >
-    <input slot="input"  v-model="form.describe" placeholder="请输事故描述"/>
-  </van-field>
- 
 
   <view class="btn-save" >
    <van-button
@@ -32,15 +29,23 @@
       >下一步</van-button
     >
   </view>
+  <view>
+    <uni-calendar 
+      ref="calendar"
+      :insert="false"
+      :start-date="'2000-1-1'"
+      :end-date="'2025-5-20'"
+      @confirm="change"
+    />
+  </view>
   
-<van-calendar allow-same-day :show="calendarIsShow" @close="calendarIsShow = false" @confirm="onCalendarConfirm"/>
 </template>
 <script setup lang="ts">
 import { useMap } from '@/hooks/useMap';
 import type {UpdateAccidentQuery} from '@/api/gen/data-contracts'
-import { formatDate } from "@/utils";
 import WxValidate from '@/utils/validate/WxValidate'
 let validator: WxValidateType<UpdateAccidentQuery> | null = null;
+
 
 const form = ref<UpdateAccidentQuery>({
   districtId: '',
@@ -57,6 +62,8 @@ const form = ref<UpdateAccidentQuery>({
   injuredCnt: 0,
   uid: '',
 })
+
+
 
 onLoad((params) => {
   validator = new WxValidate(rules, message);
@@ -83,7 +90,6 @@ const nextStep = () => {
     uni.navigateTo({
     url: '/pages/accident/pages/AccidentUploadPage',
     success: (res) => {
-      // 下一步页面打开后,把三方施工信息传过去
       res.eventChannel.emit('accidentFileUpload', { formData: form.value })
     }
   })
@@ -108,12 +114,14 @@ const openMapAndChooseLocation = async() => {
 }
 
 // 选择事故时间
-const calendarIsShow = ref(false)
-const showCalender = () => calendarIsShow.value = true
-const onCalendarConfirm = (e) => {
-  form.value.accidentTime = formatDate(e.detail);
-  calendarIsShow.value = false;
-};
+const calendar = ref()
+const change  = ({fulldate}) => {
+  form.value.accidentTime = fulldate;
+}
+const showcalendar = () => {
+  calendar.value.open()
+}
+
 
 const rules:Rules<UpdateAccidentQuery> = {
   address: {
@@ -144,10 +152,6 @@ const rules:Rules<UpdateAccidentQuery> = {
     required: true,
     number: true,
     min: 0
-  },
-  describe: {
-    required: true,
-    maxlength: 16
   }
 } 
 const message:Messages<UpdateAccidentQuery> = {
@@ -179,10 +183,6 @@ const message:Messages<UpdateAccidentQuery> = {
     required: '请输入受伤人数',
     number: '请输入数字',
     min: '请输入大于0的数字'
-  },
-  describe: {
-    required: '请输入事故描述',
-    maxlength: '事故描述不能超过200个字符'
   }
 } 
 </script>

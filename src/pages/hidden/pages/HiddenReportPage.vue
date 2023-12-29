@@ -46,11 +46,10 @@
       <!-- 企业不需要关联检查计划 -->
       <van-picker-new
         v-if="!isOrg"
-        dicType="planCode"
+        v-model="reportForm.planCode"
+        :options="planOptions"
         label="关联检查计划"
         title="关联检查计划"
-        v-model="reportForm.planCode"
-        :orgId="reportForm.orgId"
       />
 
       <van-picker-new
@@ -82,20 +81,11 @@ import { userStore } from "@/state";
 import { useLoading } from "@/hooks/useLoading";
 import { useMap } from '@/hooks/useMap';
 
-import {postHidangerGov,postHidangerOrg} from '@/api/gen/GasSuperviseApi'
+import {postHidangerGov,postHidangerOrg,getHidangerGovCheckPlanSelections} from '@/api/gen/GasSuperviseApi'
 import type {HidangerCreateDTO} from '@/api/gen/data-contracts'
 
 const store = userStore();
-
 const isOrg: boolean = store.isOrgUser;
-
-onShow(() => {
-  !isOrg &&
-    uni.setNavigationBarTitle({
-      title: "安全检查下发",
-    });
-});
-
 let reportForm = ref<HidangerCreateDTO>({
   remark: "",
   address: "",
@@ -112,6 +102,26 @@ let reportForm = ref<HidangerCreateDTO>({
   districtId: "",
   state: 'DRAFT'
 });
+
+onShow(() => {
+  !isOrg &&
+    uni.setNavigationBarTitle({
+      title: "安全检查下发",
+    });
+});
+
+const planOptions = ref<GasOption[]>([])
+watch(() => reportForm.value.orgId, (orgId) => {
+  if (orgId) {
+    getHidangerGovCheckPlanSelections({targetOrgId: orgId})
+    .then(({data}) => data.map(({value,label}) => ({text: label, value,label})))
+    .then((options) => {
+      planOptions.value = options;
+    });
+  }
+});
+
+
 
 const submit = async () => {
   const result = Promise.resolve().then(() => isOrg ? postHidangerOrg(reportForm.value) : postHidangerGov(reportForm.value))

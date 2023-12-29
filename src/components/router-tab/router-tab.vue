@@ -65,6 +65,11 @@ let actions = [
         name: '隐患上报',
         optType: ['org'],
         url: '/pages/hidden/pages/HiddenReportPage'
+      },
+      {
+        name: '事故事件上报',
+        optType: ['org','gov'],
+        url: '/pages/accident/pages/AccidentEditPage'
       }
     ]
 const functions = computed(() => {

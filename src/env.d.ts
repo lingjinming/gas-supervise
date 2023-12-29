@@ -7,6 +7,14 @@ declare module '*.vue' {
   export default component
 }
 
+
+type GasOption = {
+  text: string;
+  value: string;
+  label?: string;
+}
+
+
 interface Event {
   detail: any
 }

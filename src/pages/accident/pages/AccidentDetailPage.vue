@@ -15,6 +15,7 @@
 <script setup lang="ts">
 import { getAccidentDetailByAccidentId } from '@/api/gen/GasSuperviseApi'
 import type {AccidentVO } from '@/api/gen/data-contracts'
+import { EventType } from '../event';
 
 const detail = ref<AccidentVO>();
 const fields = [{
@@ -57,6 +58,12 @@ onLoad((options) => {
   getDetail(options!.uid);
 });
 
+uni.$on(EventType.DETAIL_PAGE_REFRESH,function(data){
+  if(detail.value?.accidentId) {
+    getDetail(detail.value?.accidentId)
+  }
+})
+
 const goEdit = () => {
   uni.navigateTo({
     url: `/pages/accident/pages/AccidentEditPage?accidentId=${detail.value!.accidentId}`,
@@ -66,8 +73,8 @@ const goEdit = () => {
   });
 }
 
-const getDetail = async (uid: string) => {
-  const { data } = await getAccidentDetailByAccidentId(uid)
+const getDetail = async (accidentId: string) => {
+  const { data } = await getAccidentDetailByAccidentId(accidentId)
   detail.value = data
 }
 </script>

@@ -22,15 +22,15 @@
   </view>
 </template>
 <script setup lang="ts">
-import type { UpdateAccidentQuery } from '@/api/gen/data-contracts'
 import { postAccidentAdd, postAccidentUpdate } from '@/api/gen/GasSuperviseApi'
+import { useLoading } from '@/hooks/useLoading';
+import { EventType } from '../event'
 
-const fileNames = ref([])
-const form = ref<{ uid: string, describe: string, fileIds: string[] }>({
+const form = ref<any>({
   uid: '',
   describe: '',
-  fileIds: []
-});
+  fileIds: ''
+}); 
 
 onLoad((params) => {
   const _this = getCurrentInstance();
@@ -38,13 +38,57 @@ onLoad((params) => {
   const eventChannel = _this!.ctx.getOpenerEventChannel();
   eventChannel && eventChannel.on("accidentFileUpload", ({ formData }) => {
     form.value = formData;
-    // @ts-ignore
   });
 })
 
-const saveOrUpdate = () => {
-  console.log(form.value)
+const saveOrUpdate = () => { 
+  const isValid = validate();
+  if (!isValid) return;
+  const isUpdate = !!form.value.uid;
+  const fileIds = form.value.fileIds.map(e => e.id).join(",");
+  const accidentTime = form.value.accidentTime;
+  const formData = {...form.value, fileIds,accidentTime: accidentTime + ' 00:00:00'}
+  const result = Promise.resolve().then(() => {
+    return isUpdate ? postAccidentUpdate(formData) : postAccidentAdd(formData)
+  })
+  useLoading(result,()=>{
+    if(isUpdate) {
+      // 返回到详情页,并刷新
+      uni.$emit(EventType.DETAIL_PAGE_REFRESH)
+      uni.navigateBack({delta:2})
+    }
+    else {
+      // 重定向到列表页
+      uni.$emit(EventType.LIST_PAGE_REFRESH)
+      uni.redirectTo({
+        url: '/pages/accident/index'
+      })
+    }
+
+  })
 }
+
+const validate = (): boolean => {
+// 校验参数
+  if (!form.value.fileIds.length) {
+    uni.showToast({
+      title: '请上传事故事件报告',
+      icon: 'none'
+    })
+    return false
+  }
+  // describe 长度最大200
+  if (form.value.describe.length > 200) {
+    uni.showToast({
+      title: '事故事件描述最多200字',
+      icon: 'none'
+    })
+    return false
+  }
+  return true;
+}
+
+
 </script>
 <style scoped lang="scss">
 .acc-upload-container {

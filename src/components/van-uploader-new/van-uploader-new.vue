@@ -3,20 +3,17 @@
     <text class="label">{{ label }}</text>
     <!-- 文件上传 -->
     <template v-if="accept === 'file'">
-      <van-uploader
-        accept="file"
-        @after-read="upload"
-      >
+      <van-uploader accept="file" @after-read="upload" >
         <van-button icon="description" custom-style="height: 60rpx;">选择文件</van-button>
-        <view v-for="f in fileList" :key="f.name" class="file-list">
-          <view class="fiel-preview">
-            <view class="file-del">
-              <van-icon name="cross" size="20px" color="#000"></van-icon>
-            </view>
-            {{ f.name }}
-          </view>
-        </view>
       </van-uploader>
+      <view v-for="(f,index) in fileList" :key="f.name" class="file-list">
+        <view class="fiel-preview">
+          <view class="file-del" @click="deleteFile({detail:{index,file:f}})">
+            <van-icon name="cross" size="20px" color="#000"></van-icon>
+          </view>
+          {{ f.name }}
+        </view>
+      </view>
     </template>
     <!-- 图片上传 -->
     <template v-else>
@@ -25,7 +22,7 @@
         :max-count="3"
         accept="image"
         :file-list="fileList"
-        @delete="delImg"
+        @delete="deleteFile"
         @after-read="upload"
       >
         <view class="btn">
@@ -37,7 +34,8 @@
 </template>
 <script lang="ts" setup>
 import { uploadFile } from "@/hooks";
-import type {ResultFileUpdateResponseDTO} from '@/api/gen/data-contracts'
+import { downloadFile} from "@/api/img";
+import type {ResultFileUpdateResponseDTO,FileObj} from '@/api/gen/data-contracts'
 interface File{  
   id?:string,
   status?: 'uploading'|'down',
@@ -47,54 +45,62 @@ interface File{
   time: number; 
   url: string;
   tempFilePath: string;
+  // 图片附件时
   thumb: string;
 }
 const emits = defineEmits(["update:modelValue"]);
 const props = withDefaults(defineProps<{
-  modelValue: string[],
+  modelValue: string[] | FileObj[],
   label?: string,
   accept?: 'image' | 'media' | 'file',
-  // 反显时候的文件列表
-  reshow: {id: string,name:string}[]
 }>(),{
   label: '上传照片(最多3张)',
   accept: 'image',
-  // @ts-ignore
-  reshow: []
 })
 const fileList = ref<File[]>([]);
 watch(fileList,(newFils) => {
-  let newFileIds = newFils.filter(f => f.id).map(f => f.id);
+  let newFileIds = newFils.filter(f => f.id).map(({id,name,url}) => ({id,name,url}));
   emits("update:modelValue", newFileIds);
 })
 
+
 onMounted(() => {
-  fileList.value = props?.modelValue?.map(f => {
-    return {
-      // @ts-ignore
-      id: f.id,
-      // @ts-ignore
-      name: f.name,
-      status: 'down',
-      type: props.accept,
-      size: 0,
-      time: 0,
-      url: '',
-      tempFilePath: '',
-      thumb: ''
+  let reshowPromiseList:Promise<void>[] = []
+  // @ts-ignore
+  fileList.value = props?.modelValue?.map(({id,name,url}) => {
+    let item =  {  id, name, status: 'uploading', type: props.accept, size: 0,  time: 0, url: '',tempFilePath: '', thumb: ''}
+    // 对图片要反显出来
+    if(isImage(id) && !url) {
+      reshowPromiseList.push(downloadFile(id).then((tempPath) => {
+        item.url = tempPath;
+        item.tempFilePath = tempPath;
+        item.thumb = tempPath;
+        item.status = 'down';
+      }))
+    } else {
+      item.url = url;
+      item.tempFilePath = url;
+      item.thumb = url;
+      item.status = 'down';
     }
+    return item;
+  }) || []
+  Promise.all(reshowPromiseList).then(() => {
+    fileList.value = [...fileList.value]
   })
 })
 
-// 需要反显出来附件
+const isImage = (fileId: string) => {
+  if(!fileId) return false; 
+  const index = fileId.lastIndexOf('.');
+  if(index === -1) return false;
+  const ext = fileId.slice(index + 1);
+  return ['jpg', 'jpeg', 'png', 'gif'].includes(ext);
+}
 
-const delImg = (event) => {
-  // let temp = JSON.parse(JSON.stringify(fileList.value));
-  // temp.splice(event.detail.index, 1);
-  // fileIds.value.splice(event.detail.index, 1);
 
-  // fileList.value = temp;
-  // console.log(fileList.value);
+const deleteFile = (event: {detail: {index:number,file: File}}) => {
+  fileList.value = fileList.value.filter((_,i) => i !== event.detail.index)
 };
 
 
@@ -102,9 +108,11 @@ const delImg = (event) => {
 
 
 const upload = async (event: {detail: {file: File[] | File}}) => {
-
   let { file } = event.detail;
-  file = Array.isArray(file) ? file : [file]
+  if(!Array.isArray(file)) {
+    file['tempFilePath'] = file.url;
+    file = [file]
+  }
 
   fileList.value.push(...file);
   fileList.value = [...fileList.value]

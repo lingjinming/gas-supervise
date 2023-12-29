@@ -1,6 +1,6 @@
 <template>
   <van-field v-bind="$attrs" is-link clickable maxlength="200" @click-input="showPicker">
-    <input hold-keyboard readonly disabled :value="pickerVal" slot="input" style="width: 100%;" placeholder="请选择" />
+    <input hold-keyboard readonly disabled :value="pickerVal?.text" slot="input" style="width: 100%;" placeholder="请选择" />
   </van-field>
   <van-popup :show="isShow" round position="bottom">
     <van-picker
@@ -14,107 +14,72 @@
   </van-popup>
 </template>
 <script setup lang="ts">
-import { getDictList, getOrg } from "@/api/dic";
 import { userStore } from "@/state";
-import {getHidangerGovCheckPlanSelections} from '@/api/gen/GasSuperviseApi'
-// hidanger/gov/check-plan/selections
 
-
-interface Options {
-  text: string;
-  value: string;
-}
 const store = userStore()
 const emits = defineEmits(["update:modelValue"]);
-const props = defineProps({
-  dicType: {
-    type: String,
-    default: "",
-  },
-  // 下拉选的默认值
-  defaultValue: {
-    type: String,
-    default: "",
-  },
-  orgId: {
-    type: String,
-    default: "",
-  },
-});
+const props = withDefaults(defineProps<{
+  modelValue: string;
+  dicType: string;
+  defaultValue: string;
+  // 提供一组准备好的选项
+  options?: GasOption[];
+  // 或者提供一个异步获取选项的方法
+  fetcher?: () => Promise<GasOption[]>;
+}>(),{
+  dicType: "",
+  defaultValue: "",
+})
+
 let isShow = ref(false);
-let columns: Ref<Options[]> = ref([]);
-let pickerVal = ref('');
+let columns: Ref<GasOption[]> = ref([]);
+// 选中的下拉选
+let pickerVal = ref<GasOption|undefined>();
 
-const columnsObj = {
-  org: async () => {
-    let data = await getOrg();
-    columns.value = data.map(e => ({
-      text: e.fullName,
-      value: e.id
-    }))
-  },
-  planCode: async () => {
-    let {data} = await getHidangerGovCheckPlanSelections({targetOrgId: props.orgId});
-    if(data) {
-      columns.value = data.map(e => ({
-        text: e.value!,
-        value: e.value!
-      }))
-    }
-    
-  },
-  SERVER_CONFIG: async () => {
-    columns.value = store.auth.servers.map(e => ({
-      text: e.label,
-      value: e.value
-    }))
-  },
-};
-
-const getDictListFn = async (type:string) =>{
-  if(columns.value.length) {
-    return columns.value;
+onMounted(() => {
+  if(props.options) {
+    columns.value = props.options;
+  } else if(props.fetcher) {
+    props.fetcher().then(options => {
+      columns.value = options;
+    })
+  } else if(props.dicType) {
+    store.fetchDictionary(props.dicType).then(options => {
+      columns.value = options;
+    })
   }
-  let data = (await getDictList(type))[type];
-  columns.value = data;
-  return data;
-}
-// 下拉选默认值
-if(props.defaultValue) {
-  const refDefault = toRefs(props).defaultValue
-  watch(refDefault,(val)=> {
-    getDictListFn(props.dicType).then((res) => {
-    let theDefault = findOption(val);
+})
+
+watch(columns,(newCols) => {
+  // 下拉选默认值还原出来
+  if(newCols.length && !pickerVal.value) {
+    let dicValue = props.modelValue || props.defaultValue;
+    let theDefault = findOption(dicValue);
     if(theDefault) {
-      pickerVal.value = theDefault.text;
-      emits("update:modelValue", theDefault.value);
-    }
-  })
-  },{immediate: true})
-}
-
-const showPicker = () => {
-  isShow.value = true;
-  if(!columns.value.length) {
-    if(Object.keys(columnsObj).includes(props.dicType)){
-      columnsObj[props.dicType]();
-    }else{
-      getDictListFn(props.dicType);
+      pickerVal.value = theDefault;
     }
   }
+})
+
+watch(pickerVal,(newPick) => {
+  if(newPick?.value) {
+    emits("update:modelValue", newPick.value);
+  }
+})
+
+const showPicker = async () => {
+  isShow.value = true;
 };
 
 const confirm = (e) => {
-  const value: Options = e.detail.value;
+  const value: GasOption = e.detail.value;
+  pickerVal.value = value;
   isShow.value = false;
-  
-  pickerVal.value = value.text;
-  emits("update:modelValue", value.value);
 };
 
-const findOption = (value: string) :Options | undefined => {
-  if(columns.value.length) {
-    return columns.value.find(e => e.value === props.defaultValue)
+const findOption = (value: string) :GasOption | undefined => {
+  if(columns.value.length && value) {
+    return columns.value.find(e => e.value === value)
   }
 }
 </script>

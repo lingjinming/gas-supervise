@@ -23,13 +23,10 @@
 
 <script setup lang="ts">
 import { ref ,type Ref} from 'vue';
-import { getDictList } from "@/api/dic";
+import { userStore } from '@/state';
 
-interface Option {
-  label: string;
-  value: unknown;
-}
 
+const store = userStore();
 const emits = defineEmits(["update:modelValue","change"]);
 const props = withDefaults(defineProps<{
   isColumn?: boolean,
@@ -40,7 +37,7 @@ const props = withDefaults(defineProps<{
   // 数据字典类型,和options二选一
   type?: string,
   // 选项集合
-  options?: Option[]
+  options?: GasOption[]
 }>(),{
   useAll: false,
   isColumn: false,
@@ -52,12 +49,12 @@ const props = withDefaults(defineProps<{
 const checked: Ref<unknown[]> = ref([]);
 const allClicked = ref(false)
 if(props.type) {
-  getDictList(props.type).then(dics => {
-    props.options.push(...dics[props.type])
+  store.fetchDictionary(props.type).then(options => {
+    props.options.push(...options)
   })
 }
 
-const onChecked = (option: Option) => {
+const onChecked = (option: GasOption) => {
   // 如果已经选中了 就给反选
   if(checked.value.includes(option.value)) {
     checked.value = checked.value.filter(o => o !== option.value);

@@ -51,6 +51,7 @@ import AccidentPageItem from "./components/AccidentPageItem.vue";
 import { useTable } from "@/hooks/useTable";
 import {getAccident} from '@/api/gen/GasSuperviseApi'
 import type {AccidentPageQuery,AccidentVO} from '@/api/gen/data-contracts'
+import { EventType } from "./event";
 
 
 
@@ -78,6 +79,10 @@ const {
 onLoad((params) => {
   search();
 });
+// 刷新页面
+uni.$on(EventType.LIST_PAGE_REFRESH,function(data){
+  doQuery();
+})
 const doQuery = () => {
   state.showQuery = false;
   search();

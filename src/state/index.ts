@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia';
 import { setCache, getCache ,removeCache} from '@/utils/cache'
 import { getConfig } from "@/api/uaa";
+import {fetchDictionary} from '@/api/dic'
 import type { SysUserInfo ,OAuth2Token} from '@/api/model/UserAuth';
+
 
 interface UserStoreType {
   auth: {
@@ -9,7 +11,11 @@ interface UserStoreType {
     servers: Server[],
     activeServer: Server | undefined
   },
-  userInfo: SysUserInfo | undefined
+  userInfo: SysUserInfo | undefined,
+  // 字典缓存
+  dictionary: {
+    [key in string]: GasOption[]
+  }
 }
 
 export const userStore = defineStore('app-store', {
@@ -25,6 +31,9 @@ export const userStore = defineStore('app-store', {
       },
       // 用户信息
       userInfo: undefined,
+      dictionary: {
+
+      }
     } 
   },
   getters: {
@@ -46,6 +55,19 @@ export const userStore = defineStore('app-store', {
       const serverList = data.regions.map(r => ({label: r.remark,value: r.region,...r}));
       this.auth.servers = serverList;
       setCache('SERVER_LIST',serverList);
+
+    },
+    // 获取数据字典
+    async fetchDictionary(dicType: string) {
+      const cacheDic = this.dictionary[dicType];
+      if(!cacheDic) {
+        // concurrent fetch
+        this.dictionary[dicType] = [];
+        const fetched = await fetchDictionary(dicType) || [];
+        this.dictionary[dicType] = fetched ;
+        return fetched;
+      }
+      return cacheDic;
 
     },
     // 从缓存恢复配置
@@ -82,6 +104,7 @@ export const userStore = defineStore('app-store', {
       this.auth.token = undefined;
       this.auth.activeServer = undefined;
       this.userInfo = undefined;
+      this.dictionary = {};
     },
     setServer(server: any) {
       setCache('SERVER_CONFIG',server);

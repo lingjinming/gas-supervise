@@ -45,12 +45,14 @@ export const downloadFile = async (fileId: string) : Promise<string>=> {
   const store = userStore();
   const region = store.auth.activeServer?.region;
 
-  const previewUrl = await getImgPreviewUrl(fileId);
-  const queryObj = getUrl(previewUrl);
+  //const previewUrl = await getImgPreviewUrl(fileId);
+  //const queryObj = getUrl(previewUrl);
+  // https://aiot.citysafety.com/gasguard/gas-supervise/open/download/895131bae2b148f3abcd7dc46a79e534.jpg
 
   return new Promise<string>((resolve,rej) => {
     uni.downloadFile({
-      url: `https://aiot.citysafety.com/gasguard/preview_pic/${queryObj?.path}`,
+      //url: `https://aiot.citysafety.com/gasguard/preview_pic/${queryObj?.path}`,
+      url: `https://aiot.citysafety.com/gasguard/gas-supervise/open/download/${fileId}`,
       header: {
         "x-api-region": region,
       },

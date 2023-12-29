@@ -5,13 +5,10 @@
       <template v-if="!$slots[prop]">
         <template>
           <view class="item-label">{{ label }}</view>
-          <view class="item-value" v-if="isFile">
-            <region-img
-              v-for="img in (value as any)"
-              :key="img.id"
-              :fileId="img.id"
-              :fileName="img.name"
-            />
+          <view :class="['item-value',isFile?'file':'']" v-if="isFile">
+            <view class="file-line" v-for="img in (value as any)">
+              <region-img :key="img.id" :fileId="img.id" :fileName="img.name" />
+            </view>
           </view>
           <view class="item-value" v-else>{{ value }}</view>
         </template>
@@ -67,6 +64,16 @@ const list = computed(() => {
       font-weight: 600;
     }
 
+    .item-value.file {
+      display: flex;
+      flex-wrap: wrap;
+
+      // 我想让子元素一个占一行,同时给添加一个下划线
+      // 但是这个下划线只应用在内容上,而不是整个item上
+      .file-line {
+        width: 100%;
+      }
+    }
     .item-value {
       width: 70%;
       // 超出换行,最多两行,超出显示省略号
@@ -75,7 +82,6 @@ const list = computed(() => {
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
-      
     }
   }
 
