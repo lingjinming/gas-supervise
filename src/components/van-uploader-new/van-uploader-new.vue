@@ -33,12 +33,13 @@
   </view>
 </template>
 <script lang="ts" setup>
-import { uploadFile } from "@/hooks";
+import { uploadFile ,uploadfileAsync} from "@/hooks";
 import { downloadFile} from "@/api/img";
+import { getFileExt,isImageFile } from '@/utils'
 import type {ResultFileUpdateResponseDTO,FileObj} from '@/api/gen/data-contracts'
 interface File{  
   id?:string,
-  status?: 'uploading'|'down',
+  status?: 'uploading'|'down' | 'failed',
   type: 'image' | 'media' | 'file'; 
   name: string; 
   size: number; 
@@ -53,9 +54,12 @@ const props = withDefaults(defineProps<{
   modelValue: string[] | FileObj[],
   label?: string,
   accept?: 'image' | 'media' | 'file',
+  types: string[]
 }>(),{
   label: '上传照片(最多3张)',
   accept: 'image',
+  // @ts-ignore
+  types: ['jpg', 'jpeg', 'png', 'gif']
 })
 const fileList = ref<File[]>([]);
 watch(fileList,(newFils) => {
@@ -70,7 +74,7 @@ onMounted(() => {
   fileList.value = props?.modelValue?.map(({id,name,url}) => {
     let item =  {  id, name, status: 'uploading', type: props.accept, size: 0,  time: 0, url: '',tempFilePath: '', thumb: ''}
     // 对图片要反显出来
-    if(isImage(id) && !url) {
+    if(isImageFile(id) && !url) {
       reshowPromiseList.push(downloadFile(id).then((tempPath) => {
         item.url = tempPath;
         item.tempFilePath = tempPath;
@@ -90,21 +94,9 @@ onMounted(() => {
   })
 })
 
-const isImage = (fileId: string) => {
-  if(!fileId) return false; 
-  const index = fileId.lastIndexOf('.');
-  if(index === -1) return false;
-  const ext = fileId.slice(index + 1);
-  return ['jpg', 'jpeg', 'png', 'gif'].includes(ext);
-}
-
-
 const deleteFile = (event: {detail: {index:number,file: File}}) => {
   fileList.value = fileList.value.filter((_,i) => i !== event.detail.index)
 };
-
-
-
 
 
 const upload = async (event: {detail: {file: File[] | File}}) => {
@@ -113,20 +105,41 @@ const upload = async (event: {detail: {file: File[] | File}}) => {
     file['tempFilePath'] = file.url;
     file = [file]
   }
-
+  // 按照types校验文件类型
+  for(let f of file) {
+    if(!validateFile(f)) {
+      uni.showToast({ icon: 'none', title: `文件类型不支持,支持的文件类型有:${props.types.join(',')}` })
+      return;
+    }
+  }
   fileList.value.push(...file);
   fileList.value = [...fileList.value]
 
   const uploadTasks = file.map((item) => {
     item.status = 'uploading'
-    return new Promise<ResultFileUpdateResponseDTO>((resolve,reject) => {
-      uploadFile(item,resolve)
-    });
+    return uploadfileAsync(item)
+      .then(response => {
+        item.status = 'down';
+        item.id = response.data.objectName;
+      }).catch(e => {
+        item.status = 'failed';
+      })
   });
-  await Promise.all(uploadTasks);
-  fileList.value = [...fileList.value]
-
+  // show uploading
+  uni.showLoading({ title:'上传中...' });
+  Promise.all(uploadTasks).finally(() => {
+    uni.hideLoading();
+    fileList.value = [...fileList.value]
+  })
 };
+
+const validateFile = (file: File): boolean => {
+  if(!file) return false;
+  if(!props.types?.length) return true;
+  const ext = getFileExt(file.name);
+  if(!ext) return false;
+  return props.types.includes(ext)
+}
 
 </script>
 

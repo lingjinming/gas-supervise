@@ -1,4 +1,5 @@
 import { userStore } from "@/state";
+import type { ResultFileUpdateResponseDTO } from "@/api/gen/data-contracts";
 
 export const minDate = new Date().getTime();
 export const tomorrowDate = new Date().getTime() + 24 * 60 * 60 * 1000;
@@ -44,3 +45,31 @@ export const uploadFile = (item, cb) => {
     },
   });
 };
+
+
+export const uploadfileAsync = (file: {tempFilePath: string}) => 
+  new Promise<ResultFileUpdateResponseDTO>((resolve, reject) => {
+    const store = userStore();
+    const server = store.auth.activeServer;
+    const token = store.auth.token;
+    uni.uploadFile({
+      url: "https://aiot.citysafety.com/gasguard/gas-supervise/file/upload",
+      filePath: file.tempFilePath,
+      name: "file",
+      header: {
+        "x-api-region": server?.region,
+        Authorization: "Bearer " + token?.access_token,
+      },
+      success(res) {
+        try{
+          const result = JSON.parse(res.data)
+          resolve(result);
+        } catch(err) {
+          reject(res);
+        }
+      },
+      fail(err) {
+        reject(err);
+      },
+    });
+  });

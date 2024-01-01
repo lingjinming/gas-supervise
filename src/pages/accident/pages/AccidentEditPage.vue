@@ -12,10 +12,10 @@
   
 
   <van-field required label="死亡人数" >
-    <input slot="input"  v-model="form.deathCnt" placeholder="请输入死亡人数"/>
+    <input slot="input" type="number"   v-model="form.deathCnt" placeholder="请输入死亡人数"/>
   </van-field>
   <van-field required label="受伤人数" >
-    <input slot="input"  v-model="form.injuredCnt" placeholder="请输入受伤人数"/>
+    <input slot="input" type="number"  v-model="form.injuredCnt" placeholder="请输入受伤人数"/>
   </van-field>
 
   <view class="btn-save" >
@@ -116,7 +116,7 @@ const openMapAndChooseLocation = async() => {
 // 选择事故时间
 const calendar = ref()
 const change  = ({fulldate}) => {
-  form.value.accidentTime = fulldate;
+  form.value.accidentTime = fulldate + ' 00:00:00';
 }
 const showcalendar = () => {
   calendar.value.open()

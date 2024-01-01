@@ -46,3 +46,16 @@ export const getUrl = (url: string): {path: string,query: string} => {
   return urlObj as {path: string,query: string}
   
 };
+
+
+export const getFileExt = (filename : string|undefined) : string | undefined => {
+  if(filename && filename.includes('.')) {
+    return filename.split(".").pop();
+  }
+}
+
+export const isImageFile = (filename: string) => {
+  const ext = getFileExt(filename);
+  if(!ext) return false;
+  return ['jpg', 'jpeg', 'png', 'gif'].includes(ext);
+}

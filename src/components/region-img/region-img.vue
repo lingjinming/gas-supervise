@@ -10,27 +10,17 @@
 </template>
 <script lang="ts" setup>
 import { downloadFile,loadFileBase64} from "@/api/img";
-import { userStore } from "@/state";
-
-const store = userStore();
-const region = store.auth.activeServer?.region;
+import { getFileExt } from '@/utils'
 
 let src = ref("");
-const props = defineProps({
-  fileId: {
-    type: String,
-  },
-  fileName: {
-    type: String,
-  },
-  id: {
-    type: String,
-  },
-  disabledPreview: {
-    type: Boolean,
-    default: false,
-  },
-});
+const props = withDefaults(defineProps<{
+  fileId: string,
+  fileName: string,
+  id?: string,
+  disabledPreview?: boolean
+}>(),{
+  disabledPreview: false
+})
 
 /**
  * 对于过长的文件名,导致看不见后缀
@@ -64,22 +54,13 @@ const getImgFn = async () => {
 // doc, xls, ppt, pdf, docx, xlsx,pptx，
 const supportPreview = () => {
   const supportList = ["doc", "xls", "ppt", "pdf", "docx", "xlsx", "pptx"];
-  const ext = getFileExt();
+  const ext = getFileExt(props.fileName);
   if(ext) {
     return  supportList.includes(ext);
   }
   return false;
 }
 
-const getFileExt = () => {
-  if(props.fileName) {
-    const suffix = props.fileName.split(".").pop();
-    if(suffix) {
-      return  suffix;
-    }
-  }
-  return "";
-}
 
 const previewFile = async () => {
   if(!supportPreview()) {
@@ -89,7 +70,7 @@ const previewFile = async () => {
     });
     return;
   }
-  const ext = getFileExt();
+  const ext = getFileExt(props.fileName);
   if(props.fileId) {
     uni.showLoading({ title:'下载中...' });
     downloadFile(props.fileId)

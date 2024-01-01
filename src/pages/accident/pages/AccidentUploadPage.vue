@@ -10,7 +10,7 @@
         </uni-forms-item>
       </view>
     </uni-forms>
-    <van-uploader-new accept="file"   label="事故事件报告" v-model="form.fileIds" />
+    <van-uploader-new accept="file" :types="['doc','docx','pdf']"  label="事故事件报告" v-model="form.fileIds" />
     <view class="required">*请上传事故事件报告</view>
   </view>
   <view class="info">
@@ -46,8 +46,7 @@ const saveOrUpdate = () => {
   if (!isValid) return;
   const isUpdate = !!form.value.uid;
   const fileIds = form.value.fileIds.map(e => e.id).join(",");
-  const accidentTime = form.value.accidentTime;
-  const formData = {...form.value, fileIds,accidentTime: accidentTime + ' 00:00:00'}
+  const formData = {...form.value, fileIds}
   const result = Promise.resolve().then(() => {
     return isUpdate ? postAccidentUpdate(formData) : postAccidentAdd(formData)
   })

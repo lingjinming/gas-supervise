@@ -73,8 +73,6 @@ let actions = [
       }
     ]
 const functions = computed(() => {
-  console.log(store.userInfo);
-  
   return actions.filter(act => act.optType.includes(store.isGovUser?'gov':'org'))
 })
 let switchTab = (route: any) => {

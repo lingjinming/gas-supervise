@@ -3,7 +3,7 @@
   <view class="top">
     <text
       >共计<text class="total">{{ total }}</text
-      >条隐患</text
+      >条记录</text
     >
     <view @click="state.showQuery = true" class="search">
       筛选<van-icon name="arrow-down" />
@@ -32,6 +32,8 @@
     custom-style="padding: 30rpx"
     @close="state.showQuery = false"
   >
+    <!-- 关键字查询 -->
+    <uni-search-bar placeholder="地址查询" cancel-button="none" clearButton="none"  v-model="state.query.keyword" />
     <!-- 事故类型 -->
     <check-group useAll type="sp_accident_type" v-model="state.query.accidentType" title="事故类型"/>
     <!-- 事故级别 -->
@@ -41,7 +43,7 @@
 
     <!-- 确定 -->
     <view class="bottom">
-      <button plain="true" @click="state.showQuery = false" class="btn cancel">取消</button>
+      <button plain="true" @click="resetQuery" class="btn reset">重置</button>
       <button plain="true" @click="doQuery" class="btn query">查询</button>
     </view>
   </van-popup>
@@ -54,18 +56,19 @@ import type {AccidentPageQuery,AccidentVO} from '@/api/gen/data-contracts'
 import { EventType } from "./event";
 
 
-
 ///accident
 const state = reactive({
   // 展示搜索框
   showQuery: false,
   query: <AccidentPageQuery>{
     keyword: undefined,
-    accidentScene: undefined,
+    accidentScene: [],
     accidentLevel: undefined,
     accidentType: undefined,
   }
 })
+
+
 const {
   total,
   list,
@@ -83,6 +86,14 @@ onLoad((params) => {
 uni.$on(EventType.LIST_PAGE_REFRESH,function(data){
   doQuery();
 })
+
+
+const resetQuery = () => {
+  state.query.keyword = undefined;
+  state.query.accidentScene = [];
+  state.query.accidentLevel = undefined;
+  state.query.accidentType = undefined;
+}
 const doQuery = () => {
   state.showQuery = false;
   search();
@@ -111,6 +122,29 @@ const doQuery = () => {
     text-align: center;
     border-radius: 26rpx;
     line-height: 50rpx;
+  }
+}
+.bottom {
+  @include flex-between;
+  margin-top: 20rpx;
+
+  .btn {
+    border: 0px;
+    height: 88rpx;
+    line-height: 88rpx;
+    border-radius: 10px;
+  }
+
+  .btn.reset {
+    width: 200rpx;
+    background: #e8f1ff;
+    color: $uni-color-primary;
+  }
+
+  .btn.query {
+    width: 470rpx;
+    background: $uni-color-primary;
+    color: #fff;
   }
 }
 </style>

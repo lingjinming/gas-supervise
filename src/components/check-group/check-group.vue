@@ -29,6 +29,7 @@ import { userStore } from '@/state';
 const store = userStore();
 const emits = defineEmits(["update:modelValue","change"]);
 const props = withDefaults(defineProps<{
+  modelValue: any[],
   isColumn?: boolean,
   // 是否追加一个全部选项
   useAll?:  boolean,
@@ -54,12 +55,18 @@ if(props.type) {
   })
 }
 
+watch(() => props.modelValue, (val) => {
+ if(!val || !val.length) {
+  checked.value = []
+ }
+})
+
 const onChecked = (option: GasOption) => {
   // 如果已经选中了 就给反选
   if(checked.value.includes(option.value)) {
     checked.value = checked.value.filter(o => o !== option.value);
   } else {
-    checked.value.push(option.value);
+    checked.value  = [...checked.value, option.value]
   }
   emits("update:modelValue", checked.value);
   emits("change", [option]);
@@ -114,14 +121,6 @@ const clickAll = () => {
 
       &:nth-child(3n) {
         margin-right: 0;
-      }
-
-      image {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        width: 40rpx;
-        height: 36rpx;
       }
     }
 

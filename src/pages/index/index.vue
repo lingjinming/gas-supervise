@@ -50,14 +50,10 @@ import NoticePageItem from '@/pages/notice/components/NoticePageItem.vue'
 import { EventType } from "@/enums/eventType";
 import { getNoticeFn, notices } from "../notice";
 onShow(() => {
-  console.log('onShow')
   uni.$on(EventType.NOTICE_REFRESH, () => getNoticeFn());
   getNoticeFn()
 });
-// onHide(() => {
-//   console.log('onHide')
-//   uni.$off(EventType.NOTICE_REFRESH)
-// })
+
 onPullDownRefresh(() => getNoticeFn());
 
 
