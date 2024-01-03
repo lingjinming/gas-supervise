@@ -47,13 +47,15 @@ export const uploadFile = (item, cb) => {
 };
 
 
-export const uploadfileAsync = (file: {tempFilePath: string}) => 
+export const uploadfileAsync = (file: {tempFilePath: string,name?:string}) => 
   new Promise<ResultFileUpdateResponseDTO>((resolve, reject) => {
     const store = userStore();
     const server = store.auth.activeServer;
     const token = store.auth.token;
+    // name uriEncode
+    const filename = file.name ? `?filename=${encodeURIComponent(file.name)}` : "";
     uni.uploadFile({
-      url: "https://aiot.citysafety.com/gasguard/gas-supervise/file/upload",
+      url: "https://aiot.citysafety.com/gasguard/gas-supervise/file/upload"+filename,
       filePath: file.tempFilePath,
       name: "file",
       header: {

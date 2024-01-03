@@ -112,18 +112,19 @@ const upload = async (event: {detail: {file: File[] | File}}) => {
       return;
     }
   }
-  fileList.value.push(...file);
-  fileList.value = [...fileList.value]
 
-  const uploadTasks = file.map((item) => {
+  const uploadTasks = file.map(async (item) => {
     item.status = 'uploading'
-    return uploadfileAsync(item)
-      .then(response => {
+    try {
+        const response = await uploadfileAsync(item);
         item.status = 'down';
         item.id = response.data.objectName;
-      }).catch(e => {
+        fileList.value.push(item);
+      } catch (e) {
         item.status = 'failed';
-      })
+        uni.hideLoading();
+        uni.showToast({ icon: 'none', title: '文件上传失败!' });
+      }
   });
   // show uploading
   uni.showLoading({ title:'上传中...' });
@@ -140,7 +141,20 @@ const validateFile = (file: File): boolean => {
   if(!ext) return false;
   return props.types.includes(ext)
 }
-
+/**
+ * 对于过长的文件名,导致看不见后缀
+ * 这里限制文件名称最多10个字符,超过的话,就删除前面的字符,只保留后面的字符
+ * @param fileName 文件名
+ */
+ const formatterFilename = (fileName: string|undefined) => {
+  if(fileName) {
+    if (fileName.length > 20) {
+      return fileName.slice(fileName.length - 20);
+    }
+    return fileName;
+  }
+  return ''
+}
 </script>
 
 <style lang="scss" scoped>
@@ -154,12 +168,21 @@ const validateFile = (file: File): boolean => {
   .file-list {
     display: flex;
     padding: 10rpx 0;
+    flex-wrap: wrap;
     .fiel-preview {
-      height: 45rpx;
+      width: 100%;
+      min-height: 45rpx;
       padding-left: 10rpx;
       padding-right: 40rpx;
       border: 1rpx solid #efefef;
       position: relative;
+      // 文本超出的时候换行
+      word-break: break-all;
+      white-space: normal;
+      line-height: 45rpx;
+      color: $uni-color-primary;
+      // 每行的文字底部添加下划线
+      text-decoration: underline;
 
       .file-del {
         // 绝对定位在右上角

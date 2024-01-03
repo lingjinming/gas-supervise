@@ -60,8 +60,8 @@ export const downloadFile = async (fileId: string) : Promise<string>=> {
       success(res) {
         resolve(res.tempFilePath)
       },
-      fail() {
-        rej()
+      fail(e) {
+        rej(e)
       }
     });
   })

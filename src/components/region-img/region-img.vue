@@ -2,21 +2,26 @@
   <image
     v-if="id"
     class="image"
-    :src="src"
+    lazy-load
+    :src="imgSrc"
     mode="scaleToFill"
-    @click="preview"
+    @click="previewImage"
   />
-  <text class="file-txt" @click="previewFile" v-else>{{ formatterFilename(fileName) }}</text>
+  <text class="file-txt" @click="previewFile" v-else>{{ fileName }}</text>
 </template>
 <script lang="ts" setup>
-import { downloadFile,loadFileBase64} from "@/api/img";
+import { downloadFile} from "@/api/img";
 import { getFileExt } from '@/utils'
+import { userStore } from "@/state";
 
-let src = ref("");
+const store = userStore();
+
 const props = withDefaults(defineProps<{
+  // 图片id
+  id?: string,
+  // 普通附件id
   fileId: string,
   fileName: string,
-  id?: string,
   disabledPreview?: boolean
 }>(),{
   disabledPreview: false
@@ -35,33 +40,33 @@ const formatterFilename = (fileName: string|undefined) => {
     return fileName;
   }
   return ''
-  
 }
+/**
+ *  https://aiot.citysafety.com/gasguard/gas-supervise/open/download/{fileId}
+ *  后端nginx转发,不再下载之后base64了;
+ *  这样的话可以支持 lazy-load
+ */
+const imgSrc = computed(() => {
+  if(props.id) {
+    return `https://aiot.citysafety.com/gasguard/gas-supervise/open/download/${props.id}?xapiregion=${store.auth.activeServer?.region}`
+  }
+  return '';
+});
 
-const preview = () => {
+/**
+ * 预览图片
+ */
+const previewImage = () => {
   if (props.disabledPreview) return;
   uni.previewImage({
-    urls: [src.value],
+    urls: [imgSrc.value],
   });
 };
-const getImgFn = async () => {
-  if(props.id) {
-    const base64 = await loadFileBase64(props.id)
-    src.value = `data:image/jpg;base64,${base64}`;
-  }
-};
-
-// doc, xls, ppt, pdf, docx, xlsx,pptx，
-const supportPreview = () => {
-  const supportList = ["doc", "xls", "ppt", "pdf", "docx", "xlsx", "pptx"];
-  const ext = getFileExt(props.fileName);
-  if(ext) {
-    return  supportList.includes(ext);
-  }
-  return false;
-}
 
 
+/**
+ * 预览文件
+ */
 const previewFile = async () => {
   if(!supportPreview()) {
     uni.showToast({
@@ -82,29 +87,30 @@ const previewFile = async () => {
           uni.hideLoading();
         },
         fail(err) {
-          uni.showModal({
-            title: err.errMsg,
-          });
+          uni.showModal({ title: err.errMsg});
           uni.hideLoading();
         },
       });
-    }).catch(() => {
+    }).catch((e) => {
+      console.log(e)
       uni.hideLoading();
+      uni.showModal({ title: JSON.stringify(e)});
     })
 
   }
 
 };
-watch(
-  () => props.id,
-  (newValue) => {
-    console.log("region-img newValue", newValue);
-    if (newValue && 'null' !== newValue) {
-      getImgFn();
-    }
-  },
-  { immediate: true }
-);
+
+// doc, xls, ppt, pdf, docx, xlsx,pptx，
+const supportPreview = () => {
+  const supportList = ["doc", "xls", "ppt", "pdf", "docx", "xlsx", "pptx"];
+  const ext = getFileExt(props.fileName);
+  if(ext) {
+    return  supportList.includes(ext);
+  }
+  return false;
+}
+
 </script>
 <style lang="scss" scoped>
 .image {
@@ -114,6 +120,12 @@ watch(
   margin-bottom: 20rpx;
 }
 .file-txt{
+  // 文本超出的时候换行
+  word-break: break-all;
+  white-space: normal;
+  line-height: 45rpx;
   color: $uni-color-primary;
+  // 每行的文字底部添加下划线
+  text-decoration: underline;
 }
 </style>
