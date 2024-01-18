@@ -1,4 +1,4 @@
-// 系统数据字典定义
+import type {BaseResponse} from './BaseModel'
 export interface DicItem {
   pid:         string;
   id:          string;
@@ -12,7 +12,7 @@ export interface DicItem {
   children?: DicItem[]
 }
 
-export type SysDictionaryResponse  = Record<string,DicItem[]>
+export type SysDictionaryResponse  = BaseResponse<Record<string,DicItem[]>>
 
 
 // 行政区划数据结构

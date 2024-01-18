@@ -37,6 +37,29 @@ export const getDictList = (dicType: string) => {
   },{isTransformResponse: false})
 }
 
+let taskId: number;
+let tempCache :any[] = [];
+/**
+ * 防抖函数,如果50ms内接收到了多个查询请求,则使用逗号拼接成一个,同时发送到服务器;
+ * thread safe on client
+ */
+const getDicListDebounce = async (dicType :string) =>{
+  return new Promise<SysDictionaryResponse>((resolve,rej) => {
+    if(taskId) {
+      clearTimeout(taskId);
+    }
+    resolve['__dicType'] = dicType
+    tempCache.push(resolve);
+    taskId = setTimeout(() => {
+
+      getDictList(tempCache.map(e => e['__dicType']).join(','))
+      .then(res => {
+        tempCache.forEach(r => r(res))
+      }).catch(rej).finally(() => tempCache = [])
+
+    }, 50);
+  })
+}
 
 export const  fetchDictionary = async (dicType: string): Promise<GasOption[]> => {
   // 组织机构下拉选
@@ -52,6 +75,6 @@ export const  fetchDictionary = async (dicType: string): Promise<GasOption[]> =>
       value: e.value
     }))
   }
-  const { data } = await getDictList(dicType);
+  const { data } = await getDicListDebounce(dicType);
   return data[dicType].map(o => ({text: o.label,value: o.value,label: o.label}));
 }

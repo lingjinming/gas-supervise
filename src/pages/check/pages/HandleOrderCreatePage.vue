@@ -193,7 +193,7 @@ const chooseUid = (item: HidangerOrgPageVO) => {
 };
 const navigatoSignature = (key) => {
   uni.navigateTo({
-    url: `/pages/signature/index?key=${key}`,
+    url: `/pages/check/pages/signature?key=${key}`,
     events: {
       onSignature: (result) => {
         data[key] = result.data.objectName;

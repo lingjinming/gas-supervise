@@ -45,7 +45,7 @@ const goDetail = () => {
   });
 }
 const getImg = (type: string|undefined) => {
-  return `/static/img/third_build_${type}.png`;
+  return `../static/third_build_${type}.png`;
 }
 const isOk = (value: string|undefined) => {
   return value&&'REPORTED,GUARDED,COMPLETED'.includes(value)

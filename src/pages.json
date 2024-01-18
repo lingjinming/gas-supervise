@@ -8,46 +8,15 @@
 	},
   "pages": [
     //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-
     {
+      "name": "Login",
       "path": "pages/login/index",
       "style": {
         "navigationStyle": "custom"
       }
     },
     {
-      "path": "pages/signature/index",
-      "style": {
-        "navigationBarTitleText": "签名",
-        "disableScroll": true,
-        "pageOrientation": "landscape"
-      }
-    },
-    {
-      "path": "pages/check/pages/CheckPlanDetailPage",
-      "style": {
-        "navigationBarTitleText": "企业合规性检查"
-      }
-    },
-    {
-      "path": "pages/check/pages/CheckPlanCreatePage",
-      "style": {
-        "navigationBarTitleText": "创建检查计划"
-      }
-    },
-    {
-      "path": "pages/check/pages/HandleOrderCreatePage",
-      "style": {
-        "navigationBarTitleText": "创建整改单"
-      }
-    },
-    {
-      "path": "pages/hidden/pages/HiddenDetailPage",
-      "style": {
-        "navigationBarTitleText": "隐患详情"
-      }
-    },
-    {
+      "name": "Home",
       "path": "pages/index/index",
       "style": {
         "navigationStyle": "custom",
@@ -55,89 +24,7 @@
       }
     },
     {
-      "path": "pages/hidden/pages/HiddenReformPage",
-      "style": {
-        "navigationBarTitleText": "整改跟进"
-      }
-    },
-    {
-      "path": "pages/hidden/pages/HiddenReportPage",
-      "style": {
-        "navigationBarTitleText": "隐患上报"
-      }
-    },
-    {
-      "path": "pages/hidden/index",
-      "style": {
-        "navigationBarTitleText": "隐患管理",
-        "disableScroll": true
-      }
-    },
-    {
-      "path": "pages/thirdBuild/index",
-      "style": {
-        "navigationBarTitleText": "第三方施工管理",
-        "disableScroll": true
-        
-      }
-    },
-    {
-      "path": "pages/accident/index",
-      "style": {
-        "navigationBarTitleText": "事故事件管理",
-        "disableScroll": true
-      }
-    },
-    {
-      "path": "pages/accident/pages/AccidentDetailPage",
-      "style": {
-        "navigationBarTitleText": "事故事件详情",
-        "disableScroll": true
-      }
-    },
-    {
-      "path": "pages/accident/pages/AccidentEditPage",
-      "style": {
-        "navigationBarTitleText": "事故事件上报",
-        "disableScroll": true
-      }
-    },
-    {
-      "path": "pages/accident/pages/AccidentUploadPage",
-      "style": {
-        "navigationBarTitleText": "上传报告",
-        "disableScroll": true
-      }
-    },
-    {
-      "path": "pages/thirdBuild/pages/thirdBuildDetailPage",
-      "style": {
-        "navigationBarTitleText": "第三方施工详情",
-        "disableScroll": true
-      }
-    },
-    {
-      "path": "pages/thirdBuild/pages/thirdBuildFormPage",
-      "style": {
-        "navigationBarTitleText": "第三方施工上报",
-        "disableScroll": true
-      }
-    },
-    {
-      "path": "pages/thirdBuild/pages/thirdBuildReportFormPage",
-      "style": {
-        "navigationBarTitleText": "交底上报",
-        "disableScroll": true
-      }
-    },
-    {
-      "path": "pages/thirdBuild/pages/thirdBuildGuardFormPage",
-      "style": {
-        "navigationBarTitleText": "上报看护记录",
-        "disableScroll": true
-      }
-    },
-    {
+      "name": "Notice",
       "path": "pages/notice/index",
       "style": {
         "navigationBarTitleText": "消息提醒",
@@ -145,13 +32,7 @@
       }
     },
     {
-      "path": "pages/check/index",
-      "style": {
-        "navigationBarTitleText": "检查计划管理",
-        "enablePullDownRefresh": true
-      }
-    },
-    {
+      "name": "UserProfile",
       "path": "pages/user/index",
       "style": {
         "navigationStyle": "custom",
@@ -159,6 +40,182 @@
       }
     }
   ],
+  "subPackages":[
+    // 事故事件管理
+    {
+      "root": "pages/accident",
+      "pages": [
+        {
+          "name":"AccidentListPage",
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "事故事件管理",
+            "disableScroll": true
+          }
+        },
+        {
+          "name": "AccidentDetailPage",
+          "path": "pages/AccidentDetailPage",
+          "style": {
+            "navigationBarTitleText": "事故事件详情",
+            "disableScroll": true
+          }
+        },
+        {
+          "name": "AccidentEditPage",
+          "path": "pages/AccidentEditPage",
+          "style": {
+            "navigationBarTitleText": "事故事件上报",
+            "disableScroll": true
+          }
+        },
+        {
+          "name": "AccidentUploadPage",
+          "path": "pages/AccidentUploadPage",
+          "style": {
+            "navigationBarTitleText": "上传报告",
+            "disableScroll": true
+          }
+        }
+      ]
+    },
+    // 第三方施工管理
+    {
+      "root": "pages/thirdBuild",
+      "pages": [
+        {
+          "name": "ThirdBuildListPage",
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "第三方施工管理",
+            "disableScroll": true
+          }
+        },
+        {
+          "name": "ThirdBuildDetailPage",
+          "path": "pages/thirdBuildDetailPage",
+          "style": {
+            "navigationBarTitleText": "第三方施工详情",
+            "disableScroll": true
+          }
+        },
+        {
+          "name": "ThirdBuildFormPage",
+          "path": "pages/thirdBuildFormPage",
+          "style": {
+            "navigationBarTitleText": "第三方施工上报",
+            "disableScroll": true
+          }
+        },
+        {
+          "name": "ThirdBuildReportFormPage",
+          "path": "pages/thirdBuildReportFormPage",
+          "style": {
+            "navigationBarTitleText": "交底上报",
+            "disableScroll": true
+          }
+        },
+        {
+          "name": "ThirdBuildGuardFormPage",
+          "path": "pages/thirdBuildGuardFormPage",
+          "style": {
+            "navigationBarTitleText": "上报看护记录",
+            "disableScroll": true
+          }
+        }
+      ]
+    },
+    // 检查计划管理
+    {
+      "root": "pages/check",
+      "pages": [
+        {
+          "name": "CheckPlanListPage",
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "检查计划管理",
+            "enablePullDownRefresh": true
+          }
+        },
+        {
+          "name": "CheckPlanDetailPage",
+          "path": "pages/CheckPlanDetailPage",
+          "style": {
+            "navigationBarTitleText": "企业合规性检查"
+          }
+        },
+        {
+          "name": "CheckPlanCreatePage",
+          "path": "pages/CheckPlanCreatePage",
+          "style": {
+            "navigationBarTitleText": "创建检查计划"
+          }
+        },
+        {
+          "name": "CheckPlanEditPage",
+          "path": "pages/HandleOrderCreatePage",
+          "style": {
+            "navigationBarTitleText": "创建整改单",
+            "componentPlaceholder": {
+              "hidden-page-item": "view"
+            }
+          }
+        },
+        {
+          "name": "Signature",
+          "path": "pages/signature",
+          "style": {
+            "navigationBarTitleText": "签名",
+            "disableScroll": true,
+            "pageOrientation": "landscape"
+          }
+        }
+      ]
+    },
+    // 隐患管理
+    {
+      "root": "pages/hidden",
+      "pages": [
+        {
+          "name": "HiddenListPage",
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "隐患管理",
+            "disableScroll": true
+          }
+        },
+        {
+          "name": "HiddenDetailPage",
+          "path": "pages/HiddenDetailPage",
+          "style": {
+            "navigationBarTitleText": "隐患详情"
+          }
+        },
+        {
+          "name": "HiddenReformPage",
+          "path": "pages/HiddenReformPage",
+          "style": {
+            "navigationBarTitleText": "整改跟进"
+          }
+        },
+        {
+          "name": "HiddenReportPage",
+          "path": "pages/HiddenReportPage",
+          "style": {
+            "navigationBarTitleText": "隐患上报"
+          }
+        }
+      ]
+    }
+  ],
+  "preloadRule": {
+    "pages/check/index": {
+      "network": "all",
+      "packages": [
+        "pages/hidden"
+      ]
+    }
+  },
   "tabBar": {
     "list": [
       {

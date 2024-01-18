@@ -2,7 +2,7 @@
   <view class="top-info">
     <!-- 第一行时间 -->
     <view class="info-line">
-      <image class="image-bg" src="/static/img/third_build_time.png"/>
+      <image class="image-bg" src="/pages/thirdBuild/static/third_build_time.png"/>
       <view class="info-time">
         <view class="time-item">
           <view class="title">

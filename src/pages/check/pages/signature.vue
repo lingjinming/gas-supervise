@@ -89,6 +89,8 @@ const draw = () => {
   canvasCtx.draw(true);
   hasSign.value = true;
 };
+
+
 const autographClick = (type) => {
   // 底部按钮点击操作
   if (type === 1) {
