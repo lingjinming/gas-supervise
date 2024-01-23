@@ -77,7 +77,9 @@ const changeStep = (setp: number) => {
 
 // 选择检查对象
 const goSelectTarget = () => {
-
+  uni.navigateTo({
+    url: `/pages/safeCheck/pages/SelectTargetPage`,
+  });
 }
 // 选择检查主题
 const goSelectTopic = () => {

@@ -239,6 +239,20 @@
           "style": {
             "navigationBarTitleText": "新增检查"
           }
+        },
+        {
+          "name": "SafeCheckSelectTargetPage",
+          "path": "pages/SelectTargetPage",
+          "style": {
+            "navigationBarTitleText": "新增检查"
+          }
+        },
+        {
+          "name": "SafeCheckSelectTopicPage",
+          "path": "pages/SelectTopicPage",
+          "style": {
+            "navigationBarTitleText": "新增检查"
+          }
         }
       ]
     }

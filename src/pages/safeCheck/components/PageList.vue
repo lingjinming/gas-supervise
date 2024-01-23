@@ -131,7 +131,7 @@ const goCreateSafeCheck = () => {
   });
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
   .page-warpper{
     margin: 0 30rpx;
     .keyword {
