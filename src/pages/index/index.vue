@@ -60,43 +60,54 @@ onPullDownRefresh(() => getNoticeFn());
 uni.hideTabBar();
 
 const menus = [
-  // {
-  //   name: "政府界面",
-  //   image: "/static/img/icon_zfjm.png"
-  // },
+  {
+    name: "日常检查",
+    url: "/pages/safeCheck/index?type=DAILY",
+    image: "/static/icon/icon_safe_check_daily.png",
+  },
+  {
+    name: "专项检查",
+    url: "/pages/safeCheck/index?type=SPECIAL",
+    image: "/static/icon/icon_safe_check_spec.png",
+  },
+  {
+    name: "三方安全评价",
+    url: "/pages/safeCheck/index?type=THIRD",
+    image: "/static/icon/icon_safe_check_third.png",
+  },
+  {
+    name: "事故事件",
+    url: "/pages/accident/index",
+    image: "/static/icon/icon_accident.png",
+  },
   {
     name: "隐患管理",
     url: "/pages/hidden/index",
-    image: "/static/img/icon_yhgl.png",
+    image: "/static/icon/icon_hidanger.png",
   },
   {
-    name: "检查计划管理",
+    name: "检查计划",
     url: "/pages/check/index",
     image: "/static/img/icon_jcjhgl.png",
   },
   {
-    name: "第三方施工管理",
+    name: "第三方施工",
     url: "/pages/thirdBuild/index",
-    image: "/static/img/icon_dsfsg.png",
+    image: "/static/icon/icon_thrid_build.png",
   },
-  {
-    name: "风险管理",
-    image: "/static/img/icon_fxgl.png",
-  },
-  {
-    name: "报警管理",
-    image: "/static/img/icon_bjgl.png",
-  },
-  {
-    name: "事故事件管理",
-    url: "/pages/accident/index",
-    image: "/static/img/icon_sgsjgl.png",
-  },
-
-  {
-    name: "更多分类",
-    image: "/static/img/icon_gdfl.png",
-  },
+  // {
+  //   name: "风险管理",
+  //   image: "/static/img/icon_fxgl.png",
+  // },
+  // {
+  //   name: "报警管理",
+  //   image: "/static/img/icon_bjgl.png",
+  // },
+  
+  // {
+  //   name: "更多分类",
+  //   image: "/static/img/icon_gdfl.png",
+  // },
 ];
 const navigato = (url) => {
   if (!url) {

@@ -18,11 +18,14 @@ import type {
   AddAccidentQuery,
   AddBaseDataRequest,
   AddBulletinQuery,
+  AddCoordinateMatterQuery,
   AddEmresDrillRequest,
   AddEmresPlanRequest,
   AddGasUserQuery,
   AddOldPipeBuildQuery,
   AddPerQualificationsQuery,
+  AddSuperviseMatterQuery,
+  AddSuperviseRisk,
   AlarmPageRequest,
   AnalysBaseMnCaseDTO,
   AnalysBaseMnKnowledgeDTO,
@@ -36,6 +39,8 @@ import type {
   CifrsPipeMnPipelinePageQuery,
   CifrsPipeMnPipepointPageQuery,
   ConferenceCreateRequest,
+  CoordinateMatterFeedbackQuery,
+  CoordinateMatterQuery,
   DataMessage,
   DeviceMapRequest,
   DeviceRequest,
@@ -54,7 +59,7 @@ import type {
   EnterpriseBatchImportDTO,
   EnterpriseCreateDTO,
   EnterpriseInfoPageQuery,
-  EnterpriseScoringPostDTO,
+  EstimateSuperviseRisk,
   GasStationImportDTO,
   GasStationQuery,
   GasSupplyDTO,
@@ -79,7 +84,6 @@ import type {
   HidangerOrgPageQuery,
   HiDangerSendHandleOrderDTO,
   HidangerStatementDTO,
-  HidangerStateQuery,
   IDsRequestDTO,
   ImportGasUserQuery,
   ImportPerQualificationsQuery,
@@ -123,12 +127,15 @@ import type {
   PageResultListHidangerFactorsPageVO,
   PageResultListHidangerFactorsSummaryPageVO,
   PageResultListHidangerOrgPageVO,
-  PageResultListHidangerStatePageDTO,
   PageResultListLinePatrolPageVO,
   PageResultListMessageContent,
   PageResultListMonitorPageVO,
   PageResultListOldPipeBuildVO,
   PageResultListPerCertificatePageVO,
+  PageResultListSafeCheckTargetDTO,
+  PageResultListSafeCheckTaskPageVO,
+  PageResultListSafeCheckTopicPageVO,
+  PageResultListScoringPageVO,
   PageResultListSecCheckThreeYearsUnCheckPageDTO,
   PageResultListSecurityCheckPageVO,
   PageResultListSecurityCheckRecPageVO,
@@ -143,6 +150,7 @@ import type {
   PerimeterSearchRequest,
   ProjectRiskDangerRequest,
   ResultAccessDataVO,
+  ResultAccidentStatisticsVO,
   ResultAccidentSummaryVO,
   ResultAccidentVO,
   ResultAlarmCountTrendVO,
@@ -164,15 +172,10 @@ import type {
   ResultBasicScreenUserCountVO,
   ResultBoolean,
   ResultBottleInfoVO,
-  ResultBsEnterpriseSafeCheckVO,
-  ResultBsGovCheckPlanSummaryVO,
   ResultBsHidangerHandleSummaryVO,
-  ResultBsHidangerSubjectSummaryVO,
   ResultBsOldPipeConfigDTO,
   ResultBsPipeGasCheckSummaryVO,
   ResultBsPipeGasHidangerSummaryVO,
-  ResultBsSafeCheckVO,
-  ResultBsThirdCheckSummaryVO,
   ResultBulletinCountVO,
   ResultBulletinDetailVO,
   ResultCheckPlanEndUserSummaryVO,
@@ -186,6 +189,7 @@ import type {
   ResultComSupLgEnterpriseVO,
   ResultComSupSafeCheckVO,
   ResultComSupSubjectTypeVO,
+  ResultCoordinateMatterFeedbackVO,
   ResultCreateConferenceDTO,
   ResultDangerDetailVO,
   ResultDetailGasUserVO,
@@ -218,7 +222,6 @@ import type {
   ResultHiDangerCheckPlanSummaryVO,
   ResultHidangerFactorsSummaryVO,
   ResultHidangerImportVO,
-  ResultHidangerStateDTO,
   ResultHidangerUrgePreviewVO,
   ResultHidnagerFlowVO,
   ResultHomePageWarnSummaryVO,
@@ -236,14 +239,15 @@ import type {
   ResultListBsHidangerCountDTO,
   ResultListBsHidangerCountItemDTO,
   ResultListBsHidangerHandleItemDTO,
-  ResultListBsPipelineDangerTypesDTO,
   ResultListCheckPlanRelDangerVO,
+  ResultListCheckTaskCountVO,
   ResultListCifrsPipeMnPipecodeDTO,
   ResultListCifrsPipeMnPipelineVO,
   ResultListCifrsPipeMnPipepointPageVO,
   ResultListCifrsPipeSectionVO,
   ResultListComSupLgEnterpriseDTO,
   ResultListCoordinate,
+  ResultListCoordinateMatterVO,
   ResultListDataOverviewVO,
   ResultListDeviceStateSummaryVO,
   ResultListDictionaryItem,
@@ -259,7 +263,6 @@ import type {
   ResultListEmresMnRetmanExportVO,
   ResultListEmresMnWhouseDownVO,
   ResultListEnterpriseMapInfoVO,
-  ResultListEnterpriseScoringItemDTO,
   ResultListHiDangerCheckPlanSelectionsDTO,
   ResultListHidangerDictionaryVO,
   ResultListHidangerGisVO,
@@ -273,6 +276,7 @@ import type {
   ResultListMapObjectObject,
   ResultListMapStringString,
   ResultListMenuVO,
+  ResultListMinioResp,
   ResultListMonitorDeviceSumVO,
   ResultListMonitorSummaryVO,
   ResultListObject,
@@ -282,8 +286,14 @@ import type {
   ResultListProjectRiskDangerVO,
   ResultListRiskExportVO,
   ResultListRiskStatisticsVO,
+  ResultListScoringAreaRankVO,
+  ResultListScoringEnterpriseRankVO,
+  ResultListScoringPageVO,
   ResultListScreenGasDataMapVO,
   ResultListStationMapInfoVO,
+  ResultListSuperviseMatterVO,
+  ResultListSuperviseRiskEstimateRecordVO,
+  ResultListSuperviseRiskPageVO,
   ResultListTreeVo,
   ResultListUserInfoVO,
   ResultListVehicleMapInfoVO,
@@ -295,6 +305,7 @@ import type {
   ResultLngDeviceStatDTO,
   ResultLngFlowAlarmStatVO,
   ResultLngFlowStatVO,
+  ResultMapIntegerListCheckTaskCountVO,
   ResultMapStringListDictionaryItem,
   ResultMapStringListListMapStringString,
   ResultMapStringListMessageContent,
@@ -319,6 +330,12 @@ import type {
   ResultQualificationsErrorVO,
   ResultRiskDangerStatisticsOfWordVO,
   ResultRiskFactorDetailVO,
+  ResultSafeCheckTaskDetailVO,
+  ResultSafeCheckTopicDetailVO,
+  ResultScoringBadCntVO,
+  ResultScoringDeductionStatVO,
+  ResultScoringDetailVO,
+  ResultScoringIndustryStatVO,
   ResultScreenAlarmSummaryVO,
   ResultScreenDeviceOnlineSummaryVO,
   ResultScreenDeviceSummaryVO,
@@ -349,6 +366,13 @@ import type {
   RiskComputedCallbackDTO,
   RiskIdsReqDTO,
   RiskStatisticsQuery,
+  SafeCheckCopyDTO,
+  SafeCheckItemCreateDTO,
+  SafeCheckTaskCreateDTO,
+  SafeCheckTaskPageQuery,
+  SafeCheckTopicCreateDTO,
+  SafeCheckTopicPageQuery,
+  ScoringPageQuery,
   SecCheckImportDTO,
   SecurityCheckDTO,
   SecurityCheckQuery,
@@ -356,6 +380,8 @@ import type {
   StatisticalRequest,
   SuperviseActivitiesCreateDTO,
   SuperviseDeptUserPageQuery,
+  SuperviseMatterQuery,
+  SuperviseRiskQuery,
   SysNotifyRuleDTO,
   SysNotifyTemplateDTO,
   SysNotifyTemplatePageQuery,
@@ -371,6 +397,8 @@ import type {
   UpdateGasUserQuery,
   UpdateOldPipeBuildQuery,
   UpdatePerQualificationsQuery,
+  UpdateSuperviseMatterQuery,
+  UpdateSuperviseRisk,
   VehiclePageQuery,
   WarnPageRequest,
 } from "./data-contracts";
@@ -419,7 +447,7 @@ export const putVehicleById = (id: number, data: Type车辆信息, params: PerRe
  * @request DELETE:/vehicle/{id}
  * @response `200` `ResultVoid` OK
  */
-export const deleteVehicleById = (id: number, params: PerRequestOptions = {}) => {
+export const deleteVehicleById = (id: string, params: PerRequestOptions = {}) => {
   return defHttp.delete<ResultVoid>(
     {
       url: `gas-supervise/vehicle/${id}`,
@@ -471,7 +499,7 @@ export const putVehicleEmerById = (id: number, data: EmerVehicleInfoDTO, params:
  * @request DELETE:/vehicle/emer/{id}
  * @response `200` `ResultVoid` OK
  */
-export const deleteVehicleEmerById = (id: number, params: PerRequestOptions = {}) => {
+export const deleteVehicleEmerById = (id: string, params: PerRequestOptions = {}) => {
   return defHttp.delete<ResultVoid>(
     {
       url: `gas-supervise/vehicle/emer/${id}`,
@@ -577,6 +605,85 @@ export const putSysNotifyRuleByUid = (uid: number, data: SysNotifyRuleDTO, param
   return defHttp.put<ResultVoid>(
     {
       url: `gas-supervise/sys/notify/rule/${uid}`,
+      data: data,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * @description 获取安全检查主题详情,包含检查项目
+ *
+ * @tags 安全检查
+ * @name GetSafeCheckTopicByUid
+ * @summary 获取安全检查主题详情
+ * @request GET:/safe-check/topic/{uid}
+ * @response `200` `ResultSafeCheckTopicDetailVO` OK
+ */
+export const getSafeCheckTopicByUid = (uid: number, params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultSafeCheckTopicDetailVO>(
+    {
+      url: `gas-supervise/safe-check/topic/${uid}`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * @description 根据主题的uid,更新检查主题,不可更新内置
+ *
+ * @tags 安全检查
+ * @name PutSafeCheckTopicByUid
+ * @summary 更新安全检查主题
+ * @request PUT:/safe-check/topic/{uid}
+ * @response `200` `ResultVoid` OK
+ */
+export const putSafeCheckTopicByUid = (uid: number, data: SafeCheckTopicCreateDTO, params: PerRequestOptions = {}) => {
+  return defHttp.put<ResultVoid>(
+    {
+      url: `gas-supervise/safe-check/topic/${uid}`,
+      data: data,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * @description 根据检查项uid,更新主题下的安全检查项目
+ *
+ * @tags 安全检查
+ * @name PutSafeCheckTopicItemByTid
+ * @summary 更新安全检查-检查项目
+ * @request PUT:/safe-check/topic/{tid}/item
+ * @response `200` `ResultVoid` OK
+ */
+export const putSafeCheckTopicItemByTid = (
+  tid: number,
+  data: SafeCheckItemCreateDTO,
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.put<ResultVoid>(
+    {
+      url: `gas-supervise/safe-check/topic/${tid}/item`,
+      data: data,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * @description 根据主题的uid,创建主题下的安全检查项目,成功后返回详情
+ *
+ * @tags 安全检查
+ * @name PostSafeCheckTopicItemByTid
+ * @summary 创建安全检查-检查项目
+ * @request POST:/safe-check/topic/{tid}/item
+ * @response `200` `ResultVoid` OK
+ */
+export const postSafeCheckTopicItemByTid = (
+  tid: number,
+  data: SafeCheckItemCreateDTO,
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.post<ResultVoid>(
+    {
+      url: `gas-supervise/safe-check/topic/${tid}/item`,
       data: data,
     },
     { ...params, isTransformResponse: false },
@@ -1077,6 +1184,150 @@ export const postSuperviseWarnCreateConference = (data: ConferenceCreateRequest,
   return defHttp.post<ResultCreateConferenceDTO>(
     {
       url: `gas-supervise/supervise/warn/create/conference`,
+      data: data,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 企业风险更新 企业风险更新
+ *
+ * @tags 企业风险更新, 企业风险上报控制层
+ * @name PostSuperviseRiskUpdate
+ * @summary 企业风险更新
+ * @request POST:/supervise/risk/update
+ * @response `200` `ResultVoid` OK
+ */
+export const postSuperviseRiskUpdate = (data: UpdateSuperviseRisk, params: PerRequestOptions = {}) => {
+  return defHttp.post<ResultVoid>(
+    {
+      url: `gas-supervise/supervise/risk/update`,
+      data: data,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 企业风险评估 企业风险评估
+ *
+ * @tags 企业风险评估, 企业风险上报控制层
+ * @name PostSuperviseRiskEstimate
+ * @summary 企业风险评估
+ * @request POST:/supervise/risk/estimate
+ * @response `200` `ResultVoid` OK
+ */
+export const postSuperviseRiskEstimate = (data: EstimateSuperviseRisk, params: PerRequestOptions = {}) => {
+  return defHttp.post<ResultVoid>(
+    {
+      url: `gas-supervise/supervise/risk/estimate`,
+      data: data,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 新增企业风险 新增企业风险
+ *
+ * @tags 新增企业风险, 企业风险上报控制层
+ * @name PostSuperviseRiskAdd
+ * @summary 新增企业风险
+ * @request POST:/supervise/risk/add
+ * @response `200` `ResultVoid` OK
+ */
+export const postSuperviseRiskAdd = (data: AddSuperviseRisk, params: PerRequestOptions = {}) => {
+  return defHttp.post<ResultVoid>(
+    {
+      url: `gas-supervise/supervise/risk/add`,
+      data: data,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 更新重点督办 更新重点督办
+ *
+ * @tags 更新重点督办, 重点督办接口
+ * @name PostSuperviseMatterUpdate
+ * @summary 更新重点督办
+ * @request POST:/supervise/matter/update
+ * @response `200` `ResultVoid` OK
+ */
+export const postSuperviseMatterUpdate = (data: UpdateSuperviseMatterQuery, params: PerRequestOptions = {}) => {
+  return defHttp.post<ResultVoid>(
+    {
+      url: `gas-supervise/supervise/matter/update`,
+      data: data,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 重点督办接口 新增重点督办事件
+ *
+ * @tags 重点督办接口, 新增重点督办事件
+ * @name PostSuperviseMatterAdd
+ * @summary 新增重点督办事件
+ * @request POST:/supervise/matter/add
+ * @response `200` `ResultVoid` OK
+ */
+export const postSuperviseMatterAdd = (data: AddSuperviseMatterQuery, params: PerRequestOptions = {}) => {
+  return defHttp.post<ResultVoid>(
+    {
+      url: `gas-supervise/supervise/matter/add`,
+      data: data,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 安全检查 创建安全检查主题
+ *
+ * @tags 安全检查
+ * @name PostSafeCheckTopic
+ * @summary 创建安全检查主题
+ * @request POST:/safe-check/topic
+ * @response `200` `ResultVoid` OK
+ */
+export const postSafeCheckTopic = (data: SafeCheckTopicCreateDTO, params: PerRequestOptions = {}) => {
+  return defHttp.post<ResultVoid>(
+    {
+      url: `gas-supervise/safe-check/topic`,
+      data: data,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * @description 复制内置安全检查主题检查项到指定检查主题下,成功后返回该主题详情
+ *
+ * @tags 安全检查
+ * @name PostSafeCheckTopicCopyTopic
+ * @summary 复制安全检查主题
+ * @request POST:/safe-check/topic/copy-topic
+ * @response `200` `ResultSafeCheckTopicDetailVO` OK
+ */
+export const postSafeCheckTopicCopyTopic = (data: SafeCheckCopyDTO, params: PerRequestOptions = {}) => {
+  return defHttp.post<ResultSafeCheckTopicDetailVO>(
+    {
+      url: `gas-supervise/safe-check/topic/copy-topic`,
+      data: data,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 安全检查 创建安全检查
+ *
+ * @tags 安全检查
+ * @name PostSafeCheckTask
+ * @summary 创建安全检查
+ * @request POST:/safe-check/task
+ * @response `200` `ResultVoid` OK
+ */
+export const postSafeCheckTask = (data: SafeCheckTaskCreateDTO, params: PerRequestOptions = {}) => {
+  return defHttp.post<ResultVoid>(
+    {
+      url: `gas-supervise/safe-check/task`,
       data: data,
     },
     { ...params, isTransformResponse: false },
@@ -1874,24 +2125,6 @@ export const postFileUpload = (
   );
 };
 /**
- * 大屏-安全监管 考核评价-打分
- *
- * @tags 大屏-安全监管
- * @name PostEnterpriseScoring
- * @summary 考核评价-打分
- * @request POST:/enterprise/scoring
- * @response `200` `ResultVoid` OK
- */
-export const postEnterpriseScoring = (data: EnterpriseScoringPostDTO, params: PerRequestOptions = {}) => {
-  return defHttp.post<ResultVoid>(
-    {
-      url: `gas-supervise/enterprise/scoring`,
-      data: data,
-    },
-    { ...params, isTransformResponse: false },
-  );
-};
-/**
  * 企业巡线管理 创建企业巡线计划
  *
  * @tags 企业巡线管理
@@ -1990,6 +2223,45 @@ export const postEnterpriseInfoImport = (data: EnterpriseBatchImportDTO, params:
   return defHttp.post<ResultVoid>(
     {
       url: `gas-supervise/enterprise/info/import`,
+      data: data,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 企业协调事件反馈 企业协调事件反馈
+ *
+ * @tags 企业协调事件反馈, 企业协调事件接口
+ * @name PostEnterpriseCoordinateFeedback
+ * @summary 企业协调事件反馈
+ * @request POST:/enterprise/coordinate/feedback
+ * @response `200` `ResultVoid` OK
+ */
+export const postEnterpriseCoordinateFeedback = (
+  data: CoordinateMatterFeedbackQuery,
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.post<ResultVoid>(
+    {
+      url: `gas-supervise/enterprise/coordinate/feedback`,
+      data: data,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 新增企业协调事件 新增企业协调事件
+ *
+ * @tags 新增企业协调事件, 企业协调事件接口
+ * @name PostEnterpriseCoordinateAdd
+ * @summary 新增企业协调事件
+ * @request POST:/enterprise/coordinate/add
+ * @response `200` `ResultVoid` OK
+ */
+export const postEnterpriseCoordinateAdd = (data: AddCoordinateMatterQuery, params: PerRequestOptions = {}) => {
+  return defHttp.post<ResultVoid>(
+    {
+      url: `gas-supervise/enterprise/coordinate/add`,
       data: data,
     },
     { ...params, isTransformResponse: false },
@@ -4514,6 +4786,47 @@ export const getSuperviseScreenAlarmSummary = (
   );
 };
 /**
+ * 企业风险列表查询 企业风险列表查询
+ *
+ * @tags 企业风险列表查询, 企业风险上报控制层
+ * @name GetSuperviseRiskList
+ * @summary 企业风险列表查询
+ * @request GET:/supervise/risk/list
+ * @response `200` `ResultListSuperviseRiskPageVO` OK
+ */
+export const getSuperviseRiskList = (
+  query: {
+    /** 企业风险VO */
+    query: SuperviseRiskQuery;
+  },
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.get<ResultListSuperviseRiskPageVO>(
+    {
+      url: `gas-supervise/supervise/risk/list`,
+      data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 企业风险评估记录 企业风险评估记录
+ *
+ * @tags 企业风险评估记录, 企业风险上报控制层
+ * @name GetSuperviseRiskEstimateById
+ * @summary 企业风险评估记录
+ * @request GET:/supervise/risk/estimate/{id}
+ * @response `200` `ResultListSuperviseRiskEstimateRecordVO` OK
+ */
+export const getSuperviseRiskEstimateById = (id: string, params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultListSuperviseRiskEstimateRecordVO>(
+    {
+      url: `gas-supervise/supervise/risk/estimate/${id}`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
  * 监管端报警管理接口 实时监测列表
  *
  * @tags 监管端报警管理接口, 实时监测列表
@@ -4697,6 +5010,47 @@ export const getSuperviseMonitorCurve = (
     {
       url: `gas-supervise/supervise/monitor/curve`,
       data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 重点督办列表查询 重点督办列表查询
+ *
+ * @tags 重点督办列表查询, 重点督办接口
+ * @name GetSuperviseMatterList
+ * @summary 重点督办列表查询
+ * @request GET:/supervise/matter/list
+ * @response `200` `ResultListSuperviseMatterVO` OK
+ */
+export const getSuperviseMatterList = (
+  query: {
+    /** 重点督办事项查询 */
+    query: SuperviseMatterQuery;
+  },
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.get<ResultListSuperviseMatterVO>(
+    {
+      url: `gas-supervise/supervise/matter/list`,
+      data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 获取所有政府类组织机构 获取所有政府类组织机构
+ *
+ * @tags 获取所有政府类组织机构, 重点督办接口
+ * @name GetSuperviseMatterGetGovTree
+ * @summary 获取所有政府类组织机构
+ * @request GET:/supervise/matter/get/gov/tree
+ * @response `200` `ResultListOrganizationVO` OK
+ */
+export const getSuperviseMatterGetGovTree = (params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultListOrganizationVO>(
+    {
+      url: `gas-supervise/supervise/matter/get/gov/tree`,
     },
     { ...params, isTransformResponse: false },
   );
@@ -4914,6 +5268,212 @@ export const getSuperviseAlarmDisposeByAlarmId = (alarmId: string, params: PerRe
   return defHttp.get<ResultListDisposeTraceVO>(
     {
       url: `gas-supervise/supervise/alarm/dispose/${alarmId}`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 安全检查执行分析控制层 检查企业类型
+ *
+ * @tags 安全检查执行分析控制层, 检查企业类型
+ * @name GetSafeCheckStatisticsType
+ * @summary 检查企业类型
+ * @request GET:/safe/check/statistics/type
+ * @response `200` `ResultMapIntegerListCheckTaskCountVO` OK
+ */
+export const getSafeCheckStatisticsType = (
+  query: {
+    /** 监管统计请求 */
+    query: StatisticalRequest;
+  },
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.get<ResultMapIntegerListCheckTaskCountVO>(
+    {
+      url: `gas-supervise/safe/check/statistics/type`,
+      data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 检查不合格企业占比 检查不合格企业占比
+ *
+ * @tags 检查不合格企业占比, 安全检查执行分析控制层
+ * @name GetSafeCheckStatisticsNoPass
+ * @summary 检查不合格企业占比
+ * @request GET:/safe/check/statistics/no/pass
+ * @response `200` `ResultMapIntegerListCheckTaskCountVO` OK
+ */
+export const getSafeCheckStatisticsNoPass = (
+  query: {
+    /** 监管统计请求 */
+    query: StatisticalRequest;
+  },
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.get<ResultMapIntegerListCheckTaskCountVO>(
+    {
+      url: `gas-supervise/safe/check/statistics/no/pass`,
+      data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 安全检查执行分析控制层 查处隐患类型
+ *
+ * @tags 安全检查执行分析控制层, 查处隐患类型
+ * @name GetSafeCheckStatisticsDangerType
+ * @summary 查处隐患类型
+ * @request GET:/safe/check/statistics/danger/type
+ * @response `200` `ResultMapIntegerListCheckTaskCountVO` OK
+ */
+export const getSafeCheckStatisticsDangerType = (
+  query: {
+    /** 监管统计请求 */
+    query: StatisticalRequest;
+  },
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.get<ResultMapIntegerListCheckTaskCountVO>(
+    {
+      url: `gas-supervise/safe/check/statistics/danger/type`,
+      data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 安全检查统计-安全检查任务 安全检查统计-安全检查任务
+ *
+ * @tags 安全检查统计-安全检查任务, 安全检查执行分析控制层
+ * @name GetSafeCheckStatisticsCnt
+ * @summary 安全检查统计-安全检查任务
+ * @request GET:/safe/check/statistics/cnt
+ * @response `200` `ResultListCheckTaskCountVO` OK
+ */
+export const getSafeCheckStatisticsCnt = (
+  query: {
+    /** 监管统计请求 */
+    query: StatisticalRequest;
+  },
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.get<ResultListCheckTaskCountVO>(
+    {
+      url: `gas-supervise/safe/check/statistics/cnt`,
+      data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 安全检查统计-各区域检查次数 安全检查统计-各区域检查次数
+ *
+ * @tags 安全检查统计-各区域检查次数, 安全检查执行分析控制层
+ * @name GetSafeCheckStatisticsArea
+ * @summary 安全检查统计-各区域检查次数
+ * @request GET:/safe/check/statistics/area
+ * @response `200` `ResultListCheckTaskCountVO` OK
+ */
+export const getSafeCheckStatisticsArea = (
+  query: {
+    /** 监管统计请求 */
+    query: StatisticalRequest;
+  },
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.get<ResultListCheckTaskCountVO>(
+    {
+      url: `gas-supervise/safe/check/statistics/area`,
+      data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 安全检查 检查主题管理分页
+ *
+ * @tags 安全检查
+ * @name GetSafeCheckTopicPage
+ * @summary 检查主题管理分页
+ * @request GET:/safe-check/topic/page
+ * @response `200` `PageResultListSafeCheckTopicPageVO` OK
+ */
+export const getSafeCheckTopicPage = (
+  query: {
+    query: SafeCheckTopicPageQuery;
+  },
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.get<PageResultListSafeCheckTopicPageVO>(
+    {
+      url: `gas-supervise/safe-check/topic/page`,
+      data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 安全检查 安全检查记录详情
+ *
+ * @tags 安全检查
+ * @name GetSafeCheckTaskByUid
+ * @summary 安全检查记录详情
+ * @request GET:/safe-check/task/{uid}
+ * @response `200` `ResultSafeCheckTaskDetailVO` OK
+ */
+export const getSafeCheckTaskByUid = (uid: number, params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultSafeCheckTaskDetailVO>(
+    {
+      url: `gas-supervise/safe-check/task/${uid}`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 安全检查 检查记录分页
+ *
+ * @tags 安全检查
+ * @name GetSafeCheckTaskPage
+ * @summary 检查记录分页
+ * @request GET:/safe-check/task/page
+ * @response `200` `PageResultListSafeCheckTaskPageVO` OK
+ */
+export const getSafeCheckTaskPage = (
+  query: {
+    query: SafeCheckTaskPageQuery;
+  },
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.get<PageResultListSafeCheckTaskPageVO>(
+    {
+      url: `gas-supervise/safe-check/task/page`,
+      data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * @description 新增安全检查时,筛选历史检查对象,方便快速创建检查任务
+ *
+ * @tags 安全检查
+ * @name GetSafeCheckTargetPage
+ * @summary 选择检查对象分页
+ * @request GET:/safe-check/target/page
+ * @response `200` `PageResultListSafeCheckTargetDTO` OK
+ */
+export const getSafeCheckTargetPage = (
+  query: {
+    query: PageRequest;
+  },
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.get<PageResultListSafeCheckTargetDTO>(
+    {
+      url: `gas-supervise/safe-check/target/page`,
+      data: query,
     },
     { ...params, isTransformResponse: false },
   );
@@ -6064,10 +6624,17 @@ export const getHidangerGovCheckPlanEndUserSummary = (
  * @request GET:/hidanger/gis/map
  * @response `200` `ResultListHidangerGisVO` OK
  */
-export const getHidangerGisMap = (params: PerRequestOptions = {}) => {
+export const getHidangerGisMap = (
+  query: {
+    l1: string;
+    l2: string;
+  },
+  params: PerRequestOptions = {},
+) => {
   return defHttp.get<ResultListHidangerGisVO>(
     {
       url: `gas-supervise/hidanger/gis/map`,
+      data: query,
     },
     { ...params, isTransformResponse: false },
   );
@@ -6806,6 +7373,23 @@ export const getEnterpriseStationMapLng = (
   );
 };
 /**
+ * enterprise-scoring-controller 考核评价结果详情
+ *
+ * @tags enterprise-scoring-controller
+ * @name GetEnterpriseScoringById
+ * @summary 考核评价结果详情
+ * @request GET:/enterprise/scoring/{id}
+ * @response `200` `ResultScoringDetailVO` OK
+ */
+export const getEnterpriseScoringById = (id: number, params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultScoringDetailVO>(
+    {
+      url: `gas-supervise/enterprise/scoring/${id}`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
  * 大屏-安全监管 考核评价-评分排名
  *
  * @tags 大屏-安全监管
@@ -6823,18 +7407,156 @@ export const getEnterpriseScoringRank = (params: PerRequestOptions = {}) => {
   );
 };
 /**
- * 大屏-安全监管 考核评价-评分排名详情
+ * enterprise-scoring-controller 企业考核排名
  *
- * @tags 大屏-安全监管
- * @name GetEnterpriseScoringDetailByOrgId
- * @summary 考核评价-评分排名详情
- * @request GET:/enterprise/scoring/detail/{orgId}
- * @response `200` `ResultListEnterpriseScoringItemDTO` OK
+ * @tags enterprise-scoring-controller
+ * @name GetEnterpriseScoringRankEnt
+ * @summary 企业考核排名
+ * @request GET:/enterprise/scoring/rank/ent
+ * @response `200` `ResultListScoringEnterpriseRankVO` OK
  */
-export const getEnterpriseScoringDetailByOrgId = (orgId: string, params: PerRequestOptions = {}) => {
-  return defHttp.get<ResultListEnterpriseScoringItemDTO>(
+export const getEnterpriseScoringRankEnt = (params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultListScoringEnterpriseRankVO>(
     {
-      url: `gas-supervise/enterprise/scoring/detail/${orgId}`,
+      url: `gas-supervise/enterprise/scoring/rank/ent`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * enterprise-scoring-controller 区域考核排名
+ *
+ * @tags enterprise-scoring-controller
+ * @name GetEnterpriseScoringRankArea
+ * @summary 区域考核排名
+ * @request GET:/enterprise/scoring/rank/area
+ * @response `200` `ResultListScoringAreaRankVO` OK
+ */
+export const getEnterpriseScoringRankArea = (params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultListScoringAreaRankVO>(
+    {
+      url: `gas-supervise/enterprise/scoring/rank/area`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * enterprise-scoring-controller 考核评价结果列表
+ *
+ * @tags enterprise-scoring-controller
+ * @name GetEnterpriseScoringList
+ * @summary 考核评价结果列表
+ * @request GET:/enterprise/scoring/list
+ * @response `200` `PageResultListScoringPageVO` OK
+ */
+export const getEnterpriseScoringList = (
+  query: {
+    /** 考核评价结果分页查询 */
+    query: ScoringPageQuery;
+  },
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.get<PageResultListScoringPageVO>(
+    {
+      url: `gas-supervise/enterprise/scoring/list`,
+      data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * enterprise-scoring-controller 燃气行业综合评价分析
+ *
+ * @tags enterprise-scoring-controller
+ * @name GetEnterpriseScoringIndustry
+ * @summary 燃气行业综合评价分析
+ * @request GET:/enterprise/scoring/industry
+ * @response `200` `ResultScoringIndustryStatVO` OK
+ */
+export const getEnterpriseScoringIndustry = (
+  query: {
+    scoringCycle: string;
+  },
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.get<ResultScoringIndustryStatVO>(
+    {
+      url: `gas-supervise/enterprise/scoring/industry`,
+      data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * enterprise-scoring-controller 行业考核报告列表
+ *
+ * @tags enterprise-scoring-controller
+ * @name GetEnterpriseScoringIndustryReport
+ * @summary 行业考核报告列表
+ * @request GET:/enterprise/scoring/industry/report
+ * @response `200` `ResultListScoringPageVO` OK
+ */
+export const getEnterpriseScoringIndustryReport = (params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultListScoringPageVO>(
+    {
+      url: `gas-supervise/enterprise/scoring/industry/report`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * enterprise-scoring-controller 考核报表生成
+ *
+ * @tags enterprise-scoring-controller
+ * @name GetEnterpriseScoringGen
+ * @summary 考核报表生成
+ * @request GET:/enterprise/scoring/gen
+ * @response `200` `ResultListMinioResp` OK
+ */
+export const getEnterpriseScoringGen = (
+  query: {
+    cycle: string;
+  },
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.get<ResultListMinioResp>(
+    {
+      url: `gas-supervise/enterprise/scoring/gen`,
+      data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * enterprise-scoring-controller 考核异常分析
+ *
+ * @tags enterprise-scoring-controller
+ * @name GetEnterpriseScoringDeduction
+ * @summary 考核异常分析
+ * @request GET:/enterprise/scoring/deduction
+ * @response `200` `ResultScoringDeductionStatVO` OK
+ */
+export const getEnterpriseScoringDeduction = (params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultScoringDeductionStatVO>(
+    {
+      url: `gas-supervise/enterprise/scoring/deduction`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * enterprise-scoring-controller 近一年突出问题企业
+ *
+ * @tags enterprise-scoring-controller
+ * @name GetEnterpriseScoringBad
+ * @summary 近一年突出问题企业
+ * @request GET:/enterprise/scoring/bad
+ * @response `200` `ResultScoringBadCntVO` OK
+ */
+export const getEnterpriseScoringBad = (params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultScoringBadCntVO>(
+    {
+      url: `gas-supervise/enterprise/scoring/bad`,
     },
     { ...params, isTransformResponse: false },
   );
@@ -7001,6 +7723,47 @@ export const getEnterpriseDevRes = (
     {
       url: `gas-supervise/enterprise/dev-res`,
       data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 企业协调事件接口 企业协调事件列表查询
+ *
+ * @tags 企业协调事件接口, 企业协调事件列表查询
+ * @name GetEnterpriseCoordinatePage
+ * @summary 企业协调事件列表查询
+ * @request GET:/enterprise/coordinate/page
+ * @response `200` `ResultListCoordinateMatterVO` OK
+ */
+export const getEnterpriseCoordinatePage = (
+  query: {
+    /** 企业协调事项查询 */
+    query: CoordinateMatterQuery;
+  },
+  params: PerRequestOptions = {},
+) => {
+  return defHttp.get<ResultListCoordinateMatterVO>(
+    {
+      url: `gas-supervise/enterprise/coordinate/page`,
+      data: query,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * 企业协调事件反馈记录 企业协调事件反馈记录
+ *
+ * @tags 企业协调事件反馈记录, 企业协调事件接口
+ * @name GetEnterpriseCoordinateFeedbackById
+ * @summary 企业协调事件反馈记录
+ * @request GET:/enterprise/coordinate/feedback/{id}
+ * @response `200` `ResultCoordinateMatterFeedbackVO` OK
+ */
+export const getEnterpriseCoordinateFeedbackById = (id: string, params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultCoordinateMatterFeedbackVO>(
+    {
+      url: `gas-supervise/enterprise/coordinate/feedback/${id}`,
     },
     { ...params, isTransformResponse: false },
   );
@@ -8048,23 +8811,6 @@ export const getBsHidangerDetailByUid = (uid: string, params: PerRequestOptions 
   );
 };
 /**
- * 管道气监管 隐患统计
- *
- * @tags 管道气监管
- * @name GetBigScreenHidangerPipeGasRank
- * @summary 隐患统计
- * @request GET:/big-screen/hidanger/pipe-gas/rank
- * @response `200` `ResultBsPipeGasHidangerSummaryVO` OK
- */
-export const getBigScreenHidangerPipeGasRank = (params: PerRequestOptions = {}) => {
-  return defHttp.get<ResultBsPipeGasHidangerSummaryVO>(
-    {
-      url: `gas-supervise/big-screen/hidanger/pipe-gas/rank`,
-    },
-    { ...params, isTransformResponse: false },
-  );
-};
-/**
  * 管道气监管 巡查巡检
  *
  * @tags 管道气监管
@@ -8083,214 +8829,6 @@ export const getBigScreenHidangerPipeGasInspection = (
   return defHttp.get<ResultBsPipeGasCheckSummaryVO>(
     {
       url: `gas-supervise/big-screen/hidanger/pipe-gas/inspection`,
-      data: query,
-    },
-    { ...params, isTransformResponse: false },
-  );
-};
-/**
- * 大屏首页 安全检查
- *
- * @tags 大屏首页
- * @name GetBigScreenHidangerIndexSafeCheck
- * @summary 安全检查
- * @request GET:/big-screen/hidanger/index/safe-check
- * @response `200` `ResultBsSafeCheckVO` OK
- */
-export const getBigScreenHidangerIndexSafeCheck = (
-  query?: {
-    /** @format int32 */
-    cycle?: number;
-  },
-  params: PerRequestOptions = {},
-) => {
-  return defHttp.get<ResultBsSafeCheckVO>(
-    {
-      url: `gas-supervise/big-screen/hidanger/index/safe-check`,
-      data: query,
-    },
-    { ...params, isTransformResponse: false },
-  );
-};
-/**
- * 大屏首页 管网隐患排查整改
- *
- * @tags 大屏首页
- * @name GetBigScreenHidangerIndexPipeline
- * @summary 管网隐患排查整改
- * @request GET:/big-screen/hidanger/index/pipeline
- * @response `200` `ResultListBsPipelineDangerTypesDTO` OK
- */
-export const getBigScreenHidangerIndexPipeline = (
-  query?: {
-    /** @format int32 */
-    cycle?: number;
-  },
-  params: PerRequestOptions = {},
-) => {
-  return defHttp.get<ResultListBsPipelineDangerTypesDTO>(
-    {
-      url: `gas-supervise/big-screen/hidanger/index/pipeline`,
-      data: query,
-    },
-    { ...params, isTransformResponse: false },
-  );
-};
-/**
- * 隐患排查 三方检测
- *
- * @tags 隐患排查
- * @name GetBigScreenHidangerHidangerCheckThirdCheck
- * @summary 三方检测
- * @request GET:/big-screen/hidanger/hidanger-check/third-check
- * @response `200` `ResultBsThirdCheckSummaryVO` OK
- */
-export const getBigScreenHidangerHidangerCheckThirdCheck = (
-  query?: {
-    /** @format int32 */
-    cycle?: number;
-  },
-  params: PerRequestOptions = {},
-) => {
-  return defHttp.get<ResultBsThirdCheckSummaryVO>(
-    {
-      url: `gas-supervise/big-screen/hidanger/hidanger-check/third-check`,
-      data: query,
-    },
-    { ...params, isTransformResponse: false },
-  );
-};
-/**
- * 隐患排查 隐患场所分析
- *
- * @tags 隐患排查
- * @name GetBigScreenHidangerHidangerCheckSubject
- * @summary 隐患场所分析
- * @request GET:/big-screen/hidanger/hidanger-check/subject
- * @response `200` `ResultBsHidangerSubjectSummaryVO` OK
- */
-export const getBigScreenHidangerHidangerCheckSubject = (params: PerRequestOptions = {}) => {
-  return defHttp.get<ResultBsHidangerSubjectSummaryVO>(
-    {
-      url: `gas-supervise/big-screen/hidanger/hidanger-check/subject`,
-    },
-    { ...params, isTransformResponse: false },
-  );
-};
-/**
- * 隐患排查 政府安全检查
- *
- * @tags 隐患排查
- * @name GetBigScreenHidangerHidangerCheckGovCheck
- * @summary 政府安全检查
- * @request GET:/big-screen/hidanger/hidanger-check/gov-check
- * @response `200` `ResultBsGovCheckPlanSummaryVO` OK
- */
-export const getBigScreenHidangerHidangerCheckGovCheck = (
-  query?: {
-    /** @format int32 */
-    cycle?: number;
-  },
-  params: PerRequestOptions = {},
-) => {
-  return defHttp.get<ResultBsGovCheckPlanSummaryVO>(
-    {
-      url: `gas-supervise/big-screen/hidanger/hidanger-check/gov-check`,
-      data: query,
-    },
-    { ...params, isTransformResponse: false },
-  );
-};
-/**
- * 隐患排查 企业整改
- *
- * @tags 隐患排查
- * @name GetBigScreenHidangerHidangerCheckEnterpriseHandle
- * @summary 企业整改
- * @request GET:/big-screen/hidanger/hidanger-check/enterprise-handle
- * @response `200` `ResultListBsEnterpriseHidangerHandleDTO` OK
- */
-export const getBigScreenHidangerHidangerCheckEnterpriseHandle = (
-  query?: {
-    /** @format int32 */
-    cycle?: number;
-  },
-  params: PerRequestOptions = {},
-) => {
-  return defHttp.get<ResultListBsEnterpriseHidangerHandleDTO>(
-    {
-      url: `gas-supervise/big-screen/hidanger/hidanger-check/enterprise-handle`,
-      data: query,
-    },
-    { ...params, isTransformResponse: false },
-  );
-};
-/**
- * 隐患排查 企业安全检查
- *
- * @tags 隐患排查
- * @name GetBigScreenHidangerHidangerCheckEnterpriseCheck
- * @summary 企业安全检查
- * @request GET:/big-screen/hidanger/hidanger-check/enterprise-check
- * @response `200` `ResultBsEnterpriseSafeCheckVO` OK
- */
-export const getBigScreenHidangerHidangerCheckEnterpriseCheck = (
-  query?: {
-    /** @format int32 */
-    cycle?: number;
-  },
-  params: PerRequestOptions = {},
-) => {
-  return defHttp.get<ResultBsEnterpriseSafeCheckVO>(
-    {
-      url: `gas-supervise/big-screen/hidanger/hidanger-check/enterprise-check`,
-      data: query,
-    },
-    { ...params, isTransformResponse: false },
-  );
-};
-/**
- * 隐患排查 隐患排查-分页
- *
- * @tags 隐患排查
- * @name GetBigScreenHidangerHidangerCheckCheckPage
- * @summary 隐患排查-分页
- * @request GET:/big-screen/hidanger/hidanger-check/check/page
- * @response `200` `PageResultListHidangerStatePageDTO` OK
- */
-export const getBigScreenHidangerHidangerCheckCheckPage = (
-  query: {
-    query: HidangerStateQuery;
-  },
-  params: PerRequestOptions = {},
-) => {
-  return defHttp.get<PageResultListHidangerStatePageDTO>(
-    {
-      url: `gas-supervise/big-screen/hidanger/hidanger-check/check/page`,
-      data: query,
-    },
-    { ...params, isTransformResponse: false },
-  );
-};
-/**
- * 隐患排查 隐患排查-统计
- *
- * @tags 隐患排查
- * @name GetBigScreenHidangerHidangerCheckCheckCount
- * @summary 隐患排查-统计
- * @request GET:/big-screen/hidanger/hidanger-check/check-count
- * @response `200` `ResultHidangerStateDTO` OK
- */
-export const getBigScreenHidangerHidangerCheckCheckCount = (
-  query?: {
-    /** @format int32 */
-    cycle?: number;
-  },
-  params: PerRequestOptions = {},
-) => {
-  return defHttp.get<ResultHidangerStateDTO>(
-    {
-      url: `gas-supervise/big-screen/hidanger/hidanger-check/check-count`,
       data: query,
     },
     { ...params, isTransformResponse: false },
@@ -8953,6 +9491,23 @@ export const getAccidentSummary = (
   );
 };
 /**
+ * 事故事件统计 事故事件统计
+ *
+ * @tags 事故事件统计, 事故事件管理接口
+ * @name GetAccidentStatistics
+ * @summary 事故事件统计
+ * @request GET:/accident/statistics
+ * @response `200` `ResultAccidentStatisticsVO` OK
+ */
+export const getAccidentStatistics = (params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultAccidentStatisticsVO>(
+    {
+      url: `gas-supervise/accident/statistics`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
  * 事故事件详情 事故事件详情
  *
  * @tags 事故事件详情, 事故事件管理接口
@@ -8965,6 +9520,40 @@ export const getAccidentDetailByAccidentId = (accidentId: string, params: PerReq
   return defHttp.get<ResultAccidentVO>(
     {
       url: `gas-supervise/accident/detail/${accidentId}`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * @description 删除安全检查主题及其下的检查项目,不可恢复,不可删除内置,可传入多个uid,逗号拼接
+ *
+ * @tags 安全检查
+ * @name DeleteSafeCheckTopicByTid
+ * @summary 删除安全检查主题
+ * @request DELETE:/safe-check/topic/{tid}
+ * @response `200` `ResultVoid` OK
+ */
+export const deleteSafeCheckTopicByTid = (tid: Array<number> | number, params: PerRequestOptions = {}) => {
+  return defHttp.delete<ResultVoid>(
+    {
+      url: `gas-supervise/safe-check/topic/${tid}`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
+ * @description 根据检查项uid,删除主题下的安全检查项目,不可恢复
+ *
+ * @tags 安全检查
+ * @name DeleteSafeCheckTopicItemByCheckItemId
+ * @summary 删除安全检查-检查项目
+ * @request DELETE:/safe-check/topic/item/{checkItemId}
+ * @response `200` `ResultVoid` OK
+ */
+export const deleteSafeCheckTopicItemByCheckItemId = (checkItemId: number, params: PerRequestOptions = {}) => {
+  return defHttp.delete<ResultVoid>(
+    {
+      url: `gas-supervise/safe-check/topic/item/${checkItemId}`,
     },
     { ...params, isTransformResponse: false },
   );

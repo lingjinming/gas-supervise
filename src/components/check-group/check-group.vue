@@ -118,6 +118,7 @@ const clickAll = () => {
       margin-right: 20rpx;
       margin-top: 10rpx ;
       text-align: center;
+      overflow: hidden;
 
       &:nth-child(3n) {
         margin-right: 0;

@@ -206,6 +206,41 @@
           }
         }
       ]
+    },
+    // 安全检查
+    {
+      "root": "pages/safeCheck",
+      "pages": [
+        {
+          "name": "SafeCheckPage",
+          "path": "index",
+          "style": {
+            "navigationBarTitleText": "安全检查",
+            "disableScroll": true
+          }
+        },
+        {
+          "name": "SafeCheckDetailPage",
+          "path": "pages/DetailPage",
+          "style": {
+            "navigationBarTitleText": "检查详情"
+          }
+        },
+        {
+          "name": "SafeCheckHidangerDetailPage",
+          "path": "pages/HidangerDetailPage",
+          "style": {
+            "navigationBarTitleText": "隐患详情"
+          }
+        },
+        {
+          "name": "SafeCheckCreatePage",
+          "path": "pages/CreatePage",
+          "style": {
+            "navigationBarTitleText": "新增检查"
+          }
+        }
+      ]
     }
   ],
   "preloadRule": {

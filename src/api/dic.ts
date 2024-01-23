@@ -1,7 +1,7 @@
 // 导入请求函数
 import { defHttp } from '@/utils/http';
 import { userStore } from "@/state";
-import type { SysDictionaryResponse ,SysDistrictItem ,SysOrgItem} from './model/SysDictionary'
+import type { DicItem, SysDictionaryResponse ,SysDistrictItem ,SysOrgItem} from './model/SysDictionary'
 
 
 /**
@@ -67,14 +67,35 @@ export const  fetchDictionary = async (dicType: string): Promise<GasOption[]> =>
     const list = await getOrg();
     return list.map(o => ({text: o.fullName,value: o.id,label: o.fullName}));
   }
+  if('district' === dicType) {
+    const result = await getDistrict();
+    if(result.children) {
+      return result.children.map(o => ({text: o.name,value: o.code+'',label: o.name}));
+    }
+    return [];
+  }
   // 服务器列表下拉选
   if('SERVER_CONFIG' === dicType) {
     const store = userStore();
-    return  store.auth.servers.map(e => ({
-      text: e.label,
-      value: e.value
-    }))
+    const serverList = await store.loadServers();
+    return  serverList.map(e => ({ text: e.label, value: e.value }))
   }
   const { data } = await getDicListDebounce(dicType);
-  return data[dicType].map(o => ({text: o.label,value: o.value,label: o.label}));
+  return mapTo(data[dicType])
+}
+
+// 递归转换为树形结构
+const mapTo = (item: DicItem[]) : GasOption[] => {
+  return item.map(e => {
+    const option: GasOption = {
+      text: e.label,
+      value: e.value,
+      label: e.label
+    }
+    if(e.children) {
+      option.children = mapTo(e.children);
+    }
+    return option;
+  })
+  
 }

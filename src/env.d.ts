@@ -12,6 +12,7 @@ type GasOption = {
   text: string;
   value: string;
   label?: string;
+  children?: GasOption[];
 }
 
 

@@ -57,13 +57,8 @@ let actions = [
         url: '/pages/thirdBuild/pages/thirdBuildFormPage'
       },
       {
-        name: '安全检查下发',
-        optType: ['gov'],
-        url: '/pages/hidden/pages/HiddenReportPage'
-      },
-      {
         name: '隐患上报',
-        optType: ['org'],
+        optType: ['org','gov'],
         url: '/pages/hidden/pages/HiddenReportPage'
       },
       {

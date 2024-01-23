@@ -1,46 +1,25 @@
 <template>
-  <image
-    v-if="id"
-    class="image"
-    lazy-load
-    :src="imgSrc"
-    mode="scaleToFill"
-    @click="previewImage"
-  />
-  <text class="file-txt" @click="previewFile" v-else>{{ fileName }}</text>
+  <image  v-if="isImg" class="image" lazy-load :src="imgSrc"  mode="scaleToFill" @click="previewImage" />
+  <text   v-else class="file-txt" @click="previewFile">{{ fileName }}</text>
 </template>
 <script lang="ts" setup>
 import { downloadFile} from "@/api/img";
-import { getFileExt } from '@/utils'
+import { getFileExt ,isImageFile} from '@/utils'
 import { userStore } from "@/state";
 
 const store = userStore();
 
 const props = withDefaults(defineProps<{
-  // 图片id
   id?: string,
-  // 普通附件id
   fileId: string,
   fileName: string,
   disabledPreview?: boolean
 }>(),{
   disabledPreview: false
 })
+// 是否是图片
+const isImg = computed(() => props.fileName&&isImageFile(props.fileName))
 
-/**
- * 对于过长的文件名,导致看不见后缀
- * 这里限制文件名称最多10个字符,超过的话,就删除前面的字符,只保留后面的字符
- * @param fileName 文件名
- */
-const formatterFilename = (fileName: string|undefined) => {
-  if(fileName) {
-    if (fileName.length > 20) {
-      return fileName.slice(fileName.length - 20);
-    }
-    return fileName;
-  }
-  return ''
-}
 /**
  *  https://aiot.citysafety.com/gasguard/gas-supervise/open/download/{fileId}
  *  后端nginx转发,不再下载之后base64了;
@@ -76,9 +55,10 @@ const previewFile = async () => {
     return;
   }
   const ext = getFileExt(props.fileName);
-  if(props.fileId) {
+  const fileKey = props.fileId || props.id
+  if(fileKey) {
     uni.showLoading({ title:'下载中...' });
-    downloadFile(props.fileId)
+    downloadFile(fileKey)
     .then(path => {
       uni.openDocument({
         filePath: path,

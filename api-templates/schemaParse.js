@@ -21,26 +21,48 @@ async function  schemaParse(url) {
       let schema = schemas[schemaName];
       let resultType = getResultType(schemaName,schema)
       if(resultType > 0) {
-        mackSchemaPropsRequired(schema);
-        const resultDataSchema = getDataRefSchema(schema,schemas);
-        if(resultDataSchema) {
-          // 处理data的引用类型中的枚举,添加别名
-          makeEnumsAlias(resultDataSchema);
-          // 给data的引用类型全部添加required
-          mackSchemaPropsRequired(resultDataSchema);
-        }
+        makeSchemaPropsRequired(schema,schemas);
       }
     }
     return spec;
-
   })
-  
+}
+
+/**
+ * 递归处理属性,添加required,同时处理枚举类型,添加下划线别名
+ */
+function makeSchemaPropsRequired(schema,schemas) {
+  let check = schema['__递归检测']
+  if(check) {
+    return;
+  }
+  schema['__递归检测']  = true
+  const props = schema['properties'];
+  // 全部添加required
+  const propKeys = Object.keys(props);
+  schema['required'] = propKeys;
+
+  // 遍历处理枚举类型,添加下划线别名
+  for (const key in props) {
+    const prop = props[key];
+    // 1 枚举类型
+    if(prop.enum) {
+      appendAlias(key,prop,props)
+    } else if('orgId,districtId'.includes(key)) {
+      appendAlias(key,prop,props)
+    }
+    // 2.引用类型
+    let refData = getDataRefSchema(prop,schemas)
+    if(refData) {
+      makeSchemaPropsRequired(refData,schemas)
+    }
+  }
 }
 
 
-function getDataRefSchema(schema,schemas) {
-  const props = schema['properties'];
-  const data = props['data'];
+
+
+function getDataRefSchema(data,schemas) {
   let dataRef = data['$ref'];
   if(!dataRef) {
     if(data['type'] === 'array' && data['items']) {
@@ -55,20 +77,7 @@ function getDataRefSchema(schema,schemas) {
 
 
 
-/**
- * 给schema中的props添加枚举类型的别名
- */
-function makeEnumsAlias(schema) {
-  const props = schema['properties'];
-  for (const key in props) {
-    const prop = props[key];
-    if(prop.enum) {
-      appendAlias(key,prop,props)
-    } else if('orgId,districtId'.includes(key)) {
-      appendAlias(key,prop,props)
-    }
-  }
-}
+
 
 function appendAlias(key,prop,props) {
   props['_'+key] = {
@@ -77,13 +86,15 @@ function appendAlias(key,prop,props) {
   }
 }
 
-function mackSchemaPropsRequired(schema) {
-  const propKeys = Object.keys(schema['properties']);
-  schema['required'] = propKeys;
-}
 
 
 
+/**
+ * 获取接口响应类型
+ * 0: 非标准响应
+ * 1: 标准响应
+ * 2: 分页标准响应
+ */
 function getResultType(schemaName,schema) {
   if(schemaName.startsWith('Result') || schemaName.startsWith('PageResult')) {
     const props = schema['properties'];

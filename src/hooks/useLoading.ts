@@ -1,10 +1,10 @@
-type ResponseType = Promise<{success?: boolean,message?: string, data?: any}>
+type ResponseType<T = any> = Promise<{success: boolean,message: string, data: T}>
 
-export const useLoading  = async (response: ResponseType,callback?: (data ?: any) => void) => {
+export const useLoading  = async <T = any>(response: ResponseType<T>,callback?: (data ?: T) => void) => {
   let startTime = new Date().getTime();
   let isFailed = false;
   uni.showLoading({ title: '请稍后...' });
-  let result = null;
+  let result: T | undefined = undefined ;
   try{
     const { success ,message,data} = await response;
     result = data
@@ -22,7 +22,7 @@ export const useLoading  = async (response: ResponseType,callback?: (data ?: any
 }
 
 
-const closeLoading = (startTime: number,callback ?: (data ?: any) => void,data ?: any) => {
+const closeLoading = <T = any>(startTime: number,callback ?: (data ?: T) => void,data ?: T) => {
   let costTime = new Date().getTime() - startTime;
   let restTime = 800 - costTime;
   if (restTime > 150) {

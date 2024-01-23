@@ -49,13 +49,14 @@ export const userStore = defineStore('app-store', {
   },
   actions: {
     async loadServers() {
-      console.log('加载服务器配置...');
-      // 加载服务器列表
+      if(this.auth.servers.length) {
+        return this.auth.servers
+      }
       const data = await getConfig();
       const serverList = data.regions.map(r => ({label: r.remark,value: r.region,...r}));
       this.auth.servers = serverList;
       setCache('SERVER_LIST',serverList);
-
+      return this.auth.servers
     },
     // 获取数据字典
     async fetchDictionary(dicType: string) {
