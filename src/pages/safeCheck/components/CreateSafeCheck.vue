@@ -1,4 +1,9 @@
 <template>
+  <scroll-view
+      style="height: calc(100vh - 310rpx);"
+      scroll-y="true"
+      class="scroll-Y"
+    >
   <view class="check-container">
     <view v-for="(item,index) in items" :key="index">
       <view class="title">{{ item.checkItem }}</view>
@@ -25,6 +30,11 @@
         </view>
       </view>
     </view>
+  </view>
+</scroll-view>
+<view class="opts">
+    <view class="button cancel" >取消</view>
+    <view class="button confirm" >确定</view>
   </view>
 </template>
 <script setup lang="ts">
@@ -137,5 +147,39 @@ watch(() => props.topic, topic => {
       color: #222222;
       border-bottom: 1rpx solid #E0E0E0;
     }
+}
+.opts {
+  z-index: -1;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120rpx;
+  background-color: #fff;
+  padding: 30rpx;
+  display: flex;
+  justify-content:space-between;
+  .button {
+    width: 333rpx;
+    height: 88rpx;
+    border-radius: 10rpx;
+
+    font-size: 32rpx;
+    font-weight: 500;
+    color: #222222;
+    line-height: 88rpx;
+    text-align: center;
+    
+  }
+  .button.cancel {
+    color: #006CFF;
+    background: #E8F1FF;
+    border-radius: 10rpx;
+  }
+  .button.confirm {
+    background: #006CFF;
+    border-radius: 10rpx;
+    color: #fff;
+  }
 }
 </style>

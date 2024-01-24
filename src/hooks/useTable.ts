@@ -68,7 +68,7 @@ export const useTable = <T>(
   options?: TableOptions
 ): UseTableReturnType<T> => {
   const defaultOptions = Object.assign(
-    { minTime: 600, autoFetch: false, showToast: true },
+    { minTime: 300, autoFetch: false, showToast: true },
     options || {}
   );
 

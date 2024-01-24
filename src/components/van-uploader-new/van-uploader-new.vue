@@ -101,6 +101,7 @@ const deleteFile = (event: {detail: {index:number,file: File}}) => {
 
 const upload = async (event: {detail: {file: File[] | File}}) => {
   let { file } = event.detail;
+  console.log(file)
   if(!Array.isArray(file)) {
     file['tempFilePath'] = file.url;
     file = [file]
@@ -137,7 +138,7 @@ const upload = async (event: {detail: {file: File[] | File}}) => {
 const validateFile = (file: File): boolean => {
   if(!file) return false;
   if(!props.types?.length) return true;
-  const ext = getFileExt(file.name);
+  const ext = getFileExt(file.tempFilePath);
   if(!ext) return false;
   return props.types.includes(ext)
 }
