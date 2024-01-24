@@ -253,6 +253,13 @@
           "style": {
             "navigationBarTitleText": "新增检查"
           }
+        },
+        {
+          "name": "SafeCheckCreateTargetPage",
+          "path": "pages/CreateTargetPage",
+          "style": {
+            "navigationBarTitleText": "新建检查对象"
+          }
         }
       ]
     }

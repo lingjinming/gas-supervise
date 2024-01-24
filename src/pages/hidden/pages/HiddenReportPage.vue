@@ -86,7 +86,7 @@ import type {HidangerCreateDTO} from '@/api/gen/data-contracts'
 
 const store = userStore();
 const isOrg: boolean = store.isOrgUser;
-let reportForm = ref<HidangerCreateDTO>({
+let reportForm = ref<Partial<HidangerCreateDTO>>({
   remark: "",
   address: "",
   orgId: "",
@@ -124,6 +124,7 @@ watch(() => reportForm.value.orgId, (orgId) => {
 
 
 const submit = async () => {
+  // @ts-ignore
   const result = Promise.resolve().then(() => isOrg ? postHidangerOrg(reportForm.value) : postHidangerGov(reportForm.value))
   useLoading(result,() => {
     uni.navigateBack();

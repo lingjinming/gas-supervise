@@ -71,10 +71,24 @@ interface ReverseGeocoderResult {
 
 const map = new MapSDK({ key: 'YV5BZ-RY3CZ-OKJXS-Z7JJJ-NFBTV-WXFGF' });
 
+type getDistrictIdReturnType = {
+  /**
+   * 区划编码
+   */
+  code: string;
+  /**
+   * 城市名称
+   */
+  city: string;
+  /**
+   * 区县名称
+   */
+  name: string;
+}
 /**
  * 根据经纬度坐标 获取行政区划编码
  */
-export const getDistrictId = (latitude: string|number,longitude:string|number): Promise<{code: string,name: string}> => {
+export const getDistrictId = (latitude: string|number,longitude:string|number): Promise<getDistrictIdReturnType> => {
   return new Promise((res,rej) => {
     map.reverseGeocoder({
       location:{latitude,longitude},
@@ -82,6 +96,7 @@ export const getDistrictId = (latitude: string|number,longitude:string|number): 
         const adInfo = data.result.ad_info;
         res({
           code: adInfo.adcode,
+          city: adInfo.city,
           name: adInfo.district
         });
       },

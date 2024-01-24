@@ -619,7 +619,7 @@ export const putSysNotifyRuleByUid = (uid: number, data: SysNotifyRuleDTO, param
  * @request GET:/safe-check/topic/{uid}
  * @response `200` `ResultSafeCheckTopicDetailVO` OK
  */
-export const getSafeCheckTopicByUid = (uid: number, params: PerRequestOptions = {}) => {
+export const getSafeCheckTopicByUid = (uid: number|string, params: PerRequestOptions = {}) => {
   return defHttp.get<ResultSafeCheckTopicDetailVO>(
     {
       url: `gas-supervise/safe-check/topic/${uid}`,
@@ -2113,11 +2113,15 @@ export const postFileUpload = (
     /** @format binary */
     file?: FormData;
   },
+  query?: {
+    filename?: string;
+  },
   params: PerRequestOptions = {},
 ) => {
   return defHttp.post<ResultFileUpdateResponseDTO>(
     {
       url: `gas-supervise/file/upload`,
+      query: query,
       data: data,
       header: { "Content-Type": "multipart/form-data" },
     },

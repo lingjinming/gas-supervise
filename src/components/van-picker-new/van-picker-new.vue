@@ -24,8 +24,6 @@ const props = withDefaults(defineProps<{
   defaultValue: string;
   // 提供一组准备好的选项
   options?: GasOption[];
-  // 或者提供一个异步获取选项的方法
-  fetcher?: () => Promise<GasOption[]>;
 }>(),{
   dicType: "",
   defaultValue: "",
@@ -36,14 +34,12 @@ let columns: Ref<GasOption[]> = ref([]);
 // 选中的下拉选
 let pickerVal = ref<GasOption|undefined>();
 
+watch(() => props.options,(newOptions) => {
+      columns.value = newOptions||[];
+    },{immediate: true})
+
 onMounted(() => {
-  if(props.options) {
-    columns.value = props.options;
-  } else if(props.fetcher) {
-    props.fetcher().then(options => {
-      columns.value = options;
-    })
-  } else if(props.dicType) {
+  if(props.dicType) {
     store.fetchDictionary(props.dicType).then(options => {
       columns.value = options;
     })

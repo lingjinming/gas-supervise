@@ -10,7 +10,7 @@ declare module '*.vue' {
 
 type GasOption = {
   text: string;
-  value: string;
+  value: string|number;
   label?: string;
   children?: GasOption[];
 }

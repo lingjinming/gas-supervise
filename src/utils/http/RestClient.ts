@@ -1,5 +1,5 @@
 import type { ClientOptions ,UniResponse,PerRequestOptions} from "./typing";
-import { isFunction } from "../is";
+import { isFunction ,isObject} from "../is";
 
 
 
@@ -22,13 +22,27 @@ export class RestClient {
    * get请求封装
    */
   get<T = any>(options: UniApp.RequestOptions,per?: PerRequestOptions): Promise<T> {
+    // @ts-ignore
+    const queryInQuery = options?.data?.query;
+    if(isObject(queryInQuery)) {
+      // @ts-ignore
+      options.data.query = undefined;
+      // @ts-ignore
+      options.data = {...options.data,...queryInQuery};
+    }
     return this.request({...options,method: 'GET'},per);
   }
 
   /**
    * post请求封装
    */
-  post<T = any>(options: UniApp.RequestOptions,per?: PerRequestOptions): Promise<T> {
+  post<T = any>(options: UniApp.RequestOptions & {query?: any},per?: PerRequestOptions): Promise<T> {
+    // 拼接到url
+    if(options.query) {
+      const query = Object.keys(options.query).map(key => `${key}=${options.query[key]}`).join('&');
+      options.url += `?${query}`;
+      options.query = undefined;
+    }
     return this.request({...options,method: 'POST'},per);
   }
 
@@ -74,7 +88,6 @@ export class RestClient {
     }
 
     const fullUrl = this.options.baseUrl + option.url;
-    
     return new Promise((resolve, reject) => {
       uni.request({
         ...option,

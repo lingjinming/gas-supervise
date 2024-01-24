@@ -1,33 +1,35 @@
 <template>
   <view class="item-container">
     <view class="title">
-      <view class="cycle"/>{{ info.targetName }}
+      <slot name="select"></slot>
+      {{ info.targetName }}
     </view>
     <view class="line">
       <view class="icon">
-        <van-icon name="label" size="38rpx"/>
+        <van-icon name="label" size="38rpx" />
       </view>
       <view class="content">对象类型：{{ info._targetType }}</view>
     </view>
     <view class="line">
       <view class="icon">
-        <van-icon name="location" size="38rpx"/>
+        <van-icon name="location" size="38rpx" />
       </view>
       <view class="content">企业地址：{{ info.address }}</view>
     </view>
   </view>
 </template>
 <script setup lang="ts">
-import type { SafeCheckTargetDTO } from '@/api/gen/data-contracts'
+import type { SafeCheckTargetDTO } from '@/api/gen/data-contracts';
 
 const props = defineProps({
   info: {
-    type: Object as PropType<SafeCheckTargetDTO>,
+    type: Object as PropType<SafeCheckTargetDTO & { selected?: boolean, _targetType?: string }>,
     default: {
       uid: "",
     },
   }
 });
+
 </script>
 <style lang="scss" scoped>
 .item-container {
@@ -55,6 +57,25 @@ const props = defineProps({
       border: 2rpx solid #006CFF;
       border-radius: 50%;
       margin-right: 19rpx;
+      position: relative;
+    }
+
+    .selected {
+      // 选中的时候背景变蓝,同时中间出现一个白色的对号
+      background: #006CFF;
+      border: none;
+
+      &:after {
+        content: '√';
+        color: #FFFFFF;
+        width: 20rpx;
+        height: 20rpx;
+        border-radius: 50%;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      }
     }
   }
 
@@ -66,6 +87,7 @@ const props = defineProps({
     font-weight: 400;
     color: #666666;
     display: flex;
+
     .icon {
       width: 38rpx;
       height: 38rpx;
@@ -75,5 +97,4 @@ const props = defineProps({
   }
 
 
-}
-</style>
+}</style>

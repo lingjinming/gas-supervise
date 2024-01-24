@@ -2,6 +2,8 @@
 import { defHttp } from '@/utils/http';
 import { userStore } from "@/state";
 import type { DicItem, SysDictionaryResponse ,SysDistrictItem ,SysOrgItem} from './model/SysDictionary'
+import { getUserOrgEnterprise } from './gen/GasSuperviseApi';
+import type {OrganizationVO} from '@/api/gen/data-contracts'
 
 
 /**
@@ -74,6 +76,11 @@ export const  fetchDictionary = async (dicType: string): Promise<GasOption[]> =>
     }
     return [];
   }
+  // 企业用户
+  if('ENTERPRISE_USER' === dicType) {
+    const result = await getUserOrgEnterprise()
+    return mapUserTo(result.data)
+  }
   // 服务器列表下拉选
   if('SERVER_CONFIG' === dicType) {
     const store = userStore();
@@ -86,7 +93,7 @@ export const  fetchDictionary = async (dicType: string): Promise<GasOption[]> =>
 
 // 递归转换为树形结构
 const mapTo = (item: DicItem[]) : GasOption[] => {
-  return item.map(e => {
+  return item?.map(e => {
     const option: GasOption = {
       text: e.label,
       value: e.value,
@@ -96,6 +103,26 @@ const mapTo = (item: DicItem[]) : GasOption[] => {
       option.children = mapTo(e.children);
     }
     return option;
-  })
+  }) || []
   
+}
+
+
+const mapUserTo = (orgList: OrganizationVO[]): GasOption[]  => {
+  let result =  orgList?.map(o =>{
+    const item : GasOption= {text: o.fullName, label: o.fullName, value: o.id}
+    if(o.children.length) {
+      item.children = mapUserTo(o.children)
+      return item;
+    }
+    // @ts-ignore 
+    else if(o.userList) {
+      // @ts-ignore 
+      item.children = o.userList.map(u => ({text: u.name, label: u.name, value: u.userId}))
+      return item;
+    }
+    return undefined;
+  }).filter(e => e) || [];
+  // @ts-ignore 
+  return result;
 }

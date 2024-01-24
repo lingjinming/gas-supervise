@@ -39,7 +39,6 @@ const rawWrapperArgs = config.extractRequestParams ?
         payload,
         requestConfigParam,
     ])
-
 let wrapperArgs = _
     // Sort by optionality
     .sortBy(rawWrapperArgs, [o => o.optional])
@@ -101,7 +100,8 @@ const hh = uploadHandle();
 export const <%~ route.routeName.usage %> = (<%~ wrapperArgs %>)  => {
   return defHttp.<%~method  %><<%~ type %>>({
         url: `gas-supervise<%~ path %>`,
-        <%~ queryTmpl ? `data: ${queryTmpl},` : '' %>
+        <%~ queryTmpl && !bodyTmpl? `data: ${queryTmpl},` : '' %>
+        <%~ queryTmpl && bodyTmpl? `query: ${queryTmpl},` : '' %>
         <%~ bodyTmpl ? `data: ${bodyTmpl},` : '' %>
         <%~ hh ? `header: {'Content-Type':'multipart/form-data'}` : '' %>
     },{...<%~ _.get(requestConfigParam, "name") %>,isTransformResponse: false,});
