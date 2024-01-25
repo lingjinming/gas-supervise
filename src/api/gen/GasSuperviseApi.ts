@@ -227,6 +227,7 @@ import type {
   ResultHomePageWarnSummaryVO,
   ResultInspectionPatrolVO,
   ResultInstallAlarmCountVO,
+  ResultInteger,
   ResultLinePatrolSumVO,
   ResultListAlarmAnalysisVO,
   ResultListAlarmObjTypeSummaryVO,
@@ -619,7 +620,7 @@ export const putSysNotifyRuleByUid = (uid: number, data: SysNotifyRuleDTO, param
  * @request GET:/safe-check/topic/{uid}
  * @response `200` `ResultSafeCheckTopicDetailVO` OK
  */
-export const getSafeCheckTopicByUid = (uid: number|string, params: PerRequestOptions = {}) => {
+export const getSafeCheckTopicByUid = (uid: number, params: PerRequestOptions = {}) => {
   return defHttp.get<ResultSafeCheckTopicDetailVO>(
     {
       url: `gas-supervise/safe-check/topic/${uid}`,
@@ -6423,6 +6424,23 @@ export const getHidangerNewPage = (
   );
 };
 /**
+ * @description 未整改隐患数量
+ *
+ * @tags hidanger-controller
+ * @name GetHidangerMyUnhandledCnt
+ * @summary 我的待办
+ * @request GET:/hidanger/my/unhandled-cnt
+ * @response `200` `ResultInteger` OK
+ */
+export const getHidangerMyUnhandledCnt = (params: PerRequestOptions = {}) => {
+  return defHttp.get<ResultInteger>(
+    {
+      url: `gas-supervise/hidanger/my/unhandled-cnt`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
  * 监管单位隐患管理 隐患统计
  *
  * @tags 监管单位隐患管理
@@ -7914,11 +7932,11 @@ export const getEnterpriseCheckEndUserStatisticalTable = (
   );
 };
 /**
- * 企业安检管理 三年未检用户分页
+ * 企业安检管理 ��年未检用户分页
  *
  * @tags 企业安检管理
  * @name GetEnterpriseCheckEndUserPage
- * @summary 三年未检用户分页
+ * @summary ��年未检用户分页
  * @request GET:/enterprise/check/end-user/page
  * @response `200` `PageResultListSecCheckThreeYearsUnCheckPageDTO` OK
  */

@@ -51,21 +51,24 @@ let isShow = ref(false);
 let options: Ref<GasOption[]> = ref([]);
 let fieldValue = ref("");
 
+
 onMounted(() => {
   store.fetchDictionary(props.dicType).then(dics => {
     options.value = dics;
     // 反显出来
-    reShow();
+    reshow();
   })
 })
 
-watch(() => props.modelValue, (val) => {
-  reShow();
+watch(() => props.modelValue, () => {
+  reshow()
 })
 
-const reShow = () => {
-  if(props.modelValue) {
-    let theDefault = findOption(props.modelValue);
+function reshow(option?: GasOption) {
+  if(option) {
+    fieldValue.value = option.text;
+  } else if(props.modelValue) {
+    let theDefault = findOptionDFS(props.modelValue,options.value);
     if(theDefault) {
       fieldValue.value = theDefault.text;
     }
@@ -74,34 +77,32 @@ const reShow = () => {
   }
 }
 
-// 递归查找出来
-const findOption = (value: string) => {
-  let theDefault: GasOption | undefined;
-  const find = (options: GasOption[]) => {
-    for (let i = 0; i < options.length; i++) {
-      const option = options[i];
-      if (option.value == value) {
-        theDefault = option;
-        break;
-      } else if (option.children) {
-        find(option.children);
+// DFS 深度优先遍历查找
+function findOptionDFS(value: string | number,list: GasOption[]) : GasOption | undefined {
+  for (let i = 0; i < list.length; i++) {
+    const option = list[i];
+    if(option.value === value) {
+      return option;
+    } else if(option.children?.length) {
+      const target = findOptionDFS(value,option.children);
+      if(target) {
+        return target;
       }
     }
-  };
-  find(options.value);
-  return theDefault;
+  }
+  return void(0);
 }
 
-const showCascader = async () => {
-  isShow.value = true;
-};
+
+const showCascader = async () => isShow.value = true;
 
 type EventDetail = { value: string | number, selectedOptions: GasOption[], tabIndex: number }
 const finish = (e: {detail: EventDetail}) => {
   isShow.value = false;
   const detail = e.detail;
+  let paths = detail.selectedOptions;
+  const last = paths[paths.length - 1];
   if (props.dicType == "RISK_SUBJECT_TYPE_TREE") {
-      let paths = detail.selectedOptions;
       emits("update:subjectType", paths[0].value);
       emits("update:modelValue", paths[1].value);
       emits("update:dangerSubtype", paths[2].value);
@@ -109,6 +110,7 @@ const finish = (e: {detail: EventDetail}) => {
       emits("update:modelValue", detail.value);
   }
   emits("selectFinish", detail.selectedOptions);
+  reshow(last);
 };
 
 </script>

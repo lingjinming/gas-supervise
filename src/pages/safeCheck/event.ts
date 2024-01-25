@@ -6,4 +6,6 @@ export enum EventType {
   // 新建安全检查,选中的检查对象
   SELECTED_TARGET = 'SELECTED_TARGET',
   CREATE_TARGET = 'CREATE_TARGET',
+  // 刷新检查列表
+  REFRESH_PAGE = 'REFRESH_PAGE',
 }

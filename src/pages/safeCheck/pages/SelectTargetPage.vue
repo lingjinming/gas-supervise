@@ -167,7 +167,6 @@ const sendBack = (target: PageItemType) => {
   .button {
     width: 90%;
     height: 88rpx;
-    border: 1px solid #868686;
     border-radius: 10rpx;
     background: #006CFF;
     color: #fff;

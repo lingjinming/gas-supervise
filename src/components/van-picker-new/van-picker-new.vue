@@ -31,51 +31,59 @@ const props = withDefaults(defineProps<{
 
 let isShow = ref(false);
 let columns: Ref<GasOption[]> = ref([]);
+
+
 // 选中的下拉选
 let pickerVal = ref<GasOption|undefined>();
-
-watch(() => props.options,(newOptions) => {
-      columns.value = newOptions||[];
-    },{immediate: true})
-
-onMounted(() => {
-  if(props.dicType) {
-    store.fetchDictionary(props.dicType).then(options => {
-      columns.value = options;
-    })
+const confirm = (e) => {
+  const value: GasOption = e.detail.value;
+  pickerVal.value = value;
+  isShow.value = false;
+};
+const findOption = (value: string) :GasOption | undefined => {
+  if(columns.value.length && value) {
+    return columns.value.find(e => e.value === value)
   }
-})
-
-watch(columns,(newCols) => {
-  // 下拉选默认值还原出来
-  if(newCols.length && !pickerVal.value) {
+}
+// 初始化/options变更时反显
+const reshow = () => {
+  if(columns.value.length && !pickerVal.value) {
     let dicValue = props.modelValue || props.defaultValue;
     let theDefault = findOption(dicValue);
     if(theDefault) {
       pickerVal.value = theDefault;
     }
   }
-})
-
+}
 watch(pickerVal,(newPick) => {
   if(newPick?.value) {
     emits("update:modelValue", newPick.value);
   }
 })
 
-const showPicker = async () => {
+watch(() => props.options,(newOptions) => {
+      columns.value = newOptions||[];
+      reshow();
+    },{immediate: true})
+
+onMounted(() => {
+  if(props.dicType) {
+    store.fetchDictionary(props.dicType).then(options => {
+      columns.value = options;
+      reshow();
+    })
+  }
+})
+
+
+
+
+
+const showPicker =  () => {
   isShow.value = true;
 };
 
-const confirm = (e) => {
-  const value: GasOption = e.detail.value;
-  pickerVal.value = value;
-  isShow.value = false;
-};
 
-const findOption = (value: string) :GasOption | undefined => {
-  if(columns.value.length && value) {
-    return columns.value.find(e => e.value === value)
-  }
-}
+
+
 </script>

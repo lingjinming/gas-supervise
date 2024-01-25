@@ -37,8 +37,10 @@
    <van-popup
       :show="state.showQuery"
       position="top"
+      z-index="9999"
+      root-portal
       custom-style="padding: 30rpx"
-      @close="doQuery"
+      @close="closeSearch"
     >
     <!-- 所属区域 -->
     <check-group
@@ -61,13 +63,10 @@
       title="检查结果"
       type="SAFE_CHECK_TASK_STATE"
     ></check-group>
-    <!-- 确定 -->
-    <view class="bottom">
       <!-- 确定 -->
     <view class="bottom">
       <button plain="true" @click="resetQuery" class="btn reset">重置</button>
       <button plain="true" @click="doQuery" class="btn query">查询</button>
-    </view>
     </view>
   </van-popup>
 </template>
@@ -122,14 +121,25 @@ const doQuery = () => {
   state.showQuery = false;
 }
 
+const closeSearch = () => {
+  state.showQuery = false;
+}
+
 const goCreateSafeCheck = () => {
   uni.navigateTo({
     url: `/pages/safeCheck/pages/CreatePage`,
     success: (res) => {
-      res.eventChannel.emit(EventType.CREATE_SAFE_CHECK, { checkType: props.checkType })
+      res.eventChannel.emit(EventType.CREATE_SAFE_CHECK, { checkType: props.checkType });
     }
   });
 }
+
+onLoad(() => {
+  uni.$on(EventType.REFRESH_PAGE,doQuery)
+})
+onUnload(() => {
+  uni.$off(EventType.REFRESH_PAGE,doQuery)
+})
 </script>
 <style lang="scss" scoped>
   .page-warpper{

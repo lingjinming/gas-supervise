@@ -79,6 +79,7 @@ export const  fetchDictionary = async (dicType: string): Promise<GasOption[]> =>
   // 企业用户
   if('ENTERPRISE_USER' === dicType) {
     const result = await getUserOrgEnterprise()
+    // @ts-ignore
     return mapUserTo(result.data)
   }
   // 服务器列表下拉选
@@ -108,21 +109,29 @@ const mapTo = (item: DicItem[]) : GasOption[] => {
 }
 
 
-const mapUserTo = (orgList: OrganizationVO[]): GasOption[]  => {
-  let result =  orgList?.map(o =>{
-    const item : GasOption= {text: o.fullName, label: o.fullName, value: o.id}
+/**
+ * 获取用户树
+ * 所有用户都应该挂在叶子节点上
+ * 如果某个节点下的所有叶子节点都没有用户,则该节点不应该出现在树中
+ */
+const mapUserTo = (orgList: OrganizationVO[])  => {
+  return  orgList?.map(o =>{
+    const item = {text: o.fullName, label: o.fullName, value: o.id,children: []}
     if(o.children.length) {
-      item.children = mapUserTo(o.children)
+      // @ts-ignore 
+      item.children = mapUserTo(o.children);
+      if(!item.children.length) {
+        return undefined;
+      }
       return item;
     }
     // @ts-ignore 
-    else if(o.userList) {
+    if(o.userList?.length) {
       // @ts-ignore 
-      item.children = o.userList.map(u => ({text: u.name, label: u.name, value: u.userId}))
+      item.children = o.userList.map(u => ({text: u.name, label: u.name, value: u.userId}));
+      // @ts-ignore 
       return item;
     }
     return undefined;
   }).filter(e => e) || [];
-  // @ts-ignore 
-  return result;
 }

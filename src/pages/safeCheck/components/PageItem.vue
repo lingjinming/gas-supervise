@@ -8,9 +8,20 @@
         <view class="name">
           {{ info.targetName }}
           </view>
-        <view class="type">{{ info._targetType }}</view>
+        <view class="type">{{ (info as any)._targetType }}</view>
       </view>
-      <view :class="['status',info.checkState === 'PASS' ? '' : 'danger']">{{ info.checkState === 'PASS' ? '无隐患' : '有隐患' }}</view>
+      <!-- 三方安全评价 -->
+      <template v-if="info.checkType === 'THIRD'">
+        <view :class="['status',info.safeLevel]">
+          {{ info.safeLevel }}
+        </view>
+      </template>
+      <!-- 日常/专项检查 -->
+      <template v-else>
+        <view :class="['status',info.safeLevel]">
+          {{ info.checkState === 'PASS' ? '无隐患' : '有隐患' }}
+        </view>
+      </template>
     </view>
     <view class="info">
       <view class="line">
@@ -91,23 +102,43 @@ const goDetail = () => {
         position: absolute;
         right: 0rpx;
         top: 2rpx;
-        color: #01C14A;
+      }
+      .PASS, .NOT_PASS {
         &:before{
           content: '';
           display: inline-block;
           width: 16rpx;
           height: 16rpx;
           border-radius: 50%;
-          background-color: #01C14A;
           margin-right: 4rpx;
         }
-        &.danger{
-          color: #F63724;
+      }
+      .PASS {
+        color: #01C14A;
+        &:before{
+          background-color: #01C14A;
         }
-        &.danger:before{
+      }
+      .NOT_PASS {
+        color: #F63724;
+        &:before{
           background-color: #F63724;
         }
-        
+      }
+      .A,.B,.C,.D {
+        height: 40rpx;
+        line-height: 40rpx;
+        text-align: center;
+        width: 80rpx;
+        border-radius: 20rpx;
+        color: #fff;
+        background-color: #006CFF;
+      }
+      .C {
+        background-color: $uni-color-warning;
+      }
+      .D {
+        background-color: $uni-color-error;
       }
     }
     .info {

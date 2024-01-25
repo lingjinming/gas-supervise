@@ -155,13 +155,12 @@ export const useTable = <T>(
 
   const nextPage = async () => {
     if (state.page.page * state.page.size > total.value) {
-      uni.showToast({
-        icon: "none",
-        title: "没有更多数据了",
-        // 刷新的时候立正站好,别乱动
-        mask: true,
-        duration: 1000,
-      });
+      // uni.showToast({
+      //   icon: "none",
+      //   title: "没有更多数据了",
+      //   mask: true,
+      //   duration: 1000,
+      // });
       return;
     }
     state.page.page += 1;

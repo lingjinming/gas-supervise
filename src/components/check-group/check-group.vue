@@ -105,17 +105,17 @@ const clickAll = () => {
   .tab_item_box {
     display: flex;
     flex-wrap: wrap;
-    
+    margin: 0rpx auto;
 
     .tab_item {
       position: relative;
-      width: 194rpx;
+      width: 30%;
       height: 72rpx;
       line-height: 72rpx;
       border-radius: 10rpx;
       color: #4B5B6C;
       background: #f5f6fa;
-      margin-right: 20rpx;
+      margin-right: 30rpx;
       margin-top: 10rpx ;
       text-align: center;
       overflow: hidden;

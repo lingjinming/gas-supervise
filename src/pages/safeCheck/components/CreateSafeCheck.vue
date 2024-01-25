@@ -10,6 +10,7 @@
       <view class="category">
         <view class="sub-item" v-for="(sub,si) in item.list" :key="si">
           <view class="sub-item-title">{{ sub.checkContent }}</view>
+          <!-- 是否有隐患 -->
           <view class="option">
             <uni-data-checkbox v-model="sub.checkResult" :localdata="options" ></uni-data-checkbox>
           </view>
@@ -24,8 +25,9 @@
               label="整改责任人"
               title="整改责任人"
               v-model="sub.rectifierPersonId"
+              @selectFinish="(path) => onSelectedUser(sub,path)"
             />
-            <van-picker-new required  :options="deadlinOptions" label="整改期限"  title="整改期限" v-model="sub.rectifierPersonId" />
+            <van-picker-new required  :options="deadlinOptions" label="整改期限"  title="整改期限" v-model="sub.deadlineDays" />
           </view>
         </view>
       </view>
@@ -33,29 +35,21 @@
   </view>
 </scroll-view>
 <view class="opts">
-    <view class="button cancel" >取消</view>
-    <view class="button confirm" >确定</view>
+    <view class="button cancel" @click="goback">上一步</view>
+    <view class="button confirm" @click="confirm">{{ target?.type === 'THIRD' ? '下一步' : '检查完成' }}</view>
   </view>
 </template>
 <script setup lang="ts">
-import type {SafeCheckTaskCreateDTO,SafeCheckTopicDetailVO,SafeCheckItemCreateDTO} from '@/api/gen/data-contracts'
+import type {SafeCheckTaskCreateDTO,CheckTaskItem} from '@/api/gen/data-contracts'
 import { getSafeCheckTopicByUid } from '@/api/gen/GasSuperviseApi';
-import { upload } from '@/api/uaa';
-type ItemType = {
-  checkItem: string,
-  list: {
-    topicItemId: string,
-    checkContent: string,
-    checkResult: string,
-    dangerRemark?: string,
-    dangerImgs?: string[],
-    rectifierPersonId?: string,
-    rectifierPerson?: string,
-    rectifierAdvise?: string,
-    deadlineDays?: number
-  }[]
-}
+import { userStore } from '@/state';
 
+
+const store = userStore();
+const emit = defineEmits<{
+  (e: 'complate', form: SafeCheckTaskCreateDTO): void,
+  (e: 'goback'): void
+}>()
 const props = defineProps({
   topic: {
     type: String
@@ -92,21 +86,87 @@ const deadlinOptions = ref<GasOption[]>([
     value: 60
   }
 ])
+type CheckTaskItemI = CheckTaskItem & {checkContent:string}
+type ItemType = {
+  checkItem: string,
+  list: CheckTaskItemI[]
+}
 const items = ref<ItemType[]>([])
 watch(() => props.topic, topic => {
   if(topic) {
-    getSafeCheckTopicByUid(topic).then(res => {
+    getSafeCheckTopicByUid(topic as any).then(res => {
       items.value = res.data.items.map(raw => {
-        const obj = {
+        const userId = store.userInfo?.userId;
+        const username = store.userInfo?.name;
+        const category = {
           checkItem: raw.checkItem,
-          list: raw.list.map(e => ({topicItemId: e.uid+'', checkResult: 'PASS',checkContent:e.checkContent}))
-        }
-        return obj;
+          list: raw.list.map(({uid,checkContent}) => {
+            let it: CheckTaskItemI = { 
+              topicItemId: (uid as any), 
+              checkResult: 'PASS',
+              checkContent: checkContent,
+              rectifierPersonId: userId+"",
+              rectifierPerson: username,
+              dangerImgs: [],
+              dangerRemark: '',
+              deadlineDays: 7
+            };
+            return it;
+          })
+        } 
+        return category;
       })
     })
   }
 })
 
+
+const onSelectedUser = (item: CheckTaskItemI,userPath: GasOption[]) => {
+  const last = userPath[userPath.length - 1];
+  item.rectifierPerson = last.label
+}
+
+const goback = () => {
+  emit('goback')
+}
+const confirm = () => {
+  // 检查所有整改状态为隐患的项是否都填写了隐患描述
+  for(let category of items.value) {
+    if(!category.list.every(validate)) {
+      return;
+    }
+  }
+  // 保存
+  const checkItems = items.value.flatMap(e => e.list);
+  const task :SafeCheckTaskCreateDTO = {...toRaw(props.target!),checkItems};
+  emit('complate',task)
+}
+
+const validate = (item: ItemType['list'][0]) =>  {
+  if(item.checkResult === 'HIDANGER') {
+    if(!item.dangerRemark) {
+      uni.showToast({ title: '请填写隐患描述', icon: 'none' })
+      return false;
+    }
+    if(!item.dangerImgs || item.dangerImgs.length === 0) {
+      uni.showToast({ title: '请上传隐患照片', icon: 'none' })
+      return false;
+    } else {
+      // @ts-ignore
+      item.dangerImgs = item.dangerImgs.map(e => e.id);
+    }
+    if(!item.rectifierPersonId) {
+      uni.showToast({ title: '请选择整改责任人', icon: 'none' })
+      return false;
+    }
+    if(!item.deadlineDays) {
+      uni.showToast({ title: '请选择整改期限', icon: 'none' })
+      return false;
+    }
+  }
+  return true;
+
+}
 </script>
 <style lang="scss" scoped>
 .check-container {
@@ -149,7 +209,6 @@ watch(() => props.topic, topic => {
     }
 }
 .opts {
-  z-index: -1;
   position: fixed;
   bottom: 0;
   left: 0;

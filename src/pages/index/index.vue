@@ -17,31 +17,34 @@
     </view>
   </view>
 
-  <view class="index-box center">
+  <view class="index-box ">
+    <view class="tit">
+      <view>我的待办</view>
+    </view>
+    <view class="sub_title" @click="goHidanger">
+      <view class="tip">
+        <view class="badge">{{ waitHandleCnt }}</view>
+        <van-icon name="arrow" />
+      </view>
+      <image class="icon" src="/static/icon/icon_detail.png"></image>
+      隐患整改反馈
+    </view>
+  </view>
+
+  <view class="index-box ">
     <view class="tit">
       <view>消息提醒</view>
       <view hover-class="hover" @click="navigatoNotice" class="more"
         >更多 ></view
       >
     </view>
-    <NoticePageItem v-if="notices.length" :notices="notices.slice(0, 2)" />
+    <NoticePageItem v-if="notices.length" :notices="notices.slice(0, 3)" />
     <view v-else class="no-content">
       <image src="/static/img/nodata.png" class="nodata"></image>
     </view>
   </view>
 
-  <view class="index-box bottom">
-    <view class="tit">
-      <view>我的待办</view>
-      <view hover-class="hover" class="more">更多 ></view>
-    </view>
-    <view>
-      <view class="no-content">
-        <image src="/static/img/nodata.png" class="nodata"></image>
-      </view>
-      <view class="no-content">该功能尚未启用 , 敬请期待~</view>
-    </view>
-  </view>
+  
   <router-tab actPath="pages/index/index" />
 </template>
 
@@ -49,15 +52,36 @@
 import NoticePageItem from '@/pages/notice/components/NoticePageItem.vue'
 import { EventType } from "@/enums/eventType";
 import { getNoticeFn, notices } from "../notice";
+import { getHidangerMyUnhandledCnt } from '@/api/gen/GasSuperviseApi'
+
+const waitHandleCnt = ref(0);
+
+onLoad(() => {
+  uni.hideTabBar();
+  uni.$on(EventType.NOTICE_REFRESH, getNoticeFn);
+  // 隐患整改反馈
+  getHidangerMyUnhandledCnt().then(result => {
+    waitHandleCnt.value = result.data || 0;
+  })
+})
+
+onUnload(() => {
+  uni.$off(EventType.NOTICE_REFRESH, getNoticeFn)
+})
+
 onShow(() => {
-  uni.$on(EventType.NOTICE_REFRESH, () => getNoticeFn());
   getNoticeFn()
 });
 
 onPullDownRefresh(() => getNoticeFn());
 
+const goHidanger = () => {
+  uni.navigateTo({
+    url: "/pages/hidden/index",
+  });
+};
 
-uni.hideTabBar();
+
 
 const menus = [
   {
@@ -183,7 +207,6 @@ const navigatoNotice = () => {
 
 .index-box {
   padding: 36rpx 30rpx 0rpx 30rpx;
-  min-height: 250rpx;
   .tit {
     @include flex-between;
     line-height: 60rpx;
@@ -197,6 +220,46 @@ const navigatoNotice = () => {
     font-family: Microsoft YaHei;
     font-weight: 400;
     color: #4b5b6c;
+  }
+  .sub_title {
+    height: 96rpx;
+    margin-top: 22rpx;
+    padding-left: 29rpx;
+    background: #FFFFFF;
+    line-height: 96rpx;
+    font-size: 28rpx;
+    font-family: Microsoft YaHei;
+    font-weight: bold;
+    color: #222222;
+    border-bottom: 1rpx solid #E0E0E0;
+
+    .tip {
+      float: right;
+      min-width: 150rpx;
+      height: 96rpx;
+      display: flex;
+      justify-content: space-around;
+      .badge {
+        align-self: center;
+        height: 40rpx;
+        min-width: 40rpx;
+        line-height: 40rpx;
+        font-size: 26rpx;
+        font-weight: 400;
+        text-align: center;
+        color: #fff;
+        background: #F63724;
+        border-radius: 50%;
+      }
+    }
+    .icon {
+      // 垂直居中
+      display: inline-block;
+      vertical-align: middle;
+      width: 36rpx;
+      height: 36rpx;
+      margin-right: 16rpx;
+    }
   }
 }
 </style>
