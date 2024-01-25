@@ -127,7 +127,7 @@ const getTagType = (level: string) => {
 
 <style lang="scss" scoped>
 .hidden-box {
-  margin: 0 30rpx 30rpx;
+  margin: 0 0rpx 30rpx;
   background: #fff;
   border-radius: 4rpx;
   padding: 30rpx;

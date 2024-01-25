@@ -77,7 +77,7 @@ onPullDownRefresh(() => getNoticeFn());
 
 const goHidanger = () => {
   uni.navigateTo({
-    url: "/pages/hidden/index",
+    url: "/pages/hidden/index?mine=true",
   });
 };
 

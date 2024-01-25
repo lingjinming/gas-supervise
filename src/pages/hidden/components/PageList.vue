@@ -2,19 +2,18 @@
   <view class="page-warpper">
     <view class="keyword">
       <!-- 关键字查询 -->
-      <!-- <uni-search-bar placeholder="输入企业名称或地址" bgColor="#fff" cancel-button="none" clearButton="none"  v-model="state.query.keyword" /> -->
       <uni-easyinput prefixIcon="search" v-model="state.query.keyword" placeholder="输入企业名称或地址" @confirm="search"></uni-easyinput>
     </view>
     <view class="top">
-      <text>
-        <text class="total">{{ total }}</text>条检查记录
-      </text>
+      <text >共计<text class="total">{{ total }}</text >条隐患</text>
       <view @click="state.showQuery = true" class="search">
         筛选<van-icon name="arrow-down" />
       </view>
     </view>
+
+    <!-- 隐患列表 -->
     <scroll-view
-      style="height: calc(100vh - 480rpx);"
+      style="height: calc(100vh - 280rpx);"
       scroll-y="true"
       class="scroll-Y"
       @scrolltolower="nextPage"
@@ -24,72 +23,90 @@
       @refresherrefresh="onRefresh"
     >
       <template v-if="total">
-        <SafeCheckTaskPageItem class="check-page-item" v-for="(item, i) in list" :key="i" :info="item" ></SafeCheckTaskPageItem>
+        <HiddenPageItem v-for="(item, i) in list" :key="i" :info="item" ></HiddenPageItem>
       </template>
       <van-empty v-else description="暂无数据"></van-empty>
     </scroll-view>
+
   </view>
-  <view class="opts">
-    <view class="button" @click="goCreateSafeCheck"><van-icon name="plus" class="icon"/>新建检查</view>
-  </view>
-   <!-- 搜索面板 -->
-   <van-popup
-      :show="state.showQuery"
-      position="top"
-      z-index="9999"
-      root-portal
-      custom-style="padding: 30rpx"
-      @close="closeSearch"
-    >
-    <!-- 所属区域 -->
+
+  <!-- 搜索面板 -->
+  <van-popup
+    :show="state.showQuery"
+    position="top"
+    custom-style="padding: 30rpx"
+    @close="cancel"
+  >
+    <!-- 隐患类型 -->
+    <van-cascader-new
+      dicType="RISK_SUBJECT_TYPE_TREE"
+      label="隐患类别"
+      title="隐患类别"
+      v-model="state.query.dangerType"
+      v-model:subjectType="state.query.subjectType"
+    />
+    <!-- 所属企业(政府用户可见) -->
+    <van-picker-new
+      v-if="!isOrg"
+      dicType="org"
+      label="所属企业"
+      title="上报企业"
+      v-model="state.query.orgId"
+    />
+    <!-- 隐患来源 -->
     <check-group
       useAll
-      v-model="state.query.districtId"
-      title="所属区域"
-      type="district"
+      type="RISK_DANGER_SOURCE"
+      v-model="state.query.dangerSource"
+      title="隐患来源"
     ></check-group>
-    <!-- 企业类型 -->
+    <!-- 隐患级别 -->
     <check-group
       useAll
-      v-model="state.query.targetType"
-      title="企业类型"
-      type="SAFE_CHECK_TARGET_TYPE"
+      v-model="state.query.level"
+      title="隐患级别"
+      type="RISK_DANGER_LEVEL"
     ></check-group>
-    <!-- 是否有隐患 -->
-    <check-group
-      useAll
-      v-model="state.query.checkState"
-      title="检查结果"
-      type="SAFE_CHECK_TASK_STATE"
-    ></check-group>
-      <!-- 确定 -->
+
+    <!-- 确定 -->
     <view class="bottom">
-      <button plain="true" @click="resetQuery" class="btn reset">重置</button>
+      <button plain="true" @click="cancel" class="btn cancel">取消</button>
       <button plain="true" @click="doQuery" class="btn query">查询</button>
     </view>
   </van-popup>
 </template>
+
 <script setup lang="ts">
-import SafeCheckTaskPageItem from './PageItem.vue'
-import { useTable } from '@/hooks/useTable';
-import { getSafeCheckTaskPage } from '@/api/gen/GasSuperviseApi'
-import type { SafeCheckTaskPageQuery,SafeCheckTaskPageVO } from '@/api/gen/data-contracts'
-import { userStore } from '@/state';
-import {EventType} from '../event'
+
+import HiddenPageItem from './HiddenPageItem.vue'
+import { getHidangerOrgPage } from '@/api/gen/GasSuperviseApi'
+import type { HidangerOrgPageQuery,HidangerOrgPageVO } from '@/api/gen/data-contracts'
+
+import { reactive } from "vue";
+import { userStore } from "@/state";
+import { EventType } from "@/enums/eventType";
+import { useTable } from "@/hooks/useTable";
+
+const props = defineProps<{mine: boolean,state: string}>()
 
 const store = userStore();
-const props = defineProps<{checkType: string,mine: boolean}>()
+
+const isOrg: boolean = store.isOrgUser;
 const state = reactive({
   showQuery: false,
-  query: <SafeCheckTaskPageQuery>{
-    keyword: '',
-    targetType: [],
-    checkState: [],
-    districtId: '',
-    checkType: [],
-    mine: props.mine,
+  query: <HidangerOrgPageQuery>{
+    page: 1,
+    size: 10,
+    planCode: "",
+    state: [],
+    orgId: "",
+    dangerSource: [],
+    level: [],
+    dangerType: "",
+    dangerSubType: "",
   }
-})
+});
+
 
 const {
   total,
@@ -99,46 +116,42 @@ const {
   triggered,
   onRefreshPulling,
   onRefresh,
-} = useTable<SafeCheckTaskPageVO>(state.query,getSafeCheckTaskPage);
-watch(() => props.checkType,(newVal) => {
-  if(newVal) {
-    // @ts-ignore
-    state.query.checkType = [newVal]
-    search()
-  }
-})
+} = useTable<HidangerOrgPageVO>(state.query, getHidangerOrgPage, { showToast: true });
 
-const resetQuery = () => {
-  state.query.keyword = '';
-  state.query.targetType = [];
-  state.query.checkState = [];
+// TODO 这里不行
+watch(() => props.mine,(mine) => {
+  console.log(props)
   // @ts-ignore
-  state.query.districtId = [];
-}
-const doQuery = () => {
-  search();
-  state.showQuery = false;
-}
-
-const closeSearch = () => {
-  state.showQuery = false;
-}
-
-const goCreateSafeCheck = () => {
-  uni.navigateTo({
-    url: `/pages/safeCheck/pages/CreatePage`,
-    success: (res) => {
-      res.eventChannel.emit(EventType.CREATE_SAFE_CHECK, { checkType: props.checkType });
-    }
-  });
-}
-
-onLoad(() => {
-  uni.$on(EventType.REFRESH_PAGE,doQuery)
+  state.query.mine = mine;
+  search()
 })
+
+onLoad((params) => {
+  const fromState = params?.state
+  if(fromState === 'ALL') {
+    state.query.state = []
+  } else if(fromState === 'UN_HANDLED') {
+    state.query.state = ['WAIT_AUDIT','WAIT_HANDLE']
+  } else if(fromState === 'HANDLED') {
+    state.query.state = ['HANDLED']
+  }
+  uni.$on(EventType.DANGER_PAGE_REFRESH, search);
+});
 onUnload(() => {
-  uni.$off(EventType.REFRESH_PAGE,doQuery)
+  uni.$off(EventType.DANGER_PAGE_REFRESH, search);
 })
+
+const cancel = () => {
+  state.showQuery = false;
+};
+
+// 关闭查询面板/点击确定 执行查询
+const doQuery = async () => {
+  state.showQuery = false;
+  search();
+};
+
+
 </script>
 <style lang="scss" scoped>
   .page-warpper{
