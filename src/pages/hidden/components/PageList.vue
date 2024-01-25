@@ -35,6 +35,7 @@
     :show="state.showQuery"
     position="top"
     custom-style="padding: 30rpx"
+    root-portal
     @close="cancel"
   >
     <!-- 隐患类型 -->
@@ -118,16 +119,13 @@ const {
   onRefresh,
 } = useTable<HidangerOrgPageVO>(state.query, getHidangerOrgPage, { showToast: true });
 
-// TODO 这里不行
-watch(() => props.mine,(mine) => {
-  console.log(props)
-  // @ts-ignore
-  state.query.mine = mine;
-  search()
-})
 
-onLoad((params) => {
-  const fromState = params?.state
+
+onMounted(() => {
+  console.log('onMounted')
+  uni.$on(EventType.DANGER_PAGE_REFRESH, search);
+  const fromState = props?.state;
+  state.query.mine = props?.mine;
   if(fromState === 'ALL') {
     state.query.state = []
   } else if(fromState === 'UN_HANDLED') {
@@ -135,9 +133,11 @@ onLoad((params) => {
   } else if(fromState === 'HANDLED') {
     state.query.state = ['HANDLED']
   }
-  uni.$on(EventType.DANGER_PAGE_REFRESH, search);
-});
-onUnload(() => {
+  search()
+})
+
+onUnmounted(() => {
+  console.log('onUnmounted')
   uni.$off(EventType.DANGER_PAGE_REFRESH, search);
 })
 

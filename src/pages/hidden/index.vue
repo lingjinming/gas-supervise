@@ -14,13 +14,16 @@
 
 <script setup lang="ts">
 import PageList from './components/PageList.vue' 
-
+// 隐患整改待办，只展示自己的
 const mine = ref(false)
-const type = ref('');
 
 onLoad((params) => {
-  console.log(params)
-  mine.value = Boolean(params?.mine)
+  mine.value = Boolean(params?.mine);
+  if(mine.value) {
+    uni.setNavigationBarTitle({
+      title: '隐患整改反馈'
+    })
+  }
 })
 
 

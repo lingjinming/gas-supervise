@@ -18,7 +18,7 @@
       </template>
       <!-- 日常/专项检查 -->
       <template v-else>
-        <view :class="['status',info.safeLevel]">
+        <view :class="['status',info.checkState]">
           {{ info.checkState === 'PASS' ? '无隐患' : '有隐患' }}
         </view>
       </template>
