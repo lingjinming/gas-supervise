@@ -29,6 +29,7 @@
     </scroll-view>
 
   </view>
+  
 
   <!-- 搜索面板 -->
   <van-popup

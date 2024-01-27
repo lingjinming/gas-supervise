@@ -9,7 +9,7 @@
         <view :class="[ 'tab_item flex_center_row', { cur: allClicked }]" @click="clickAll">全部</view>
       </template>
 
-      <view  v-for="option in options" :key="option.label"
+      <view  v-for="option in innerOpts" :key="option.label"
         :class="[ 'tab_item flex_center_row', { cur: checked.includes(option.value) }]"
         @click="onChecked(option)" >
 
@@ -49,11 +49,20 @@ const props = withDefaults(defineProps<{
 
 const checked: Ref<unknown[]> = ref([]);
 const allClicked = ref(false)
-if(props.type) {
-  store.fetchDictionary(props.type).then(options => {
-    props.options.push(...options)
-  })
-}
+
+
+const innerOpts = ref<GasOption[]>([]);
+onMounted(() => {
+  if(props.type) {
+    store.fetchDictionary(props.type).then(list => {
+      innerOpts.value = [...list]
+    })
+  } else if(props.options.length) {
+    innerOpts.value = [...props.options]
+  }
+})
+
+
 
 watch(() => props.modelValue, (val) => {
  if(!val || !val.length) {
@@ -76,8 +85,8 @@ const clickAll = () => {
   allClicked.value = !allClicked.value;
   // 选中全部
   if(allClicked.value) {
-    checked.value = props.options.map(o => o.value)
-    emits("change", props.options);
+    checked.value = innerOpts.value.map(o => o.value)
+    emits("change", innerOpts.value);
   }
   // 反选 
   else {

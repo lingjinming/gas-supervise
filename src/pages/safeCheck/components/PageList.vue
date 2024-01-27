@@ -1,8 +1,40 @@
 <template>
-  <view class="page-warpper">
+  <gas-table ref="table" 
+    :apiFun="getSafeCheckTaskPage"
+    :query="state.query"
+    >
+    <template #item="{info}">
+      <SafeCheckTaskPageItem  :info="info" ></SafeCheckTaskPageItem>
+    </template>
+    <template #search>
+      <!-- 所属区域 -->
+    <check-group
+      useAll
+      v-model="state.query.districtId"
+      title="所属区域"
+      type="district"
+    ></check-group>
+    <!-- 企业类型 -->
+    <check-group
+      useAll
+      v-model="state.query.targetType"
+      title="企业类型"
+      type="SAFE_CHECK_TARGET_TYPE"
+    ></check-group>
+    <!-- 是否有隐患 -->
+    <check-group
+      useAll
+      v-model="state.query.checkState"
+      title="检查结果"
+      type="SAFE_CHECK_TASK_STATE"
+    ></check-group>
+     
+    </template>
+  </gas-table>
+
+
+  <!-- <view class="page-warpper">
     <view class="keyword">
-      <!-- 关键字查询 -->
-      <!-- <uni-search-bar placeholder="输入企业名称或地址" bgColor="#fff" cancel-button="none" clearButton="none"  v-model="state.query.keyword" /> -->
       <uni-easyinput prefixIcon="search" v-model="state.query.keyword" placeholder="输入企业名称或地址" @confirm="search"></uni-easyinput>
     </view>
     <view class="top">
@@ -32,7 +64,6 @@
   <view class="opts">
     <view class="button" @click="goCreateSafeCheck"><van-icon name="plus" class="icon"/>新建检查</view>
   </view>
-   <!-- 搜索面板 -->
    <van-popup
       :show="state.showQuery"
       position="top"
@@ -41,33 +72,31 @@
       custom-style="padding: 30rpx"
       @close="closeSearch"
     >
-    <!-- 所属区域 -->
     <check-group
       useAll
       v-model="state.query.districtId"
       title="所属区域"
       type="district"
     ></check-group>
-    <!-- 企业类型 -->
     <check-group
       useAll
       v-model="state.query.targetType"
       title="企业类型"
       type="SAFE_CHECK_TARGET_TYPE"
     ></check-group>
-    <!-- 是否有隐患 -->
     <check-group
       useAll
       v-model="state.query.checkState"
       title="检查结果"
       type="SAFE_CHECK_TASK_STATE"
     ></check-group>
-      <!-- 确定 -->
     <view class="bottom">
       <button plain="true" @click="resetQuery" class="btn reset">重置</button>
       <button plain="true" @click="doQuery" class="btn query">查询</button>
     </view>
-  </van-popup>
+  </van-popup> -->
+
+  
 </template>
 <script setup lang="ts">
 import SafeCheckTaskPageItem from './PageItem.vue'

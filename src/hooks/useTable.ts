@@ -3,7 +3,7 @@ import { reactive, shallowRef, triggerRef, watch } from "vue";
 
 
 
-type ApiType<T> = (params: any) => Promise<BasePageResponse<T>>;
+export type ApiType<T> = (params: any) => Promise<BasePageResponse<T>>;
 
 type TableOptions = {
   minTime?: number;
