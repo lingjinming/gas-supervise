@@ -67,6 +67,7 @@ onMounted(() => {
 watch(() => props.modelValue, (val) => {
  if(!val || !val.length) {
   checked.value = []
+  allClicked.value = false
  }
 })
 

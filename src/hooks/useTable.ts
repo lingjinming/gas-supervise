@@ -75,7 +75,7 @@ export const useTable = <T>(
   const page = params.page || 1;
   const size = params.size || 10;
   // we keep the original params
-  const initParm = { ...toRaw(params) };
+  let initParm : any | undefined = undefined;
 
   const noData = ref(false);
   const loading = ref(false);
@@ -181,6 +181,10 @@ export const useTable = <T>(
   };
 
   const margeParam = () => {
+    // 保存初始查询参数
+    if(!initParm) {
+      initParm = {...toRaw(state.searchParam)};  
+    }
     return {
       ...initParm,
       ...toRaw(state.searchParam),

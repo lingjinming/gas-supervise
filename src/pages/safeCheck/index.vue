@@ -10,14 +10,15 @@
 </template>
 <script setup lang="ts">
 import SafeCheckTaskPageList from './components/PageList.vue'
+import type { SafeCheckTaskPageQueryCheckType} from '@/api/gen/data-contracts'
 
-const type = ref('');
 
 let activeTab = ref("全部");
 const onChangeTab = ({ name }) => {
   activeTab.value = name;
 };
 
+const type = ref<SafeCheckTaskPageQueryCheckType>('SPECIAL');
 onLoad((params) => {
   type.value = params?.type
   const title = type.value === 'DAILY' ? '日常安全检查' : type.value === 'SPECIAL' ? '专项安全检查' : '三方安全评价'

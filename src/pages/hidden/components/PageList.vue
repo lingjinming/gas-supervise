@@ -123,9 +123,9 @@ const {
 
 
 onMounted(() => {
-  console.log('onMounted')
   uni.$on(EventType.DANGER_PAGE_REFRESH, search);
   const fromState = props?.state;
+  // @ts-ignore
   state.query.mine = props?.mine;
   if(fromState === 'ALL') {
     state.query.state = []

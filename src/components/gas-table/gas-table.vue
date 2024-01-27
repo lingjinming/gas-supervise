@@ -1,21 +1,21 @@
 <template>
 <view class="page-warpper">
-  <view class="keyword">
-      <!-- 关键字查询 -->
-      <uni-easyinput prefixIcon="search"  placeholder="输入企业名称或地址" ></uni-easyinput>
+  <!-- 关键字查询 -->
+  <view class="keyword" v-if="keyword">
+      <uni-easyinput prefixIcon="search" v-model="query.keyword" :placeholder="keyword" />
   </view>
   <view class="top">
     <slot name="top" :total="total">
       <text>
-        <text class="total">{{ total }}</text>条检查记录
+        <text class="total">{{ total }}</text>条记录
       </text>
-      <view @click="showQuery = true" class="search">
+      <view @click="showQuery = true" class="search" v-if="$slots['search']">
         筛选<van-icon name="arrow-down" />
       </view>
     </slot>
   </view>
   <scroll-view
-      :style="listHeight"
+      :style="scrollViewStyle"
       scroll-y="true"
       class="scroll-Y"
       @scrolltolower="nextPage"
@@ -42,43 +42,49 @@
     <slot name="search"></slot>
      <!-- 确定 -->
      <view class="bottom">
-      <button plain="true"  class="btn reset">重置</button>
-      <button plain="true"  class="btn query">查询</button>
+      <button plain="true" @click="resetQuery" class="btn reset">重置</button>
+      <button plain="true" @click="doQuery" class="btn query">查询</button>
     </view>
 </van-popup>
 </template>
 <script setup lang="ts">
 import { useTable } from '@/hooks/useTable';
 import type { ApiType } from '@/hooks/useTable';
-import { useSlots } from 'vue';
+
+
 const props = defineProps({
+  /* 接口请求方法 */
   apiFun: {
     type: Function as PropType<ApiType<any>>,
     required: true
   },
+  /* 分页查询参数 */
   query: {
     type: Object,
     default: () => ({})
   },
+  /* 顶部展示关键字搜索 */
+  keyword: {
+    type: String,
+    default: () => ''
+  },
+  /* 组件挂载后自动请求分页数据 */
   autoFetch: {
     type: Boolean,
     default: true
+  },
+  scrollViewStyle: {
+    type: String,
+    default: 'height: 75vh;'
   }
 });
 
-const showQuery = ref(false)
 
-const slots = useSlots();
-const listHeight = computed(() => {
-  if(!slots['bottom']) {
-    return 'height: 75vh;'
-  }
-  return 'height: 50vh;'
-})
 const {
   total,
   list,
   search,
+  reset,
   nextPage,
   triggered,
   onRefreshPulling,
@@ -91,18 +97,24 @@ onMounted(() => {
   }
 })
 
+const showQuery = ref(false)
 const closeSearch = () => {
   showQuery.value = false
 }
+const doQuery = () => {
+  search();
+  showQuery.value = false;
+}
+
+const resetQuery = () => {
+  props.query.keyword = '';
+  showQuery.value = false;
+  reset();
+}
+
 
 defineExpose({
-  total,
-  list,
-  search,
-  nextPage,
-  triggered,
-  onRefreshPulling,
-  onRefresh,
+  doQuery,
 })
 </script>
 <style lang="scss" scoped>
