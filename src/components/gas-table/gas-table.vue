@@ -2,7 +2,12 @@
 <view class="page-warpper">
   <!-- 关键字查询 -->
   <view class="keyword" v-if="keyword">
-      <uni-easyinput prefixIcon="search" v-model="query.keyword" :placeholder="keyword" />
+      <uni-easyinput 
+        prefixIcon="search" 
+        v-model="query.keyword" 
+        @clear="clearKeyword"
+        @confirm="search"
+        :placeholder="keyword" />
   </view>
   <view class="top">
     <slot name="top" :total="total">
@@ -31,7 +36,6 @@
       
   </scroll-view>
 </view>
-<slot name="bottom"> </slot>
 <van-popup
       :show="showQuery"
       position="top"
@@ -51,6 +55,8 @@
 import { useTable } from '@/hooks/useTable';
 import type { ApiType } from '@/hooks/useTable';
 
+
+console.log('gas-table setup')
 
 const props = defineProps({
   /* 接口请求方法 */
@@ -90,8 +96,11 @@ const {
   onRefreshPulling,
   onRefresh,
 } = useTable<any>(props.query,props.apiFun);
-
+onLoad(() => {
+  console.log ('gas-table on load')
+})
 onMounted(() => {
+  console.log ('gas-table on mounted')
   if (props.autoFetch) {
     search();
   }
@@ -106,12 +115,16 @@ const doQuery = () => {
   showQuery.value = false;
 }
 
+const clearKeyword = () => {
+  props.query.keyword = '';
+  search();
+}
+
 const resetQuery = () => {
   props.query.keyword = '';
   showQuery.value = false;
   reset();
 }
-
 
 defineExpose({
   doQuery,

@@ -1,8 +1,9 @@
 <template>
   <gas-table 
-    ref="tabelRef" 
+    ref="tabelRef"
+    keyword="请输入企业名称或地址"
     :autoFetch="false"
-    scrollViewStyle="height: 73vh;"
+    scrollViewStyle="height: 70vh;"
     :apiFun="getSafeCheckTaskPage" 
     :query="state.query"
     >
