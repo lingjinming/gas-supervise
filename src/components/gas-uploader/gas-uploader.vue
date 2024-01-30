@@ -33,46 +33,58 @@
   </view>
 </template>
 <script lang="ts" setup>
-import { uploadFile ,uploadfileAsync} from "@/hooks";
+import { uploadfileAsync} from "@/hooks";
 import { downloadFile} from "@/api/img";
 import { getFileExt,isImageFile } from '@/utils'
-import type {ResultFileUpdateResponseDTO,FileObj} from '@/api/gen/data-contracts'
-interface File{  
-  id?:string,
-  status?: 'uploading'|'down' | 'failed',
-  type: 'image' | 'media' | 'file'; 
-  name: string; 
-  size: number; 
-  time: number; 
-  url: string;
-  tempFilePath: string;
-  // 图片附件时
-  thumb: string;
-}
+import  type { LocalFile,FileObj ,AcceptType} from './index'
+
 const emits = defineEmits(["update:modelValue"]);
-const props = withDefaults(defineProps<{
-  modelValue: string[] | FileObj[],
-  label?: string,
-  accept?: 'image' | 'media' | 'file',
-  types: string[]
-}>(),{
-  label: '上传照片(最多3张)',
-  accept: 'image',
-  // @ts-ignore
-  types: ['jpg', 'jpeg', 'png', 'gif']
+const props = defineProps({
+  modelValue: {
+    type: Array as PropType<FileObj[]>,
+    required: true
+  },
+  label: {
+    type: String,
+    default: '上传照片(最多3张)'
+  },
+  // 上传文件类型
+  accept: {
+    type: String as PropType<AcceptType>,
+    default: 'image'
+  },
+  // 支持的文件扩展类型
+  types: {
+    type: Array as PropType<string[]>,
+    default: () => ['jpg', 'jpeg', 'png', 'gif']
+  }
 })
-const fileList = ref<File[]>([]);
+
+let isInternalChange = false;
+const fileList = ref<LocalFile[]>([]);
 watch(fileList,(newFils) => {
   let newFileIds = newFils.filter(f => f.id).map(({id,name,url}) => ({id,name,url}));
   emits("update:modelValue", newFileIds);
+  isInternalChange = true;
+})
+
+watch(() => props.modelValue,(newModelValue) => {
+  if(isInternalChange) {
+    isInternalChange = false;
+    return;
+  }
+  init();
+})
+
+onMounted(() => {
+  init();
 })
 
 
-onMounted(() => {
-  let reshowPromiseList:Promise<void>[] = []
-  // @ts-ignore
-  fileList.value = props?.modelValue?.map(({id,name,url}) => {
-    let item =  {  id, name, status: 'uploading', type: props.accept, size: 0,  time: 0, url: '',tempFilePath: '', thumb: ''}
+const init = () => {
+  let reshowPromiseList: Promise<void>[] = []
+  fileList.value = props.modelValue?.map(({id,name,url}) => {
+    let item : LocalFile =  {  id, name, status: 'uploading', type: props.accept, size: 0,  time: 0, url: '',tempFilePath: '', thumb: ''}
     // 对图片要反显出来
     if(isImageFile(id) && !url) {
       reshowPromiseList.push(downloadFile(id).then((tempPath) => {
@@ -92,16 +104,15 @@ onMounted(() => {
   Promise.all(reshowPromiseList).then(() => {
     fileList.value = [...fileList.value]
   })
-})
+}
 
-const deleteFile = (event: {detail: {index:number,file: File}}) => {
+const deleteFile = (event: {detail: {index:number,file: LocalFile}}) => {
   fileList.value = fileList.value.filter((_,i) => i !== event.detail.index)
 };
 
 
-const upload = async (event: {detail: {file: File[] | File}}) => {
+const upload = async (event: {detail: {file: LocalFile[] | LocalFile}}) => {
   let { file } = event.detail;
-  console.log(file)
   if(!Array.isArray(file)) {
     file['tempFilePath'] = file.url;
     file = [file]
@@ -117,6 +128,7 @@ const upload = async (event: {detail: {file: File[] | File}}) => {
   const uploadTasks = file.map(async (item) => {
     item.status = 'uploading'
     try {
+        // @ts-ignore
         const response = await uploadfileAsync(item);
         item.status = 'down';
         item.id = response.data.objectName;
@@ -135,7 +147,7 @@ const upload = async (event: {detail: {file: File[] | File}}) => {
   })
 };
 
-const validateFile = (file: File): boolean => {
+const validateFile = (file: LocalFile): boolean => {
   if(!file) return false;
   if(!props.types?.length) return true;
   const ext = getFileExt(file.tempFilePath);

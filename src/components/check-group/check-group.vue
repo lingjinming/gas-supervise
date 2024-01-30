@@ -10,7 +10,7 @@
       </template>
 
       <view  v-for="option in innerOpts" :key="option.label"
-        :class="[ 'tab_item flex_center_row', { cur: checked.includes(option.value) }]"
+        :class="[ 'tab_item flex_center_row', { cur: isChecked(option) }]"
         @click="onChecked(option)" >
 
         {{ option.label }}
@@ -25,11 +25,14 @@
 import { ref ,type Ref} from 'vue';
 import { userStore } from '@/state';
 
-
+type StringOrNumber = string | number;
 const store = userStore();
-const emits = defineEmits(["update:modelValue","change"]);
+const emits = defineEmits<{
+  (e: 'update:modelValue',modelValue: StringOrNumber[]): void,
+  (e: 'change',options: GasOption[]): void
+}>();
 const props = withDefaults(defineProps<{
-  modelValue: any[],
+  modelValue: StringOrNumber[],
   isColumn?: boolean,
   // 是否追加一个全部选项
   useAll?:  boolean,
@@ -46,55 +49,55 @@ const props = withDefaults(defineProps<{
   title: '多选',
   options: () => []
 })
-
-const checked: Ref<unknown[]> = ref([]);
+const innerOpts = ref<GasOption[]>([]);
+const checked: Ref<GasOption[]> = ref([]);
 const allClicked = ref(false)
 
+const isChecked = (option: GasOption) => {
+  return checked.value.includes(option);
+};
 
-const innerOpts = ref<GasOption[]>([]);
+
 onMounted(() => {
   if(props.type) {
     store.fetchDictionary(props.type).then(list => {
       innerOpts.value = [...list]
     })
   } else if(props.options.length) {
-    innerOpts.value = [...props.options]
+      innerOpts.value = [...props.options]
   }
 })
 
 
-
-watch(() => props.modelValue, (val) => {
- if(!val || !val.length) {
-  checked.value = []
-  allClicked.value = false
- }
+let isInternalChange = false; 
+watch(() => props.modelValue, (newModelValue) => {
+  if(isInternalChange) {
+    isInternalChange = false;
+    return;
+  }
+  checked.value = innerOpts.value.filter(o => newModelValue?.includes(o.value));
+  allClicked.value = checked.value.length === innerOpts.value.length;
 })
+
+watch(checked,(current: GasOption[]) => {
+  emits("change", current);
+  emits("update:modelValue", current.map(o => o.value));
+  isInternalChange = true;
+})
+
 
 const onChecked = (option: GasOption) => {
   // 如果已经选中了 就给反选
-  if(checked.value.includes(option.value)) {
-    checked.value = checked.value.filter(o => o !== option.value);
+  if(isChecked(option)) {
+    checked.value = checked.value.filter(o => o !== option);
   } else {
-    checked.value  = [...checked.value, option.value]
+    checked.value  = [...checked.value, option]
   }
-  emits("update:modelValue", checked.value);
-  emits("change", [option]);
 };
 
 const clickAll = () => {
   allClicked.value = !allClicked.value;
-  // 选中全部
-  if(allClicked.value) {
-    checked.value = innerOpts.value.map(o => o.value)
-    emits("change", innerOpts.value);
-  }
-  // 反选 
-  else {
-    checked.value = []
-    emits("change", []);
-  }
-  emits("update:modelValue", checked.value);
+  checked.value = allClicked.value ? innerOpts.value : [];
 }
 
 </script>

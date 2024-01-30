@@ -19,7 +19,7 @@
             <view style="margin: 0rpx 30rpx;">
               <uni-easyinput  type="textarea" v-model="sub.dangerRemark" placeholder="请输入" maxlength="300"/>
             </view>
-            <van-uploader-new v-model="sub.dangerImgs" label="上传照片" class="upload"/>
+            <gas-uploader v-model="sub.dangerImgs" label="上传照片" class="upload"/>
             <van-cascader-new
               dicType="ENTERPRISE_USER"
               label="整改责任人"
@@ -137,7 +137,11 @@ const confirm = () => {
     }
   }
   // 保存
-  const checkItems = items.value.flatMap(e => e.list);
+  const checkItems = items.value.flatMap(e => e.list).map(item => {
+    // @ts-ignore
+    const dangerImgs = item?.dangerImgs?.map(e => e.id);
+    return ({...item,dangerImgs});
+  });
   const task :SafeCheckTaskCreateDTO = {...toRaw(props.target!),checkItems};
   emit('complate',task)
 }
@@ -151,10 +155,7 @@ const validate = (item: ItemType['list'][0]) =>  {
     if(!item.dangerImgs || item.dangerImgs.length === 0) {
       uni.showToast({ title: '请上传隐患照片', icon: 'none' })
       return false;
-    } else {
-      // @ts-ignore
-      item.dangerImgs = item.dangerImgs.map(e => e.id);
-    }
+    } 
     if(!item.rectifierPersonId) {
       uni.showToast({ title: '请选择整改责任人', icon: 'none' })
       return false;

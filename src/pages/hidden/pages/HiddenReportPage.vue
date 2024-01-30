@@ -15,7 +15,7 @@
       </view>
 
 
-      <van-uploader-new v-model="reportForm.fileIds"/>
+      <gas-uploader v-model="reportForm.fileIds"/>
       <van-cascader-new
         dicType="RISK_SUBJECT_TYPE_TREE"
         label="隐患类别"
@@ -124,8 +124,10 @@ watch(() => reportForm.value.orgId, (orgId) => {
 
 
 const submit = async () => {
+  const fileIds = reportForm.value.fileIds?.map((e) => e.id).join(",");
+  const form = {...reportForm.value, fileIds};
   // @ts-ignore
-  const result = Promise.resolve().then(() => isOrg ? postHidangerOrg(reportForm.value) : postHidangerGov(reportForm.value))
+  const result = Promise.resolve().then(() => isOrg ? postHidangerOrg(form) : postHidangerGov(form))
   useLoading(result,() => {
     uni.navigateBack();
   })

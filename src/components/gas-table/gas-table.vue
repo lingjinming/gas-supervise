@@ -20,9 +20,9 @@
     </slot>
   </view>
   <scroll-view
-      :style="scrollViewStyle"
+      :style="{ height: scrollViewHeight  }"
       scroll-y="true"
-      class="scroll-Y"
+      class="gas-table-sv"
       @scrolltolower="nextPage"
       refresher-enabled
       :refresher-triggered="triggered"
@@ -33,9 +33,16 @@
     <view v-for="(item, i) in list" :key="i" >
       <slot name="item" :info="item"></slot>
     </view>
-      
+    <view class="place" v-if="total">
+      {{ loading ? '加载中...' : '没有更多了' }}
+    </view>
   </scroll-view>
+  <!-- 底部按钮操作 -->
+  <view class="opt-bottom" v-if="$slots['bottom']">
+    <slot name="bottom"></slot>
+  </view>
 </view>
+<!-- 弹出查询 -->
 <van-popup
       :show="showQuery"
       position="top"
@@ -45,7 +52,7 @@
     >
     <slot name="search"></slot>
      <!-- 确定 -->
-     <view class="bottom">
+     <view class="search-bottom">
       <button plain="true" @click="resetQuery" class="btn reset">重置</button>
       <button plain="true" @click="doQuery" class="btn query">查询</button>
     </view>
@@ -54,9 +61,6 @@
 <script setup lang="ts">
 import { useTable } from '@/hooks/useTable';
 import type { ApiType } from '@/hooks/useTable';
-
-
-console.log('gas-table setup')
 
 const props = defineProps({
   /* 接口请求方法 */
@@ -79,12 +83,14 @@ const props = defineProps({
     type: Boolean,
     default: true
   },
-  scrollViewStyle: {
+  scrollHeight: {
     type: String,
-    default: 'height: 75vh;'
+    default: () => ''
   }
 });
-
+const instance = getCurrentInstance();
+const innerScrollHeight = ref(10);
+const scrollViewHeight = computed(() => props.scrollHeight || innerScrollHeight.value + 'px')
 
 const {
   total,
@@ -95,16 +101,55 @@ const {
   triggered,
   onRefreshPulling,
   onRefresh,
+  loading
 } = useTable<any>(props.query,props.apiFun);
-onLoad(() => {
-  console.log ('gas-table on load')
-})
+
+
+
+
+
 onMounted(() => {
-  console.log ('gas-table on mounted')
+  if(!props.scrollHeight) {
+    setupScroll();
+  }
   if (props.autoFetch) {
     search();
   }
 })
+
+onUnmounted(() => {
+  // clear observer
+  intersectionObserver?.disconnect();
+  intersectionObserver = undefined;
+})
+
+const slots = useSlots();
+const setupScroll = () => {
+  const res = uni.getSystemInfoSync()
+  // 窗口高度
+  const windowHeight = res.windowHeight;
+  let scrollQuery = uni.createSelectorQuery().in(instance).select(".gas-table-sv"); 
+  scrollQuery.boundingClientRect((data: any) => {
+    if(!data?.width) {
+      observerVisibleOnce();
+    } else {
+      const bottomHeight = slots.bottom ? uni.upx2px(150) : 0;
+      innerScrollHeight.value = windowHeight  - data.top - bottomHeight;
+    }
+  }).exec();
+}
+
+let intersectionObserver : UniApp.IntersectionObserver | undefined = undefined;
+const observerVisibleOnce = () => {
+  intersectionObserver = uni.createIntersectionObserver(instance);
+  intersectionObserver.relativeToViewport().observe('.gas-table-sv', (res) => {
+    if(res.intersectionRatio > 0) {
+      intersectionObserver?.disconnect();
+      intersectionObserver = undefined;
+      setupScroll();
+    }
+  })
+}
 
 const showQuery = ref(false)
 const closeSearch = () => {
@@ -125,74 +170,73 @@ const resetQuery = () => {
   showQuery.value = false;
   reset();
 }
+const closeQuery = () => {
+  showQuery.value = false;
+}
+const openQuery = () => {
+  showQuery.value = true;
+}
 
 defineExpose({
   doQuery,
+  closeQuery,
+  openQuery
 })
 </script>
 <style lang="scss" scoped>
-  .page-warpper{
-    margin: 0 30rpx;
-    .keyword {
-      margin-top: 24rpx;
-    }
-    .top {
-      line-height: 100rpx;
-      position: relative;
+.page-warpper{
+  margin: 0 30rpx;
+  .keyword {
+    margin-top: 24rpx;
+  }
+  .top {
+    line-height: 100rpx;
+    position: relative;
 
-      .total {
-        font-weight: 700;
-        padding: 0 8rpx;
-      }
+    .total {
+      font-weight: 700;
+      padding: 0 8rpx;
+    }
 
-      .search {
-        position: absolute;
-        top: 0rpx;
-        bottom: 0rpx;
-        right: 0rpx;
-        margin: auto;
-        width: 129rpx;
-        height: 52rpx;
-        background-color: #fff;
-        text-align: center;
-        border-radius: 26rpx;
-        line-height: 50rpx;
-      }
+    .search {
+      position: absolute;
+      top: 0rpx;
+      bottom: 0rpx;
+      right: 0rpx;
+      margin: auto;
+      width: 129rpx;
+      height: 52rpx;
+      background-color: #fff;
+      text-align: center;
+      border-radius: 26rpx;
+      line-height: 50rpx;
     }
-    .check-page-item {
-      // 给最后一个元素 添加底部边距
-      &:is(:last-child) {
-        margin-bottom: 100rpx
-      }
-    }
+  }
+
+  .place {
+    height: 70rpx;
+    width: 100%;
+    text-align: center;
+    line-height: 70rpx;
+    color: #a7a7a7;
     
   }
-  .opts {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 120rpx;
-      width: 100%;
-      background-color: #fff;
-      padding: 30rpx;
-      .button {
-        width: 90%;
-        height: 88rpx;
-        border: 1px solid #868686;
-        border-radius: 10rpx;
-
-        font-size: 32rpx;
-        font-weight: 500;
-        color: #222222;
-        line-height: 88rpx;
-        text-align: center;
-        .icon {
-          margin-right: 15rpx
-        }
-      }
-  }
-.bottom {
+  
+}
+.opt-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 150rpx;
+  width: 100%;
+  background-color: #fff;
+  // 内部元素居中
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.search-bottom {
   @include flex-between;
   margin-top: 20rpx;
 

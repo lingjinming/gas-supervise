@@ -226,7 +226,6 @@ const closeComment = () => {
 };
 // 提交领导评论
 const submitLeaderComment = async () => {
-  console.log(data.commentBody);
   try {
     loading.value = true;
     await postHidangerGovLeaderComment(data.commentBody);

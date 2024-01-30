@@ -1,17 +1,17 @@
 <template>
   <!-- 操作步骤 -->
   <view class="step-box">
-    <view @click="changeStep(0)" :class="[currentStep >= 0 ? 'act' : '','item']">
+    <view :class="[currentStep >= 0 ? 'act' : '','item']">
       <van-icon class="icon" color="#fff" name="aim" />选择检查对象
     </view>
     <van-icon name="arrow" class="arrow" />
-    <view @click="changeStep(1)" :class="[currentStep >= 1 ? 'act' : '','item']">
+    <view  :class="[currentStep >= 1 ? 'act' : '','item']">
       <van-icon class="icon" color="#fff" name="edit" />填写检查内容
     </view>
     <!-- 三方安全评价多一个步骤 -->
     <template v-if="isThird">
       <van-icon name="arrow"  />
-      <view @click="changeStep(2)" :class="[currentStep >= 2 ? 'act' : '','item']">
+      <view :class="[currentStep >= 2 ? 'act' : '','item']">
         <van-icon class="icon" color="#fff" name="award-o" />填写检查评价
       </view>
     </template>
@@ -19,14 +19,15 @@
   <view class="swiper-container">
     <swiper 
       class="swiper" 
-      :disable-touch="true" 
+      :disable-touch="true"
+      :touchable="false"
       :circular="false" 
       :indicator-dots="false" 
       :autoplay="false"
       :current="currentStep" 
       @change="changeStep($event.detail.current)">
       <!-- 选择检查对象 -->
-      <swiper-item class="target">
+      <swiper-item @touchmove.stop="stopTouchMove" class="target">
         <van-field required label="检查对象" @click-input="goSelectTarget"  right-icon="arrow" >
           <input slot="input" disabled style="width: 100%" :value="form.targetName" placeholder="点击选择" />
         </van-field>
@@ -45,11 +46,12 @@
         </view>
       </swiper-item>
       <!-- 填写检查内容 -->
-      <swiper-item>
+      <swiper-item @touchmove.stop="stopTouchMove">
         <CreateSafeCheck :target="form" :topic="topicId" @complate="checkComplate" @goback="changeStep(0)"></CreateSafeCheck>
       </swiper-item>
+      <!-- 第三方评价 -->
       <template v-if="isThird">
-        <swiper-item>
+        <swiper-item @touchmove.stop="stopTouchMove">
           <view class="third">
             <van-picker-new required  :options="levelOptions" label="安全等级"  title="安全等级" v-model="form.safeLevel" />
             <view class="sub-item-title">评价总结</view>
@@ -112,25 +114,12 @@ const changeStep = (setp: number) => {
 }
 
 const goToDoCheck = () => {
-  // 校验是否选择检查对象
-  if(!form.value.districtId) {
-    uni.showToast({
-      title: '请选择检查对象',
-      icon: 'none'
-    })
-    return;
+  if(validatorCheckTarget()) {
+    changeStep(1);
   }
-  // 校验是否选择检查主题
-  if(!topicId.value) {
-    uni.showToast({
-      title: '请选择检查主题',
-      icon: 'none'
-    })
-    return;
-  }
-  changeStep(1);
 }
 
+const stopTouchMove = () => false;
 // 选择检查对象
 const goSelectTarget = () => {
   uni.navigateTo({
@@ -157,6 +146,9 @@ const goSelectTarget = () => {
               value: item.uid
             }
           })
+          if(!topicOptions.value.length) {
+            uni.showToast({ title: '该检查对象类型未配置检查主题', icon: 'none' })
+          }
         })
       }
     }
@@ -221,6 +213,27 @@ const levelOptions = ref<GasOption[]>([
     value: 'D'
   }
 ])
+
+
+const validatorCheckTarget = (): boolean => {
+  // 校验是否选择检查对象
+  if(!form.value.districtId) {
+      uni.showToast({
+        title: '请选择检查对象',
+        icon: 'none'
+      })
+      return false;
+    }
+    // 校验是否选择检查主题
+    if(!topicId.value) {
+      uni.showToast({
+        title: '请选择检查主题',
+        icon: 'none'
+      })
+      return false;
+    }
+    return true;
+}
 </script>
 <style lang="scss" scoped>
 .step-box {

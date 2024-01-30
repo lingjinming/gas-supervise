@@ -29,8 +29,8 @@ onLoad((params) => {
 
 
 let activeTab = ref("全部");
-const onChangeTab = ({ name }) => {
-  activeTab.value = name;
+const onChangeTab = (e:{detail:{index:number,name: string,title: string}}) => {
+  activeTab.value = e?.detail.name;
 };
 
 

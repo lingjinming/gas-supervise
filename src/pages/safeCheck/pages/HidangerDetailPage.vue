@@ -8,6 +8,7 @@
 <script setup lang="ts">
 import {EventType} from '../event'
 import type {SafeCheckTaskItemDetailDTO} from '@/api/gen/data-contracts'
+import { useEventChannel } from '@/hooks/useEventChannel';
 
 const detail = ref<SafeCheckTaskItemDetailDTO|undefined>(undefined)
 
@@ -32,13 +33,10 @@ const fields = [{
   isImg: true,
   prop: 'handleImgs'
 }]
-onLoad((params) => {
-  const _this = getCurrentInstance();
-  // @ts-ignore
-  const eventChannel = _this!.ctx.getOpenerEventChannel();
-  eventChannel && eventChannel.on(EventType.SHOW_HIDANGER_DETAIL, ({ formData }) => {
+onLoad(() => {
+  const {on} = useEventChannel();
+  on(EventType.SHOW_HIDANGER_DETAIL, ({ formData }) => {
     detail.value = formData;
-    console.log(formData)
   });
 })
 

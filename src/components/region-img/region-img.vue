@@ -1,5 +1,5 @@
 <template>
-  <image  v-if="isImg" class="image" lazy-load :src="imgSrc"  mode="scaleToFill" @click="previewImage" />
+  <image  v-if="isImg" class="image"  :src="imgSrc"  mode="scaleToFill" @click="previewImage" />
   <text   v-else class="file-txt" @click="previewFile">{{ fileName }}</text>
 </template>
 <script lang="ts" setup>
@@ -18,8 +18,7 @@ const props = withDefaults(defineProps<{
   disabledPreview: false
 })
 // 是否是图片
-const isImg = computed(() => props.fileName&&isImageFile(props.fileName))
-
+const isImg = computed(() => props.id&&isImageFile(props.id))
 /**
  *  https://aiot.citysafety.com/gasguard/gas-supervise/open/download/{fileId}
  *  后端nginx转发,不再下载之后base64了;

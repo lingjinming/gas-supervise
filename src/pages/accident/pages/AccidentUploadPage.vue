@@ -10,7 +10,7 @@
         </uni-forms-item>
       </view>
     </uni-forms>
-    <van-uploader-new accept="file" :types="['doc','docx','pdf']"  label="事故事件报告" v-model="form.fileIds" />
+    <gas-uploader accept="file" :types="['doc','docx','pdf']"  label="事故事件报告" v-model="form.fileIds" />
     <view class="required">*请上传事故事件报告</view>
   </view>
   <view class="info">
@@ -24,20 +24,20 @@
 <script setup lang="ts">
 import { postAccidentAdd, postAccidentUpdate } from '@/api/gen/GasSuperviseApi'
 import { useLoading } from '@/hooks/useLoading';
+import { useEventChannel } from '@/hooks/useEventChannel';
 import { EventType } from '../event'
 
 const form = ref<any>({
   uid: '',
   describe: '',
-  fileIds: ''
+  fileIds: []
 }); 
 
-onLoad((params) => {
-  const _this = getCurrentInstance();
-  // @ts-ignore
-  const eventChannel = _this!.ctx.getOpenerEventChannel();
-  eventChannel && eventChannel.on("accidentFileUpload", ({ formData }) => {
+onLoad(() => {
+  const { on } = useEventChannel();
+  on(EventType.ON_UPLOAD_FILE, ({ formData }) => {
     form.value = formData;
+    console.log(form.value)
   });
 })
 
@@ -45,7 +45,7 @@ const saveOrUpdate = () => {
   const isValid = validate();
   if (!isValid) return;
   const isUpdate = !!form.value.uid;
-  const fileIds = form.value.fileIds.map(e => e.id).join(",");
+  const fileIds = form.value.fileIds.map(e => e.id);
   const formData = {...form.value, fileIds}
   const result = Promise.resolve().then(() => {
     return isUpdate ? postAccidentUpdate(formData) : postAccidentAdd(formData)

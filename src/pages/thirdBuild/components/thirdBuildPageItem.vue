@@ -53,7 +53,7 @@ const isOk = (value: string|undefined) => {
 </script>
 <style lang="scss" scoped>
 .container{
-  margin: 30rpx ;
+  margin:  30rpx 0rpx;
   height: 200rpx;
   background: #fff;
   border-radius: 4rpx;

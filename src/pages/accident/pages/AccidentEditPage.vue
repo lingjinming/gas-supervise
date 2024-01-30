@@ -2,7 +2,7 @@
   <van-field required label="位置" @click-input="openMapAndChooseLocation" right-icon="location-o" >
     <input slot="input" disabled style="width: 100%" :value="form.address" placeholder="请选择" />
   </van-field>
-  <van-picker-new required dicType="org" :defaultValue="form.orgId" label="所属燃气公司" title="所属燃气公司" v-model="form.orgId" />
+  <van-picker-new required dicType="org"  label="所属燃气公司" title="所属燃气公司" v-model="form.orgId" />
   <van-picker-new required dicType="ACCIDENTLEVEL" label="事故等级" title="事故等级" :defaultValue="form.accidentLevel" v-model="form.accidentLevel" />
   <van-picker-new  required dicType="sp_accident_type" label="事故类型" title="事故类型" :defaultValue="form.accidentType"  v-model="form.accidentType" />
   <van-picker-new  required dicType="sp_accident_scene" label="事故场景" title="事故场景" :defaultValue="form.accidentScene"  v-model="form.accidentScene" />
@@ -44,8 +44,10 @@
 import { useMap } from '@/hooks/useMap';
 import type {UpdateAccidentQuery} from '@/api/gen/data-contracts'
 import WxValidate from '@/utils/validate/WxValidate'
-let validator: WxValidateType<UpdateAccidentQuery> | null = null;
+import { useEventChannel } from '@/hooks/useEventChannel';
+import { EventType } from "../event";
 
+let validator: WxValidateType<UpdateAccidentQuery> | null = null;
 
 const form = ref<UpdateAccidentQuery>({
   districtId: '',
@@ -69,12 +71,10 @@ onLoad((params) => {
   validator = new WxValidate(rules, message);
   // 编辑
   if(params?.accidentId) {
-    const _this = getCurrentInstance();
-    // @ts-ignore
-    const eventChannel = _this!.ctx.getOpenerEventChannel();
-    eventChannel && eventChannel.on("editAccident", ({formData}) => {
-      form.value = formData
-    });
+    const { on } = useEventChannel();
+    on(EventType.ON_EDIT_ACCIDENT,({formData}) => {
+      form.value = formData;
+    })
   }
   // 新增 
   else {
@@ -90,7 +90,7 @@ const nextStep = () => {
     uni.navigateTo({
     url: '/pages/accident/pages/AccidentUploadPage',
     success: (res) => {
-      res.eventChannel.emit('accidentFileUpload', { formData: form.value })
+      res.eventChannel.emit(EventType.ON_UPLOAD_FILE, { formData: form.value })
     }
   })
   } else {

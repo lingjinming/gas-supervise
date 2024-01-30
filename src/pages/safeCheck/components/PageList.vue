@@ -3,9 +3,8 @@
     ref="tabelRef"
     keyword="请输入企业名称或地址"
     :autoFetch="false"
-    scrollViewStyle="height: 70vh;"
     :apiFun="getSafeCheckTaskPage" 
-    :query="state.query"
+    :query="query"
     >
     <template #item="{ info }">
       <SafeCheckTaskPageItem :info="info"></SafeCheckTaskPageItem>
@@ -13,17 +12,17 @@
 
     <template #search>
       <!-- 所属区域 -->
-      <check-group useAll v-model="state.query.districtId" title="所属区域" type="district"></check-group>
+      <check-group useAll v-model="query.districtId" title="所属区域" type="district"></check-group>
       <!-- 企业类型 -->
-      <check-group useAll v-model="state.query.targetType" title="企业类型" type="SAFE_CHECK_TARGET_TYPE"></check-group>
+      <check-group useAll v-model="targetBigType" title="企业类型" type="SAFE_CHECK_TARGET_TYPE" @change="targetTypeChange"></check-group>
       <!-- 是否有隐患 -->
-      <check-group useAll v-model="state.query.checkState" title="检查结果" type="SAFE_CHECK_TASK_STATE"></check-group>
+      <check-group useAll v-model="query.checkState" title="检查结果" type="SAFE_CHECK_TASK_STATE"></check-group>
 
     </template>
+    <template #bottom>
+      <view class="button" @click="goCreateSafeCheck"><van-icon name="plus" class="icon"/>新建检查</view>
+    </template>
   </gas-table>
-  <view class="opts">
-    <view class="button" @click="goCreateSafeCheck"><van-icon name="plus" class="icon"/>新建检查</view>
-  </view>
 
 </template>
 <script setup lang="ts">
@@ -33,32 +32,34 @@ import type { SafeCheckTaskPageQuery ,SafeCheckTaskPageQueryCheckType} from '@/a
 import { EventType } from '../event'
 
 const props = defineProps<{ checkType: SafeCheckTaskPageQueryCheckType, mine: boolean }>()
-const state = reactive({
-  showQuery: false,
-  query: <SafeCheckTaskPageQuery>{
+const targetBigType = ref([])
+const query = reactive<SafeCheckTaskPageQuery>({
     keyword: '',
     targetType: [],
     checkState: [],
     districtId: '',
     checkType: [],
     mine: props.mine,
-  }
 })
 
 const tabelRef = ref<any>(null);
-const query = () => {
+const tableQuery = () => {
   tabelRef.value?.doQuery() 
 }
 onMounted(() => {
-  uni.$on(EventType.REFRESH_PAGE, query);
-  state.query.checkType = [props.checkType]
-  query();
+  uni.$on(EventType.REFRESH_PAGE, tableQuery);
+  query.checkType = [props.checkType]
+  tableQuery();
 })
 
 onUnmounted(() => {
-  uni.$off(EventType.REFRESH_PAGE, query)
+  uni.$off(EventType.REFRESH_PAGE, tableQuery)
 })
 
+const targetTypeChange = (options: GasOption[]) => {
+  // @ts-ignore
+  query.targetType = options.flatMap(o => o.children?.map(c => c.value) ?? [])
+}
 
 
 const goCreateSafeCheck = () => {
@@ -74,17 +75,7 @@ const goCreateSafeCheck = () => {
 </script>
 <style lang="scss" scoped>
 
-.opts {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 120rpx;
-  width: 100%;
-  background-color: #fff;
-  padding: 30rpx;
-
-  .button {
+.button {
     width: 90%;
     height: 88rpx;
     border: 1px solid #868686;
@@ -100,6 +91,5 @@ const goCreateSafeCheck = () => {
       margin-right: 15rpx
     }
   }
-}
 
 </style>

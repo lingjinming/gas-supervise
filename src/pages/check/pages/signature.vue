@@ -100,8 +100,6 @@ const autographClick = (type) => {
       success: function (res) {
         let canvas = uni.createSelectorQuery().select(".form-content__canvas");
         canvas.boundingClientRect().exec(function (data) {
-          console.log("canvas", data);
-          console.log("canvas wh:" + data[0].width + "X" + data[0].height);
           let canvasw = Math.ceil(data[0].width);
           let canvash = Math.ceil(data[0].height);
           canvasCtx.fillStyle = "#fff";
@@ -123,7 +121,6 @@ const autographClick = (type) => {
       success: function (res) {
         let canvas = uni.createSelectorQuery().select(".form-content__canvas");
         canvas.boundingClientRect().exec(function (data) {
-          console.log("canvas saveSign:", data[0].width + "X" + data[0].height);
           let canvasw = Math.ceil(data[0].width);
           let canvash = Math.ceil(data[0].height);
           uni.canvasToTempFilePath({

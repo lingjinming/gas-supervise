@@ -50,9 +50,9 @@
     </view>
   </view>
   <view class="tabs">
-    <van-tabs    :active="activeTab" @change="onChangeTab">
+    <van-tabs  :active="activeTab"  @change="onChangeTab">
       <scroll-view style="height: 650rpx" scroll-y="true" class="scroll-Y container">
-        <van-tab title="看护记录">
+        <van-tab title="看护记录" name="看护记录">
           <van-empty v-if="!state.info.guardList?.length" description="暂无数据"></van-empty>
           <view v-else>
             <view class="flow-node" v-for="item in state.info.guardList" :key="item.uid">
@@ -75,7 +75,7 @@
           </view>
         
         </van-tab>
-        <van-tab title="资料详情">
+        <van-tab title="资料详情" name="资料详情">
           <!-- 第三方施工信息 -->
           <view class="info-form">
             <view class="title">第三方施工信息</view>
@@ -204,22 +204,26 @@ const state = reactive({
 
 onLoad((options) => {
   state.uid = options!.uid
-  getDetail(options!.uid);
+  getDetail();
+  uni.$on(EventType.THIRD_BUILD_REFRESH,getDetail)
 });
-uni.$on(EventType.THIRD_BUILD_REFRESH,function(data){
-  if(state.uid) {
-    getDetail(state.uid)
-  }
+onUnload(() => {
+  uni.$off(EventType.THIRD_BUILD_REFRESH,getDetail)
 })
 
-let activeTab = ref(0);
-const onChangeTab = ({ name }) => {
-  activeTab.value = name;
+let activeTab = ref('看护记录');
+const onChangeTab = (e:{detail:{index:number,name: string,title: string}}) => {
+  activeTab.value = e?.detail.name;
 };
 
-const getDetail = async (uid: string) => {
-  const { data } = await getThirdBuildById(uid);
-  state.info = data!;
+const getDetail = async () => {
+  if(state.uid) {
+    const { data } = await getThirdBuildById(state.uid);
+    state.info = data!;
+    state.info.protocolPicIds = data.protocolPicIds;
+    state.info.reportPicIds = data.reportPicIds;
+    state.info.schemaPicIds = data.schemaPicIds;
+  }
 }
 // 跳转到编辑页面
 const goEdit = () => {
@@ -256,7 +260,7 @@ const goFinish = () => {
     success: function (res) {
       if (res.confirm) {
         putThirdBuildComplete({ids: [state.info.uid!]}).then(() => {
-          getDetail(state.info.uid!)
+          getDetail()
         })
       } 
     }

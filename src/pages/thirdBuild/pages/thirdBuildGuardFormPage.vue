@@ -12,7 +12,7 @@
       </uni-forms-item>
     </view>
     </uni-forms>
-    <van-uploader-new label="看护照片" v-model="data.form.picIds"/>
+    <gas-uploader label="看护照片" v-model="data.form.picIds"/>
     <view class="required">*需要上传人员旁站照片</view>
     
   </view>
@@ -42,7 +42,10 @@ import {postThirdBuild,postThirdBuildGuardByThirdBuildId} from '@/api/gen/GasSup
 const data = reactive({
   isInChain: false,
   thirdBuildUid: '',
-  form: <ThirdBuildGuardCreateDTO> {},
+  form: <ThirdBuildGuardCreateDTO> {
+    picIds: [],
+    remark: ''
+  },
   thirdBuildInfo: <ThirdBuildInfoCreateDTO>{},
   reportInfo: <ThirdBuildReportCreateDTO>{}
 })
@@ -63,16 +66,18 @@ onLoad(options => {
 })
 
 const save = async () => {
+  // @ts-ignore
+  const picIds = data.form?.picIds?.map(e => e.id);
   // 创建三方施工记录
   if(data.isInChain) {
-    const createResult = postThirdBuild({info: data.thirdBuildInfo,report: data.reportInfo,guard: data.form});
+    const createResult = postThirdBuild({info: data.thirdBuildInfo,report: data.reportInfo,guard: {remark: data.form.remark,picIds}});
     useLoading(createResult, () => {
       uni.reLaunch({  url: '/pages/thirdBuild/index'  })
     })
   }
   // 创建看护记录 
   else {
-    const createResult = postThirdBuildGuardByThirdBuildId(data.thirdBuildUid,data.form);
+    const createResult = postThirdBuildGuardByThirdBuildId(data.thirdBuildUid,{remark: data.form.remark,picIds});
     useLoading(createResult, () => {
       uni.$emit(EventType.THIRD_BUILD_REFRESH)
       uni.navigateBack();

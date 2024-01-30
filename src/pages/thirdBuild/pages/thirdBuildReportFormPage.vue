@@ -17,11 +17,11 @@
         maxlength="16"
       />
       <!-- 交底照片 -->
-      <van-uploader-new label="上传交底照片" v-model="data.form.reportPicIds"/>
+      <gas-uploader label="上传交底照片" v-model="data.form.reportPicIds"/>
       <!-- 管网保护方案照片 -->
-      <van-uploader-new label="上传管网保护方案照片" v-model="data.form.schemaPicIds"/>
+      <gas-uploader label="上传管网保护方案照片" v-model="data.form.schemaPicIds"/>
       <!-- 管网保护协议照片 -->
-      <van-uploader-new label="上传管网保护协议(施工方签字照片)" v-model="data.form.protocolPicIds"/>
+      <gas-uploader label="上传管网保护协议(施工方签字照片)" v-model="data.form.protocolPicIds"/>
       
     </van-cell-group>
   </view>
@@ -49,21 +49,21 @@
 </template>
 <script lang="ts" setup>
 import { reactive ,getCurrentInstance } from 'vue';
-import { userStore } from "@/state";
 import {EventType} from '@/enums/eventType'
 import {useLoading} from '@/hooks/useLoading'
 import type {  ThirdBuildReportCreateDTO,ThirdBuildInfoCreateDTO} from '@/api/gen/data-contracts'
 import {postThirdBuildReportByThirdBuildId} from '@/api/gen/GasSuperviseApi'
 
-const store =  userStore()
-const isOrg = store.isOrgUser
 
 const data = reactive({
   thirdBuildUid: '',
   isInChain: false,
   form: <ThirdBuildReportCreateDTO>{
     reporterName: '',
-    reporterPhone:  ''
+    reporterPhone:  '',
+    reportPicIds: [],
+    schemaPicIds:[],
+    protocolPicIds:[]
   },
   thirdBuildInfo: <ThirdBuildInfoCreateDTO>{}
 })
@@ -99,13 +99,16 @@ const nextStep = () => {
 const save = async() => {
   const hasParam = atLeastOneParam();
   if(!hasParam) {
-    uni.showToast({
-      title: '请至少填写一项',
-      icon: 'error'
-    });
+    uni.showToast({ title: '请至少填写一项', icon: 'error' });
     return;
   }
-  const result = postThirdBuildReportByThirdBuildId(data.thirdBuildUid,data.form);
+  // @ts-ignore
+  const reportPicIds = data.form.reportPicIds.map(e => e.id);
+  // @ts-ignore
+  const schemaPicIds = data.form.schemaPicIds.map(e => e.id);
+  // @ts-ignore
+  const protocolPicIds = data.form.protocolPicIds.map(e => e.id);
+  const result = postThirdBuildReportByThirdBuildId(data.thirdBuildUid,{...data.form,reportPicIds,schemaPicIds,protocolPicIds});
   useLoading(result, () => {
     uni.$emit(EventType.THIRD_BUILD_REFRESH)
     uni.navigateBack();

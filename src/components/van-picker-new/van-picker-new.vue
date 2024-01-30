@@ -18,15 +18,22 @@ import { userStore } from "@/state";
 
 const store = userStore()
 const emits = defineEmits(["update:modelValue"]);
-const props = withDefaults(defineProps<{
-  modelValue: string;
-  dicType: string;
-  defaultValue: string;
-  // 提供一组准备好的选项
-  options?: GasOption[];
-}>(),{
-  dicType: "",
-  defaultValue: "",
+
+
+const props = defineProps({
+  modelValue: {
+    // 字符串或者数字
+    type: [String, Number] as PropType<string | number>,
+    required: true
+  },
+  dicType: {
+    type: String,
+    default: () => ''
+  },
+  options: {
+    type: Array as PropType<GasOption[]>,
+    default: () => []
+  }
 })
 
 let isShow = ref(false);
@@ -40,7 +47,7 @@ const confirm = (e) => {
   pickerVal.value = value;
   isShow.value = false;
 };
-const findOption = (value: string) :GasOption | undefined => {
+const findOption = (value: string|number) :GasOption | undefined => {
   if(columns.value.length && value) {
     return columns.value.find(e => e.value === value)
   }
@@ -48,7 +55,7 @@ const findOption = (value: string) :GasOption | undefined => {
 // 初始化/options变更时反显
 const reshow = () => {
   if(columns.value.length && !pickerVal.value) {
-    let dicValue = props.modelValue || props.defaultValue;
+    let dicValue = props.modelValue ;
     let theDefault = findOption(dicValue);
     if(theDefault) {
       pickerVal.value = theDefault;

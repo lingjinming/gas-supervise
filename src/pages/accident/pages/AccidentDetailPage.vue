@@ -68,7 +68,7 @@ const goEdit = () => {
   uni.navigateTo({
     url: `/pages/accident/pages/AccidentEditPage?accidentId=${detail.value!.accidentId}`,
     success: (res) => {
-      res.eventChannel.emit('editAccident', { formData: detail.value })
+      res.eventChannel.emit(EventType.ON_EDIT_ACCIDENT,{ formData: detail.value })
     }
   });
 }

@@ -21,10 +21,9 @@
   </template>
 </template>
 <script setup lang="ts">
-import { useLoading } from '@/hooks/useLoading';
 import { getSafeCheckTaskByUid } from '@/api/gen/GasSuperviseApi';
-import type {SortedDTO,SafeCheckTaskItemDetailDTO} from '@/api/gen/data-contracts'
-import {EventType} from '../event'
+import type { SortedDTO,SafeCheckTaskItemDetailDTO } from '@/api/gen/data-contracts'
+import { EventType } from '../event'
 
 const list = ref<SortedDTO[]>([]);
 const title = ref('')
@@ -36,13 +35,13 @@ onLoad((params) => {
     const data = result.data
     if(data) {
       list.value = data.items;
+      // @ts-ignore
       title.value = data._targetType + '安全检查'
     }
   })
 }) 
 
 const goDangerDetail = (content: SafeCheckTaskItemDetailDTO) => {
-  
   uni.navigateTo({
     url: `/pages/safeCheck/pages/HidangerDetailPage`,
     success: (res) => {

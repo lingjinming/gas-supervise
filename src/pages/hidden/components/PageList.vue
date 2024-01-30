@@ -3,7 +3,6 @@
     ref="tabelRef"
     keyword="输入企业名称或地址"
     :autoFetch="false"
-    scrollViewStyle="height: 78vh;"
     :apiFun="getHidangerOrgPage" 
     :query="query"
     >

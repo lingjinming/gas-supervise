@@ -46,8 +46,6 @@ import { userStore } from "@/state";
 
 const store = userStore();
 if (store.isLogin) {
-  console.log("已经登录了");
-
   uni.switchTab({
     url: "/pages/index/index",
   });
