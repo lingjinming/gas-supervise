@@ -5,9 +5,11 @@
       class="scroll-Y"
     >
   <view class="check-container">
-    <view v-for="(item,index) in items" :key="index">
-      <view class="title">{{ item.checkItem }}</view>
-      <view class="category">
+    <view class="item" v-for="(item,index) in items" :key="index">
+      <view class="item-title">
+        {{ item.checkItem }}
+      </view>
+      <view class="list-container">
         <view class="sub-item" v-for="(sub,si) in item.list" :key="si">
           <view class="sub-item-title">{{ sub.checkContent }}</view>
           <!-- 是否有隐患 -->
@@ -20,14 +22,14 @@
               <uni-easyinput  type="textarea" v-model="sub.dangerRemark" placeholder="请输入" maxlength="300"/>
             </view>
             <gas-uploader v-model="sub.dangerImgs" label="上传照片" class="upload"/>
-            <van-cascader-new
+            <gas-cascader
               dicType="ENTERPRISE_USER"
               label="整改责任人"
               title="整改责任人"
               v-model="sub.rectifierPersonId"
               @selectFinish="(path) => onSelectedUser(sub,path)"
             />
-            <van-picker-new required  :options="deadlinOptions" label="整改期限"  title="整改期限" v-model="sub.deadlineDays" />
+            <gas-picker required  :options="deadlinOptions" label="整改期限"  title="整改期限" v-model="sub.deadlineDays" />
           </view>
         </view>
       </view>
@@ -172,42 +174,40 @@ const validate = (item: ItemType['list'][0]) =>  {
 <style lang="scss" scoped>
 .check-container {
   margin-top: 20rpx;
-
-  .category {
-    
+  .item {
     background-color: #fff;
-    margin-bottom: 20rpx;
-
-    .sub-item {
-      .sub-item-title {
-        padding: 0rpx 30rpx;
-        height: 60rpx;
-        line-height: 60rpx;
-      }
-      .option {
-        padding: 0rpx 30rpx;
-        padding-bottom: 20rpx;
-      }
-      .option:not(:last-child) {
-        border-bottom: 1rpx solid #E0E0E0;
-      }
-      .dangers {
-        .upload {
-          margin-left: -20rpx;
+    .item-title {
+      font-size: 28rpx;
+      font-weight: 500;
+      color: #222222;
+      background: linear-gradient(to bottom, transparent 50%, #E1EEFF 50%);
+      display: inline-block;
+      margin-left: 30rpx;
+    }
+    .list-container {
+      margin-bottom: 20rpx;
+      .sub-item {
+        .sub-item-title {
+          padding: 0rpx 30rpx;
+          height: 60rpx;
+          line-height: 60rpx;
+        }
+        .option {
+          padding: 0rpx 30rpx;
+          padding-bottom: 20rpx;
+        }
+        .option:not(:last-child) {
+          border-bottom: 1rpx solid #E0E0E0;
+        }
+        .dangers {
+          .upload {
+            margin-left: -20rpx;
+          }
         }
       }
     }
   }
-  .title {
-      background-color: #fff;
-      padding: 0rpx 30rpx;
-      height: 90rpx;
-      line-height: 90rpx;
-      font-size: 28rpx;
-      font-weight: 400;
-      color: #222222;
-      border-bottom: 1rpx solid #E0E0E0;
-    }
+  
 }
 .opts {
   position: fixed;

@@ -11,35 +11,31 @@
 
     <template #search>
       <!-- 施工类型 -->
-      <check-group
-        useAll
+      <gas-check-group
         v-model="query.buildType"
         title="施工类型"
         type="THIRD_BUILD_TYPE"
-      ></check-group>
+      ></gas-check-group>
       <!-- 施工状态 -->
-      <check-group
-        useAll
+      <gas-check-group
         v-model="query.buildStates"
         title="施工状态"
         type="RISK_THIRD_BUILD_STATE"
-      ></check-group>
+      ></gas-check-group>
       <!-- 交底状态 -->
-      <check-group
-        useAll
+      <gas-check-group
         v-model="query.reportStates"
         title="交底状态"
         type="RISK_THIRD_REPORT_STATE"
-      ></check-group>
+      ></gas-check-group>
       <!-- 看护状态 -->
-      <check-group
-        useAll
+      <gas-check-group
         v-model="query.guardStates"
         title="看护状态"
         type="RISK_THIRD_GUARD_STATE"
-      ></check-group>
+      ></gas-check-group>
       <!-- 所属企业(政府用户可见) -->
-      <van-picker-new
+      <gas-picker
         v-if="!isOrg"
         dicType="org"
         label="所属企业"

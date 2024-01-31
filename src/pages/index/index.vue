@@ -45,7 +45,7 @@
   </view>
 
   
-  <router-tab actPath="pages/index/index" />
+  <RouterTab actPath="pages/index/index" />
 </template>
 
 <script setup lang="ts">
@@ -53,6 +53,7 @@ import NoticePageItem from '@/pages/notice/components/NoticePageItem.vue'
 import { EventType } from "@/enums/eventType";
 import { getNoticeFn, notices } from "../notice";
 import { getHidangerMyUnhandledCnt } from '@/api/gen/GasSuperviseApi'
+import RouterTab from './components/router-tab.vue'
 
 const waitHandleCnt = ref(0);
 

@@ -59,7 +59,7 @@
         <view class="tab-detail-box">
           <text class="label">企业负责人签字:</text>
           <view class="img-box">
-            <region-img
+            <gas-attach
               :disabledPreview="true"
               v-if="order?.targetOrgMasterSign?.length"
               :id="order.targetOrgMasterSign[0]"
@@ -68,12 +68,12 @@
         <view class="tab-detail-box">
           <text class="label">检查人签字签字:</text>
           <view class="img-box">
-            <region-img
+            <gas-attach
               :disabledPreview="true"
               v-if="order?.expertSign?.length"
               :id="order.expertSign[0]"
             />
-            <region-img
+            <gas-attach
               :disabledPreview="true"
               v-if="order?.expertSign?.length"
               :id="order.expertSign[0]"

@@ -18,6 +18,7 @@
         </view>
       </view>
     </view>
+    <view class="place"></view>
   </template>
 </template>
 <script setup lang="ts">
@@ -78,16 +79,14 @@ const goDangerDetail = (content: SafeCheckTaskItemDetailDTO) => {
   background-color: #FFF;
   margin-bottom: 20rpx;
   .item-title {
-    font-size: 24rpx;
-    font-weight: 400;
+    font-size: 28rpx;
+    font-weight: 500;
     color: #222222;
     background: linear-gradient(to bottom, transparent 50%, #E1EEFF 50%);
     display: inline-block;
   }
   .content {
     margin: 29rpx 0rpx;
-    
-    // 除了最后一个元素,其他的都给加上border-bottom
     &:not(:last-child) {
       border-bottom: 1rpx solid #E0E0E0;
       padding-bottom: 25rpx;
@@ -95,9 +94,8 @@ const goDangerDetail = (content: SafeCheckTaskItemDetailDTO) => {
     .content-title {
       min-height: 27rpx;
       line-height: 26rpx;
-      font-size: 28rpx;
-      font-family: PingFang SC;
-      font-weight: 500;
+      font-size: 24rpx;
+      font-weight: 400;
       color: #2A2C32;
     }
     .result {
@@ -121,5 +119,10 @@ const goDangerDetail = (content: SafeCheckTaskItemDetailDTO) => {
       }
     }
   }
+}
+.place {
+  height: 100rpx;
+  width: 100%;
+  background-color: #F5F5F5;
 }
 </style>

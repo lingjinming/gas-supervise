@@ -40,7 +40,7 @@
         <van-field required label="详细地址" >
           <input slot="input" disabled v-model="form.address"  placeholder="选择或新建企业后自动带入"/>
         </van-field>
-        <van-picker-new required   label="检查主题" :options="topicOptions" title="检查主题" v-model="topicId" />
+        <gas-picker required   label="检查主题" :options="topicOptions" title="检查主题" v-model="topicId" />
         <view class="opts">
           <view class="button confirm" @click="goToDoCheck">下一步</view>
         </view>
@@ -53,7 +53,7 @@
       <template v-if="isThird">
         <swiper-item @touchmove.stop="stopTouchMove">
           <view class="third">
-            <van-picker-new required  :options="levelOptions" label="安全等级"  title="安全等级" v-model="form.safeLevel" />
+            <gas-picker required  :options="levelOptions" label="安全等级"  title="安全等级" v-model="form.safeLevel" />
             <view class="sub-item-title">评价总结</view>
             <view style="margin: 0rpx 30rpx;">
               <uni-easyinput  type="textarea" v-model="form.safeSummary" placeholder="请输入" maxlength="300"/>

@@ -11,7 +11,7 @@
     </template>
     <template #search>
       <!-- 隐患类型 -->
-      <van-cascader-new
+      <gas-cascader
         dicType="RISK_SUBJECT_TYPE_TREE"
         label="隐患类别"
         title="隐患类别"
@@ -19,7 +19,7 @@
         v-model:subjectType="query.subjectType"
       />
       <!-- 所属企业(政府用户可见) -->
-      <van-picker-new
+      <gas-picker
         v-if="!isOrg"
         dicType="org"
         label="所属企业"
@@ -27,19 +27,17 @@
         v-model="query.orgId"
       />
       <!-- 隐患来源 -->
-      <check-group
-        useAll
+      <gas-check-group
         type="RISK_DANGER_SOURCE"
         v-model="query.dangerSource"
         title="隐患来源"
-      ></check-group>
+      ></gas-check-group>
       <!-- 隐患级别 -->
-      <check-group
-        useAll
+      <gas-check-group
         v-model="query.level"
         title="隐患级别"
         type="RISK_DANGER_LEVEL"
-      ></check-group>
+      ></gas-check-group>
     </template>
   </gas-table>
 </template> 

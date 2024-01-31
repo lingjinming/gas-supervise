@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import { ref ,computed} from "vue";
-import { tabBar, globalStyle } from "../../pages.json";
+import { tabBar, globalStyle } from "../../../pages.json";
 import { userStore } from "@/state";
 const store =  userStore()
 

@@ -3,7 +3,7 @@
     <van-field required label="检查对象">
       <input slot="input"  v-model="form.targetName" placeholder="请输入" />
     </van-field>
-    <van-cascader-new
+    <gas-cascader
         dicType="SAFE_CHECK_TARGET_TYPE"
         label="检查对象类型"
         title="检查对象类型"

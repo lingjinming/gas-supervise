@@ -4,6 +4,7 @@ import { userStore } from "@/state";
 import type { DicItem, SysDictionaryResponse ,SysDistrictItem ,SysOrgItem} from './model/SysDictionary'
 import { getUserOrgEnterprise } from './gen/GasSuperviseApi';
 import type {OrganizationVO} from '@/api/gen/data-contracts'
+import type {PortalOrganization} from '@/api/model/UserAuth'
 
 
 /**
@@ -15,7 +16,14 @@ export const getDistrict = () => {
   })
 }
 
-
+/**
+ * 获取中台所有组织机构和用户
+ */
+export const portalAllOrgAndUser = () => {
+  return defHttp.get<{data: PortalOrganization[]}>({
+    url: "portal-system/v1/external/user/organization-user-tree"
+  },{isTransformResponse: false})
+}
 
 /**
  * 关联燃气公司
@@ -78,9 +86,9 @@ export const  fetchDictionary = async (dicType: string): Promise<GasOption[]> =>
   }
   // 企业用户
   if('ENTERPRISE_USER' === dicType) {
-    const result = await getUserOrgEnterprise()
-    // @ts-ignore
-    return mapUserTo(result.data)
+    const result = await portalAllOrgAndUser()
+    const userO = mapUserTo(result.data);
+    return userO
   }
   // 服务器列表下拉选
   if('SERVER_CONFIG' === dicType) {
@@ -114,24 +122,25 @@ const mapTo = (item: DicItem[]) : GasOption[] => {
  * 所有用户都应该挂在叶子节点上
  * 如果某个节点下的所有叶子节点都没有用户,则该节点不应该出现在树中
  */
-const mapUserTo = (orgList: OrganizationVO[])  => {
-  return  orgList?.map(o =>{
-    const item = {text: o.fullName, label: o.fullName, value: o.id,children: []}
-    if(o.children.length) {
-      // @ts-ignore 
-      item.children = mapUserTo(o.children);
-      if(!item.children.length) {
-        return undefined;
+const mapUserTo = (orgList: PortalOrganization[]) : GasOption[] => {
+  const list: GasOption[] = [];
+  for(let item of orgList) {
+    let option: GasOption = {text: item.fullName, label: item.fullName, value: item.id,children:[]}
+    // 是否有子部门
+    if(item?.children?.length) {
+      let children = mapUserTo(item.children)
+      if(children.length) {
+        option.children?.push(...children)
       }
-      return item;
+    } 
+    // 当前部门用户
+    if(item?.userList?.length) {
+      let userList = item.userList.map(u => ({text: u.name, label: u.name, value: u.userId}));
+      option.children?.push(...userList)
     }
-    // @ts-ignore 
-    if(o.userList?.length) {
-      // @ts-ignore 
-      item.children = o.userList.map(u => ({text: u.name, label: u.name, value: u.userId}));
-      // @ts-ignore 
-      return item;
+    if(option.children?.length) {
+      list.push(option)
     }
-    return undefined;
-  }).filter(e => e) || [];
+  }
+  return list;
 }

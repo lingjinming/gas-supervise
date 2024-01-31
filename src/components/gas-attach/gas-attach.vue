@@ -9,14 +9,18 @@ import { userStore } from "@/state";
 
 const store = userStore();
 
-const props = withDefaults(defineProps<{
-  id?: string,
-  fileId: string,
-  fileName: string,
-  disabledPreview?: boolean
-}>(),{
-  disabledPreview: false
+const props = defineProps({
+  // 附件id
+  id: {
+    type: String,
+    required: true,
+  },
+  // 附件名称
+  fileName: String,
+  // 是否禁用预览
+  disabledPreview: Boolean
 })
+
 // 是否是图片
 const isImg = computed(() => props.id&&isImageFile(props.id))
 /**
@@ -54,7 +58,7 @@ const previewFile = async () => {
     return;
   }
   const ext = getFileExt(props.fileName);
-  const fileKey = props.fileId || props.id
+  const fileKey =  props.id
   if(fileKey) {
     uni.showLoading({ title:'下载中...' });
     downloadFile(fileKey)

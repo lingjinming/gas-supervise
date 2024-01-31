@@ -12,11 +12,11 @@
 
     <template #search>
       <!-- 所属区域 -->
-      <check-group useAll v-model="query.districtId" title="所属区域" type="district"></check-group>
+      <gas-check-group  v-model="query.districtId" title="所属区域" type="district"></gas-check-group>
       <!-- 企业类型 -->
-      <check-group useAll v-model="targetBigType" title="企业类型" type="SAFE_CHECK_TARGET_TYPE" @change="targetTypeChange"></check-group>
+      <gas-check-group  v-model="targetBigType" title="企业类型" type="SAFE_CHECK_TARGET_TYPE" @change="targetTypeChange"></gas-check-group>
       <!-- 是否有隐患 -->
-      <check-group useAll v-model="query.checkState" title="检查结果" type="SAFE_CHECK_TASK_STATE"></check-group>
+      <gas-check-group  v-model="query.checkState" title="检查结果" type="SAFE_CHECK_TASK_STATE"></gas-check-group>
 
     </template>
     <template #bottom>
@@ -37,7 +37,8 @@ const query = reactive<SafeCheckTaskPageQuery>({
     keyword: '',
     targetType: [],
     checkState: [],
-    districtId: '',
+    // @ts-ignore
+    districtId: [],
     checkType: [],
     mine: props.mine,
 })

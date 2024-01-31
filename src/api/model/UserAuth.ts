@@ -29,27 +29,88 @@ export type ServerConfig = {
   } []  
 }
 
+// 0-政府,1-企业,2-监测中心
+export type OrgType = "0" | "1" | "2"
+/**
+ * 中台组织机构信息
+ */
+export interface PortalOrganization {
+  id:                           string;
+  parentOrg:                    string;
+  fullName:                     string;
+  shortName:                    string;
+  districtCode:                 string;
+  sort:                         number;
+  name:                         string;
+  unifiedSocialCreditIdentifie: string;
+  fax:                          string;
+  orgType:                      OrgType;
+  systemFlag:                   string;
+  // 组织下的用户列表
+  userList?:                    SysUserInfo[];
+  // 下级部门
+  children?:                    PortalOrganization[];
+}
 
 /**
- * 当前登录用户详情
+ * 中台用户信息
  */
-
 export interface SysUserInfo {
+  /**
+   * 用户id
+   */
   userId:                       string;
-  pbfStatus:                    number;
+  /**
+   * 用户手机号
+   */
   phoneNumber:                  string;
+  /**
+   * 用户登录名
+   */
   userName:                     string;
+  /**
+   * 用户姓名
+   */
   name:                         string;
+  /**
+   * 用户所属组织id
+   */
   organizationId:               string;
-  sort:                         number;
+  /**
+   * 身份证号
+  */
   idcard:                       string;
+  /**
+    * 性别
+  */
   gender:                       string;
-  officeNumber:                 string;
-  job:                          string;
+  /**
+   * 联系地址
+   */
   contactAddress:               string;
+  /**
+   * 数据权限: 有权访问的组织机构id列表,逗号分割
+   */
   partTimeOrganization:         string;
-  dataSpecific:                 string;
+  /**
+   * 数据权限: 有权访问的区域编码列表,逗号分割
+   */
   dataRegional:                 string;
+  /**
+   * 数据权限: 有权访问的专项编码列表,逗号分割
+   */
+  dataSpecific:                 string;
+  /**
+   * 用户所属的组织机构信息
+   */
+  organizationVO:               PortalOrganization;
+  /**
+   * 用户有权访问的机构列表
+   */
+  partOrganizationVOs?:         PortalOrganization[];
+  officeNumber:                 string;
+  sort:                         number;
+  job:                          string;
   permissionDistrictCode:       string;
   districtObjType:              string;
   permissionSystemDistrictName: string;
@@ -57,39 +118,10 @@ export interface SysUserInfo {
   permissionParentDistrictCode: string;
   permissionParentDistrictName: string;
   districtObjLevel:             number;
-  /**
-   * 用户所属的组织机构信息
-   */
-  organizationVO:               UserOrganization;
-  /**
-   * 用户有权访问的机构列表
-   */
-  partOrganizationVOs:          UserPartOrganization[];
 }
 
-export interface UserOrganization {
-  id:                           string;
-  parentOrg:                    string;
-  fullName:                     string;
-  shortName:                    string;
-  districtCode:                 string;
-  sort:                         number;
-  unifiedSocialCreditIdentifie: string;
-  fax:                          string;
-  orgType:                      string;
-}
 
-export interface UserPartOrganization {
-  id:                           string;
-  parentOrg:                    string;
-  fullName:                     string;
-  shortName:                    string;
-  districtCode:                 string;
-  sort:                         number;
-  unifiedSocialCreditIdentifie: string;
-  fax:                          string;
-  orgType:                      string;
-}
+
 
 
 

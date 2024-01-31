@@ -48,14 +48,14 @@
             node?.content?.remark
           }}</view>
           <view class="region-imgBox" v-if="node?.picIds">
-            <region-img
+            <gas-attach
               v-for="img in node?.picIds"
               :key="img.id"
               :id="img.id"
             />
           </view>
           <view class="region-imgBox" v-if="node?.fileIds">
-            <region-img
+            <gas-attach
               v-for="file in node?.fileIds"
               :key="file.id"
               :fileId="file.id"

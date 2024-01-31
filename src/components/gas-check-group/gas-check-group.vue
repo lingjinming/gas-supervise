@@ -31,24 +31,31 @@ const emits = defineEmits<{
   (e: 'update:modelValue',modelValue: StringOrNumber[]): void,
   (e: 'change',options: GasOption[]): void
 }>();
-const props = withDefaults(defineProps<{
-  modelValue: StringOrNumber[],
-  isColumn?: boolean,
-  // 是否追加一个全部选项
-  useAll?:  boolean,
-  // 标题
-  title: string,
-  // 数据字典类型,和options二选一
-  type?: string,
+const props = defineProps({
+  modelValue: {
+    type: Array as PropType<Array<StringOrNumber>>,
+    required: true
+  },
+   // 数据字典类型,和options二选一
+  type: String,
   // 选项集合
-  options?: GasOption[]
-}>(),{
-  useAll: false,
-  isColumn: false,
-  type: '',
-  title: '多选',
-  options: () => []
+  options: {
+    type: Array as PropType<GasOption[]>,
+    default: () => []
+  },
+  // 是否追加一个全部选项
+  useAll: {
+    type: Boolean,
+    default: true
+  },
+  isColumn: Boolean,
+  // 标题
+  title: {
+    type: String,
+    required: true
+  }
 })
+
 const innerOpts = ref<GasOption[]>([]);
 const checked: Ref<GasOption[]> = ref([]);
 const allClicked = ref(false)

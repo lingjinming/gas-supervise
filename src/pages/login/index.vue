@@ -6,7 +6,7 @@
       <text class="page-title">燃气安全监管</text>
 
       <van-cell-group>
-        <van-picker-new
+        <gas-picker
           :is-link="false"
           dicType="SERVER_CONFIG"
           label="地区"
@@ -57,7 +57,7 @@ let loginForm: Ref<OAuth2LoginReq> = ref({
   username: "system",
   password: "Gsafety@2022",
 });
-let serverValue = ref(null);
+let serverValue = ref('');
 
 const login = async () => {
   if (!serverValue.value) {
@@ -89,7 +89,6 @@ const login = async () => {
   uni.showLoading({ title: "登录中" });
   try {
     let TOKEN_INFO = await getToken(loginForm.value);
-    console.log("TOKEN_INFO", TOKEN_INFO);
     store.setToken(TOKEN_INFO);
   } catch (err) {
     uni.showToast({

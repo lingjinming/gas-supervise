@@ -22,7 +22,6 @@ const emits = defineEmits(["update:modelValue"]);
 
 const props = defineProps({
   modelValue: {
-    // 字符串或者数字
     type: [String, Number] as PropType<string | number>,
     required: true
   },

@@ -1,9 +1,9 @@
 <template>
-  <van-detail :record="detail" :fields="fields">
+  <gas-panel :record="detail" :fields="fields">
     <template #_dangerStatusValue>
       <view :class="[detail?.dangerStatus]">{{ detail?._dangerStatus }}</view>
     </template>
-  </van-detail>
+  </gas-panel>
 </template>
 <script setup lang="ts">
 import {EventType} from '../event'

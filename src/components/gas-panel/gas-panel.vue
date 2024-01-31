@@ -6,7 +6,7 @@
             <view class="item-label">{{ label }}</view>
             <view  class="item-value file">
               <view class="file-line" v-for="(img,index) in (value as any)" :key="img.id">
-                <region-img :key="index" :id="img.id" :fileId="img.id" :fileName="img.name" />
+                <gas-attach :key="index" :id="img.id"  :fileName="img.name" />
               </view>
             </view>
           </template>
@@ -14,7 +14,7 @@
           <view v-else-if="isImg" class="img-list">
             <view class="item-label">{{ label }}</view>
             <view class="image" v-for="(img,index) in (value as any)" :key="img.id">
-              <region-img :key="index" :id="img.id"  :fileName="img.name" />
+              <gas-attach :key="index" :id="img.id"  :fileName="img.name" />
             </view>
           </view>
           <template v-else>
@@ -41,6 +41,8 @@ const props = defineProps<{
   fields: Field[];
   record: any;
 }>()
+
+
 const list = computed(() => {
   let record = props.record || {};
  

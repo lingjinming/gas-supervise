@@ -2,10 +2,10 @@
   <van-field required label="位置" @click-input="openMapAndChooseLocation" right-icon="location-o" >
     <input slot="input" disabled style="width: 100%" :value="form.info.constructionAddress" placeholder="请选择" />
   </van-field>
-  <van-picker-new required dicType="THIRD_BUILD_TYPE" label="施工类型" title="施工类型" :defaultValue="form.info.buildType" v-model="form.info.buildType" />
-  <van-picker-new  required dicType="RISK_THIRD_BUILD_STATE" label="施工状态" title="施工状态" :defaultValue="form.info.buildState"  v-model="form.info.buildState" />
+  <gas-picker required dicType="THIRD_BUILD_TYPE" label="施工类型" title="施工类型" :defaultValue="form.info.buildType" v-model="form.info.buildType" />
+  <gas-picker  required dicType="RISK_THIRD_BUILD_STATE" label="施工状态" title="施工状态" :defaultValue="form.info.buildState"  v-model="form.info.buildState" />
   <!-- 政府用户,需要选择企业 -->
-  <van-picker-new
+  <gas-picker
     required
     v-if="!isOrg && !form.isEdit"
     dicType="org"

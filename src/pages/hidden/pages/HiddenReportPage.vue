@@ -16,7 +16,7 @@
 
 
       <gas-uploader v-model="reportForm.fileIds"/>
-      <van-cascader-new
+      <gas-cascader
         dicType="RISK_SUBJECT_TYPE_TREE"
         label="隐患类别"
         title="隐患类别"
@@ -37,14 +37,14 @@
         />
       </van-field>
 
-      <van-picker-new
+      <gas-picker
         dicType="org"
         :label="isOrg ? '上报企业' : '责任企业'"
         :title="isOrg ? '上报企业' : '责任企业'"
         v-model="reportForm.orgId"
       />
       <!-- 企业不需要关联检查计划 -->
-      <van-picker-new
+      <gas-picker
         v-if="!isOrg"
         v-model="reportForm.planCode"
         :options="planOptions"
@@ -52,7 +52,7 @@
         title="关联检查计划"
       />
 
-      <van-picker-new
+      <gas-picker
         dicType="RISK_DANGER_LEVEL"
         label="隐患等级"
         title="隐患等级"

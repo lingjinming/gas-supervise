@@ -13,11 +13,11 @@
 
     <template #search>
       <!-- 事故类型 -->
-      <check-group useAll type="sp_accident_type" v-model="query.accidentType" title="事故类型"/>
+      <gas-check-group  type="sp_accident_type" v-model="query.accidentType" title="事故类型"/>
       <!-- 事故级别 -->
-      <check-group useAll type="ACCIDENTLEVEL"  v-model="query.accidentLevel" title="事故级别"/>
+      <gas-check-group  type="ACCIDENTLEVEL"  v-model="query.accidentLevel" title="事故级别"/>
       <!-- 事故场景 -->
-      <check-group useAll type="sp_accident_scene" v-model="query.accidentScene" title="事故场景"  />
+      <gas-check-group  type="sp_accident_scene" v-model="query.accidentScene" title="事故场景"  />
     </template>
     <template #bottom>
       <view class="button" @click="goCreate"><van-icon name="plus" class="icon"/>事故事件上报</view>
@@ -35,8 +35,8 @@ import { EventType } from "./event";
 const query = reactive<AccidentPageQuery>({
     keyword: undefined,
     accidentScene: [],
-    accidentLevel: undefined,
-    accidentType: undefined,
+    accidentLevel: [],
+    accidentType: [],
 })
 
 const tabelRef = ref<any>(null);

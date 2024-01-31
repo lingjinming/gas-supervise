@@ -21,13 +21,13 @@
       />
     </van-field>
 
-    <van-picker-new
+    <gas-picker
       dicType="SAFE_CHECK_TYPE"
       label="检查类型"
       title="检查类型"
       v-model="reportForm.type"
     />
-    <van-picker-new
+    <gas-picker
       dicType="org"
       label="检查企业"
       title="检查企业"

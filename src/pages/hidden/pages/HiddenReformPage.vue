@@ -27,7 +27,7 @@
         placeholder="请选择"
       />
     </van-field>
-    <van-picker-new
+    <gas-picker
       defaultValue="SAME"
       dicType="RISK_DANGER_CHECK"
       label="是否和描述一致"

@@ -68,7 +68,7 @@
                   {{ item.remark }}
                 </view>
                 <view class="imgs">
-                  <region-img  v-for="img in item?.picIds" :key="img.id"  :id="img.id" />
+                  <gas-attach  v-for="img in item?.picIds" :key="img.id"  :id="img.id" />
                 </view>
               </view>
             </view>
@@ -146,7 +146,7 @@
             <view class="title">交底图片</view>
             <view class="info-images">
               <template v-if="state.info.reportPicIds?.length">
-              <region-img  v-for="img in state.info.reportPicIds" :key="img.id"  :id="img.id" />
+              <gas-attach  v-for="img in state.info.reportPicIds" :key="img.id"  :id="img.id" />
               </template>
               <template v-else>
                 <view>未上传</view>
@@ -158,7 +158,7 @@
             <view class="title">管网保护方案图片</view>
             <view class="info-images">
               <template v-if="state.info.schemaPicIds?.length">
-              <region-img  v-for="img in state.info.schemaPicIds" :key="img.id"  :id="img.id" />
+              <gas-attach  v-for="img in state.info.schemaPicIds" :key="img.id"  :id="img.id" />
               </template>
               <template v-else>
                 <view>未上传</view>
@@ -170,7 +170,7 @@
             <view class="title">管网保护协议图片(施工方签字照片)</view>
             <view class="info-images">
               <template v-if="state.info.protocolPicIds?.length">
-              <region-img  v-for="img in state.info.protocolPicIds" :key="img.id"  :id="img.id" />
+              <gas-attach  v-for="img in state.info.protocolPicIds" :key="img.id"  :id="img.id" />
               </template>
               <template v-else>
                 <view>未上传</view>

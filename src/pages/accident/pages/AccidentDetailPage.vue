@@ -1,5 +1,5 @@
 <template>
-  <van-detail :record="detail" :fields="fields" />
+  <gas-panel :record="detail" :fields="fields" />
   <view class="edit-btn">
     <van-button 
       custom-style="background-color:#006CFF;color:#fff;border-radius:10rpx"

@@ -30,20 +30,34 @@
 <script setup lang="ts">
 import { userStore } from "@/state";
 
-const emits = defineEmits([
-  "update:modelValue",
-  "update:subjectType",
-  "update:dangerSubtype",
-  "selectFinish",
-]);
-const props = withDefaults(defineProps<{
-  dicType: string;
-  modelValue: string;
-  subjectType?: string;
-  dangerSubtype?: string;
-}>(),{
-  subjectType: '',
-  dangerSubtype: ''
+const emits = defineEmits<{
+  (e: 'update:modelValue',modelValue: string|number): void,
+  (e: 'update:subjectType',value: string|number): void,
+  (e: 'update:dangerSubtype',value: string|number): void,
+  (e: 'selectFinish',value: GasOption[]): void,
+}>();
+
+const props = defineProps({
+  // 数据字典编码
+  dicType: {
+    type: String,
+    required: true,
+  },
+  // 绑定值
+  modelValue: {
+    type: [String, Number],
+    required: true,
+  },
+  // 一级分类
+  subjectType: {
+    type: String,
+    default: "",
+  },
+  // 二级分类
+  dangerSubtype: {
+    type: String,
+    default: "",
+  },
 })
 
 const store = userStore();

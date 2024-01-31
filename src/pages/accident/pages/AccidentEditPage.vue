@@ -2,10 +2,10 @@
   <van-field required label="位置" @click-input="openMapAndChooseLocation" right-icon="location-o" >
     <input slot="input" disabled style="width: 100%" :value="form.address" placeholder="请选择" />
   </van-field>
-  <van-picker-new required dicType="org"  label="所属燃气公司" title="所属燃气公司" v-model="form.orgId" />
-  <van-picker-new required dicType="ACCIDENTLEVEL" label="事故等级" title="事故等级" :defaultValue="form.accidentLevel" v-model="form.accidentLevel" />
-  <van-picker-new  required dicType="sp_accident_type" label="事故类型" title="事故类型" :defaultValue="form.accidentType"  v-model="form.accidentType" />
-  <van-picker-new  required dicType="sp_accident_scene" label="事故场景" title="事故场景" :defaultValue="form.accidentScene"  v-model="form.accidentScene" />
+  <gas-picker required dicType="org"  label="所属燃气公司" title="所属燃气公司" v-model="form.orgId" />
+  <gas-picker required dicType="ACCIDENTLEVEL" label="事故等级" title="事故等级" :defaultValue="form.accidentLevel" v-model="form.accidentLevel" />
+  <gas-picker  required dicType="sp_accident_type" label="事故类型" title="事故类型" :defaultValue="form.accidentType"  v-model="form.accidentType" />
+  <gas-picker  required dicType="sp_accident_scene" label="事故场景" title="事故场景" :defaultValue="form.accidentScene"  v-model="form.accidentScene" />
   <van-field required @click-input="showcalendar" label="事故时间"  readonly  >
     <input placeholder="请选择事故时间" slot="input"  disabled style="width: 100%" :value="form.accidentTime" />
   </van-field>
