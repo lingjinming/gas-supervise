@@ -1,15 +1,20 @@
 <template>
-  <van-tabs swipeable animated sticky :active="activeTab" @change="onChangeTab">
-    <van-tab name="全部" title="全部">
-      <PageList state="ALL" :mine="mine"></PageList>
-    </van-tab>
-    <van-tab name="未整改" title="未整改">
-      <PageList state="UN_HANDLED" :mine="mine"></PageList>
-    </van-tab>
-    <van-tab name="已整改" title="已整改">
-      <PageList state="HANDLED" :mine="mine"></PageList>
-    </van-tab>
-  </van-tabs>
+  <template v-if="mine">
+    <PageList state="UN_HANDLED" :mine="mine"></PageList>
+  </template>
+  <template v-else>
+    <van-tabs swipeable animated  :active="activeTab" @change="onChangeTab">
+      <van-tab name="全部" title="全部">
+        <PageList state="ALL" :mine="mine"></PageList>
+      </van-tab>
+      <van-tab name="未整改" title="未整改">
+        <PageList state="UN_HANDLED" :mine="mine"></PageList>
+      </van-tab>
+      <van-tab name="已整改" title="已整改">
+        <PageList state="HANDLED" :mine="mine"></PageList>
+      </van-tab>
+    </van-tabs>
+  </template>
 </template>
 
 <script setup lang="ts">

@@ -1,5 +1,5 @@
 <template>
-  <scroll-view style="height: 100%" scroll-y="true" class="scroll-Y container">
+  <scroll-view style="height: 95vh" scroll-y="true" class="scroll-Y container">
     <van-skeleton
       title
       avatar
@@ -101,6 +101,9 @@
           <template v-if="node.stage == 'AUDIT' && node.title === '隐患驳回'">
             <view>驳回原因: {{ node.content.remark }}</view>
           </template>
+          <template v-if="node.stage == 'AUDIT' && node.title === '隐患消除'">
+            <view>备注: {{ node.content.remark }}</view>
+          </template>
           <!-- 节点上的评论 -->
           <view class="commentList" v-if="node.commentList">
             <template v-for="(comment, index) in node.commentList" :key="index">
@@ -125,7 +128,8 @@
     </van-skeleton>
     <view class="bottom"></view>
   </scroll-view>
-  <view class="opt-btn" v-if="shouldShowDangerOptBtn()">
+  
+  <view class="opt-btn" v-if="canHandle">
     <van-button
       class="danger-btn"
       block
@@ -157,13 +161,14 @@
   </van-popup>
 </template>
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import {  reactive } from "vue";
 import { userStore } from "@/state";
 import { EventType } from "@/enums/eventType";
 
 
 import {getHidangerFlowByUid,postHidangerGovLeaderComment} from '@/api/gen/GasSuperviseApi'
 import type {HidnagerFlowVO,HidangerFlowDtoStage,LeaderCommentCreateDTO} from '@/api/gen/data-contracts'
+import { useLoading } from "@/hooks/useLoading";
 
 const store = userStore();
 const data = reactive({
@@ -178,7 +183,8 @@ const data = reactive({
   },
 });
 
-let loading = ref(true);
+// 是否可以处置隐患
+const canHandle = computed(() => (store.userInfo?.userId === data.detail.receiverId) && data.detail.state === 'WAIT_HANDLE');
 
 const getTagType = () => {
   if (data.detail.level === "ZD") {
@@ -191,13 +197,17 @@ const getTagType = () => {
 };
 
 onLoad((options) => {
-  getDetail(options!.uid);
+  data.uid = options?.uid;
+  if(data.uid) {
+    getDetail();
+    uni.$on(EventType.DANGER_DETAIL_REFRESH, getDetail);
+  }
+});
+onUnload(() => {
+  uni.$off(EventType.DANGER_DETAIL_REFRESH, getDetail);
 });
 
-// 是否应该展示两个操作按钮
-const shouldShowDangerOptBtn = () => {
-  return store.isOrgUser && data.detail.state === "WAIT_HANDLE";
-};
+
 
 // 去整改
 const goToHandle = (isComplete: boolean) => {
@@ -208,9 +218,7 @@ const goToHandle = (isComplete: boolean) => {
   });
 };
 
-uni.$on(EventType.DANGER_DETAIL_REFRESH, () => {
-  getDetail(data.uid);
-});
+
 
 // 点击展示领导批示
 const showLeaderComment = (stage: HidangerFlowDtoStage|undefined, stageId: string|undefined) => {
@@ -226,36 +234,32 @@ const closeComment = () => {
 };
 // 提交领导评论
 const submitLeaderComment = async () => {
-  try {
-    loading.value = true;
-    await postHidangerGovLeaderComment(data.commentBody);
+  const response = postHidangerGovLeaderComment(data.commentBody);
+  useLoading(response,() => {
     closeComment();
     // 重新拉取流程详情
-    await getDetail(data.uid);
-  } finally {
-    loading.value = false;
-  }
+     getDetail();
+  })
 };
 
-const getDetail = async (id: number) => {
-  try {
-    loading.value = true;
-    data.uid = id;
-
-    const result = await getHidangerFlowByUid(id);
+const getDetail = async () => {
+  data.loading = true;
+  try{
+    const result = await getHidangerFlowByUid(data.uid);
     if(result.data) {
-      const { level, _level, dangerId, flow, state, dangerSource } = result.data ;
+      const { level, _level, dangerId, flow, state, dangerSource ,receiverId} = result.data ;
       data.detail._level = _level;
       data.detail.state = state;
       data.detail.level = level;
       data.detail.flow = flow;
       data.detail.dangerId = dangerId;
       data.detail.dangerSource = dangerSource;
+      data.detail.receiverId = receiverId;
     }
-    
-  } finally {
-    loading.value = false;
+  }finally{
+    data.loading = false;
   }
+  
 };
 
 /**
@@ -284,7 +288,7 @@ const formatTime = (time: string|undefined) => {
   }
 }
 .bottom {
-  height: 120rpx;
+  height: 150rpx;
   width: 100%;
 }
 .detail-box {

@@ -40,8 +40,8 @@
       </view>
     </van-skeleton>
     <view slot="right" class="right">
-      <view class="done" @click="showAuditForm(true)">消除</view>
-      <view class="del" @click="showAuditForm(false)">驳回</view>
+      <view class="opt done" @click="showAuditForm(true)">消除</view>
+      <view class="opt del" @click="showAuditForm(false)">驳回</view>
     </view>
   </van-swipe-cell>
 </template>
@@ -192,7 +192,7 @@ const getTagType = (level: string) => {
   height: 100%;
   @include flex-between;
   width: 320rpx;
-  view {
+  .opt {
     @include flex-center;
     width: 50%;
     height: 100%;
@@ -203,29 +203,6 @@ const getTagType = (level: string) => {
   }
   .del {
     background: $uni-color-error;
-  }
-}
-
-.audit {
-  .title {
-    text-align: center;
-    font-weight: 700;
-    font-size: 35rpx;
-  }
-  .input {
-    border: 1rpx solid #ccc;
-    height: 65%;
-    margin: 20rpx;
-  }
-  .btns {
-    @include flex-between;
-    button {
-      border: 0px;
-      width: 333rpx;
-      height: 88rpx;
-      line-height: 88rpx;
-      border-radius: 10px;
-    }
   }
 }
 </style>

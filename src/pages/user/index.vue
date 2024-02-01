@@ -1,5 +1,5 @@
 <template>
-  <router-tab actPath='pages/user/index' />
+  <RouterTab actPath='pages/user/index' />
   <view class="user-container">
     <image class="bg_img" src="./static/img/bg.png"></image>
     <view class="user">
@@ -88,6 +88,7 @@
 import { ref } from 'vue'
 import { userStore } from "@/state";
 import { onShow } from "@dcloudio/uni-app";
+import RouterTab from '../index/components/router-tab.vue'
 
 const store = userStore();
 

@@ -171,7 +171,7 @@ export interface SafeCheckItemCreateDTO {
    * @maxLength 50
    */
   checkItem: string;
-  /** 检查项目ID */
+  /** 检查项目ID,新增时不传,更新时必传 */
   checkItemId: string;
   /**
    * 检查项目排序
@@ -1258,9 +1258,9 @@ export interface ProjectRiskDangerRequest {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 /** 研判分析-隐患分析列表 */
@@ -2765,9 +2765,9 @@ export interface VehiclePageQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface PageResultListVehicleInfoVO {
@@ -3157,7 +3157,7 @@ export interface ThirdBuildHandleItemDTO {
   protocolPicIds: Array<FileObj>;
   /** 交底相关附件id */
   fileIds: Array<FileObj>;
-  /** 看护记录描�� */
+  /** 看护记录描述 */
   remark: string;
   /**
    * 看护记录图片
@@ -3224,9 +3224,9 @@ export interface ThirdBuildPageQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface PageResultListThirdBuildPageVO {
@@ -3351,9 +3351,9 @@ export interface SysNotifyTemplatePageQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface PageResultListSysNotifyTemplatePageVO {
@@ -3399,9 +3399,9 @@ export interface PageRequest {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface JSONConfig {
@@ -3493,9 +3493,9 @@ export interface WarnPageRequest {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface PageResultListWarnPageVO {
@@ -3759,9 +3759,9 @@ export interface StatisticalRequest {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 /** 时间点位 */
@@ -5708,9 +5708,9 @@ export interface SuperviseRiskQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface ResultListSuperviseRiskPageVO {
@@ -5849,9 +5849,9 @@ export interface MonitorRequest {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 /** 实时监测分页信息VO */
@@ -6161,9 +6161,9 @@ export interface DeviceMapRequest {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 /** 设备GIS一张图点位聚合数据 */
@@ -6326,9 +6326,9 @@ export interface SuperviseMatterQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface ResultListSuperviseMatterVO {
@@ -6416,9 +6416,9 @@ export interface DeviceRequest {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 /** 监测设备分页信息 */
@@ -6585,9 +6585,9 @@ export interface AlarmPageRequest {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface PageResultListAlarmPageVO {
@@ -6767,9 +6767,9 @@ export interface SafeCheckTopicPageQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface PageResultListSafeCheckTopicPageVO {
@@ -6880,11 +6880,8 @@ export interface SafeCheckTaskDetailVO {
 export interface SafeCheckTaskItemDetailDTO {
   /** 检查项目 */
   checkItem: string;
-  /**
-   * 检查项目ID
-   * @format int64
-   */
-  checkItemId: number;
+  /** 检查项目ID */
+  checkItemId: string;
   /**
    * 检查项目排序
    * @format int32
@@ -6905,6 +6902,10 @@ export interface SafeCheckTaskItemDetailDTO {
   rectifierPerson: string;
   /** 隐患图片 */
   dangerImgs: string;
+  /** 隐患数据主键 */
+  dangerUid: string;
+  /** 隐患id */
+  dangerId: string;
   /** 风险要素状态 */
   dangerStatus: SafeCheckTaskItemDetailDtoDangerStatus;
   /**
@@ -6924,11 +6925,8 @@ export interface SafeCheckTaskItemDetailDTO {
 export interface SortedDTO {
   /** 检查项目 */
   checkItem: string;
-  /**
-   * 检查项目ID
-   * @format int64
-   */
-  checkItemId: number;
+  /** 检查项目ID */
+  checkItemId: string;
   /**
    * 检查项目排序
    * @format int32
@@ -6980,9 +6978,9 @@ export interface SafeCheckTaskPageQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface PageResultListSafeCheckTaskPageVO {
@@ -7334,9 +7332,9 @@ export interface PerCertificatePageQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface PageResultListPerCertificatePageVO {
@@ -7588,9 +7586,9 @@ export interface PageOldPipeBuildQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 /** 老旧管网返回列表 */
@@ -7801,9 +7799,9 @@ export interface EmresDrillRequest {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 /** 应急演练VO */
@@ -8329,6 +8327,8 @@ export interface HidangerOrgPageQuery {
   planCode?: string;
   /** 小程序创建隐患整改单时专用.其他请勿使用 */
   canSendHandleOrder?: boolean;
+  /** 是否只查询隐患整改责任人是当前用户的隐患 */
+  mine?: boolean;
   /** 隐患主体 */
   subjectType?: string;
   /** 风险要素类别 */
@@ -8357,14 +8357,15 @@ export interface HidangerOrgPageQuery {
    * @format date
    */
   endTime?: string;
+  currentUserId?: string;
   queryOrder?: string;
   /** @uniqueItems true */
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 /** 企业隐患管理-分页 */
@@ -8492,9 +8493,9 @@ export interface BsHidangerPageQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface BsHidangerPageVO {
@@ -8785,9 +8786,9 @@ export interface HiDangerCheckPageQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 /** 安全检查-分页VO */
@@ -8910,6 +8911,7 @@ export interface ResultListHidangerGisVO {
   success: boolean;
 }
 
+/** 隐患流程 */
 export interface HidangerFlowDTO {
   /** 标题 */
   title: string;
@@ -8940,13 +8942,17 @@ export interface HidangerFlowDTO {
 }
 
 export interface HidnagerFlowVO {
+  /** 隐患ID */
   dangerId: string;
+  /** 隐患处置人id,即接收人,派单后产生 */
+  receiverId: string;
   /** 隐患来源 */
   dangerSource: HidnagerFlowVoDangerSource;
   /** 风险要素等级 */
   level: HidnagerFlowVoLevel;
   /** 风险要素状态 */
   state: HidnagerFlowVoState;
+  /** 隐患流程 */
   flow: Array<HidangerFlowDTO>;
   /** 隐患来源 */
   _dangerSource?: string;
@@ -9040,9 +9046,9 @@ export interface HidangerFactorsSummaryPageQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 /** 风险要素-分页 */
@@ -9284,8 +9290,8 @@ export interface PipelineInfo {
   sdate: string;
   geom: string;
   edepth: number;
-  sdepth: number;
   ddate: string;
+  sdepth: number;
   /** 管线权属单位 */
   _orgId?: string;
   /** 材质 */
@@ -9449,9 +9455,9 @@ export interface KnowledgePageQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface AnalysBaseMnKnowledgePageVO {
@@ -9562,9 +9568,9 @@ export interface CasePageQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface AnalysBaseMnCasePageVO {
@@ -9789,9 +9795,9 @@ export interface ActivitiesPageQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface PageResultListSuperviseActivitiesPageVO {
@@ -9824,9 +9830,9 @@ export interface SuperviseDeptUserPageQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface GovDeptUserPageVO {
@@ -9901,9 +9907,9 @@ export interface PageGasUserQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 /** 修改用气用户信息 */
@@ -10094,9 +10100,9 @@ export interface GasSupplyQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface GasSupplyPageVO {
@@ -10177,9 +10183,9 @@ export interface GasStationQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface GasStationSumVO {
@@ -10392,7 +10398,7 @@ export interface StationBaseInfo {
 export interface StationInfoDTO {
   /** 场站基础信息 */
   baseInfo: StationBaseInfo;
-  /** 资质证照信�� */
+  /** 资质证照信息 */
   licenseInfo: Array<LicenseInfoDTO>;
   /** 视频监控信息 */
   videoInfo: Array<StationVideoInfo>;
@@ -10686,9 +10692,9 @@ export interface ScoringPageQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface PageResultListScoringPageVO {
@@ -10907,9 +10913,9 @@ export interface LinePatrolQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface LinePatrolPageVO {
@@ -11108,9 +11114,9 @@ export interface EnterpriseInfoPageQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface EnterpriseInfoPageVO {
@@ -11291,9 +11297,9 @@ export interface CoordinateMatterQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 /** 企业协调事件列表查询VO */
@@ -11468,9 +11474,9 @@ export interface SecurityCheckRecQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface PageResultListSecurityCheckRecPageVO {
@@ -11563,9 +11569,9 @@ export interface SecurityCheckQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface PageResultListSecurityCheckPageVO {
@@ -11920,9 +11926,9 @@ export interface EmresPlanRequest {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 /** 应急预案VO */
@@ -12275,8 +12281,8 @@ export interface ComSupLgEnterpriseVO {
   handledCnt: number;
   handledItem: Array<ComSupLgEnterpriseDTO>;
   unHandledItem: Array<ComSupLgEnterpriseDTO>;
-  handedRate: string;
   unHandledRate: string;
+  handedRate: string;
 }
 
 /** 隐患类型统计 */
@@ -12455,9 +12461,9 @@ export interface BulletinQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 /** 公告信息VO */
@@ -13141,9 +13147,9 @@ export interface EmresMnRetmanPageQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 /** 救援人员EmresMnRetmanPageVO */
@@ -13302,9 +13308,9 @@ export interface EmresMnReteamPageQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 /** 救援队伍VO */
@@ -13608,9 +13614,9 @@ export interface CifrsGasChPipeRepairPageQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 /** 维修记录分页信息 */
@@ -13791,9 +13797,9 @@ export interface CifrsPipeMnPipepointPageQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 export interface PageResultListCifrsPipeMnPipepointPageVO {
@@ -13920,9 +13926,9 @@ export interface CifrsPipeMnPipelinePageQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 /** 管线分页信息 */
@@ -14137,13 +14143,13 @@ export interface CifrsPipeMnPipelineDetailVO {
   width: number;
   /** @format date-time */
   ddate: string;
+  spoint: string;
   epoint: string;
   sdeep: number;
-  sh: number;
-  spoint: string;
   eh: number;
-  dtype: string;
   edeep: number;
+  sh: number;
+  dtype: string;
   /** 材质 */
   _pmaterial?: string;
   /** 压力级别 */
@@ -14246,9 +14252,9 @@ export interface EmresMnMateriPageQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 /** 救援物资分页信息 */
@@ -14398,9 +14404,9 @@ export interface EmresMnExpertPageQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 /** 专家信息分页信息 */
@@ -14622,9 +14628,9 @@ export interface AccidentPageQuery {
   selectIdsAsString?: Array<string> | string;
   districtIdAsList?: Array<string> | string;
   /** @uniqueItems true */
-  districtIdAsSet?: Array<string> | string;
-  /** @uniqueItems true */
   selectIdsAsLong?: Array<number> | number;
+  /** @uniqueItems true */
+  districtIdAsSet?: Array<string> | string;
 }
 
 /** 事故事件列表 */

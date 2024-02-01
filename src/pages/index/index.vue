@@ -38,7 +38,7 @@
         >更多 ></view
       >
     </view>
-    <NoticePageItem v-if="notices.length" :notices="notices.slice(0, 3)" />
+    <NoticePageItem v-if="list.length" :notices="list.slice(0, 3)" />
     <view v-else class="no-content">
       <image src="/static/img/nodata.png" class="nodata"></image>
     </view>
@@ -51,30 +51,35 @@
 <script setup lang="ts">
 import NoticePageItem from '@/pages/notice/components/NoticePageItem.vue'
 import { EventType } from "@/enums/eventType";
-import { getNoticeFn, notices } from "../notice";
 import { getHidangerMyUnhandledCnt } from '@/api/gen/GasSuperviseApi'
 import RouterTab from './components/router-tab.vue'
+import { useNoticeRepository } from '../notice'
 
 const waitHandleCnt = ref(0);
+const { list, search } = useNoticeRepository(false);
 
 onLoad(() => {
   uni.hideTabBar();
-  uni.$on(EventType.NOTICE_REFRESH, getNoticeFn);
-  // 隐患整改反馈
-  getHidangerMyUnhandledCnt().then(result => {
-    waitHandleCnt.value = result.data || 0;
-  })
+  uni.$on(EventType.NOTICE_REFRESH, search);
+  
 })
 
 onUnload(() => {
-  uni.$off(EventType.NOTICE_REFRESH, getNoticeFn)
+  uni.$off(EventType.NOTICE_REFRESH, search)
 })
 
 onShow(() => {
-  getNoticeFn()
+  search();
+  updateHidangerCnt();
 });
 
-onPullDownRefresh(() => getNoticeFn());
+onPullDownRefresh(() => {
+  const notice = search();
+  const hidanger = updateHidangerCnt();
+  Promise.all([notice,hidanger]).finally(() => {
+    uni.stopPullDownRefresh();
+  })
+});
 
 const goHidanger = () => {
   uni.navigateTo({
@@ -82,6 +87,12 @@ const goHidanger = () => {
   });
 };
 
+// 隐患整改反馈
+const updateHidangerCnt = () => {
+   getHidangerMyUnhandledCnt().then(result => {
+    waitHandleCnt.value = result.data || 0;
+  })
+}
 
 
 const menus = [

@@ -270,6 +270,13 @@
       "packages": [
         "pages/hidden"
       ]
+    },
+    // 安全检查详情时,预加载隐患分包
+    "pages/safeCheck/pages/DetailPage": {
+      "network": "all",
+      "packages": [
+        "pages/hidden"
+      ]
     }
   },
   "tabBar": {

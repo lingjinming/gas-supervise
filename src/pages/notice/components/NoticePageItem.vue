@@ -9,7 +9,7 @@
     :key="i"
   >
     <van-swipe-cell :right-width="0">
-      <view class="notice-box">
+      <view class="notice-box" @click="goDetail(notice)">
         <view class="tit">
           <view
             style="
@@ -21,7 +21,7 @@
             "
           >
             <van-icon
-              :name="'/static/img/' + notice.msgType + '.png'"
+              :name="'/static/img/' + notice.type + '.png'"
               size="36rpx"
             />{{ notice.title }}
           </view>
@@ -29,8 +29,7 @@
           <text class="time">{{ notice.timestampLively }}</text>
         </view>
         <view class="con">
-          <!-- <text class="name">燃气管理处-{{ notice.createBy }} </text> -->
-          <text class="content">{{ notice.content }}</text>
+          <text class="content">{{ notice.content?.content }}</text>
         </view>
       </view>
       <!-- <view slot="right" class="right">
@@ -40,61 +39,43 @@
   </van-skeleton>
 </template>
 <script setup lang="ts">
-import type { SysNoticeItem } from "@/api/model/Notice";
-import { readNotice } from "@/api/notice";
-import { EventType } from "@/enums/eventType";
+import type { MessageContent } from "@/api/gen/data-contracts";
+import { NoticeType } from "../enum";
+import { postNoticeReadByMsgId } from '@/api/gen/GasSuperviseApi'
 
+type MsgBizType = MessageContent & {timestampLively?: string}
 let loading = ref(false);
-// onMounted(() => (loading.value = Boolean(props.notices.length)));
 
 const props = defineProps({
   notices: {
-    type: Array<SysNoticeItem>,
+    type: Array<MsgBizType>,
     default: [],
   },
 });
-const format = (t) => {
-  // 定义过去的时间
-  var pastTime = new Date(t);
 
-  // 计算过去了多久
-  var currentTime = new Date();
-  var timeDiff = currentTime.getTime() - pastTime.getTime();
-
-  // 将时间差转换为天数
-  var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
-  var yearsDiff = Math.floor(daysDiff / 365);
-  var monthDiff = Math.floor(daysDiff / 30);
-  if (yearsDiff > 0) {
-    return yearsDiff + "年前";
-  }
-  if (monthDiff > 0) {
-    return monthDiff + "月前";
-  }
-  if (daysDiff > 0) {
-    return daysDiff + "天前";
-  } else {
-    var hoursDiff = Math.floor(timeDiff / (1000 * 3600));
-    if (hoursDiff > 0) {
-      return hoursDiff + "小时前";
-    } else {
-      var minsDiff = Math.floor(timeDiff / (1000 * 60));
-      if (minsDiff > 0) {
-        return minsDiff + "分钟前";
-      }
-      return "1分钟前";
+const goDetail = (notice: MsgBizType) => {
+  // 隐患派单,如果是多个隐患,
+  if(notice.type === NoticeType.MsgRiskDispatch) {
+    const dangerUids = notice.properties?.dangerUids || [];
+    if(!dangerUids.length) return;
+    // 如果就一个隐患就跳到隐患详情
+    if(dangerUids.length === 1) {
+      uni.navigateTo({
+        url: `/pages/hidden/pages/HiddenDetailPage?uid=${dangerUids[0]}`,
+        success:()=>{
+          postNoticeReadByMsgId(notice.id);
+        },
+      });
+    }
+    // 多个就跳到隐患列表 
+    else {
+      uni.navigateTo({
+        url: `/pages/hidden/pages/HiddenListPage?dangerUids=${dangerUids.join(',')}`,
+      });
     }
   }
-};
+}
 
-// const del = async (notice: SysNoticeItem) => {
-//   await readNotice({
-//     recipient: notice.recipient,
-//     uId: notice.uid,
-//   });
-//   // 让列表刷新
-//   uni.$emit(EventType.NOTICE_REFRESH);
-// };
 </script>
 <style lang="scss" scoped>
 .notice-box {

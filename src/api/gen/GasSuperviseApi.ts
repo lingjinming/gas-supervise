@@ -1461,6 +1461,22 @@ export const postOldPipeAdd = (data: AddOldPipeBuildQuery, params: PerRequestOpt
   );
 };
 /**
+ * message-endpoint
+ *
+ * @tags message-endpoint
+ * @name PostNoticeReadByMsgId
+ * @request POST:/notice/read/{msgId}
+ * @response `200` `ResultVoid` OK
+ */
+export const postNoticeReadByMsgId = (msgId: number, params: PerRequestOptions = {}) => {
+  return defHttp.post<ResultVoid>(
+    {
+      url: `gas-supervise/notice/read/${msgId}`,
+    },
+    { ...params, isTransformResponse: false },
+  );
+};
+/**
  * 应急演练管理接口 应急演练上报
  *
  * @tags 应急演练管理接口, 应急演练上报
@@ -5893,6 +5909,7 @@ export const getNoticeWsPage = (
     /** @format int32 */
     size: number;
     type: string;
+    desc: boolean;
   },
   params: PerRequestOptions = {},
 ) => {
@@ -7932,11 +7949,11 @@ export const getEnterpriseCheckEndUserStatisticalTable = (
   );
 };
 /**
- * 企业安检管理 ��年未检用户分页
+ * 企业安检管理 三年未检用户分页
  *
  * @tags 企业安检管理
  * @name GetEnterpriseCheckEndUserPage
- * @summary ��年未检用户分页
+ * @summary 三年未检用户分页
  * @request GET:/enterprise/check/end-user/page
  * @response `200` `PageResultListSecCheckThreeYearsUnCheckPageDTO` OK
  */
