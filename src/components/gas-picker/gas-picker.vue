@@ -23,7 +23,7 @@ const emits = defineEmits(["update:modelValue"]);
 const props = defineProps({
   modelValue: {
     type: [String, Number] as PropType<string | number>,
-    required: true
+    required: false
   },
   dicType: {
     type: String,
@@ -46,7 +46,7 @@ const confirm = (e) => {
   pickerVal.value = value;
   isShow.value = false;
 };
-const findOption = (value: string|number) :GasOption | undefined => {
+const findOption = (value?: string|number) :GasOption | undefined => {
   if(columns.value.length && value) {
     return columns.value.find(e => e.value === value)
   }
@@ -54,7 +54,7 @@ const findOption = (value: string|number) :GasOption | undefined => {
 // 初始化/options变更时反显
 const reshow = () => {
   if(columns.value.length && !pickerVal.value) {
-    let dicValue = props.modelValue ;
+    let dicValue = props.modelValue;
     let theDefault = findOption(dicValue);
     if(theDefault) {
       pickerVal.value = theDefault;

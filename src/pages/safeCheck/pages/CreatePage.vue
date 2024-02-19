@@ -75,6 +75,7 @@ import { getSafeCheckTopicPage,postSafeCheckTask} from '@/api/gen/GasSuperviseAp
 import type {SafeCheckTaskCreateDTO} from '@/api/gen/data-contracts'
 import CreateSafeCheck from '../components/CreateSafeCheck.vue';
 import { useLoading } from '@/hooks/useLoading';
+import { useEventChannel } from '@/hooks/useEventChannel';
 
 const topicId = ref('');
 const topicOptions = ref<GasOption[]>([]);
@@ -97,15 +98,8 @@ const form = ref<TasBizType>({
 })
 const isThird = computed(() => form.value.type === 'THIRD')
 onLoad(() => {
-  const _this = getCurrentInstance();
-  // @ts-ignore
-  const eventChannel = _this!.ctx.getOpenerEventChannel();
-  if(eventChannel) {
-    // 安全检查类型
-    eventChannel?.on(EventType.CREATE_SAFE_CHECK, ({ checkType }) => {
-      form.value.type = checkType
-    });
-  }
+  const { on } = useEventChannel()
+  on(EventType.CREATE_SAFE_CHECK, ({ checkType }) => form.value.type = checkType)
 })
 
 const currentStep = ref(0)
@@ -138,14 +132,11 @@ const goSelectTarget = () => {
         // 关联检查主题
         getSafeCheckTopicPage({query: {
           paging: false,
+          // @ts-ignore
+          checkType: form.value.type,
           targetType: target.targetType
         }}).then(result => {
-          topicOptions.value = result.data.map(item => {
-            return {
-              text: item.topic,
-              value: item.uid
-            }
-          })
+          topicOptions.value = result.data.map(item => ({ text: item.topic, value: item.uid }))
           if(!topicOptions.value.length) {
             uni.showToast({ title: '该检查对象类型未配置检查主题', icon: 'none' })
           }

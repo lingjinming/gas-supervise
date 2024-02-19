@@ -34,7 +34,7 @@ const emits = defineEmits<{
 const props = defineProps({
   modelValue: {
     type: Array as PropType<Array<StringOrNumber>>,
-    required: true
+    required: false
   },
    // 数据字典类型,和options二选一
   type: String,

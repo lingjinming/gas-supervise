@@ -3,7 +3,7 @@
     :right-width="info.state === 'WAIT_AUDIT' && !isOrg ? 160 : 0"
   >
     <van-skeleton title avatar row="2" :loading="data.loading">
-      <view class="hidden-box">
+      <view class="hidden-box" @click.stop="showFlow(info.uid as string)">
         <view class="tit">
           <view>
             <slot></slot>
@@ -16,10 +16,10 @@
           </view>
           <text class="ago">{{ info.ago }}</text>
         </view>
-        <view class="con" @click.stop="showFlow(info.uid as string)">
+        <view class="con" >
           <text>{{ info.remark || "暂无描述" }}</text>
         </view>
-        <view class="addr" @click.stop="showFlow(info.uid as string)">
+        <view class="addr" >
           <van-icon name="location" />
           {{ info.address }}
         </view>

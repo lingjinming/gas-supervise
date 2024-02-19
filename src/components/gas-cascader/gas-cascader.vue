@@ -46,7 +46,7 @@ const props = defineProps({
   // 绑定值
   modelValue: {
     type: [String, Number],
-    required: true,
+    required: false,
   },
   // 一级分类
   subjectType: {
