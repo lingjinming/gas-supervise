@@ -31,13 +31,13 @@ import { getSafeCheckTaskPage } from '@/api/gen/GasSuperviseApi'
 import type { SafeCheckTaskPageQuery ,SafeCheckTaskPageQueryCheckType} from '@/api/gen/data-contracts'
 import { EventType } from '../event'
 
+type BizType = Omit<SafeCheckTaskPageQuery,'districtId'>&{districtId: string[]}
 const props = defineProps<{ checkType: SafeCheckTaskPageQueryCheckType, mine: boolean }>()
 const targetBigType = ref([])
-const query = reactive<SafeCheckTaskPageQuery>({
+const query = reactive<BizType>({
     keyword: '',
     targetType: [],
     checkState: [],
-    // @ts-ignore
     districtId: [],
     checkType: [],
     mine: props.mine,

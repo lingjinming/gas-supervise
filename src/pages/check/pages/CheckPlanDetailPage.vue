@@ -70,13 +70,13 @@
           <view class="img-box">
             <gas-attach
               :disabledPreview="true"
-              v-if="order?.expertSign?.length"
+              v-if="order?.expertSign?.length > 0"
               :id="order.expertSign[0]"
             />
             <gas-attach
               :disabledPreview="true"
-              v-if="order?.expertSign?.length"
-              :id="order.expertSign[0]"
+              v-if="order?.expertSign?.length > 1"
+              :id="order.expertSign[1]"
             />
           </view>
         </view>

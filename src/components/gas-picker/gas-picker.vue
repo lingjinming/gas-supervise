@@ -2,7 +2,7 @@
   <van-field v-bind="$attrs" is-link clickable maxlength="200" @click-input="showPicker">
     <input hold-keyboard readonly disabled :value="pickerVal?.text" slot="input" style="width: 100%;" placeholder="请选择" />
   </van-field>
-  <van-popup :show="isShow" round position="bottom">
+  <van-popup :show="isShow" root-portal round position="bottom">
     <van-picker
       hold-keyboard	
       show-toolbar
@@ -32,18 +32,21 @@ const props = defineProps({
   options: {
     type: Array as PropType<GasOption[]>,
     default: () => []
+  },
+  beforClick: {
+    type: Function,
+    default: () => () => true
   }
 })
 
 let isShow = ref(false);
 let columns: Ref<GasOption[]> = ref([]);
 
-
 // 选中的下拉选
 let pickerVal = ref<GasOption|undefined>();
 const confirm = (e) => {
-  const value: GasOption = e.detail.value;
-  pickerVal.value = value;
+  const selected: GasOption = e.detail.value;
+  emits("update:modelValue", selected.value);
   isShow.value = false;
 };
 const findOption = (value?: string|number) :GasOption | undefined => {
@@ -51,26 +54,36 @@ const findOption = (value?: string|number) :GasOption | undefined => {
     return columns.value.find(e => e.value === value)
   }
 }
+
 // 初始化/options变更时反显
-const reshow = () => {
-  if(columns.value.length && !pickerVal.value) {
-    let dicValue = props.modelValue;
-    let theDefault = findOption(dicValue);
+const reshow = (option?: GasOption) => {
+  if(option) {
+    pickerVal.value = option;
+  } else if(props.modelValue&&columns.value.length) {
+    let theDefault = findOption(props.modelValue);
     if(theDefault) {
       pickerVal.value = theDefault;
+    } else {
+      emits("update:modelValue", undefined);
     }
+  } else {
+    pickerVal.value = undefined;
   }
+
 }
-watch(pickerVal,(newPick) => {
-  if(newPick?.value) {
-    emits("update:modelValue", newPick.value);
-  }
+
+watch(() => props.modelValue, (newValue) => {
+  reshow();
 })
 
+// 监听提供的options变化
 watch(() => props.options,(newOptions) => {
-      columns.value = newOptions||[];
-      reshow();
-    },{immediate: true})
+  if( newOptions && newOptions.length > 0) {
+    columns.value = newOptions||[];
+    reshow();
+  }
+},{immediate: true});
+
 
 onMounted(() => {
   if(props.dicType) {
@@ -86,7 +99,9 @@ onMounted(() => {
 
 
 const showPicker =  () => {
-  isShow.value = true;
+  if(props.beforClick()) {
+    isShow.value = true;
+  }
 };
 
 

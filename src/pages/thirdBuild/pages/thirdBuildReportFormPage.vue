@@ -91,9 +91,20 @@ const nextStep = () => {
   uni.navigateTo({
     url: '/pages/thirdBuild/pages/thirdBuildGuardFormPage',
     success: (res) => {
-      res.eventChannel.emit('reportInfo', { thirdBuildInfo: data.thirdBuildInfo,reportInfo: data.form })
+      const theForm = handleForm();
+      res.eventChannel.emit('reportInfo', { thirdBuildInfo: data.thirdBuildInfo,reportInfo: theForm })
     }
   })
+}
+
+const handleForm = () => {
+  // @ts-ignore
+  const reportPicIds = data.form.reportPicIds.map(e => e.id);
+  // @ts-ignore
+  const schemaPicIds = data.form.schemaPicIds.map(e => e.id);
+  // @ts-ignore
+  const protocolPicIds = data.form.protocolPicIds.map(e => e.id);
+  return {...data.form,reportPicIds,schemaPicIds,protocolPicIds};
 }
 
 const save = async() => {
@@ -102,13 +113,8 @@ const save = async() => {
     uni.showToast({ title: '请至少填写一项', icon: 'error' });
     return;
   }
-  // @ts-ignore
-  const reportPicIds = data.form.reportPicIds.map(e => e.id);
-  // @ts-ignore
-  const schemaPicIds = data.form.schemaPicIds.map(e => e.id);
-  // @ts-ignore
-  const protocolPicIds = data.form.protocolPicIds.map(e => e.id);
-  const result = postThirdBuildReportByThirdBuildId(data.thirdBuildUid,{...data.form,reportPicIds,schemaPicIds,protocolPicIds});
+  const theForm = handleForm();
+  const result = postThirdBuildReportByThirdBuildId(data.thirdBuildUid,theForm);
   useLoading(result, () => {
     uni.$emit(EventType.THIRD_BUILD_REFRESH)
     uni.navigateBack();

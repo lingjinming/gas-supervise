@@ -3,11 +3,14 @@
     <input slot="input" disabled style="width: 100%" :value="form.address" placeholder="请选择" />
   </van-field>
   <gas-picker required dicType="org"  label="所属燃气公司" title="所属燃气公司" v-model="form.orgId" />
-  <gas-picker required dicType="ACCIDENTLEVEL" label="事故等级" title="事故等级" :defaultValue="form.accidentLevel" v-model="form.accidentLevel" />
-  <gas-picker  required dicType="sp_accident_type" label="事故类型" title="事故类型" :defaultValue="form.accidentType"  v-model="form.accidentType" />
-  <gas-picker  required dicType="sp_accident_scene" label="事故场景" title="事故场景" :defaultValue="form.accidentScene"  v-model="form.accidentScene" />
-  <van-field required @click-input="showcalendar" label="事故时间"  readonly  >
-    <input placeholder="请选择事故时间" slot="input"  disabled style="width: 100%" :value="form.accidentTime" />
+  <gas-picker required dicType="ACCIDENTLEVEL" label="事故等级" title="事故等级"  v-model="form.accidentLevel" />
+  <gas-picker  required dicType="sp_accident_type" label="事故类型" title="事故类型"  v-model="form.accidentType" />
+  <gas-picker  required dicType="sp_accident_scene" label="事故场景" title="事故场景"   v-model="form.accidentScene" />
+  <van-field required  label="事故时间"  readonly  >
+    <uni-datetime-picker  v-model="form.accidentTime" type="datetime"  slot="input" >
+      {{ form.accidentTime ? form.accidentTime : '请选择事故时间' }}
+    </uni-datetime-picker>
+    
   </van-field>
   
 
@@ -28,15 +31,6 @@
       type="default"
       >下一步</van-button
     >
-  </view>
-  <view>
-    <uni-calendar 
-      ref="calendar"
-      :insert="false"
-      :start-date="'2000-1-1'"
-      :end-date="'2025-5-20'"
-      @confirm="change"
-    />
   </view>
   
 </template>
@@ -111,15 +105,6 @@ const openMapAndChooseLocation = async() => {
     form.value.latitude = location.lat;
     form.value.districtId = location.districtId;
   }
-}
-
-// 选择事故时间
-const calendar = ref()
-const change  = ({fulldate}) => {
-  form.value.accidentTime = fulldate + ' 00:00:00';
-}
-const showcalendar = () => {
-  calendar.value.open()
 }
 
 

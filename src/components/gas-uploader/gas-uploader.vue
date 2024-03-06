@@ -1,6 +1,6 @@
 <template>
   <view class="uploader-box">
-    <text class="label">{{ label }}</text>
+    <text :class="['label',required?'required':'']">{{ label }}</text>
     <!-- 文件上传 -->
     <template v-if="accept === 'file'">
       <van-uploader accept="file" @after-read="upload" >
@@ -41,8 +41,12 @@ import  type { LocalFile,FileObj ,AcceptType} from './index'
 const emits = defineEmits(["update:modelValue"]);
 const props = defineProps({
   modelValue: {
-    type: Array as PropType<FileObj[]>,
-    required: true
+    required: false
+  },
+  // 是否必填
+  required: {
+    type: Boolean,
+    default: false
   },
   label: {
     type: String,
@@ -83,6 +87,7 @@ onMounted(() => {
 
 const init = () => {
   let reshowPromiseList: Promise<void>[] = []
+  // @ts-ignore
   fileList.value = props.modelValue?.map(({id,name,url}) => {
     let item : LocalFile =  {  id, name, status: 'uploading', type: props.accept, size: 0,  time: 0, url: '',tempFilePath: '', thumb: ''}
     // 对图片要反显出来
@@ -210,6 +215,12 @@ const validateFile = (file: LocalFile): boolean => {
   
   .label {
     @include label;
+  }
+  .required {
+    &::before {
+      content: '*';
+      color: $uni-color-error;
+    }
   }
   .btn {
     width: 200rpx;

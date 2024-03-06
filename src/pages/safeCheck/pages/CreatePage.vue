@@ -40,7 +40,7 @@
         <van-field required label="详细地址" >
           <input slot="input" disabled v-model="form.address"  placeholder="选择或新建企业后自动带入"/>
         </van-field>
-        <gas-picker required   label="检查主题" :options="topicOptions" title="检查主题" v-model="topicId" />
+        <gas-picker required :beforClick="checkTargetSelected"  label="检查主题" :options="topicOptions" title="检查主题" v-model="topicId" />
         <view class="opts">
           <view class="button confirm" @click="goToDoCheck">下一步</view>
         </view>
@@ -112,7 +112,16 @@ const goToDoCheck = () => {
     changeStep(1);
   }
 }
-
+const checkTargetSelected = () => {
+  if(form.value.targetType) {
+    return true;
+  }
+  uni.showToast({
+    title: '请选择检查对象',
+    icon: 'none'
+  })
+  return false;
+}
 const stopTouchMove = () => false;
 // 选择检查对象
 const goSelectTarget = () => {
@@ -131,6 +140,7 @@ const goSelectTarget = () => {
 
         // 关联检查主题
         getSafeCheckTopicPage({query: {
+          enable: true,
           paging: false,
           // @ts-ignore
           checkType: form.value.type,
@@ -138,7 +148,16 @@ const goSelectTarget = () => {
         }}).then(result => {
           topicOptions.value = result.data.map(item => ({ text: item.topic, value: item.uid }))
           if(!topicOptions.value.length) {
-            uni.showToast({ title: '该检查对象类型未配置检查主题', icon: 'none' })
+            //uni.showToast({ title: '该检查对象类型未配置检查主题', icon: 'none' })
+            uni.showModal({
+              title: '提示',
+              content: '该检查对象类型没有可用的检查主题',
+              showCancel: false,
+              confirmText: '知道了',
+              success: function (res) {
+                
+              }
+            });
           }
         })
       }

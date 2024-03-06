@@ -58,7 +58,7 @@
             <gas-attach
               v-for="file in node?.fileIds"
               :key="file.id"
-              :fileId="file.id"
+              :id="file.id"
               :fileName='file.name'
             />
           </view>
@@ -144,6 +144,7 @@
   <!-- 领导评论弹窗 -->
   <van-popup
     :show="data.showComment"
+    root-portal
     position="bottom"
     custom-style="height: 50%;padding:40rpx 0"
     @close="closeComment"

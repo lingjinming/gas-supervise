@@ -2,15 +2,21 @@
   <!-- 操作步骤 -->
   <view class="step-box">
     <van-icon name="arrow" custom-style="position:absolute;left:50%;transform:translateX(-50%)" />
-    <view @click="changeStep(0)" :class="[data.currentStep === 0 ? 'act' : '']">选择需要整改的隐患</view>
-    <view @click="changeStep(1)" :class="[data.currentStep === 1 ? 'act' : '']">填写整改单信息</view>
+    <view  :class="[data.currentStep === 0 ? 'act' : '']">选择需要整改的隐患</view>
+    <view  :class="[data.currentStep === 1 ? 'act' : '']">填写整改单信息</view>
   </view>
   <!-- 选择隐患/填报整改单 -->
   <view class="handle-order-container">
-    <swiper class="swiper" :disable-touch="true" :circular="false" :indicator-dots="false" :autoplay="false"
-      :current="data.currentStep" @change="changeStep($event.detail.current)">
+    <swiper class="swiper" 
+      :disable-touch="true" 
+      :touchable="false"
+      :circular="false" 
+      :indicator-dots="false" 
+      :autoplay="false"
+      :current="data.currentStep" 
+      @change="changeStep($event.detail.current)">
       <!-- 隐患列表 -->
-      <swiper-item>
+      <swiper-item @touchmove.stop="stopTouchMove">
         <scroll-view style="height: 85%" scroll-y="true" class="scroll-Y">
           <template v-if="list.length" v-for="item in list" :key="item.uid">
             <view @click.capture.stop="chooseUid(item)">
@@ -30,7 +36,7 @@
         </van-button>
       </swiper-item>
       <!-- 整改单信息填报 -->
-      <swiper-item>
+      <swiper-item @touchmove.stop="stopTouchMove">
         <scroll-view style="height: 85%" scroll-y="true" class="scroll-Y">
           <view class="tab-detail-wrap">
             <view class="tab-detail-box">
@@ -71,7 +77,7 @@
             </view>
           </view>
 
-          <view class="signature-box" @click="navigatoSignature('targetOrgMasterSignatures')">
+          <!-- <view class="signature-box" @click="navigatoSignature('targetOrgMasterSignatures')">
             <van-field title-width="100%" :border="false" required label="企业负责人" readonly />
             <gas-attach :disabledPreview="true" v-if="data.targetOrgMasterSignatures"
               :id="data.targetOrgMasterSignatures" />
@@ -88,7 +94,7 @@
             <gas-attach :disabledPreview="true" v-if="data.expertSignatures2"
               :id="data.expertSignatures2" />
             <view class="image" v-else>请手写签名</view>
-          </view>
+          </view> -->
         </scroll-view>
         <van-button custom-style="width:calc(100% - 80rpx);margin:40rpx 40rpx 0 40rpx;" type="primary" size="large"
           color="#006CFF" @click="save">保存
@@ -133,6 +139,8 @@ const data = reactive({
     paging: false,
   },
 });
+
+const stopTouchMove = () => false;
 const hasSing = computed(
   () =>
     data.targetOrgMasterSignatures &&

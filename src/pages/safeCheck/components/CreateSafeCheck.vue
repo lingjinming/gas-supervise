@@ -17,15 +17,16 @@
             <uni-data-checkbox v-model="sub.checkResult" :localdata="options" ></uni-data-checkbox>
           </view>
           <view class="dangers" v-if="sub.checkResult === 'HIDANGER'">
-            <view class="sub-item-title">隐患描述</view>
+            <view class="sub-item-title required">隐患描述</view>
             <view style="margin: 0rpx 30rpx;">
               <uni-easyinput  type="textarea" v-model="sub.dangerRemark" placeholder="请输入" maxlength="300"/>
             </view>
-            <gas-uploader v-model="sub.dangerImgs" label="上传照片" class="upload"/>
+            <gas-uploader v-model="sub.dangerImgs" label="上传照片" class="upload" required/>
             <gas-cascader
               dicType="ENTERPRISE_USER"
               label="整改责任人"
               title="整改责任人"
+              required
               v-model="sub.rectifierPersonId"
               @selectFinish="(path) => onSelectedUser(sub,path)"
             />
@@ -117,7 +118,15 @@ watch(() => props.topic, topic => {
           })
         } 
         return category;
-      })
+      });
+      if(!items.value.length) {
+        uni.showModal({
+          showCancel: false,
+          title:'提示',
+          content:'该检查主题没有配置任何检查项',
+          confirmText:'知道了',
+        })
+      }
     })
   }
 })
@@ -191,6 +200,12 @@ const validate = (item: ItemType['list'][0]) =>  {
           padding: 0rpx 30rpx;
           height: 60rpx;
           line-height: 60rpx;
+        }
+        .required {
+          &::before {
+            content: '*';
+            color: $uni-color-error;
+          }
         }
         .option {
           padding: 0rpx 30rpx;

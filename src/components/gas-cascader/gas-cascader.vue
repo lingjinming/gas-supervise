@@ -15,7 +15,7 @@
       placeholder="请选择"
     />
   </van-field>
-  <van-popup :show="isShow" round position="bottom">
+  <van-popup :show="isShow" root-portal round position="bottom">
     <!-- <input @change="filter" v-model="inputVal" type="text" /> -->
     <van-cascader
       swipeable

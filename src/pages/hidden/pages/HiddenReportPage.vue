@@ -15,7 +15,7 @@
       </view>
 
 
-      <gas-uploader v-model="reportForm.fileIds"/>
+      <gas-uploader  v-model="reportForm.fileIds"/>
       <gas-cascader
         dicType="RISK_SUBJECT_TYPE_TREE"
         label="隐患类别"
@@ -124,7 +124,7 @@ watch(() => reportForm.value.orgId, (orgId) => {
 
 
 const submit = async () => {
-  const fileIds = reportForm.value.fileIds?.map((e) => e.id).join(",");
+  const fileIds = reportForm.value.fileIds?.map((e) => e.id);
   const form = {...reportForm.value, fileIds};
   // @ts-ignore
   const result = Promise.resolve().then(() => isOrg ? postHidangerOrg(form) : postHidangerGov(form))

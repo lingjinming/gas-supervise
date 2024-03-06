@@ -54,6 +54,8 @@ const props = defineProps({
 });
 
 const goDetail = (notice: MsgBizType) => {
+  // 没有这个需求,不给看详情
+  return;
   // 隐患派单,如果是多个隐患,
   if(notice.type === NoticeType.MsgRiskDispatch) {
     const dangerUids = notice.properties?.dangerUids || [];

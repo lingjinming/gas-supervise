@@ -62,7 +62,8 @@ const transforms: RequestTransform = {
     const { success, code, data, message } = response.data;
     if (!success) {
       uni.showToast({
-        icon: 'error',
+        icon: 'none',
+        duration: 3000,
         title: message
       })
     }

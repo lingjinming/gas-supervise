@@ -45,7 +45,7 @@ const saveOrUpdate = () => {
   const isValid = validate();
   if (!isValid) return;
   const isUpdate = !!form.value.uid;
-  const fileIds = form.value.fileIds.map(e => e.id);
+  const fileIds = form.value.fileIds.map(e => e.id).join(',');
   const formData = {...form.value, fileIds}
   const result = Promise.resolve().then(() => {
     return isUpdate ? postAccidentUpdate(formData) : postAccidentAdd(formData)
