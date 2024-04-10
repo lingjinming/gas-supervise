@@ -159,7 +159,7 @@ const sendBack = (data) => {
 	* @参考 https://blog.csdn.net/sdfsfsdscd/article/details/91375066
 	**/
 @function tovmin($rpx) {
-  @return #{$rpx * 100 / 750}vmin;
+  @return calc($rpx * 100 / 750) * 1vmin;
 }
 
 .page-content {

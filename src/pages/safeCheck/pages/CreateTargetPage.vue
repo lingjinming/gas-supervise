@@ -76,8 +76,12 @@ const openMapAndChooseLocation = async() => {
 
 const confirm = () => {
   if(isOk.value) {
-    eventChannel && eventChannel.emit(EventType.CREATE_TARGET, { target: form.value });
-    uni.navigateBack();
+    uni.navigateBack({
+      delta:1,
+      success: () => {
+        eventChannel && eventChannel.emit(EventType.CREATE_TARGET, { target: form.value });
+      }
+    });
   } else {
     uni.showToast({
       title: '请完善信息',

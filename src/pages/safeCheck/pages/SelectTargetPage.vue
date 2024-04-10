@@ -116,8 +116,13 @@ const selectOrCreate = () => {
 }
 
 const sendBack = (target: PageItemType) => {
-  uni.navigateBack();
-  eventChannel && eventChannel.emit(EventType.SELECTED_TARGET, { target });
+  uni.navigateBack({
+    delta:1,
+    success: () => {
+      eventChannel && eventChannel.emit(EventType.SELECTED_TARGET, { target });
+    }
+  });
+  
 }
 </script>
 <style lang="scss" scoped>

@@ -54,10 +54,11 @@
         <swiper-item @touchmove.stop="stopTouchMove">
           <view class="third">
             <gas-picker required  :options="levelOptions" label="安全等级"  title="安全等级" v-model="form.safeLevel" />
-            <view class="sub-item-title">评价总结</view>
+            <gas-field required label="评价总结" type="textarea" v-model="form.safeSummary" :autosize="{ maxHeight: 100, minHeight: 50 }"></gas-field>
+            <!-- <view class="sub-item-title">评价总结</view>
             <view style="margin: 0rpx 30rpx;">
               <uni-easyinput  type="textarea" v-model="form.safeSummary" placeholder="请输入" maxlength="300"/>
-            </view>
+            </view> -->
           </view>
           <view class="opts">
             <view class="button cancel" @click="changeStep(1)">上一步</view>
@@ -151,7 +152,7 @@ const goSelectTarget = () => {
             //uni.showToast({ title: '该检查对象类型未配置检查主题', icon: 'none' })
             uni.showModal({
               title: '提示',
-              content: '该检查对象类型没有可用的检查主题',
+              content: '尚未配置检查主题，请在管理后台配置后在进行检查',
               showCancel: false,
               confirmText: '知道了',
               success: function (res) {

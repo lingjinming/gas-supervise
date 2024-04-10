@@ -70,16 +70,16 @@ const login = async () => {
 
   if (!loginForm.value.username) {
     uni.showToast({
-      icon: "error",
-      title: "请输入账号",
+      icon: "none",
+      title: "账号/密码不能为空",
     });
     return;
   }
 
   if (!loginForm.value.password) {
     uni.showToast({
-      icon: "error",
-      title: "请输入密码",
+      icon: "none",
+      title: "账号/密码不能为空",
     });
     return;
   }
@@ -92,8 +92,8 @@ const login = async () => {
     store.setToken(TOKEN_INFO);
   } catch (err) {
     uni.showToast({
-      icon: "error",
-      title: "账号或密码错误",
+      icon: "none",
+      title: "您输入的账号或密码有误",
     });
     return;
   }

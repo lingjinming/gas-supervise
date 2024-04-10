@@ -16,7 +16,7 @@
     />
   </view>
   <scroll-view
-    :style="{ height: !isOrg ? 'calc(100% - 240rpx)' : 'calc(100% - 80rpx)' }"
+    :style="{ height: 'calc(100% - 80rpx)' }"
     scroll-y="true"
     class="scroll-Y"
     @scrolltolower="nextPage" 
@@ -51,6 +51,7 @@ import { useTable } from "@/hooks/useTable";
 import {getHidangerGovCheckPlanPage} from '@/api/gen/GasSuperviseApi'
 import type {HiDangerCheckPageVO,HiDangerCheckPageQuery} from '@/api/gen/data-contracts'
 import CheckPlanPageItem from './components/CheckPlanPageItem.vue'
+import {EventType} from './event'
 
 const minDate = new Date("2023-01-01").getTime();
 const maxDate = new Date().getTime();
@@ -66,8 +67,13 @@ const { noData ,total,list,nextPage,search,triggered,onRefreshPulling,onRefresh}
 
 
 
-
-
+onLoad(() => {
+  search();
+  uni.$on(EventType.REFRESH_PAGE, search);
+})
+onUnload(() => {
+  uni.$off(EventType.REFRESH_PAGE, search);
+})
 
 const onConfirm = (e) => {
   reportForm.value.startTime = formatDate(e.detail[0]);
@@ -79,10 +85,7 @@ const showCalendar = () => {
   isShow.value = true;
 };
 
-onShow(() => {
-  search();
-  uni.$on("refresh", () => search());
-});
+
 </script>
 <style lang="scss" scoped>
 .top {

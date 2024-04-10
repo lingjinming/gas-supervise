@@ -1,9 +1,17 @@
 <template>
-  <van-field required label="位置" @click-input="openMapAndChooseLocation" right-icon="location-o" >
+  <!-- <van-field required label="位置" @click-input="openMapAndChooseLocation" right-icon="location-o" >
     <input slot="input" disabled style="width: 100%" :value="form.info.constructionAddress" placeholder="请选择" />
-  </van-field>
-  <gas-picker required dicType="THIRD_BUILD_TYPE" label="施工类型" title="施工类型" :defaultValue="form.info.buildType" v-model="form.info.buildType" />
-  <gas-picker  required dicType="RISK_THIRD_BUILD_STATE" label="施工状态" title="施工状态" :defaultValue="form.info.buildState"  v-model="form.info.buildState" />
+  </van-field> -->
+  <gas-field required 
+            readonly
+            label="位置" 
+            placeholder="请选择"
+            @clickInput="openMapAndChooseLocation"
+            v-model="form.info.constructionAddress"
+            icon="location-o">
+          </gas-field>
+  <gas-picker required dicType="THIRD_BUILD_TYPE" label="施工类型" title="施工类型" v-model="form.info.buildType" />
+  <gas-picker  required dicType="RISK_THIRD_BUILD_STATE" label="施工状态" title="施工状态"   v-model="form.info.buildState" />
   <!-- 政府用户,需要选择企业 -->
   <gas-picker
     required
@@ -18,26 +26,16 @@
   </van-field>
 
   <view class="line"></view>
-  <van-field required label="建设单位" >
-    <input slot="input"  v-model="form.info.buildUnitName" placeholder="请输入建设单位"/>
-  </van-field>
-  <van-field required label="联系人" >
-    <input slot="input"  v-model="form.info.buildUnitContactName"  placeholder="请输入建设单位联系人"/>
-  </van-field>
-  <van-field  required label="联系方式" >
-    <input slot="input"  v-model="form.info.buildUnitContactPhone"  placeholder="请输入建设单位联系人手机号"/>
-  </van-field>
+ 
+  <gas-field required label="建设单位"  clearable v-model="form.info.buildUnitName"  placeholder="请输入建设单位"></gas-field>
+  <gas-field required label="联系人"   clearable v-model="form.info.buildUnitContactName"  placeholder="请输入建设单位联系人"></gas-field>
+  <gas-field required label="联系方式" type="number"	 clearable v-model="form.info.buildUnitContactPhone"  placeholder="请输入建设单位联系人手机号"></gas-field>
 
   <view class="line"></view>
-  <van-field required label="监理单位" >
-    <input slot="input"  v-model="form.info.supUnitName"  placeholder="请输入监理单位"/>
-  </van-field>
-  <van-field required label="联系人">
-    <input slot="input"  v-model="form.info.supUnitContactName"  placeholder="请输入监理单位单位联系人"/>
-  </van-field>
-  <van-field required label="联系方式">
-    <input slot="input"  v-model="form.info.supUnitContactPhone"  placeholder="请输入监理单位联系人手机号"/>
-  </van-field>
+
+  <gas-field required label="监理单位"  clearable v-model="form.info.supUnitName"  placeholder="请输入监理单位"></gas-field>
+  <gas-field required label="联系人"   clearable v-model="form.info.supUnitContactName"  placeholder="请输入监理单位单位联系人"></gas-field>
+  <gas-field required label="联系方式" type="number"	 clearable v-model="form.info.supUnitContactPhone"  placeholder="请输入监理单位联系人手机号"></gas-field>
  
 
 <view class="opts">

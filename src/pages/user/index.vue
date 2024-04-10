@@ -17,11 +17,11 @@
           {{ form.phone }}
         </view>
       </view>
-      <view class="arrow">
+      <!-- <view class="arrow">
         <van-icon name="arrow" />
-      </view>
+      </view> -->
     </view>
-    <view class="functions">
+    <!-- <view class="functions">
       <view class="function-item">
         <view class="icon">
           <van-icon name="bulb-o" />
@@ -46,7 +46,7 @@
           <van-icon name="arrow" />
         </view>
       </view>
-    </view>
+    </view> -->
     <button @click="logout" class="logout-btn">
       退出账号
     </button>
@@ -103,7 +103,7 @@ const form = ref({
   wechat: '暂无',
   landline: '暂无'
 });
-
+// see jira SMYFRJ2022005-3316
 
 onShow(() => {
   const userInfo = store.userInfo;
@@ -142,6 +142,7 @@ const logout = () => {
 }
 
 .user-container {
+  
   padding: 136rpx 30rpx;
   position: relative;
   .bg_img {
@@ -159,6 +160,7 @@ const logout = () => {
         text-align: right;
       }
   .user {
+    margin-top: 5vh;
     display: flex;
     align-items: center;
     width: 100%;

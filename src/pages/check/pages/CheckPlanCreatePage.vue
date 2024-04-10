@@ -87,6 +87,7 @@ import { userStore } from "@/state";
 
 import {postHidangerGovCheckPlan} from '@/api/gen/GasSuperviseApi'
 import type {HiDangerCheckPlanCreateDTO} from '@/api/gen/data-contracts'
+import { useLoading } from "@/hooks/useLoading";
 
 
 let errorMessage = ref("");
@@ -127,8 +128,13 @@ watch(
 
 const submit = async () => {
   if (errorMessage.value) return;
-  let { success,message } = await postHidangerGovCheckPlan(reportForm.value);
-  showToast(success,message,uni.navigateBack);
+  const {success,message} =  await postHidangerGovCheckPlan(reportForm.value);
+  if(success) {
+    showToast(success,message,uni.navigateBack);
+  } else {
+    uni.showModal({ title: '提示', content: message, showCancel: false, confirmText: '知道了',  success: function (res) { } });
+  }
+ 
 };
 </script>
 <style lang="scss" scoped>

@@ -1,5 +1,8 @@
 <template>
-  <van-field v-bind="$attrs" is-link clickable maxlength="200" @click-input="showPicker">
+  <van-field v-bind="$attrs"   clickable maxlength="200" @click-input="showPicker" @click-icon="clickIcon">
+    <view slot="right-icon">
+      <van-icon :name="pickerVal ? 'cross' : 'arrow'" />
+    </view>
     <input hold-keyboard readonly disabled :value="pickerVal?.text" slot="input" style="width: 100%;" placeholder="请选择" />
   </van-field>
   <van-popup :show="isShow" root-portal round position="bottom">
@@ -94,8 +97,17 @@ onMounted(() => {
   }
 })
 
-
-
+/**
+ * 点击尾部icon,如果已经选中了,则清空选中
+ * see bug: SMYFRJ2022005-3317
+ */
+const clickIcon = () => {
+  if(pickerVal.value) {
+    emits("update:modelValue",undefined);
+  } else {
+    showPicker();
+  }
+}
 
 
 const showPicker =  () => {

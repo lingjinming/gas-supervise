@@ -44,9 +44,8 @@
   </van-swipe-cell>
 </template>
 <script setup lang="ts">
-import { showToast } from "@/hooks";
-
 import { deleteHidangerGovCheckPlanByIds ,postHidangerGovCheckPlanFinishById} from '@/api/gen/GasSuperviseApi'
+import {EventType} from '../event'
 
 const props = defineProps({
   data: {
@@ -59,16 +58,29 @@ const navigateToDetail = (uid, planCode, e) => {
     url: `/pages/check/pages/CheckPlanDetailPage?uid=${uid}&planCode=${planCode}`,
   });
 };
-
+// 删除计划
 const deletePlan = async (uid: number) => {
-  let data = await deleteHidangerGovCheckPlanByIds(uid);
-  showToast(data.success, data.message);
+  let result = await deleteHidangerGovCheckPlanByIds(uid);
+  if(result.success) {
+    uni.showToast({ title: '操作成功', icon: 'none', duration: 1000});
+    uni.$emit(EventType.REFRESH_PAGE);
+  } else {
+    uni.showModal({ title: '提示', content: result.message, showCancel: false, confirmText: '知道了',  success: function (res) { } });
+  }
+};
+// 标记已完成
+const finishPlan = async (uid) => {
+  let result =  await postHidangerGovCheckPlanFinishById(uid);
+  if(result.success) {
+    uni.showToast({ title: '操作成功', icon: 'none', duration: 1000});
+    uni.$emit(EventType.REFRESH_PAGE);
+  } else {
+    uni.showModal({ title: '提示', content: result.message, showCancel: false, confirmText: '知道了',  success: function (res) { } });
+  }
+
 };
 
-const finishPlan = async (uid) => {
-  let data = await postHidangerGovCheckPlanFinishById(uid);
-  showToast(data.success, data.message);
-};
+
 </script>
 
 <style lang="scss" scoped>

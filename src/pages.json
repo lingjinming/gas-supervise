@@ -195,7 +195,7 @@
           "name": "HiddenReformPage",
           "path": "pages/HiddenReformPage",
           "style": {
-            "navigationBarTitleText": "整改跟进"
+            "navigationBarTitleText": "隐患跟进"
           }
         },
         {
