@@ -31,9 +31,7 @@
           </template>
           <van-empty v-else description="暂无需要处理的隐患"></van-empty>
         </scroll-view>
-        <van-button custom-style="width:calc(100% - 80rpx);margin:40rpx 40rpx 0 40rpx;" type="primary" size="large"
-          color="#006CFF" @click="changeStep(1)">下一步
-        </van-button>
+        <button style="margin: 0 30rpx;" type="default" size="large" @click="changeStep(1)">下一步 </button>
       </swiper-item>
       <!-- 整改单信息填报 -->
       <swiper-item @touchmove.stop="stopTouchMove">
@@ -96,9 +94,7 @@
             <view class="image" v-else>请手写签名</view>
           </view> -->
         </scroll-view>
-        <van-button custom-style="width:calc(100% - 80rpx);margin:40rpx 40rpx 0 40rpx;" type="primary" size="large"
-          color="#006CFF" @click="save">保存
-        </van-button>
+        <button style="margin: 0 30rpx;" type="default" size="large" @click="save">保存 </button>
       </swiper-item>
     </swiper>
     <!-- 日历 -->

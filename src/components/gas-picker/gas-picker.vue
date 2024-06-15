@@ -1,9 +1,9 @@
 <template>
   <van-field v-bind="$attrs"   clickable maxlength="200" @click-input="showPicker" @click-icon="clickIcon">
     <view slot="right-icon">
-      <van-icon :name="pickerVal ? 'cross' : 'arrow'" />
+      <van-icon :name="selected ? 'cross' : 'arrow'" />
     </view>
-    <input hold-keyboard readonly disabled :value="pickerVal?.text" slot="input" style="width: 100%;" placeholder="请选择" />
+    <input hold-keyboard readonly disabled :value="selected" slot="input" style="width: 100%;" placeholder="请选择" />
   </van-field>
   <van-popup :show="isShow" root-portal round position="bottom">
     <van-picker
@@ -20,9 +20,7 @@
 import { userStore } from "@/state";
 
 const store = userStore()
-const emits = defineEmits(["update:modelValue"]);
-
-
+const emits = defineEmits(["update:modelValue","onConfirm"]);
 const props = defineProps({
   modelValue: {
     type: [String, Number] as PropType<string | number>,
@@ -44,71 +42,62 @@ const props = defineProps({
 
 let isShow = ref(false);
 let columns: Ref<GasOption[]> = ref([]);
+let map = computed(() => columns.value.reduce((acc,next) => {
+  acc[next.value] = next.text;
+  return acc;
+},{}))
 
-// 选中的下拉选
-let pickerVal = ref<GasOption|undefined>();
-const confirm = (e) => {
-  const selected: GasOption = e.detail.value;
-  emits("update:modelValue", selected.value);
-  isShow.value = false;
-};
-const findOption = (value?: string|number) :GasOption | undefined => {
-  if(columns.value.length && value) {
-    return columns.value.find(e => e.value === value)
+const selected = computed({
+  get(){
+    let val = props.modelValue;
+    let optionsMap = map.value;
+    return val&&optionsMap[val];
+  },
+  set(val){
+    changEvent(val);
   }
-}
-
-// 初始化/options变更时反显
-const reshow = (option?: GasOption) => {
-  if(option) {
-    pickerVal.value = option;
-  } else if(props.modelValue&&columns.value.length) {
-    let theDefault = findOption(props.modelValue);
-    if(theDefault) {
-      pickerVal.value = theDefault;
-    } else {
-      emits("update:modelValue", undefined);
-    }
-  } else {
-    pickerVal.value = undefined;
-  }
-
-}
-
-watch(() => props.modelValue, (newValue) => {
-  reshow();
 })
 
-// 监听提供的options变化
-watch(() => props.options,(newOptions) => {
-  if( newOptions && newOptions.length > 0) {
-    columns.value = newOptions||[];
-    reshow();
-  }
-},{immediate: true});
+const changEvent = (val) => {
+  emits("update:modelValue", val);
+}
 
 
-onMounted(() => {
-  if(props.dicType) {
-    store.fetchDictionary(props.dicType).then(options => {
+const confirm = (e) => {
+  const checked: GasOption = e.detail.value;
+  emits("onConfirm",checked)
+  selected.value = checked.value;
+  isShow.value = false;
+};
+
+
+
+
+watchEffect(() => {
+  if(props.options.length) {
+    columns.value = props.options;
+  } else if(props.dicType) {
+    Promise.resolve()
+      .then(() =>  store.fetchDictionary(props.dicType))
+      .then(options => {
       columns.value = options;
-      reshow();
     })
   }
 })
+
+
 
 /**
  * 点击尾部icon,如果已经选中了,则清空选中
  * see bug: SMYFRJ2022005-3317
  */
 const clickIcon = () => {
-  if(pickerVal.value) {
-    emits("update:modelValue",undefined);
+  if(selected.value) {
+    changEvent(undefined)
   } else {
     showPicker();
   }
 }
-
 
 const showPicker =  () => {
   if(props.beforClick()) {

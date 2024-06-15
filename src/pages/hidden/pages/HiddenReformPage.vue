@@ -1,61 +1,35 @@
 <template>
 
-  <van-cell-group>
-    <view style="background: #fff;">
-      <van-field :value="reportForm.handleContent" label="整改情况说明" readonly />
+  <gas-field label="整改情况说明" v-model="reportForm.handleContent" type="textarea" placeholder="请输入" :maxlength="200" > </gas-field>
+  
+  <gas-field 
+    label="整改时间" 
+    v-model="reportForm.handleDate" 
+    type="datetime" 
+    placeholder="请选择" 
+  >
+  </gas-field>
+  <gas-picker
+    defaultValue="SAME"
+    dicType="RISK_DANGER_CHECK"
+    label="是否和描述一致"
+    title="是否和描述一致"
+    v-model="reportForm.sameWithRemark"
+  />
+  <gas-field v-model="username"  label="责任人" disabled readonly/>
 
-      <textarea
-        class="remark"
-        maxlength="200"
-        :value="reportForm.handleContent"
-        @input="reportForm.handleContent = $event.detail.value"
-        type="text"
-        placeholder="请输入"
-      />
-    </view>
+  <gas-uploader v-model="reportForm.picIds"/>
 
-    <van-field
-      is-link
-      label="整改时间"
-      @click-input="handleDatePopupIsShow = true"
-    >
-      <input
-        :value="reportForm.handleDate"
-        slot="input"
-        disabled
-        style="width: 100%;"
-        placeholder="请选择"
-      />
-    </van-field>
-    <gas-picker
-      defaultValue="SAME"
-      dicType="RISK_DANGER_CHECK"
-      label="是否和描述一致"
-      title="是否和描述一致"
-      v-model="reportForm.sameWithRemark"
-    />
-    <van-field :value="username"  label="责任人" disabled readonly/>
-    <van-calendar
-      :show="handleDatePopupIsShow"
-      @close="handleDatePopupIsShow = false"
-      @confirm="chooseDate"
-    />
-    <gas-uploader v-model="reportForm.picIds"/>
-
-  </van-cell-group>
-
-
-  <van-button 
-    custom-style="margin:40rpx;width:calc(100% - 80rpx)" 
-    type="primary" 
+  <button 
+    style="margin:40rpx;width:calc(100% - 80rpx)" 
+    type="default" 
     size="large" 
-    color="#006CFF" 
     @click="submit"
-    >确定</van-button>
+    >确定</button>
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
-import { timestampToDateTimeString} from "@/utils";
+import { timestampToDateTimeString,todayDateStr} from "@/utils";
 import { EventType } from '@/enums/eventType'
 import { userStore } from "@/state";
 import {putHidangerOrgHandleByUid} from '@/api/gen/GasSuperviseApi'
@@ -67,7 +41,6 @@ const store = userStore();
 let username = ref(store.userInfo?.name)
 
 let checkDate = ref(0)
-let handleDatePopupIsShow = ref(false);
 
 let reportForm = ref({
     uid:0,
@@ -88,10 +61,7 @@ onLoad(options => {
 })
 
 
-const chooseDate = (e) => {
-  handleDatePopupIsShow.value = false;
-  reportForm.value.handleDate = timestampToDateTimeString(e.detail);
-};
+
 
 const submit = async () => {
  if(new Date(reportForm.value.handleDate).getTime() - new Date(checkDate.value).getTime() < 0){

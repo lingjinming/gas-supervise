@@ -24,7 +24,8 @@
     <view class="sub_title" @click="goHidanger">
       <view class="tip">
         <view class="badge">{{ waitHandleCnt }}</view>
-        <van-icon name="arrow" />
+        
+        <uni-icons type="right" size="16" />
       </view>
       <image class="icon" src="/static/icon/icon_detail.png"></image>
       隐患整改反馈

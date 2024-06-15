@@ -1,42 +1,27 @@
 <template>
-  <van-skeleton
-    title
-    avatar
-    row="2"
-    :loading="loading"
-    :right-width="50"
-    v-for="(notice, i) in notices"
-    :key="i"
-  >
-    <van-swipe-cell :right-width="0">
-      <view class="notice-box" @click="goDetail(notice)">
-        <view class="tit">
-          <view
-            style="
-              display: flex;
-              align-items: center;
-              gap: 10rpx;
-              font-size: 30rpx;
-              font-weight: 600;
-            "
-          >
-            <van-icon
-              :name="'/static/img/' + notice.type + '.png'"
-              size="36rpx"
-            />{{ notice.title }}
-          </view>
+  <view v-for="(notice, i) in notices" :key="i" >
+    <view class="notice-box" @click="goDetail(notice)">
+      <view class="tit">
+        <view
+          style="
+            display: flex;
+            align-items: center;
+            gap: 10rpx;
+            font-size: 30rpx;
+            font-weight: 600;
+          "
+        >
+          <image :src="'/static/img/' + notice.type + '.png'" class="icon_img"></image>
+          {{ notice.title }}
+        </view>
 
-          <text class="time">{{ notice.timestampLively }}</text>
-        </view>
-        <view class="con">
-          <text class="content">{{ notice.content?.content }}</text>
-        </view>
+        <text class="time">{{ notice.timestampLively }}</text>
       </view>
-      <!-- <view slot="right" class="right">
-      <view class="del" @click="del(notice)">删除</view>
-    </view> -->
-    </van-swipe-cell>
-  </van-skeleton>
+      <view class="con">
+        <text class="content">{{ notice.content?.content }}</text>
+      </view>
+    </view>
+  </view>
 </template>
 <script setup lang="ts">
 import type { MessageContent } from "@/api/gen/data-contracts";
@@ -89,6 +74,10 @@ const goDetail = (notice: MsgBizType) => {
     line-height: 48rpx;
     @include flex-between;
     font-size: $uni-font-size-base;
+    .icon_img {
+      width: 36rpx;
+      height: 36rpx;
+    }
     .title {
       margin-left: 18rpx;
       width: 80%;

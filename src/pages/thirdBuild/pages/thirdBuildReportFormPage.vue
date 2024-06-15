@@ -1,17 +1,14 @@
 <template>
   <view class="report-container">
     <!-- 交底上报页面 -->
-    <van-cell-group>
-      <van-field
-        :value="data.form.reporterName"
-        @change="data.form.reporterName = $event.detail"
+      <gas-field
+        v-model="data.form.reporterName"
         label="交底人员"
         placeholder="请输入交底人员姓名"
         maxlength="16"
       />
-      <van-field
-        :value="data.form.reporterPhone"
-        @change="data.form.reporterPhone = $event.detail"
+      <gas-field
+        v-model="data.form.reporterPhone"
         label="联系电话"
         placeholder="请输入交底人员联系电话"
         maxlength="16"
@@ -23,27 +20,20 @@
       <!-- 管网保护协议照片 -->
       <gas-uploader label="上传管网保护协议(施工方签字照片)" v-model="data.form.protocolPicIds"/>
       
-    </van-cell-group>
   </view>
   <view class="info">  注:支持jpg、jpeg、png 每项可上传最多三张. </view>
   <view class="opts">
-      <van-button v-if="data.isInChain"
-      custom-style="background-color:#006CFF;color:#fff;border-radius:10rpx"
-        color="#a7a7a7"
-        plain
+      <button v-if="data.isInChain"
         size="large"
         type="default"
         @click="nextStep"
-        >下一步</van-button
+        >下一步</button
       >
-      <van-button v-else
-      custom-style="background-color:#006CFF;color:#fff;border-radius:10rpx"
-        color="#a7a7a7"
-        plain
+      <button v-else
         size="large"
         type="default"
         @click="save"
-        >保存</van-button
+        >保存</button
       >
     </view>
 </template>

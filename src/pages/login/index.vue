@@ -4,8 +4,6 @@
 
     <div class="login-box">
       <text class="page-title">燃气安全监管</text>
-
-      <van-cell-group>
         <gas-picker
           :is-link="false"
           dicType="SERVER_CONFIG"
@@ -13,28 +11,18 @@
           title="服务器"
           v-model="serverValue"
         />
-        <van-field
-          :value="loginForm.username"
-          @change="loginForm.username = $event.detail"
-          clearable
+        <gas-field
+          v-model="loginForm.username"
           label="账号"
           placeholder="请输入账号"
-          maxlength="20"
         />
-        <van-field
-          :value="loginForm.password"
-          @change="loginForm.password = $event.detail"
-          clearable
+        <gas-field
+          v-model="loginForm.password"
           type="password"
           label="密码"
           placeholder="请输入密码"
-          :border="false"
-          maxlength="20"
         />
-      </van-cell-group>
-      <van-button type="primary" color="#006CFF" size="large" @click="login"
-        >登 录</van-button
-      >
+      <button style="width:100%;margin-top: 30rpx;" type="default" size="large" @click="login" >登 录</button >
     </div>
   </view>
 </template>
@@ -125,7 +113,7 @@ const changeServe = () => {
   left: 0;
   right: 0;
   bottom: 30%;
-  gap: 40rpx;
+  
   padding: 40rpx;
   @include flex-column;
 }

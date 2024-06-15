@@ -1,47 +1,40 @@
 <template>
   <view class="uploader-box">
-    <text :class="['label',required?'required':'']">{{ label }}</text>
+    <text class="label" :class="{required}">{{ label }}</text>
     <!-- 文件上传 -->
     <template v-if="accept === 'file'">
-      <van-uploader accept="file" @after-read="upload" >
-        <van-button icon="description" custom-style="height: 60rpx;">选择文件</van-button>
-      </van-uploader>
-      <view v-for="(f,index) in fileList" :key="f.name" class="file-list">
-        <view class="fiel-preview">
-          <view class="file-del" @click="deleteFile({detail:{index,file:f}})">
-            <van-icon name="cross" size="20px" color="#000"></van-icon>
-          </view>
-          {{ f.name }}
-        </view>
-      </view>
+      <uni-file-picker 
+        :auto-upload="false" 
+        v-model="fileList" 
+        file-extname="doc,docx,pdf"
+        limit="5"
+        @select="uniUpload"
+        @fail="onFail"
+        file-mediatype="all" 
+        title="最多选择5个文件"></uni-file-picker>
     </template>
     <!-- 图片上传 -->
     <template v-else>
-      <van-uploader
-        multiple
-        :max-count="3"
-        accept="image"
-        :file-list="fileList"
-        @delete="deleteFile"
-        @after-read="upload"
-      >
-        <view class="btn">
-          <van-icon name="plus" size="50px" color="#efefef"></van-icon>
-        </view>
-      </van-uploader>
+      <uni-file-picker 
+        limit="3" 
+        v-model="fileList" 
+        file-mediatype="image" 
+        @select="uniUpload"
+        ></uni-file-picker>
     </template>
   </view>
 </template>
 <script lang="ts" setup>
 import { uploadfileAsync} from "@/hooks";
-import { downloadFile} from "@/api/img";
-import { getFileExt,isImageFile } from '@/utils'
+import { getFileExt } from '@/utils'
 import  type { LocalFile,FileObj ,AcceptType} from './index'
+import {adapterFile} from './index'
 
 const emits = defineEmits(["update:modelValue"]);
 const props = defineProps({
   modelValue: {
-    required: false
+    required: false,
+    type: Array as PropType<FileObj[]>,
   },
   // 是否必填
   required: {
@@ -64,51 +57,46 @@ const props = defineProps({
   }
 })
 
-let isInternalChange = false;
-const fileList = ref<LocalFile[]>([]);
-watch(fileList,(newFils) => {
-  let newFileIds = newFils.filter(f => f.id).map(({id,name,url}) => ({id,name,url}));
-  emits("update:modelValue", newFileIds);
-  isInternalChange = true;
+const fileList = computed({
+  get() {
+    let values = props.modelValue||[];
+    let [file,tasks] = adapterFile(values,props.accept);
+    if(tasks.length) {
+      Promise.all(tasks).finally(() => {
+        fileList.value = [...file]
+      })
+    }
+    return file;
+  },
+  set(newFile) {
+    let newFileIds = newFile.filter(f => f.id).map(({id,name,url}) => ({id,name,url}));
+    emits("update:modelValue", newFileIds);
+  }
 })
 
-watch(() => props.modelValue,(newModelValue) => {
-  if(isInternalChange) {
-    isInternalChange = false;
+
+const uniUpload = (data) => {
+  let files = data.tempFiles;
+  if(!files.length) {
+    uni.showToast({ icon: 'none', title: `文件类型不支持` });
     return;
   }
-  init();
-})
-
-onMounted(() => {
-  init();
-})
-
-
-const init = () => {
-  let reshowPromiseList: Promise<void>[] = []
-  // @ts-ignore
-  fileList.value = props.modelValue?.map(({id,name,url}) => {
-    let item : LocalFile =  {  id, name, status: 'uploading', type: props.accept, size: 0,  time: 0, url: '',tempFilePath: '', thumb: ''}
-    // 对图片要反显出来
-    if(isImageFile(id) && !url) {
-      reshowPromiseList.push(downloadFile(id).then((tempPath) => {
-        item.url = tempPath;
-        item.tempFilePath = tempPath;
-        item.thumb = tempPath;
-        item.status = 'down';
-      }))
-    } else {
-      item.url = url;
-      item.tempFilePath = url;
-      item.thumb = url;
-      item.status = 'down';
-    }
-    return item;
-  }) || []
-  Promise.all(reshowPromiseList).then(() => {
+  const uploadTasks = files.map(async (item) => {
+    let req = { tempFilePath: item.path, name: item.name};
+    const response = await uploadfileAsync(req);
+    item.id = response.data.objectName;
+    fileList.value.push(item);
+  })
+  // show uploading
+  uni.showLoading({ title:'上传中...' });
+  Promise.all(uploadTasks).finally(() => {
+    uni.hideLoading();
     fileList.value = [...fileList.value]
   })
+}
+
+const onFail = (e) => {
+  console.log(e)
 }
 
 const deleteFile = (event: {detail: {index:number,file: LocalFile}}) => {
@@ -116,63 +104,6 @@ const deleteFile = (event: {detail: {index:number,file: LocalFile}}) => {
 };
 
 
-const upload = async (event: {detail: {file: LocalFile[] | LocalFile}}) => {
-  let { file } = event.detail;
-  if(!Array.isArray(file)) {
-    file['tempFilePath'] = file.url;
-    file = [file]
-  }
-  // 按照types校验文件类型
-  for(let f of file) {
-    if(!validateFile(f)) {
-      uni.showToast({ icon: 'none', title: `文件类型不支持,支持的文件类型有:${props.types.join(',')}` })
-      return;
-    }
-  }
-
-  const uploadTasks = file.map(async (item) => {
-    item.status = 'uploading'
-    try {
-        // @ts-ignore
-        const response = await uploadfileAsync(item);
-        item.status = 'down';
-        item.id = response.data.objectName;
-        fileList.value.push(item);
-      } catch (e) {
-        item.status = 'failed';
-        uni.hideLoading();
-        uni.showToast({ icon: 'none', title: '文件上传失败!' });
-      }
-  });
-  // show uploading
-  uni.showLoading({ title:'上传中...' });
-  Promise.all(uploadTasks).finally(() => {
-    uni.hideLoading();
-    fileList.value = [...fileList.value]
-  })
-};
-
-const validateFile = (file: LocalFile): boolean => {
-  if(!file) return false;
-  if(!props.types?.length) return true;
-  const ext = getFileExt(file.tempFilePath);
-  if(!ext) return false;
-  return props.types.includes(ext)
-}
-/**
- * 对于过长的文件名,导致看不见后缀
- * 这里限制文件名称最多10个字符,超过的话,就删除前面的字符,只保留后面的字符
- * @param fileName 文件名
- */
- const formatterFilename = (fileName: string|undefined) => {
-  if(fileName) {
-    if (fileName.length > 20) {
-      return fileName.slice(fileName.length - 20);
-    }
-    return fileName;
-  }
-  return ''
-}
 </script>
 
 <style lang="scss" scoped>

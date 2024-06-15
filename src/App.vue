@@ -33,6 +33,11 @@ page {
   overflow: auto;
 }
 
+button[type=default]{
+  background-color:$uni-color-primary;  // 这里我使用的是自定义的主题色，也可以直接换成十六进制的颜色，如：#000000
+  color: #fff;
+}
+
 ::v-deep .van-swipe-cell {
   border-radius: 6px;
   margin: 0 auto;

@@ -1,6 +1,6 @@
 <template>
-  <van-tabs swipeable animated sticky :active="activeTab" @change="onChangeTab">
-    <van-tab name="计划详情" title="计划详情">
+  <gas-tabs swipeable animated sticky >
+    <gas-tab key="计划详情" title="计划详情" >
       <view class="tab-detail-wrap">
         <view
           class="tab-detail-box"
@@ -12,18 +12,11 @@
         </view>
       </view>
       <view class="opts" v-if="isGovUser">
-        <van-button
-          @click="goCreateHandleOrder"
-          custom-style="background-color:#006CFF;color:#fff;border-radius:10rpx"
-          color="#a7a7a7"
-          plain
-          size="large"
-          type="default"
-          >创建整改单</van-button
+        <button @click="goCreateHandleOrder" size="large" type="default" >创建整改单</button
         >
     </view>
-    </van-tab>
-    <van-tab name="隐患整改单" title="隐患整改单">
+    </gas-tab>
+    <gas-tab key="隐患整改单" title="隐患整改单" >
       <template v-if="detail.handleOrders?.length">
         <view
         class="tab-detail-wrap"
@@ -86,8 +79,8 @@
         <van-empty  description="暂无关联整改单"></van-empty>
       </template>
       
-    </van-tab>
-  </van-tabs>
+    </gas-tab>
+  </gas-tabs>
   
 </template>
 <script setup lang="ts">
@@ -185,10 +178,7 @@ const getDetail = async (id: string) => {
   } finally {
   }
 };
-let activeTab = ref("计划详情");
-const onChangeTab = ({ name }) => {
-  activeTab.value = name;
-};
+
 
 const goCreateHandleOrder = () => {
   uni.navigateTo({

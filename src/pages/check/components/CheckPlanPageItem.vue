@@ -96,6 +96,11 @@ const finishPlan = async (uid) => {
     @include label;
     margin: 20rpx 0;
     font-size: 28rpx;
+    // 最多一行,超出后用...显示
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
   }
   .label {
     margin: 0 10rpx;

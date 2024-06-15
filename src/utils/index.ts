@@ -14,6 +14,7 @@ export const formatDate = (timestamp:number) : string => {
   return `${year}-${month}-${day}`;
 };
 
+export const todayDateStr = formatDate(new Date().getTime())
 
 /**
  * 时间戳 转 yyyy-MM-dd HH:mm:ss
@@ -58,4 +59,23 @@ export const isImageFile = (filename: string) => {
   const ext = getFileExt(filename);
   if(!ext) return false;
   return ['jpg', 'jpeg', 'png', 'gif'].includes(ext);
+}
+
+export function getRect(context, selector) {
+  return new Promise((resolve) => {
+    uni.createSelectorQuery()
+          .in(context)
+          .select(selector)
+          .boundingClientRect(data => resolve(data)).exec();
+          //.exec((rect = []) => resolve(rect[0]));
+  });
+}
+export function getAllRect(context, selector) {
+  return new Promise((resolve) => {
+    uni.createSelectorQuery()
+          .in(context)
+          .selectAll(selector)
+          .boundingClientRect()
+          .exec((rect = []) => resolve(rect[0]));
+  });
 }

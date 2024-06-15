@@ -1,14 +1,12 @@
 <template>
-  <!-- <van-field required label="位置" @click-input="openMapAndChooseLocation" right-icon="location-o" >
-    <input slot="input" disabled style="width: 100%" :value="form.info.constructionAddress" placeholder="请选择" />
-  </van-field> -->
+
   <gas-field required 
             readonly
             label="位置" 
             placeholder="请选择"
-            @clickInput="openMapAndChooseLocation"
+            @click="openMapAndChooseLocation"
             v-model="form.info.constructionAddress"
-            icon="location-o">
+            right-icon="location">
           </gas-field>
   <gas-picker required dicType="THIRD_BUILD_TYPE" label="施工类型" title="施工类型" v-model="form.info.buildType" />
   <gas-picker  required dicType="RISK_THIRD_BUILD_STATE" label="施工状态" title="施工状态"   v-model="form.info.buildState" />
@@ -21,9 +19,8 @@
     :title="isOrg ? '上报企业' : '责任企业'"
     v-model="form.info.orgId"
   />
-  <van-field required @click-input="showCalender" label="计划施工时间" placeholder="请选择" readonly  >
-    <input slot="input"  disabled style="width: 100%" :value="form.info.planTimeStart + ' - ' + form.info.planTimeEnd" />
-  </van-field>
+  <gas-field label="计划施工时间" required v-model="datalist" type="daterange"></gas-field>
+
 
   <view class="line"></view>
  
@@ -40,36 +37,14 @@
 
 <view class="opts">
   <view class="btn-save" v-if="form.isEdit">
-    <van-button
-    custom-style="background-color:#006CFF;color:#fff;border-radius:10rpx"
-      color="#a7a7a7"
-      plain
-      size="large"
-      type="default"
-      @click="save"
-      >保存</van-button
-    >
+    <button  size="large"  type="default"  @click="save" >保存</button>
   </view>
   <view class="btn-save"  v-else>
-    <van-button
-    custom-style="background-color:#006CFF;color:#fff;border-radius:10rpx"
-      color="#a7a7a7"
-      plain
-      size="large"
-      type="default"
-      @click="nextStep"
-      >下一步</van-button
-    >
+    <button size="large" type="default" @click="nextStep" >下一步</button >
   </view>
 </view>
 
-<van-calendar
-    allow-same-day
-    type="range"
-    :show="isShow"
-    @close="isShow = false"
-    @confirm="onCalendarConfirm"
-  />
+
 </template>
 <script lang="ts" setup>
 import { reactive } from 'vue';
@@ -89,7 +64,6 @@ const store =  userStore();
 const isOrg = store.isOrgUser;
 let validator: WxValidateType<ThirdBuildUpdateDTO> | null = null;
 
-const isShow = ref(false)
 const form = reactive({
   uid: '',
   isEdit: false,
@@ -121,16 +95,16 @@ onLoad(options => {
   }
 })
 
-const showCalender = () => {
-  uni.hideKeyboard();
-  isShow.value = true;
-};
 
-const onCalendarConfirm = (e) => {
-  form.info.planTimeStart = formatDate(e.detail[0]);
-  form.info.planTimeEnd = formatDate(e.detail[1]);
-  isShow.value = false;
-};
+const datalist = computed({
+  get() {
+    return [form.info.planTimeStart, form.info.planTimeEnd]
+  },
+  set(val) {
+    form.info.planTimeStart = val[0];
+    form.info.planTimeEnd = val[1];
+  }
+})
 
 // 保存更新
 const save = () => {

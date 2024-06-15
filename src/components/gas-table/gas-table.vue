@@ -229,7 +229,7 @@ defineExpose({
   left: 0;
   right: 0;
   height: 150rpx;
-  width: 100%;
+  width: 100vw;
   background-color: #fff;
   // 内部元素居中
   display: flex;

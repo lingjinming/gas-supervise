@@ -17,8 +17,7 @@
     注:支持格式:doc/docx/pdf 单个文件不能超过50M
   </view>
   <view class="opts">
-    <van-button @click="saveOrUpdate" custom-style="background-color:#006CFF;color:#fff;border-radius:10rpx"
-      color="#a7a7a7" plain size="large" type="default">确认</van-button>
+    <button @click="saveOrUpdate"  size="large" type="default">确认</button>
   </view>
 </template>
 <script setup lang="ts">
@@ -37,7 +36,6 @@ onLoad(() => {
   const { on } = useEventChannel();
   on(EventType.ON_UPLOAD_FILE, ({ formData }) => {
     form.value = formData;
-    console.log(form.value)
   });
 })
 

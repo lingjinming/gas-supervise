@@ -1,36 +1,26 @@
 <template>
-  <van-field required label="位置" @click-input="openMapAndChooseLocation" right-icon="location-o" >
-    <input slot="input" disabled style="width: 100%" :value="form.address" placeholder="请选择" />
-  </van-field>
+
+  <gas-field required 
+            readonly
+            label="位置" 
+            placeholder="请选择"
+            @click="openMapAndChooseLocation"
+            v-model="form.address"
+            right-icon="location">
+  </gas-field>
   <gas-picker required dicType="org"  label="所属燃气公司" title="所属燃气公司" v-model="form.orgId" />
   <gas-picker required dicType="ACCIDENTLEVEL" label="事故等级" title="事故等级"  v-model="form.accidentLevel" />
   <gas-picker  required dicType="sp_accident_type" label="事故类型" title="事故类型"  v-model="form.accidentType" />
   <gas-picker  required dicType="sp_accident_scene" label="事故场景" title="事故场景"   v-model="form.accidentScene" />
-  <van-field required  label="事故时间"  readonly  >
-    <uni-datetime-picker  v-model="form.accidentTime" type="datetime"  slot="input" >
-      {{ form.accidentTime ? form.accidentTime : '请选择事故时间' }}
-    </uni-datetime-picker>
-    
-  </van-field>
+  <gas-field required placeholder="请选择" label="事故时间" v-model="form.accidentTime" type="datetime"></gas-field>
+ 
   
 
-  <van-field required label="死亡人数" >
-    <input slot="input" type="number"   v-model="form.deathCnt" placeholder="请输入死亡人数"/>
-  </van-field>
-  <van-field required label="受伤人数" >
-    <input slot="input" type="number"  v-model="form.injuredCnt" placeholder="请输入受伤人数"/>
-  </van-field>
+  <gas-field required label="死亡人数" type="number" v-model="form.deathCnt" placeholder="请输入死亡人数"/>
+  <gas-field required label="受伤人数" type="number" v-model="form.injuredCnt" placeholder="请输入受伤人数"/>
 
   <view class="btn-save" >
-   <van-button
-      @click="nextStep"
-      custom-style="background-color:#006CFF;color:#fff;border-radius:10rpx"
-      color="#a7a7a7"
-      plain
-      size="large"
-      type="default"
-      >下一步</van-button
-    >
+   <button  @click="nextStep"  size="large"  type="default">下一步</button>
   </view>
   
 </template>

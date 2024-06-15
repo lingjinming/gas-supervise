@@ -22,12 +22,12 @@
     </view>
   </view>
 
-  <van-action-sheet
+  
+  <gas-action-sheet
     :show="show"
     :actions="functions"
     cancel-text="取消"
     @click-overlay="cancel"
-    @close="cancel"
     @cancel="cancel"
     @select="onSelect"
   />
@@ -81,7 +81,8 @@ const cancel = () => {
   show.value = false;
 }
 const onSelect = (v) => {
-  const url = v.detail.url;
+  show.value=false;
+  const url = v.url;
   uni.navigateTo({url})
 }
 </script>

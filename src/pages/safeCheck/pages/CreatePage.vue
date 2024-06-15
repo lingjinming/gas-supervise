@@ -1,18 +1,18 @@
 <template>
   <!-- 操作步骤 -->
   <view class="step-box">
-    <view :class="[currentStep >= 0 ? 'act' : '','item']">
-      <van-icon class="icon" color="#fff" name="aim" />选择检查对象
+    <view class="item" :class="{act: currentStep >= 0 }">
+      <uni-icons class="icon"  size="24" :color="currentStep >= 0 ? '#006CFF' : '#000'" type="plus-filled" />选择检查对象
     </view>
     <van-icon name="arrow" class="arrow" />
-    <view  :class="[currentStep >= 1 ? 'act' : '','item']">
-      <van-icon class="icon" color="#fff" name="edit" />填写检查内容
+    <view class="item" :class="{act: currentStep >= 1 }">
+      <uni-icons class="icon"  size="24" :color="currentStep >= 1 ? '#006CFF' : '#000'" type="compose" />填写检查内容
     </view>
     <!-- 三方安全评价多一个步骤 -->
     <template v-if="isThird">
       <van-icon name="arrow"  />
-      <view :class="[currentStep >= 2 ? 'act' : '','item']">
-        <van-icon class="icon" color="#fff" name="award-o" />填写检查评价
+      <view class="item" :class="{act: currentStep >= 2 }">
+        <uni-icons class="icon" size="24"  :color="currentStep >= 2 ? '#006CFF' : '#000'" type="medal-filled" />填写检查评价
       </view>
     </template>
   </view>
@@ -257,18 +257,18 @@ const validatorCheckTarget = (): boolean => {
 
   .item {
     text-align: center;
+    // 文字对齐方式
     .icon {
       width: 36rpx;
       height: 36rpx;
-      background: #C2C3C4;
-      border-radius: 50%;
       margin-right: 15rpx;
+      vertical-align: middle;
     }
   }
   .act {
     color: $uni-color-primary;
     .icon {
-      background: $uni-color-primary;
+      color: #000;
     }
   }
 }

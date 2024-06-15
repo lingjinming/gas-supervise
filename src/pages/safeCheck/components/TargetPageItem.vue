@@ -6,13 +6,13 @@
     </view>
     <view class="line">
       <view class="icon">
-        <van-icon name="label" size="38rpx" />
+        <uni-icons type="flag" size="38rpx" />
       </view>
       <view class="content">对象类型：{{ info._targetType }}</view>
     </view>
     <view class="line">
       <view class="icon">
-        <van-icon name="location" size="38rpx" />
+        <uni-icons type="location" size="38rpx" />
       </view>
       <view class="content">企业地址：{{ info.address }}</view>
     </view>

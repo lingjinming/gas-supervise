@@ -48,7 +48,7 @@ export const getDictList = (dicType: string) => {
 }
 
 let taskId: number;
-let tempCache :any[] = [];
+let tasks :any[] = [];
 /**
  * 防抖函数,如果50ms内接收到了多个查询请求,则使用逗号拼接成一个,同时发送到服务器;
  * thread safe on client
@@ -59,13 +59,15 @@ const getDicListDebounce = async (dicType :string) =>{
       clearTimeout(taskId);
     }
     resolve['__dicType'] = dicType
-    tempCache.push(resolve);
+    tasks.push(resolve);
     taskId = setTimeout(() => {
-
-      getDictList(tempCache.map(e => e['__dicType']).join(','))
+      let dicTypes = tasks.map(e => e['__dicType']).join(',');
+      let execTasks = [...tasks];
+      tasks = [];
+      getDictList(dicTypes)
       .then(res => {
-        tempCache.forEach(r => r(res))
-      }).catch(rej).finally(() => tempCache = [])
+        execTasks.forEach(r => r(res))
+      }).catch(rej)
 
     }, 50);
   })

@@ -3,17 +3,17 @@
     <PageList state="UN_HANDLED" :mine="mine"></PageList>
   </template>
   <template v-else>
-    <van-tabs swipeable animated  :active="activeTab" @change="onChangeTab">
-      <van-tab name="全部" title="全部">
+    <gas-tabs >
+      <gas-tab key="全部" title="全部">
         <PageList state="ALL" :mine="mine"></PageList>
-      </van-tab>
-      <van-tab name="未整改" title="未整改">
+      </gas-tab>
+      <gas-tab key="未整改" title="未整改">
         <PageList state="UN_HANDLED" :mine="mine"></PageList>
-      </van-tab>
-      <van-tab name="已整改" title="已整改">
+      </gas-tab>
+      <gas-tab key="已整改" title="已整改">
         <PageList state="HANDLED" :mine="mine"></PageList>
-      </van-tab>
-    </van-tabs>
+      </gas-tab>
+    </gas-tabs>
   </template>
 </template>
 
@@ -33,10 +33,7 @@ onLoad((params) => {
 
 
 
-let activeTab = ref("全部");
-const onChangeTab = (e:{detail:{index:number,name: string,title: string}}) => {
-  activeTab.value = e?.detail.name;
-};
+
 
 
 </script>

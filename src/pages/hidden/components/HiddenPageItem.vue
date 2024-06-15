@@ -1,15 +1,11 @@
 <template>
-  <van-swipe-cell
-    :right-width="info.state === 'WAIT_AUDIT' && !isOrg ? 160 : 0"
-  >
-    <van-skeleton title avatar row="2" :loading="data.loading">
+  <uni-swipe-action>
+    <uni-swipe-action-item>
       <view class="hidden-box" @click.stop="showFlow(info.uid as string)">
         <view class="tit">
           <view>
             <slot></slot>
-            <van-tag :type="getTagType(info.level!)">
-              {{ info._level }}
-            </van-tag>
+            <uni-tag size="small" :text="info._level" :type="getTagType(info.level!)"/>
             <text class="name">{{
               info._subjectType + "-" + info._dangerType
             }}</text>
@@ -20,13 +16,13 @@
           <text>{{ info.remark || "暂无描述" }}</text>
         </view>
         <view class="addr" >
-          <van-icon name="location" />
+          <uni-icons type="location" size="16"></uni-icons>
           {{ info.address }}
         </view>
 
         <view class="bottom">
           <view>
-            <van-icon name="user-o" :size="18" />
+            <uni-icons type="person" size="16"></uni-icons>
             由<text class="publisher">{{ info.checkBy }}</text
             >发布
           </view>
@@ -38,12 +34,15 @@
           </template>
         </view>
       </view>
-    </van-skeleton>
-    <view slot="right" class="right">
-      <view class="opt done" @click="showAuditForm(true)">消除</view>
-      <view class="opt del" @click="showAuditForm(false)">驳回</view>
-    </view>
-  </van-swipe-cell>
+      <template #right>
+        <view class="right"  v-if="showOptions">
+          <view class="opt done" @click="showAuditForm(true)">消除</view>
+          <view class="opt del" @click="showAuditForm(false)">驳回</view>
+        </view>
+      </template>
+    </uni-swipe-action-item>
+  </uni-swipe-action>
+
 </template>
 <script setup lang="ts">
 import { reactive } from "vue";
@@ -72,6 +71,12 @@ const data = reactive({
     riskIds: [] as number[],
   },
 });
+/**
+ * 非企业用户&&待审核状态
+ */
+const showOptions = computed(() => {
+  return !isOrg && props.info.state === "WAIT_AUDIT";
+})
 
 
 
@@ -116,7 +121,7 @@ const showFlow = (uid: string) => {
 
 const getTagType = (level: string) => {
   if (level === "ZD") {
-    return "danger";
+    return "error";
   }
   if (level === "JD") {
     return "warning";
@@ -189,9 +194,10 @@ const getTagType = (level: string) => {
 }
 
 .right {
-  height: 100%;
+  height: calc(100% - 30rpx);
   @include flex-between;
   width: 320rpx;
+  padding-bottom: 30rpx;
   .opt {
     @include flex-center;
     width: 50%;

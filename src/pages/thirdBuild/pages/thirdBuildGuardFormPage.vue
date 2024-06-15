@@ -18,18 +18,10 @@
   </view>
   <view class="info">
       注:jpg、jpeg、png 最多可上传最多三张.
-    </view>
-    <view class="opts">
-      <van-button
-        custom-style="background-color:#006CFF;color:#fff;border-radius:10rpx"
-        color="#a7a7a7"
-        plain
-        size="large"
-        type="default"
-        @click="save"
-        >确认上报</van-button
-      >
-    </view>
+  </view>
+  <view class="opts">
+    <button size="large" type="default" @click="save">确认上报</button>
+  </view>
 </template>
 <script lang="ts" setup>
 import { reactive } from 'vue';

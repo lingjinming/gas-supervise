@@ -1,15 +1,7 @@
 <template>
   <gas-panel :record="detail" :fields="fields" />
   <view class="edit-btn">
-    <van-button 
-      custom-style="background-color:#006CFF;color:#fff;border-radius:10rpx"
-        color="#a7a7a7"
-        plain
-        size="large"
-        type="default"
-        @click="goEdit"
-        >编辑</van-button
-      >
+    <button  type="default"  @click="goEdit"  >编辑</button >
   </view>
 </template>
 <script setup lang="ts">

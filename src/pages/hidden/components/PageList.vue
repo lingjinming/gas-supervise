@@ -15,8 +15,8 @@
         dicType="RISK_SUBJECT_TYPE_TREE"
         label="隐患类别"
         title="隐患类别"
-        v-model="query.dangerType"
-        v-model:subjectType="query.subjectType"
+        v-model="query.dangerSubType"
+        @selectFinish="onDangerTypeSelected"
       />
       <!-- 所属企业(政府用户可见) -->
       <gas-picker
@@ -94,6 +94,13 @@ onMounted(() => {
 onUnmounted(() => {
   uni.$off(EventType.DANGER_PAGE_REFRESH, doQuery);
 })
+
+const onDangerTypeSelected = (options: GasOption[]) => {
+  // @ts-ignore
+  query.value.subjectType = options[0].value;
+  // @ts-ignore
+  query.value.dangerType = options[1].value;
+}
 
 
 

@@ -57,40 +57,36 @@ const props = defineProps({
 })
 
 const innerOpts = ref<GasOption[]>([]);
-const checked: Ref<GasOption[]> = ref([]);
-const allClicked = ref(false)
+const checked = computed({
+  get() {
+    let value = props.modelValue || [];
+    return innerOpts.value.filter(o => value?.includes(o.value));
+  },
+  set(val: GasOption[]) {
+    emits("change", val || []);
+    emits("update:modelValue", val?.map(o => o.value)||[]);
+  }
+})
+const allClicked = computed(() => checked.value.length === innerOpts.value.length);
+
+
+watchEffect(() => {
+  if(props.options.length) {
+    innerOpts.value = [...props.options]
+  } else if(props.type) {
+    let type = props.type
+    Promise.resolve()
+      .then(() =>  store.fetchDictionary(type))
+      .then(options => { innerOpts.value = options; })
+  }
+})
+
+
 
 const isChecked = (option: GasOption) => {
   return checked.value.includes(option);
 };
 
-
-onMounted(() => {
-  if(props.type) {
-    store.fetchDictionary(props.type).then(list => {
-      innerOpts.value = [...list]
-    })
-  } else if(props.options.length) {
-      innerOpts.value = [...props.options]
-  }
-})
-
-
-let isInternalChange = false; 
-watch(() => props.modelValue, (newModelValue) => {
-  if(isInternalChange) {
-    isInternalChange = false;
-    return;
-  }
-  checked.value = innerOpts.value.filter(o => newModelValue?.includes(o.value));
-  allClicked.value = checked.value.length === innerOpts.value.length;
-})
-
-watch(checked,(current: GasOption[]) => {
-  emits("change", current);
-  emits("update:modelValue", current.map(o => o.value));
-  isInternalChange = true;
-})
 
 
 const onChecked = (option: GasOption) => {
@@ -103,8 +99,7 @@ const onChecked = (option: GasOption) => {
 };
 
 const clickAll = () => {
-  allClicked.value = !allClicked.value;
-  checked.value = allClicked.value ? innerOpts.value : [];
+  checked.value = allClicked.value ?  [] : innerOpts.value;
 }
 
 </script>

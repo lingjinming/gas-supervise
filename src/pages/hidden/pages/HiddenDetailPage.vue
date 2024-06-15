@@ -1,9 +1,6 @@
 <template>
   <scroll-view style="height: 95vh" scroll-y="true" class="scroll-Y container">
-    <van-skeleton
-      title
-      avatar
-      row="3"
+    <view
       :loading="data.loading"
       v-for="(node, i) in data.detail.flow"
       :key="i"
@@ -13,9 +10,7 @@
         <view class="tit">
           <view class="top">
             <view>
-              <van-tag v-if="node.stage === 'PUSH'" :type="getTagType()">
-                {{ data.detail._level }}
-              </van-tag>
+              <uni-tag v-if="node.stage === 'PUSH'" :text="data.detail._level" :type="getTagType()"/>
               <text style="margin-left: 10rpx; font-weight: 400" class="fs16">{{
                 node.title
               }}</text>
@@ -32,10 +27,10 @@
               />
               {{ node.operator + (node.stage === "PUSH" ? "(发布人)" : "") }}
             </view>
-            <van-icon
-              color="#FFA044"
-              size="50rpx"
-              name="comment-o"
+            <uni-icons
+              color="lightblue"
+              size="30"
+              type="chatboxes-filled"
               @click="showLeaderComment(node.stage, node.stageId)"
               v-if="store.isGovUser"
             />
@@ -125,41 +120,30 @@
           </view>
         </view>
       </view>
-    </van-skeleton>
+    </view>
     <view class="bottom"></view>
   </scroll-view>
   
   <view class="opt-btn" v-if="canHandle">
-    <van-button
-      class="danger-btn"
-      block
-      icon="exchange"
-      @click="goToHandle(false)"
-      >整改跟进</van-button
-    >
-    <van-button class="danger-btn" block icon="passed" @click="goToHandle(true)"
-      >整改完成</van-button
-    >
+    
+    <button class="danger-btn" plain="true" icon="exchange" @click="goToHandle(false)"  >
+      <uni-icons type="right"></uni-icons>  整改跟进
+    </button>
+    <button class="danger-btn" plain="true" icon="passed" @click="goToHandle(true)">
+      <uni-icons type="checkmarkempty"></uni-icons> 整改完成
+    </button>
   </view>
   <!-- 领导评论弹窗 -->
-  <van-popup
-    :show="data.showComment"
-    root-portal
-    position="bottom"
-    custom-style="height: 50%;padding:40rpx 0"
-    @close="closeComment"
-  >
-    <view class="comment">
-      <view class="title">领导批示</view>
-      <view class="input">
-        <textarea v-model="data.commentBody.comment"> </textarea>
-      </view>
-      <view class="btns">
-        <button type="default" @click="closeComment">取消</button>
-        <button @click="submitLeaderComment">确认</button>
-      </view>
-    </view>
-  </van-popup>
+  <uni-popup ref="inputDialog" type="dialog">
+			<uni-popup-dialog 
+        ref="inputClose"
+        v-if="makeUniAppHappy"
+        mode="input" 
+        title="领导批示"
+				placeholder="请输入内容" 
+        @confirm="submitLeaderComment">
+      </uni-popup-dialog>
+  </uni-popup>
 </template>
 <script setup lang="ts">
 import {  reactive } from "vue";
@@ -171,6 +155,8 @@ import {getHidangerFlowByUid,postHidangerGovLeaderComment} from '@/api/gen/GasSu
 import type {HidnagerFlowVO,HidangerFlowDtoStage,LeaderCommentCreateDTO} from '@/api/gen/data-contracts'
 import { useLoading } from "@/hooks/useLoading";
 
+// @see https://github.com/dcloudio/uni-ui/issues/457
+const makeUniAppHappy = ref(false)
 const store = userStore();
 const data = reactive({
   uid: 0,
@@ -180,16 +166,17 @@ const data = reactive({
   loading: false,
   showComment: false,
   commentBody: <LeaderCommentCreateDTO | any>{
-    comment: undefined,
+    comment: '',
   },
 });
+const inputDialog = ref();
 
 // 是否可以处置隐患
 const canHandle = computed(() => (store.userInfo?.userId === data.detail.receiverId) && data.detail.state === 'WAIT_HANDLE');
 
 const getTagType = () => {
   if (data.detail.level === "ZD") {
-    return "danger";
+    return "error";
   }
   if (data.detail.level === "JD") {
     return "warning";
@@ -226,16 +213,23 @@ const showLeaderComment = (stage: HidangerFlowDtoStage|undefined, stageId: strin
   data.commentBody.stageId = stageId;
   data.commentBody.stage = stage;
   data.commentBody.dangerId = data.detail.dangerId!;
-  data.showComment = true;
+  makeUniAppHappy.value = true;
+  nextTick(() => {
+    inputDialog.value?.open()
+  })
 };
 // 点击关闭领导评论
 const closeComment = () => {
-  data.showComment = false;
-  data.commentBody = {};
+  inputDialog.value?.close()
+  data.commentBody = {comment:''};
 };
 // 提交领导评论
-const submitLeaderComment = async () => {
-  const response = postHidangerGovLeaderComment(data.commentBody);
+const submitLeaderComment = async (value?: string) => {
+  if(!value) {
+    return;
+  }
+  let com = {...data.commentBody,comment: value}
+  const response = postHidangerGovLeaderComment(com);
   useLoading(response,() => {
     closeComment();
     // 重新拉取流程详情
@@ -283,9 +277,10 @@ const formatTime = (time: string|undefined) => {
   padding-bottom: 30rpx;
   background-color: #fff;
   .danger-btn {
-    width: 333rpx;
+    width: 45%;
     height: 88rpx;
     border-radius: 10rpx;
+    border: 1rpx solid #ccc;
   }
 }
 .bottom {

@@ -1,76 +1,52 @@
 <template>
   <view class="container">
-    <van-cell-group>
-      <view style="background: #fff;">
-        <van-field :value="reportForm.remark" label="隐患描述" readonly />
+    
+    <gas-field v-model="reportForm.remark" type="textarea" :maxlength="200" label="隐患描述"> </gas-field>
 
-        <textarea
-          class="remark"
-          maxlength="200"
-          :value="reportForm.remark"
-          @input="reportForm.remark = $event.detail.value"
-          type="text"
-          placeholder="请输入"
-        />
-      </view>
-
-
-      <gas-uploader  v-model="reportForm.fileIds"/>
-      <gas-cascader
-        dicType="RISK_SUBJECT_TYPE_TREE"
-        label="隐患类别"
-        title="隐患类别"
-        v-model="reportForm.dangerType"
-        v-model:subjectType="reportForm.subjectType"
-        v-model:dangerSubtype="reportForm.dangerSubtype"
-      />
-      <van-field
-        label="位置"
-        @click-input="openMapAndChooseLocation"
-        right-icon="location-o"
-      >
-        <input
-          slot="input"
-          style="width: 100%"
-          :value="reportForm.address"
-          placeholder="请选择"
-        />
-      </van-field>
-
-      <gas-picker
-        dicType="org"
-        :label="isOrg ? '上报企业' : '责任企业'"
-        :title="isOrg ? '上报企业' : '责任企业'"
-        v-model="reportForm.orgId"
-      />
-      <!-- 企业不需要关联检查计划 -->
-      <gas-picker
-        v-if="!isOrg"
-        v-model="reportForm.planCode"
-        :options="planOptions"
-        label="关联检查计划"
-        title="关联检查计划"
-      />
-
-      <gas-picker
-        dicType="RISK_DANGER_LEVEL"
-        label="隐患等级"
-        title="隐患等级"
-        v-model="reportForm.level"
-      />
-
-      <van-field label="检查日期" disabled :value="reportForm.checkDate">
-      </van-field>
-    </van-cell-group>
-
-    <van-button
-      custom-style="margin:40rpx;width:calc(100% - 80rpx)"
-      type="primary"
-      size="large"
-      color="#006CFF"
-      @click="submit"
-      >保存</van-button
+    <gas-uploader  v-model="reportForm.fileIds"/>
+    <gas-cascader
+      dicType="RISK_SUBJECT_TYPE_TREE"
+      label="隐患类别"
+      title="隐患类别"
+      v-model="reportForm.dangerSubtype"
+      @selectFinish="onDangerTypeSelected"
+    />
+    <gas-field 
+      label="位置"
+      @click="openMapAndChooseLocation"
+      right-icon="location"
     >
+      <template #input>
+        <input  disabled :value="reportForm.address"  placeholder="请选择" />
+      </template>
+    </gas-field>
+
+    <gas-picker
+      dicType="org"
+      :label="isOrg ? '上报企业' : '责任企业'"
+      :title="isOrg ? '上报企业' : '责任企业'"
+      v-model="reportForm.orgId"
+    />
+    <!-- 企业不需要关联检查计划 -->
+    <gas-picker
+      v-if="!isOrg"
+      v-model="reportForm.planCode"
+      :options="planOptions"
+      label="关联检查计划"
+      title="关联检查计划"
+    />
+
+    <gas-picker
+      dicType="RISK_DANGER_LEVEL"
+      label="隐患等级"
+      title="隐患等级"
+      v-model="reportForm.level"
+    />
+
+    <gas-field label="检查日期" disabled  v-model="reportForm.checkDate"></gas-field>
+    <view class="opt">
+      <button type="default" size="large" @click="submit" >保存</button>
+    </view>
   </view>
 </template>
 <script setup lang="ts">
@@ -145,6 +121,12 @@ const openMapAndChooseLocation = async() => {
   }
 }
 
+const onDangerTypeSelected = (options: GasOption[]) => {
+  // @ts-ignore 
+  reportForm.value.subjectType = options[0].value;
+  // @ts-ignore 
+  reportForm.value.dangerType = options[1].value;
+}
 
 </script>
 <style lang="scss" scoped>
@@ -160,12 +142,8 @@ const openMapAndChooseLocation = async() => {
   padding: 30rpx;
   margin-bottom: 20rpx;
 }
-.remark {
-  height: 250rpx;
-  width: calc(100% - 100rpx);
-  margin: 0 30rpx;
-  background: $uni-text-color-grey;
-  border-radius: 10rpx;
-  padding: 20rpx;
+.opt{
+  width: calc(100% - 80rpx);
+  margin: 20rpx auto;
 }
 </style>

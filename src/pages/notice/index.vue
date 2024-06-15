@@ -10,7 +10,7 @@ import { getNotice } from "@/api/notice";
     <view v-if="list.length" style="padding: 0 20rpx">
       <NoticePageItem :notices="list" />
     </view>
-    <van-empty v-else description="暂无数据"></van-empty>
+    <gas-empty v-else description="暂无数据"></gas-empty>
   </scroll-view>
 </template>
 <script setup lang="ts">

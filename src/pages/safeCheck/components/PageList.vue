@@ -20,7 +20,7 @@
 
     </template>
     <template #bottom>
-      <view class="button" @click="goCreateSafeCheck"><van-icon name="plus" class="icon"/>新建检查</view>
+      <view class="button" @click="goCreateSafeCheck"><uni-icons type="plusempty" class="icon"/>新建检查</view>
     </template>
   </gas-table>
 
