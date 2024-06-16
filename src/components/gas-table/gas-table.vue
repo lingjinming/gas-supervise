@@ -14,8 +14,8 @@
       <text>
         <text class="total">{{ total }}</text>条记录
       </text>
-      <view @click="showQuery = true" class="search" v-if="$slots['search']">
-        筛选<van-icon name="arrow-down" />
+      <view @click="clickSearch" class="search" v-if="$slots['search']">
+        筛选<uni-icons type="down" size="18"/>
       </view>
     </slot>
   </view>
@@ -29,9 +29,9 @@
       @refresherpulling="onRefreshPulling"
       @refresherrefresh="onRefresh"
     >
-    <van-empty  v-if="!total" description="暂无数据"></van-empty>
+    <gas-empty  v-if="!total" description="暂无数据"></gas-empty>
     <view v-for="(item, i) in list" :key="i" >
-      <slot name="item" :info="item"></slot>
+      <slot name="item" :info="item" :index="i"></slot>
     </view>
     <view class="place" v-if="total">
       {{ loading ? '加载中...' : '没有更多了' }}
@@ -43,20 +43,15 @@
   </view>
 </view>
 <!-- 弹出查询 -->
-<van-popup
-      :show="showQuery"
-      position="top"
-      root-portal
-      custom-style="padding: 30rpx"
-      @close="closeSearch"
-    >
+<uni-popup ref="popup" background-color="#fff">
+  <view class="search-content">
     <slot name="search"></slot>
-     <!-- 确定 -->
-     <view class="search-bottom">
-      <button plain="true" @click="resetQuery" class="btn reset">重置</button>
-      <button plain="true" @click="doQuery" class="btn query">查询</button>
-    </view>
-</van-popup>
+  </view>
+  <view class="search-bottom">
+    <button plain="true" @click="resetQuery" class="btn reset">重置</button>
+    <button plain="true" @click="doQuery" class="btn query">查询</button>
+  </view>
+</uni-popup>
 </template>
 <script setup lang="ts">
 import { useTable } from '@/hooks/useTable';
@@ -90,7 +85,8 @@ const props = defineProps({
 });
 const instance = getCurrentInstance();
 const innerScrollHeight = ref(10);
-const scrollViewHeight = computed(() => props.scrollHeight || innerScrollHeight.value + 'px')
+const scrollViewHeight = computed(() => props.scrollHeight || innerScrollHeight.value + 'px');
+const popup = ref(null);
 
 const {
   total,
@@ -151,13 +147,14 @@ const observerVisibleOnce = () => {
   })
 }
 
-const showQuery = ref(false)
-const closeSearch = () => {
-  showQuery.value = false
+const clickSearch = () => {
+  // @ts-ignore
+  popup.value?.open('top');
 }
+
+
 const doQuery = () => {
   search();
-  showQuery.value = false;
 }
 
 const clearKeyword = () => {
@@ -167,14 +164,17 @@ const clearKeyword = () => {
 
 const resetQuery = () => {
   props.query.keyword = '';
-  showQuery.value = false;
+  // @ts-ignore
+  popup.value?.close();
   reset();
 }
 const closeQuery = () => {
-  showQuery.value = false;
+  // @ts-ignore
+  popup.value?.close();
 }
 const openQuery = () => {
-  showQuery.value = true;
+  // @ts-ignore
+  popup.value?.open('top');
 }
 
 defineExpose({
@@ -235,6 +235,10 @@ defineExpose({
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.search-content {
+  padding: 20rpx;
+  width: 95vw;
 }
 .search-bottom {
   @include flex-between;

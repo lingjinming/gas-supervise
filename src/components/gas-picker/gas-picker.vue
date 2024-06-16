@@ -1,20 +1,26 @@
 <template>
-  <van-field v-bind="$attrs"   clickable maxlength="200" @click-input="showPicker" @click-icon="clickIcon">
-    <view slot="right-icon">
-      <van-icon :name="selected ? 'cross' : 'arrow'" />
-    </view>
-    <input hold-keyboard readonly disabled :value="selected" slot="input" style="width: 100%;" placeholder="请选择" />
-  </van-field>
-  <van-popup :show="isShow" root-portal round position="bottom">
-    <van-picker
-      hold-keyboard	
-      show-toolbar
-      v-bind="$attrs"
-      :columns="columns"
-      @confirm="confirm"
-      @cancel="isShow = false"
-    />
-  </van-popup>
+  <gas-field
+    v-bind="$attrs"
+    readonly
+    v-model="selected"
+    :right-icon="icon"
+    @click-right-icon="clickIcon"
+  >
+    <template #input>
+      <uni-data-picker 
+        placeholder="请选择" 
+        :popup-title="title"
+        :localdata="columns" 
+        v-model="selected"
+				@change="confirm" 
+        >
+      <template #default="{data, error, options}">
+        {{ selected || placeholder || '请选择' }}
+      </template>
+      </uni-data-picker>
+    </template>
+  </gas-field>
+
 </template>
 <script setup lang="ts">
 import { userStore } from "@/state";
@@ -37,10 +43,17 @@ const props = defineProps({
   beforClick: {
     type: Function,
     default: () => () => true
+  },
+  title: {
+    type: String,
+    default: () => ''
+  },
+  placeholder: {
+    type: String,
+    default: () => ''
   }
 })
 
-let isShow = ref(false);
 let columns: Ref<GasOption[]> = ref([]);
 let map = computed(() => columns.value.reduce((acc,next) => {
   acc[next.value] = next.text;
@@ -57,17 +70,19 @@ const selected = computed({
     changEvent(val);
   }
 })
-
+const icon = computed(() => {
+  return selected.value ? 'closeempty' : 'right'
+})
 const changEvent = (val) => {
   emits("update:modelValue", val);
 }
 
 
 const confirm = (e) => {
-  const checked: GasOption = e.detail.value;
+  const paths: GasOption[] = e.detail.value;
+  let checked = paths[paths.length - 1];
   emits("onConfirm",checked)
   selected.value = checked.value;
-  isShow.value = false;
 };
 
 
@@ -101,7 +116,6 @@ const clickIcon = () => {
 
 const showPicker =  () => {
   if(props.beforClick()) {
-    isShow.value = true;
   }
 };
 

@@ -1,9 +1,10 @@
 <template>
   <view class="create-container">
-    <van-field required label="检查对象">
-      <input slot="input"  v-model="form.targetName" placeholder="请输入" />
-    </van-field>
+
+    <gas-field label="检查对象" v-model="form.targetName" required placeholder="请输入"/>
+
     <gas-cascader
+        required
         dicType="SAFE_CHECK_TARGET_TYPE"
         label="检查对象类型"
         title="检查对象类型"
@@ -11,22 +12,18 @@
         @selectFinish="selectFinish"
       />
     
-    <van-field
+    <gas-field 
         label="详细地址"
-        @click-input="openMapAndChooseLocation"
-        right-icon="location-o"
-      >
-      <input
-        slot="input"
-        style="width: 100%"
-        :value="form.address"
+        required
+        @click="openMapAndChooseLocation"
+        right-icon="location"
         placeholder="请选择"
+        v-model="form.address"
       />
-    </van-field>
-    <van-field required label="行政区划">
-      <input slot="input" disabled v-model="form._districtId" placeholder="请选择地址" />
-    </van-field>
+
+    <gas-field label="行政区划" v-model="form._districtId" required disabled placeholder="请选择地址"/>
   </view>
+
   <view class="opts">
     <view class="button" @click="confirm">确定</view>
   </view>

@@ -2,58 +2,62 @@
 <view class="gas_field_container" @click="clickField">
   <!-- 自己实现 -->
     <view class="gas-cell_title">
-      <view class="gas-field_label" :class="{disabled,required}">{{props.label}}</view>
+      <view class="gas-field_label" :class="{required}">{{props.label}}</view>
     </view>
-    <slot name="input">
-      <template v-if="type === 'datetime'">
-        <view class="gas-field gas-field_datetime">
-          <uni-datetime-picker type="datetime" v-model="modelValue" >
-            {{ modelValue ||  placeholder }}
-          </uni-datetime-picker>
-        </view>
-      </template>
-      <template v-else-if="type === 'daterange'">
-        <view class="gas-field gas-field_daterange" @click="openCalendar">
-          {{ datarange }}
-        </view>
-        <uni-calendar 
-          ref="calendar"  
-          :insert="false"
-		      :range="true" @confirm="confirmCalendar"/>
-      </template>
-      <template v-else-if="type !=='textarea'">
-        <view class="gas-field gas-field_input" :class="{readonly}">
-          <input
-            :type="type"
-            :class="{disabled: disabled}"
-            :value="modelValue"
-            @input="inputChange"
-            :placeholder="placeholder"
-            :readonly="readonly"
-            :required="required"
-            :disabled="disabled||readonly"
-          />
-          
-        </view>
-      </template>
-      <template v-else>
-        <view class="gas-field gas-field_textarea">
-          <textarea
-            :class="{disabled: disabled}"
-            :value="modelValue"
-            @input="inputChange"
-            :placeholder="placeholder"
-            :readonly="readonly"
-            :required="required"
-            :disabled="disabled"
-            :maxlength="maxlength"
-          ></textarea>
-        </view>
+    <view class="gas-field">
+      <slot name="input">
+        <template v-if="type === 'datetime'">
+          <view class="gas-field_datetime">
+            <uni-datetime-picker type="datetime" v-model="modelValue" >
+              {{ modelValue ||  placeholder }}
+            </uni-datetime-picker>
+          </view>
         </template>
-        
-    </slot>
+        <template v-else-if="type === 'daterange'">
+          <view class="gas-field_daterange" @click="openCalendar">
+            {{ datarange }}
+          </view>
+          <uni-calendar 
+            ref="calendar"
+            style=" --window-bottom: 0px;"
+            class="calendar"
+            :insert="false"
+            :range="true" @confirm="confirmCalendar"/>
+        </template>
+        <template v-else-if="type !=='textarea'">
+          <view class="gas-field_input" :class="{readonly}">
+            <input
+              :type="type"
+              :class="{disabled: disabled}"
+              :value="modelValue"
+              @input="inputChange"
+              :placeholder="placeholder"
+              :readonly="readonly"
+              :required="required"
+              :disabled="disabled||readonly"
+            />
+            
+          </view>
+        </template>
+        <template v-else>
+          <view class="gas-field_textarea">
+            <textarea
+              :class="{disabled: disabled}"
+              :value="modelValue"
+              @input="inputChange"
+              :placeholder="placeholder"
+              :readonly="readonly"
+              :required="required"
+              :disabled="disabled"
+              :maxlength="maxlength"
+            ></textarea>
+          </view>
+          </template>
+          
+      </slot>
+    </view>
     <template v-if="rightIcon">
-      <view class="gas-cell_right">
+      <view class="gas-cell_right" @click="handlelCickRightIcon">
         <uni-icons  :type="rightIcon" size="18" color="#c8c9cc"></uni-icons>
       </view>
     </template>
@@ -63,7 +67,7 @@
 </template>
 <script lang="ts" setup>
 import {gasFieldProps} from './index'
-const emits = defineEmits(["update:modelValue","click","change"]);
+const emits = defineEmits(["update:modelValue","click","change","click-right-icon"]);
 
 const props = defineProps(gasFieldProps);
 
@@ -83,6 +87,10 @@ const datarange = computed(() => {
   }
   return props.placeholder || '--';
 })
+
+const handlelCickRightIcon = () => {
+  emits("click-right-icon");
+}
 
 const calendar = ref(null);
 const openCalendar = () => {
@@ -140,7 +148,6 @@ const clickField = (e) => {
   .gas-cell_title {
     max-width: 6.2em;
     min-width: 6.2em;
-    margin-right: 12px;
     flex: 1;
     
 
@@ -166,27 +173,32 @@ const clickField = (e) => {
       }
     }
   }
+  .gas-field {
+    flex: 1;
+  }
 
   .gas-field > .disabled {
     color: #c8c9cc;
   }
-  .gas-field.readonly{
+  .gas-field .readonly{
     color: #c8c9cc;
   }
 
-  .gas-field.gas-field_textarea {
+  .gas-field .gas-field_textarea {
     height: 250rpx;
     width: calc(100% - 30rpx);
     background: $uni-text-color-grey;
     border-radius: 10rpx;
     padding: 20rpx;
   }
-  .gas-field.gas-field_datetime{
+  .gas-field .gas-field_datetime{
     min-height: 50rpx;
+  }
+  .gas-field .gas-field_daterange {
+    --window-bottom: 0px;
   }
   .gas-cell_right {
     text-align: right;
-    flex: 1;
   }
 }
 </style>

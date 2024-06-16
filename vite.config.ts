@@ -8,6 +8,24 @@ export default defineConfig({
       '@':'./src',
     }
   },
+  server: {
+    port: 8080,
+    proxy: {
+      '/config.js': {
+        target: 'https://aiot.citysafety.com/gasguard',
+        changeOrigin: true,
+      },
+      '/apilogin':{
+        target: 'https://aiot.citysafety.com/gasguard',
+        changeOrigin: true,
+      },
+      '/gas-supervise': {
+        target: 'https://aiot.citysafety.com/gasguard',
+        changeOrigin: true,
+        //rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
+  },
   plugins: [
     uni(),
     AutoImport({

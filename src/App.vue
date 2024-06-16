@@ -38,14 +38,7 @@ button[type=default]{
   color: #fff;
 }
 
-::v-deep .van-swipe-cell {
-  border-radius: 6px;
-  margin: 0 auto;
-}
 
-.van-field__label {
-  @include label;
-}
 
 .fs {
   &-12 {
@@ -63,10 +56,7 @@ button[type=default]{
   transition: all 0.3s;
   transform: scale(1.1);
 }
-::v-deep .van-skeleton__content {
-  border-radius: 6px;
-  margin: 0 auto;
-}
+
 .label {
   @include label;
 }

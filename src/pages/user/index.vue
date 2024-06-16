@@ -1,10 +1,10 @@
 <template>
   <RouterTab actPath='pages/user/index' />
   <view class="user-container">
-    <image class="bg_img" src="./static/img/bg.png"></image>
+    <image class="bg_img" src="/static/img/bg.png"></image>
     <view class="user">
       <view class="av">
-        <image  src="./static/img/avt.png" mode="aspectFill"></image>
+        <image  src="/static/img/avt.png" mode="aspectFill"></image>
       </view>
       <view class="info">
         <view class="name">

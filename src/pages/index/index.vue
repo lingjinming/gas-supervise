@@ -1,5 +1,5 @@
 <template>
-  <image class="bg_img" src="./static/img/bg.png"></image>
+  <image class="bg_img" src="/static/img/bg.png"></image>
   <view class="top">
     <view class="menu-box">
       <view

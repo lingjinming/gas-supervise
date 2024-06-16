@@ -4,7 +4,8 @@
     <view class="text">
       <view>燃气安全监管</view>
       <view>
-        <van-loading size="24px">加载中...</van-loading>
+        加载中...
+        <!-- <van-loading size="24px">加载中...</van-loading> -->
       </view>
     </view>
   </view>

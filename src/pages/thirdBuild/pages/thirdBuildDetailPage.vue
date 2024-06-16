@@ -50,10 +50,10 @@
     </view>
   </view>
   <view class="tabs">
-    <van-tabs  :active="activeTab"  @change="onChangeTab">
-      <scroll-view style="height: 650rpx" scroll-y="true" class="scroll-Y container">
-        <van-tab title="看护记录" name="看护记录">
-          <van-empty v-if="!state.info.guardList?.length" description="暂无数据"></van-empty>
+    <gas-tabs>
+        <gas-tab title="看护记录" key="看护记录">
+          <scroll-view style="height: 650rpx" scroll-y="true" class="scroll-Y container">
+          <gas-empty v-if="!state.info.guardList?.length" description="暂无数据"></gas-empty>
           <view v-else>
             <view class="flow-node" v-for="item in state.info.guardList" :key="item.uid">
               <view class="operator">
@@ -73,9 +73,10 @@
               </view>
             </view>
           </view>
-        
-        </van-tab>
-        <van-tab title="资料详情" name="资料详情">
+        </scroll-view>
+        </gas-tab>
+        <gas-tab title="资料详情" key="资料详情">
+          <scroll-view style="height: 650rpx" scroll-y="true" class="scroll-Y container">
           <!-- 第三方施工信息 -->
           <view class="info-form">
             <view class="title">第三方施工信息</view>
@@ -177,16 +178,25 @@
               </template>
             </view>
           </view>
-        </van-tab>
-      </scroll-view>
-    </van-tabs>
+        </scroll-view>
+        </gas-tab>
+      
+    </gas-tabs>
   </view>
   <!-- 底部操作按钮 -->
   <view class="bottom-buttons">
-    <view @click="goReport"> <van-icon name="upgrade" /> 上传交底</view>
-    <view @click="goGuard"> <van-icon name="add-o" /> 新增看护</view>
-    <view @click="goFinish"  v-if="state.info.buildState !== 'COMPLETED'"> <van-icon name="passed" />施工完成</view>
-    <view @click="goEdit" v-if="state.info.buildState !== 'COMPLETED'"><van-icon name="edit" />修改</view>
+    <view class="bt" @click="goReport">
+       <uni-icons class="bt_icon"  type="cloud-upload" size="18"/> 上传交底
+    </view>
+    <view class="bt" @click="goGuard"> 
+      <uni-icons class="bt_icon" type="plus" size="18"/> 新增看护
+    </view>
+    <view class="bt" @click="goFinish"  v-if="state.info.buildState !== 'COMPLETED'"> 
+      <uni-icons class="bt_icon" type="checkbox" size="18"/>施工完成
+    </view>
+    <view class="bt" @click="goEdit" v-if="state.info.buildState !== 'COMPLETED'">
+      <uni-icons class="bt_icon" type="compose" size="18"/>修改
+    </view>
   </view>
 </template>
 <script setup lang="ts">
@@ -211,10 +221,6 @@ onUnload(() => {
   uni.$off(EventType.THIRD_BUILD_REFRESH,getDetail)
 })
 
-let activeTab = ref('看护记录');
-const onChangeTab = (e:{detail:{index:number,name: string,title: string}}) => {
-  activeTab.value = e?.detail.name;
-};
 
 const getDetail = async () => {
   if(state.uid) {
@@ -510,16 +516,17 @@ const isOk = (value: string|undefined) => {
   flex-wrap: wrap;
   background-color: #fff;
   border-top: 1rpx solid #ccc;
-  view {
+  .bt {
     text-align: center;
     flex: 1;
     border-right: 1rpx solid #ccc;
-    van-icon {
+    .bt_icon {
       margin-right: 10rpx;
+      vertical-align: middle;
     }
   }
 
-  view:last-child {
+  .bt:last-child {
     border-right: none;
   }
 }

@@ -13,7 +13,7 @@
 </template>
 <script lang="ts" setup>
 import { GasActionSheetProps,type ActionType } from './index'
-import { defineProps, ref ,watch} from 'vue'
+import {  ref ,watch} from 'vue'
 const props = defineProps(GasActionSheetProps);
 const emit = defineEmits(['select','cancel','close','click-overlay'])
 

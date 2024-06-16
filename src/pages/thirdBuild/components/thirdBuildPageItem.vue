@@ -20,7 +20,7 @@
         <view class="time-item">{{ info.planTimeEnd }}</view>
       </view>
       <view class="address">
-        <van-icon name="location" size="30rpx"/>
+        <uni-icons type="location" size="20"/>
         {{ info.constructionAddress }}
       </view>
     </view>

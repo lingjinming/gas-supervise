@@ -4,13 +4,13 @@
     <view class="item" :class="{act: currentStep >= 0 }">
       <uni-icons class="icon"  size="24" :color="currentStep >= 0 ? '#006CFF' : '#000'" type="plus-filled" />选择检查对象
     </view>
-    <van-icon name="arrow" class="arrow" />
+    <uni-icons type="right" size="18" />
     <view class="item" :class="{act: currentStep >= 1 }">
       <uni-icons class="icon"  size="24" :color="currentStep >= 1 ? '#006CFF' : '#000'" type="compose" />填写检查内容
     </view>
     <!-- 三方安全评价多一个步骤 -->
     <template v-if="isThird">
-      <van-icon name="arrow"  />
+      <uni-icons type="right" size="18" />
       <view class="item" :class="{act: currentStep >= 2 }">
         <uni-icons class="icon" size="24"  :color="currentStep >= 2 ? '#006CFF' : '#000'" type="medal-filled" />填写检查评价
       </view>
@@ -28,18 +28,14 @@
       @change="changeStep($event.detail.current)">
       <!-- 选择检查对象 -->
       <swiper-item @touchmove.stop="stopTouchMove" class="target">
-        <van-field required label="检查对象" @click-input="goSelectTarget"  right-icon="arrow" >
-          <input slot="input" disabled style="width: 100%" :value="form.targetName" placeholder="点击选择" />
-        </van-field>
-        <van-field required label="企业类型" >
-          <input slot="input" disabled v-model="form._targetType"  placeholder="选择或新建企业后自动带入"/>
-        </van-field>
-        <van-field required label="所属区域" >
-          <input slot="input" disabled v-model="form._districtId"  placeholder="选择或新建企业后自动带入"/>
-        </van-field>
-        <van-field required label="详细地址" >
-          <input slot="input" disabled v-model="form.address"  placeholder="选择或新建企业后自动带入"/>
-        </van-field>
+        <gas-field label="检查对象" v-model="form.targetName" required disabled   placeholder="请选择" @click="goSelectTarget"  right-icon="right" />
+
+        <gas-field label="企业类型" v-model="form._targetType" required disabled placeholder="选择或新建企业后自动带入"/>
+          
+        <gas-field label="所属区域" v-model="form._districtId" required disabled placeholder="选择或新建企业后自动带入"/>
+
+        <gas-field label="详细地址" v-model="form.address" required disabled placeholder="选择或新建企业后自动带入"/>
+
         <gas-picker required :beforClick="checkTargetSelected"  label="检查主题" :options="topicOptions" title="检查主题" v-model="topicId" />
         <view class="opts">
           <view class="button confirm" @click="goToDoCheck">下一步</view>

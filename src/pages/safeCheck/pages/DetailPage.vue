@@ -1,25 +1,22 @@
 <template>
-  <van-skeleton v-if="!title" title row="3" />
-  <template v-else>
-    <view class="topic">
-      <image class="icon" src="/pages/safeCheck/static/icon_detail.png"></image>
-      {{ title }}
-    </view>
-    <view class="item" v-for="(item) in list" :key="item.checkItem">
-      <view class="item-title">{{ item.checkItem }}</view>
-      <view class="content" v-for="(content,index) in item.list" :key="index">
-        <view class="content-title">{{ content.checkContent }}</view>
-        <view class="result" v-if="content.checkResult === 'PASS'">
-          <image class="icon" src="/pages/safeCheck/static/icon_check_state_ok.png"></image>合格
-        </view>
-        <view class="result" v-else @click="goDangerDetail(content)">
-          <image class="icon" src="/pages/safeCheck/static/icon_check_state_bad.png"></image>存在隐患
-          <van-icon name="arrow" class="icon-right"/>
-        </view>
+  <view class="topic">
+    <image class="icon" src="/pages/safeCheck/static/icon_detail.png"></image>
+    {{ title }}
+  </view>
+  <view class="item" v-for="(item) in list" :key="item.checkItem">
+    <view class="item-title">{{ item.checkItem }}</view>
+    <view class="content" v-for="(content,index) in item.list" :key="index">
+      <view class="content-title">{{ content.checkContent }}</view>
+      <view class="result" v-if="content.checkResult === 'PASS'">
+        <image class="icon" src="/pages/safeCheck/static/icon_check_state_ok.png"></image>合格
+      </view>
+      <view class="result" v-else @click="goDangerDetail(content)">
+        <image class="icon" src="/pages/safeCheck/static/icon_check_state_bad.png"></image>存在隐患
+        <uni-icons type="right" class="icon-right"/>
       </view>
     </view>
-    <view class="place"></view>
-  </template>
+  </view>
+  <view class="place"></view>
 </template>
 <script setup lang="ts">
 import { getSafeCheckTaskByUid } from '@/api/gen/GasSuperviseApi';

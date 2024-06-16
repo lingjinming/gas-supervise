@@ -21,6 +21,7 @@
           <view class="header">
             <view class="img-box">
               <image
+                class="img-box_img"
                 style="width: 50rpx; height: 50rpx"
                 src="../../static/img/header.png"
                 mode="scaleToFill"
@@ -448,7 +449,7 @@ const formatTime = (time: string|undefined) => {
   padding: 20rpx;
 }
 .img-box {
-  image {
+  .img-box_img {
     position: relative;
     top: 5rpx;
   }

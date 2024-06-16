@@ -1,30 +1,26 @@
 <template>
-  <van-field
+  <gas-field
     v-bind="$attrs"
-    @click-input="showCascader"
-    maxlength="200"
-    is-link
+    readonly
+    v-model="selected"
+    right-icon="right"
   >
-    <input
-      hold-keyboard
-      disabled
-      readonly
-      :value="selected"
-      slot="input"
-      style="width: 100%"
-      placeholder="请选择"
-    />
-  </van-field>
-  <van-popup :show="isShow" root-portal round position="bottom">
-    <van-cascader
-      swipeable
-      active-color="#ee0a24"
-      :options="options"
-      @close="isShow = false"
-      @finish="finish"
-    >
-    </van-cascader>
-  </van-popup>
+    <template #input>
+      <uni-data-picker 
+        placeholder="请选择" 
+        :popup-title="title"
+        :localdata="options" 
+        v-model="selected"
+				@change="finish" 
+        @nodeclick="onnodeclick" 
+        @popupopened="onpopupopened" 
+        @popupclosed="onpopupclosed">
+      <template #default="{data, error, options}">
+        {{ selected || placeholder || '请选择' }}
+      </template>
+      </uni-data-picker>
+    </template>
+  </gas-field>
 </template>
 <script setup lang="ts">
 import { userStore } from "@/state";
@@ -33,7 +29,6 @@ const emits = defineEmits<{
   (e: 'update:modelValue',modelValue: string|number|undefined): void,
   (e: 'selectFinish',value: GasOption[]): void,
 }>();
-
 const props = defineProps({
   // 数据字典编码
   dicType: {
@@ -43,6 +38,14 @@ const props = defineProps({
   modelValue: {
     type: [String, Number],
     required: false,
+  },
+  placeholder: {
+    type: String,
+    default: "请选择"
+  },
+  title: {
+    type: String,
+    default: "请选择"
   }
 })
 
@@ -62,6 +65,14 @@ const selected = computed<string|number|undefined>({
   }
 })
 
+
+const onnodeclick = (e) => {
+}
+const onpopupopened = (e) => {
+}
+const onpopupclosed = (e) => {
+}
+
 watchEffect(() => {
   let type = props.dicType;
   Promise.resolve()
@@ -73,17 +84,11 @@ watchEffect(() => {
 
 
 
-
-
-
-const showCascader = async () => isShow.value = true;
-
-type EventDetail = { value: string | number, selectedOptions: GasOption[], tabIndex: number }
+type EventDetail = { value: GasOption[] }
 const finish = (e: {detail: EventDetail}) => {
   isShow.value = false;
   const detail = e.detail;
-  let paths = detail.selectedOptions;
-  selected.value = detail.value;
+  let paths = detail.value;
   emits("selectFinish", paths);
 };
 
