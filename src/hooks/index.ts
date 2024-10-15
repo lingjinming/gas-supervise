@@ -20,14 +20,13 @@ export const showToast = (flag: boolean = true, msg?:string,callback?: Function)
 export const uploadFile = (item, cb) => {
   const store = userStore();
   const server = store.auth.activeServer;
-  // 当前激活的服务器
   const token = store.auth.token;
+  const baseUrl = server?.BASE_URL;
   uni.uploadFile({
-    url: "https://aiot.citysafety.com/gasguard/gas-supervise/file/upload",
+    url: baseUrl+"/file/upload",
     filePath: item.tempFilePath,
     name: "file",
     header: {
-      "x-api-region": server?.region,
       Authorization: "Bearer " + token?.access_token,
     },
     success(res) {
@@ -51,15 +50,15 @@ export const uploadfileAsync = (file: {tempFilePath: string,name?:string}) =>
   new Promise<ResultFileUpdateResponseDTO>((resolve, reject) => {
     const store = userStore();
     const server = store.auth.activeServer;
+    const baseUrl = server?.BASE_URL;
     const token = store.auth.token;
     // name uriEncode
     const filename = file.name ? `?filename=${encodeURIComponent(file.name)}` : "";
     uni.uploadFile({
-      url: "https://aiot.citysafety.com/gasguard/gas-supervise/file/upload"+filename,
+      url: baseUrl+"file/upload"+filename,
       filePath: file.tempFilePath,
       name: "file",
       header: {
-        "x-api-region": server?.region,
         Authorization: "Bearer " + token?.access_token,
       },
       success(res) {

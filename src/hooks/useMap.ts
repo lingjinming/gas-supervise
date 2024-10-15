@@ -53,6 +53,9 @@ export const useMap = (): UserMapReturnType => {
 
 
 const requireUserPermission = (scope: string) => {
+  //#ifdef H5
+  return Promise.resolve(true)
+  //#endif
   return new Promise<boolean>((res,rej) => {
     uni.authorize({
       scope,

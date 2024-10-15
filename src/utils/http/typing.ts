@@ -25,7 +25,6 @@ export type ClientOptions = {
   // 超时时间
   timeout: number;
   // base url
-  baseUrl: string;
   // 拦截器配置
   transforms: RequestTransform,
   perRequestOptions: PerRequestOptions

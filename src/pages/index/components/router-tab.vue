@@ -46,21 +46,21 @@ let  props = defineProps({
   }
 });
 let actions = [
-      {
-        name: '创建检查计划',
-        url:'/pages/check/pages/CheckPlanCreatePage',
-        optType: ['gov']
-      },
+      // {
+      //   name: '创建检查计划',
+      //   url:'/pages/check/pages/CheckPlanCreatePage',
+      //   optType: ['gov']
+      // },
       {
         name: '第三方施工上报',
         optType: ['gov','org'],
         url: '/pages/thirdBuild/pages/thirdBuildFormPage'
       },
-      {
-        name: '隐患上报',
-        optType: ['org','gov'],
-        url: '/pages/hidden/pages/HiddenReportPage'
-      },
+      // {
+      //   name: '隐患上报',
+      //   optType: ['org','gov'],
+      //   url: '/pages/hidden/pages/HiddenReportPage'
+      // },
       {
         name: '事故事件上报',
         optType: ['org','gov'],

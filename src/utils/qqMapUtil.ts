@@ -1,4 +1,5 @@
 import MapSDK from './qqmap-wx-jssdk'
+import { jsonp } from "vue-jsonp";
 
 
 
@@ -89,6 +90,24 @@ type getDistrictIdReturnType = {
  * 根据经纬度坐标 获取行政区划编码
  */
 export const getDistrictId = (latitude: string|number,longitude:string|number): Promise<getDistrictIdReturnType> => {
+  //#ifdef H5
+  return new Promise((res,rej) => {
+   jsonp("http://apis.map.qq.com/ws/geocoder/v1", {
+      location: `${latitude},${longitude}`,
+      key: 'YV5BZ-RY3CZ-OKJXS-Z7JJJ-NFBTV-WXFGF',
+      output: "jsonp",
+    }).then(data => {
+      const adInfo = data.result.ad_info;
+        res({
+          code: adInfo.adcode,
+          city: adInfo.city,
+          name: adInfo.district
+        });
+    })
+  })
+  //#endif
+
+  //#ifndef H5
   return new Promise((res,rej) => {
     map.reverseGeocoder({
       location:{latitude,longitude},
@@ -107,5 +126,12 @@ export const getDistrictId = (latitude: string|number,longitude:string|number): 
       }
     })
   })
+  //#endif
+
+  
+
+
+
+  
 };
 

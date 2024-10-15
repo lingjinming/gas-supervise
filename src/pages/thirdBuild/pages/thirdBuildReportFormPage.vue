@@ -61,10 +61,11 @@ const data = reactive({
 onLoad(options => {
   data.isInChain = !options?.uid;
   if(data.isInChain) {
-    const _this = getCurrentInstance();
+    const instance = getCurrentInstance()?.proxy
     // @ts-ignore
-    const eventChannel = _this!.ctx.getOpenerEventChannel();
+    const eventChannel = instance?.getOpenerEventChannel();
     eventChannel && eventChannel.on("thirdBuildInfoData", ({thirdBuildInfo}) => {
+      console.log(thirdBuildInfo)
       data.thirdBuildInfo  = thirdBuildInfo;
     });
   } else {

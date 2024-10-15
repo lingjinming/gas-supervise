@@ -1,21 +1,22 @@
 <template>
 
   <view class="tabs-box">
-      <view v-for="(item, index) in tabs" :key="item.key" class="tab-name" :class="{active: currentStep == index}" @click="changeStep(index)">
-        {{ item.title }}
+    <view v-for="(item, index) in tabs" :key="item.key" class="tab-name" :class="{ active: currentStep == index }"
+      @click="changeStep(index)">
+      {{ item.title }}
     </view>
   </view>
   <view class="swiper-container">
-      <view  class="tabs-container" :style="{transform: `translateX(-${scrollLeft}px)`}">
-        <slot name="default" ></slot>
-      </view>
+    <view class="tabs-container" :style="{ transform: `translateX(-${scrollLeft}px)` }">
+      <slot name="default"></slot>
+    </view>
   </view>
 
 </template>
 
 <script setup lang="ts">
 import { provide } from 'vue'
-import {getRect} from '@/utils/index'
+import { getRect } from '@/utils/index'
 
 type Tab = {
   title: string,
@@ -27,20 +28,24 @@ const scrollLeft = ref(0);
 const active = ref('');
 const tabs = ref<Tab[]>([])
 const containerWidth = ref(0);
-getRect(instance, '.swiper-container').then((rect:any) => {
-  containerWidth.value = rect.width;
-});
+onMounted(() => {
+  nextTick(() => {
+    getRect(instance, '.swiper-container').then((rect: any) => {
+      containerWidth.value = rect.width;
+    });
+  })
+})
 
 
-watch(currentStep,() => {
+watch(currentStep, () => {
   let currentIndex = currentStep.value;
   const offsetLeft = currentIndex * containerWidth.value;
-  scrollLeft.value = offsetLeft ;
+  scrollLeft.value = offsetLeft;
 })
 
 const changeStep = (index: number) => {
   currentStep.value = index;
-  active.value =tabs.value[index].key;
+  active.value = tabs.value[index].key;
 }
 provide('gas-tabs', {
   active: active,
@@ -61,9 +66,11 @@ provide('gas-tabs', {
   .tab-name {
     flex: 1;
     text-align: center;
+
     &.active {
       font-weight: 700;
       position: relative;
+
       &::after {
         content: '';
         position: absolute;
@@ -73,10 +80,12 @@ provide('gas-tabs', {
         right: 0;
         bottom: 0;
         height: 4rpx;
-        background-color: $uni-color-primary;}
-      
+        background-color: $uni-color-primary;
+      }
+
     }
   }
+
   .active {
     color: $uni-color-primary;
   }
@@ -85,9 +94,10 @@ provide('gas-tabs', {
 .swiper-container {
   height: calc(100% - 120rpx);
   overflow: hidden;
+
   .tabs-container {
     display: flex;
-    height:100%;
+    height: 100%;
     width: 10000rpx;
     flex-direction: row;
     overflow-x: auto;

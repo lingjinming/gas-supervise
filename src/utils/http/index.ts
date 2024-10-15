@@ -25,9 +25,8 @@ const transforms: RequestTransform = {
   // 请求前的参数处理
   beforeRequestHook: (options: UniApp.RequestOptions,per?: PerRequestOptions) => {
     const store = userStore();
-    const activeServer = store.auth.activeServer;
+    let current = store.auth.activeServer
     let header =  {
-      "x-api-region": activeServer?.region
     }
     // 处理token
     if(!per?.withoutToken) {
@@ -117,7 +116,6 @@ const transforms: RequestTransform = {
 function createHttpInstance(opt: Partial<ClientOptions>) {
   return new RestClient({
     timeout: 1000 * 30,
-    baseUrl: 'https://aiot.citysafety.com/gasguard/',
     //baseUrl: 'http://localhost:8080/',
     transforms,
     perRequestOptions: {

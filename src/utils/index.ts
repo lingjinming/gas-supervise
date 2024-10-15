@@ -79,3 +79,24 @@ export function getAllRect(context, selector) {
           .exec((rect = []) => resolve(rect[0]));
   });
 }
+
+export function loadJs (src: string) :Promise<string> {
+  return new Promise((resolve, reject) => {
+    const tag = document.querySelector(`script[src="${src}"]`)
+    if (tag) {
+      resolve('ok')
+    } else {
+      const script = document.createElement('script')
+      script.type = 'text/javascript'
+      script.onload = () => {
+        resolve('ok')
+      }
+      script.onerror = (e) => {
+        reject(e)
+        console.error(`loading js source[${src}] fail!`)
+      }
+      script.src = src
+      document.getElementsByTagName('body')[0].appendChild(script)
+    }
+  })
+}

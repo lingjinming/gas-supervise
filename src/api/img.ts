@@ -43,19 +43,10 @@ export const loadFileBase64 = async (fileId: string): Promise<string> => {
  */
 export const downloadFile = async (fileId: string) : Promise<string>=> {
   const store = userStore();
-  const region = store.auth.activeServer?.region;
-
-  //const previewUrl = await getImgPreviewUrl(fileId);
-  //const queryObj = getUrl(previewUrl);
-  // https://aiot.citysafety.com/gasguard/gas-supervise/open/download/895131bae2b148f3abcd7dc46a79e534.jpg
-
+  let baseUrl = store.auth.activeServer?.BASE_URL
   return new Promise<string>((resolve,rej) => {
     uni.downloadFile({
-      //url: `https://aiot.citysafety.com/gasguard/preview_pic/${queryObj?.path}`,
-      url: `https://aiot.citysafety.com/gasguard/gas-supervise/open/download/${fileId}`,
-      header: {
-        "x-api-region": region,
-      },
+      url: `${baseUrl}/open/download/${fileId}`,
       responseType: "arraybuffer",
       success(res) {
         resolve(res.tempFilePath)

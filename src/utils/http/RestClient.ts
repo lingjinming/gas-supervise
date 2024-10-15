@@ -1,5 +1,6 @@
 import type { ClientOptions ,UniResponse,PerRequestOptions} from "./typing";
 import { isFunction ,isObject} from "../is";
+import { userStore } from "@/state";
 
 
 
@@ -86,8 +87,17 @@ export class RestClient {
     if(beforeRequestHook && isFunction(beforeRequestHook)) {
       option = beforeRequestHook(option,opt);
     }
-
-    const fullUrl = this.options.baseUrl + option.url;
+    const store = userStore();
+    let current = store.auth.activeServer
+    let base_url = current?.BASE_URL;
+    let fullUrl = base_url + option.url;
+    if(option.url.startsWith('http')) {
+      fullUrl = option.url;
+    }
+    if(fullUrl.includes('gas-supervise')) {
+      fullUrl = fullUrl.replace('gas-supervise','');
+    }
+ 
     return new Promise((resolve, reject) => {
       uni.request({
         ...option,

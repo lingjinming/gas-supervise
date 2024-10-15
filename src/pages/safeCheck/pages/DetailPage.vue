@@ -1,6 +1,6 @@
 <template>
   <view class="topic">
-    <image class="icon" src="/pages/safeCheck/static/icon_detail.png"></image>
+    <image class="icon" src="../static/icon_detail.png"></image>
     {{ title }}
   </view>
   <view class="item" v-for="(item) in list" :key="item.checkItem">
@@ -8,10 +8,10 @@
     <view class="content" v-for="(content,index) in item.list" :key="index">
       <view class="content-title">{{ content.checkContent }}</view>
       <view class="result" v-if="content.checkResult === 'PASS'">
-        <image class="icon" src="/pages/safeCheck/static/icon_check_state_ok.png"></image>合格
+        <image class="icon" src="../static/icon_check_state_ok.png"></image>合格
       </view>
       <view class="result" v-else @click="goDangerDetail(content)">
-        <image class="icon" src="/pages/safeCheck/static/icon_check_state_bad.png"></image>存在隐患
+        <image class="icon" src="../static/icon_check_state_bad.png"></image>存在隐患
         <uni-icons type="right" class="icon-right"/>
       </view>
     </view>

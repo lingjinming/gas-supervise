@@ -1,7 +1,7 @@
 // 导入请求函数
 import { request } from "./request";
 import { defHttp } from "@/utils/http";
-import { userStore } from "@/state";
+import { userStore, type Server } from "@/state";
 import type { ServerConfig ,SysUserInfo,OAuth2LoginReq} from "./model/UserAuth";
 
 /**
@@ -23,12 +23,16 @@ export const upload = (data: any) => {
  * 服务器配置
  *
  */
-export const getConfig = () => {
-  return defHttp.get<ServerConfig>({
-    url: "config.json",
-  },{
-    isTransformResponse: false
-  });
+export const getConfig =  (): Server[] => {
+  let conf = window['conf'] as Server ;
+  if(!conf) {
+    uni.showModal({
+      title: '错误',
+      content: '服务器配置错误',
+      showCancel: false
+    })
+  }
+  return [conf];
 };
 
 /**
@@ -36,12 +40,14 @@ export const getConfig = () => {
  */
 export const getToken = (data: OAuth2LoginReq) => {
   const store = userStore();
-  const authHeader = store.auth.activeServer?.auth_header
+  const currentServer = store.auth.activeServer;
+  const authHeader = currentServer?.APPID + ":" + currentServer?.APPKEY;
+  let loginPath = currentServer?.LOGIN_URL!;
   return defHttp.post({
-    url: "apilogin/oauth/token",
+    url: loginPath,
     data,
     header: {
-      Authorization: authHeader,
+      Authorization: `Basic ${window.btoa(authHeader)}`,
       'Content-Type': 'application/x-www-form-urlencoded'
     }
   },{

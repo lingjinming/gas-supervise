@@ -1,7 +1,5 @@
 import { userStore } from "@/state";
 
-const BASE_URL = "https://aiot.citysafety.com/gasguard/";
-const SUCESS_CODE = [200];
 
 /**
  * @deprecated
@@ -30,8 +28,9 @@ export const request = <T = any>(option: UniApp.RequestOptions): Promise<T> => {
     handleGetQueryParam(option.data);
   }
   return new Promise((resolve, reject) => {
+    let baseUrl = currentServer?.base_url;
     uni.request({
-      url: BASE_URL + option.url,
+      url: baseUrl + option.url,
       method: option.method,
       header,
       data: option.data,

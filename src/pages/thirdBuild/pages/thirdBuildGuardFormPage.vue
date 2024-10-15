@@ -45,9 +45,9 @@ const data = reactive({
 onLoad(options => {
   data.isInChain = !options?.uid;
   if(data.isInChain) {
-    const _this = getCurrentInstance();
+    const instance = getCurrentInstance()?.proxy
     // @ts-ignore
-    const eventChannel = _this!.ctx.getOpenerEventChannel();
+    const eventChannel = instance?.getOpenerEventChannel();
     eventChannel.on && eventChannel.on("reportInfo", ({thirdBuildInfo,reportInfo}) => {
       data.thirdBuildInfo  = thirdBuildInfo;
       data.reportInfo = reportInfo;

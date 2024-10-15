@@ -3,7 +3,16 @@ import { setCache, getCache ,removeCache} from '@/utils/cache'
 import { getConfig } from "@/api/uaa";
 import {fetchDictionary} from '@/api/dic'
 import type { SysUserInfo ,OAuth2Token} from '@/api/model/UserAuth';
+import { loadJs } from '@/utils';
 
+export interface Server {
+  // title in login page
+  TITLE: string;
+  BASE_URL: string;
+  LOGIN_URL: string;
+  APPID: string;
+  APPKEY: string;
+}
 
 interface UserStoreType {
   auth: {
@@ -44,18 +53,17 @@ export const userStore = defineStore('app-store', {
     // 是否是政府用户
     isGovUser: (state) => state.userInfo?.organizationVO.orgType === '0',
     // 按 服务器 编码,获取服务器配置
-    getServer:(state) => (region: string) => state.auth.servers.find(s => s.region === region)
+    getServer:(state) => (region: string) => state.auth.servers?.[0] || undefined
 
   },
   actions: {
     async loadServers() {
-      if(this.auth.servers.length) {
-        return this.auth.servers
-      }
-      const data = await getConfig();
-      const serverList = data.regions.map(r => ({label: r.remark,value: r.region,...r}));
-      this.auth.servers = serverList;
+      await loadJs('./static/conf.js')
+      let serverList = getConfig();
+      this.auth.servers =  serverList;
       setCache('SERVER_LIST',serverList);
+
+      this.setServer(this.auth.servers[0]);
       return this.auth.servers
     },
     // 获取数据字典
@@ -120,10 +128,5 @@ export const userStore = defineStore('app-store', {
 })
 
 
-interface Server {
-  label: string;
-  value:string;
-  region: string;
-  auth_header: string;
-}
+
 

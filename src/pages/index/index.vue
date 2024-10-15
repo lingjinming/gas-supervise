@@ -1,23 +1,18 @@
 <template>
-  <image class="bg_img" src="/static/img/bg.png"></image>
-  <view class="top">
-    <view class="menu-box">
-      <view
-        hover-class="hover"
-        class="menu"
-        v-for="item in menus"
-        :key="item.name"
-        @click="navigato(item.url)"
-      >
-        <view>
-          <image class="menu_img" :src="item.image"></image>
+  <!-- <image class="bg_img" src="/static/img/bg.png"></image> -->
+  <view class="bg">
+    <view class="top">
+      <view class="menu-box">
+        <view hover-class="hover" class="menu" v-for="item in menus" :key="item.name" @click="navigato(item.url)">
+          <view>
+            <image class="menu_img" :src="item.image"></image>
+          </view>
+          <view>{{ item.name }}</view>
         </view>
-        <view>{{ item.name }}</view>
       </view>
     </view>
-  </view>
 
-  <view class="index-box ">
+    <!-- <view class="index-box ">
     <view class="tit">
       <view>我的待办</view>
     </view>
@@ -43,9 +38,9 @@
     <view v-else class="no-content">
       <image src="/static/img/nodata.png" class="nodata"></image>
     </view>
-  </view>
+  </view> -->
 
-  
+  </view>
   <RouterTab actPath="pages/index/index" />
 </template>
 
@@ -97,36 +92,36 @@ const updateHidangerCnt = () => {
 
 
 const menus = [
-  {
-    name: "日常检查",
-    url: "/pages/safeCheck/index?type=DAILY",
-    image: "/static/icon/icon_safe_check_daily.png",
-  },
-  {
-    name: "专项检查",
-    url: "/pages/safeCheck/index?type=SPECIAL",
-    image: "/static/icon/icon_safe_check_spec.png",
-  },
-  {
-    name: "三方安全评价",
-    url: "/pages/safeCheck/index?type=THIRD",
-    image: "/static/icon/icon_safe_check_third.png",
-  },
+  // {
+  //   name: "日常检查",
+  //   url: "/pages/safeCheck/index?type=DAILY",
+  //   image: "/static/icon/icon_safe_check_daily.png",
+  // },
+  // {
+  //   name: "专项检查",
+  //   url: "/pages/safeCheck/index?type=SPECIAL",
+  //   image: "/static/icon/icon_safe_check_spec.png",
+  // },
+  // {
+  //   name: "三方安全评价",
+  //   url: "/pages/safeCheck/index?type=THIRD",
+  //   image: "/static/icon/icon_safe_check_third.png",
+  // },
   {
     name: "事故事件",
     url: "/pages/accident/index",
     image: "/static/icon/icon_accident.png",
   },
-  {
-    name: "隐患管理",
-    url: "/pages/hidden/index",
-    image: "/static/icon/icon_hidanger.png",
-  },
-  {
-    name: "检查计划",
-    url: "/pages/check/index",
-    image: "/static/img/icon_jcjhgl.png",
-  },
+  // {
+  //   name: "隐患管理",
+  //   url: "/pages/hidden/index",
+  //   image: "/static/icon/icon_hidanger.png",
+  // },
+  // {
+  //   name: "检查计划",
+  //   url: "/pages/check/index",
+  //   image: "/static/img/icon_jcjhgl.png",
+  // },
   {
     name: "第三方施工",
     url: "/pages/thirdBuild/index",
@@ -167,6 +162,10 @@ const navigatoNotice = () => {
 </script>
 
 <style lang="scss" scoped>
+.bg{
+  background-image: url("../static/img/bg.png");
+  height: 50vh;
+} 
 .top {
   border-radius: 10prx;
   padding: 160rpx 30rpx 0rpx;
@@ -176,6 +175,7 @@ const navigatoNotice = () => {
   color: #222222;
   box-shadow: $uni-box-shadow;
   border-radius: 10rpx;
+  
   .menu-box {
     padding: 25rpx;
     background-color: #ffffff;

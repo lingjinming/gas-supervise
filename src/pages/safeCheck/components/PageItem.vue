@@ -2,7 +2,7 @@
   <view class="item-warpper" @click="goDetail">
     <view class="top">
       <view class="icon">
-        <image class="img" src="/pages/safeCheck/static/icon_check.png"></image>
+        <image class="img" src="../static/icon_check.png"></image>
       </view>
       <view class="title">
         <view class="name">
@@ -25,15 +25,15 @@
     </view>
     <view class="info">
       <view class="line">
-        <image class="icon" src="/pages/safeCheck/static/icon_checker.png"></image>
+        <image class="icon" src="../static/icon_checker.png"></image>
         检查人: {{ info.checkPersonName }}
       </view>
       <view class="line">
-        <image class="icon" src="/pages/safeCheck/static/icon_time.png"></image>
+        <image class="icon" src="../static/icon_time.png"></image>
         检查时间: {{ info.checkTime }}
       </view>
       <view class="line address">
-        <image class="icon" src="/pages/safeCheck/static/icon_location.png"></image>
+        <image class="icon" src="../static/icon_location.png"></image>
         企业地址：{{ info.address }}
       </view>
     </view>

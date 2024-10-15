@@ -2,7 +2,7 @@
   <view class="container" @click="goDetail">
     <!-- 左边图片 -->
     <view class="left-item">
-      <image class="img" :src="getImg(info.buildType)"></image>
+      <image class="img" src="../static/third_build_DLGZ.png"></image>
     </view>
     <!-- 右边详情 -->
     <view class="right-item">
@@ -44,9 +44,9 @@ const goDetail = () => {
     url: `/pages/thirdBuild/pages/thirdBuildDetailPage?uid=${props.info.uid}`,
   });
 }
-const getImg = (type: string|undefined) => {
-  return `../static/third_build_${type}.png`;
-}
+// const getImg = (type: string|undefined) => {
+//   return `../static/third_build_${type}.png`;
+// }
 const isOk = (value: string|undefined) => {
   return value&&'REPORTED,GUARDED,COMPLETED'.includes(value)
 }

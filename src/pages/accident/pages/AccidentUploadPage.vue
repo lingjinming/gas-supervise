@@ -25,16 +25,19 @@ import { postAccidentAdd, postAccidentUpdate } from '@/api/gen/GasSuperviseApi'
 import { useLoading } from '@/hooks/useLoading';
 import { useEventChannel } from '@/hooks/useEventChannel';
 import { EventType } from '../event'
-
+import {getCurrentInstance} from 'vue'
 const form = ref<any>({
   uid: '',
   describe: '',
   fileIds: []
 }); 
 
-onLoad(() => {
-  const { on } = useEventChannel();
-  on(EventType.ON_UPLOAD_FILE, ({ formData }) => {
+onMounted(() => {
+  const instance = getCurrentInstance()?.proxy
+  // @ts-ignore
+  const eventChannel = instance?.getOpenerEventChannel();
+  eventChannel.on(EventType.ON_UPLOAD_FILE, ({ formData }) => {
+    console.log('formData',formData)
     form.value = formData;
   });
 })

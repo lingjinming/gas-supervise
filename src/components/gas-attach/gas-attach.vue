@@ -24,13 +24,13 @@ const props = defineProps({
 // 是否是图片
 const isImg = computed(() => props.id&&isImageFile(props.id))
 /**
- *  https://aiot.citysafety.com/gasguard/gas-supervise/open/download/{fileId}
  *  后端nginx转发,不再下载之后base64了;
  *  这样的话可以支持 lazy-load
  */
 const imgSrc = computed(() => {
   if(props.id) {
-    return `https://aiot.citysafety.com/gasguard/gas-supervise/open/download/${props.id}?xapiregion=${store.auth.activeServer?.region}`
+    let baseUrl = store.auth.activeServer?.BASE_URL;
+    return `${baseUrl}/open/download/${props.id}`
   }
   return '';
 });

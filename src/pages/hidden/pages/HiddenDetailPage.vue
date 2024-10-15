@@ -23,7 +23,7 @@
               <image
                 class="img-box_img"
                 style="width: 50rpx; height: 50rpx"
-                src="../../static/img/header.png"
+                src="/static/img/header.png"
                 mode="scaleToFill"
               />
               {{ node.operator + (node.stage === "PUSH" ? "(发布人)" : "") }}
@@ -106,7 +106,7 @@
               <view class="img-box">
                 <image
                   style="width: 30rpx; height: 30rpx"
-                  src="../../static/img/header.png"
+                  src="/static/img/header.png"
                   mode="scaleToFill"
                 />
                 {{ comment.leaderOrgName }}

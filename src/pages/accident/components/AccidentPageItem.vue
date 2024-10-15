@@ -2,7 +2,7 @@
   <view class="item-warpper" @click="goToDetail">
     <view class="top">
       <view class="icon">
-        <image class="img" src="/pages/accident/static/icon_check.png"></image>
+        <image class="img" src="../static/icon_check.png"></image>
       </view>
       <view class="title">
         <view class="name">
@@ -17,15 +17,15 @@
     </view>
     <view class="info">
       <view class="line">
-        <image class="icon" src="/pages/accident/static/icon_time.png"></image>
+        <image class="icon" src="../static/icon_time.png"></image>
           伤亡情况:  {{ `${info.deathCnt||0}死/${info.injuredCnt||0}伤` }}
       </view>
       <view class="line">
-        <image class="icon" src="/pages/accident/static/icon_time.png"></image>
+        <image class="icon" src="../static/icon_time.png"></image>
           事故时间: {{ info.accidentTime }}
       </view>
       <view class="line address">
-        <image class="icon" src="/pages/accident/static/icon_location.png"></image>
+        <image class="icon" src="../static/icon_location.png"></image>
           事故地址: {{ info.address }}
       </view>
     </view>

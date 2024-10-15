@@ -1,7 +1,7 @@
 <template>
   <RouterTab actPath='pages/user/index' />
   <view class="user-container">
-    <image class="bg_img" src="/static/img/bg.png"></image>
+    <!-- <image class="bg_img" src="/static/img/bg.png"></image> -->
     <view class="user">
       <view class="av">
         <image  src="/static/img/avt.png" mode="aspectFill"></image>
@@ -56,14 +56,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { reactive } from 'vue'
 import { userStore } from "@/state";
 import { onShow } from "@dcloudio/uni-app";
 import RouterTab from '../index/components/router-tab.vue'
 
 const store = userStore();
 
-const form = ref({
+const form = reactive({
   name: '',
   department: '',
   gender: '',
@@ -79,12 +79,13 @@ const form = ref({
 onShow(() => {
   const userInfo = store.userInfo;
   if (userInfo) {
-    form.value.name = userInfo.name || '--';
-    form.value.department = userInfo.organizationVO?.fullName || '--';
-    form.value.gender = userInfo.gender == 'xb002' ? '男' : '女';
-    form.value.phone = userInfo.phoneNumber;
-    form.value.contactAddress = userInfo.contactAddress || '--'
+    form.name = userInfo.name || '--';
+    form.department = userInfo.organizationVO?.fullName || '--';
+    form.gender = userInfo.gender == 'xb002' ? '男' : '女';
+    form.phone = userInfo.phoneNumber;
+    form.contactAddress = userInfo.contactAddress || '--'
   }
+  console.log(userInfo)
 })
 
 
@@ -113,7 +114,7 @@ const logout = () => {
 }
 
 .user-container {
-  
+  background-image: url('/static/img/bg.png');
   padding: 136rpx 30rpx;
   position: relative;
   .bg_img {
@@ -123,7 +124,6 @@ const logout = () => {
     display: block;
     width: 750rpx;
     height: 534rpx;
-    z-index: -999;
   }
 
   .arrow {
